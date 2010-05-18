@@ -1,5 +1,5 @@
 <!DOCTYPE article [
-<!ENTITY standard "Committee Specification">
+<!ENTITY standard "OASIS Standard">
 <!ENTITY tracker "http://sourceforge.net/tracker">
 <!ENTITY RFE "&tracker;/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;">
 <!ENTITY root "http://docs.oasis-open.org/docbook/">
@@ -17,8 +17,8 @@ $Id$
 <!-- product -->        <productname>docbook</productname>
 <!-- productVersion --> <productnumber>5.0</productnumber>
 <!-- artifactType       spec; what else? :-) -->
-<!-- stage -->          <releaseinfo role="stage">cs</releaseinfo>
-<!-- revision -->       <biblioid class="pubsnumber">03</biblioid>
+<!-- stage -->          <releaseinfo role="stage">os</releaseinfo>
+<!-- revision -->       <biblioid class="pubsnumber"></biblioid>
 <!-- language           en; see /article/@xml:lang -->
 <!-- form               xml -->
 
@@ -38,8 +38,7 @@ $Id$
   </personname>
   <email>norman.walsh@marklogic.com</email>
   <affiliation>
-    <shortaffil>Mark Logic</shortaffil>
-    <orgname>Mark Logic Corporation</orgname>
+    <orgname>MarkLogic Corporation</orgname>
   </affiliation>
 </othercredit>
 
@@ -51,27 +50,43 @@ $Id$
   </personname>
   <email>norman.walsh@marklogic.com</email>
   <affiliation>
-    <shortaffil>Mark Logic</shortaffil>
-    <orgname>Mark Logic Corporation</orgname>
+    <orgname>MarkLogic Corporation</orgname>
   </affiliation>
 </editor>
 </authorgroup>
 
-<pubdate>2009-06-03</pubdate>
+<pubdate>2009-11-01</pubdate>
 
 <bibliomisc role="namespace">http://docbook.org/ns/docbook</bibliomisc>
 
 <bibliorelation type="replaces" condition="online"
-    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cd-05.html"/>
+    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cs-02.html"/>
+<bibliorelation type="replaces" condition="online"
+    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cs-01.html"/>
+<bibliorelation type="replaces" condition="online"
+    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cd-04.html"/>
+<bibliorelation type="replaces" condition="online"
+    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cd-03.html"/>
+<bibliorelation type="replaces" condition="online"
+    xlink:href="http://docbook.org/specs/docbook-5.0CR7-spec-wd-01.html"/>
 
 <bibliorelation type="replaces" condition="print"
-    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cd-05.pdf"/>
+    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cs-02.pdf"/>
+<bibliorelation type="replaces" condition="print"
+    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cs-01.pdf"/>
+<bibliorelation type="replaces" condition="print"
+    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cd-04.pdf"/>
+<bibliorelation type="replaces" condition="print"
+    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cd-03.pdf"/>
+<bibliorelation type="replaces" condition="print"
+    xlink:href="http://docbook.org/specs/docbook-5.0CR7-spec-wd-01.pdf"/>
 
 <bibliorelation type="references" condition="online"
     xlink:href="http://docs.oasis-open.org/docbook/specs/docbook-4.5-spec.html"/>
 
 <bibliorelation type="references" condition="print"
     xlink:href="http://docs.oasis-open.org/docbook/specs/docbook-4.5-spec.pdf"/>
+
 
 <copyright>
 <year>2001</year><year>2002</year><year>2003</year>
@@ -99,32 +114,17 @@ XML DTD, but the RELAX NG Schema is now the normative schema.</para>
 </abstract>
 
 <legalnotice role="status">
-<para>This &standard; was
-<link xlink:href="http://lists.oasis-open.org/archives/docbook-tc/200711/msg00007.html">approved</link>
-for publication by the
-OASIS DocBook Technical Committee. It represents the
-consensus of the committee.
-</para>
+<para>This document was last revised or approved by the DocBook Technical Committee on the above date. The level of approval is also listed above. Check the &quot;Latest Version&quot; location noted above for possible later revisions of this document.</para>
 
-<!--
-<para>This is a &standard;. It does not necessarily
-represent the consensus of the committee.
-</para>
--->
+<para>Technical Committee members should send comments on this specification to the Technical Committee' email list. Others should send comments to the Technical Committee by using the “Send A Comment” button on the Technical Committee's web page at <link xlink:href="http://www.oasis-open.org/committees/docbook/">http://www.oasis-open.org/committees/docbook/</link>.</para>
 
-<para>Please send comments on this specification to the
-<email>docbook@lists.oasis-open.org</email> list. To subscribe, please
-use the
-<link xlink:href="http://lists.oasis-open.org/ob/adm.pl">OASIS Subscription
-Manager</link>.</para>
+<para>For information on whether any patents have been disclosed that may be essential to implementing this specification, and any offers of patent licensing terms, please refer to the Intellectual Property Rights section of the Technical Committee web page <link xlink:href="http://www.oasis-open.org/committees/docbook/ipr.php">http://www.oasis-open.org/committees/docbook/ipr.php</link>.</para>
 
-<para>The errata page for this specification is at
-<link xlink:href="&root;specs/docbook5-errata.html"/>.
-</para>
+<para>The non-normative errata page for this specification is located at <link xlink:href="http://www.oasis-open.org/committees/docbook/">http://www.oasis-open.org/committees/docbook/</link>.</para>
 </legalnotice>
 
 <legalnotice role="notices">
-<para>Copyright © OASIS® 2009. All Rights Reserved.</para>
+<para>Copyright © OASIS® 2008. All Rights Reserved.</para>
 
 <para>All capitalized terms in the following text have the meanings
 assigned to them in the OASIS Intellectual Property Rights Policy (the
@@ -205,7 +205,7 @@ particularly well suited to books and papers about computer hardware
 and software (though it is by no means limited to these applications).
 </para>
 
-<para>The <link xlink:href="mailto:docbook-tc@oasis-open.org">DocBook
+<para>The <link xlink:href="http://www.oasis-open.org/committees/docbook">DocBook
 Technical Committee</link> maintains the DocBook schema. Starting
 with V5.0, DocBook is normatively available as a <xref
 linkend="iso19757-2"/> Schema (with some additional
@@ -275,7 +275,7 @@ document.</para>
 <para>The DocBook
 <link xlink:href="&root;rng/">RELAX NG Schema</link> is distributed
 from the
-<link xlink:href="http://www.oasis-open.org/docbook/">DocBook site</link> at
+<link xlink:href="http://docs.oasis-open.org/docbook/">DocBook site</link> at
 <link xlink:href="http://www.oasis-open.org/">OASIS</link>.
 DocBook is also available from the mirror on
 <link xlink:href="http://docbook.org/"/>.
@@ -764,63 +764,6 @@ assertions.</para>
 processing expectations. A conformant DocBook V5.0 document
 <glossterm>should</glossterm> respect those constraints and anticipate
 those processing expectations.</para>
-</section>
-
-<section xml:id="backwards-compatibility">
-<title>Backwards compatibility</title>
-
-<para>The DocBook Technical Committee understands that the community
-benefits from the long-term stability of the DocBook family of
-schemas. We also understand that DocBook must continue to adapt and
-change in order to remain relevant in a changing world.</para>
-
-<para>All changes, and especially changes that are backwards
-incompatible (changes that make a currently valid document no longer
-valid under a new version of the schema), have a cost associated with
-them. Our duty is to balance those costs against the need to remain
-responsive to the community's desire to see DocBook grow to cover the
-new use cases that inevitably arise in documentation.</para>
-
-<para>With that in mind, the DocBook Technical Committee has adopted
-the following policy on backwards incompatible changes. This policy
-spells out when backwards incompatible changes can occur and how much
-notice the TC must provide before adopting a schema that is backwards
-incompatible with the current release.</para>
-
-<para>This policy allows DocBook to continue to change and adapt while
-simultaneously guaranteeing that existing users will have sufficient
-advance notice to develop reasonable migration plans.</para>
-
-<para>With respect to schema changes, the following points
-<glossterm>must</glossterm> always apply:</para>
-
-<itemizedlist>
-<listitem>
-<para>A point release (X.1 to X.2, X.2 to X.3, X.1 to X.1.2, etc.)
-<glossterm>must not</glossterm> contain any backwards incompatible changes.
-</para>
-</listitem>
-<listitem>
-<para>A major release (X.1 to Y.0, X.2 to Y.0, X.1.2 to Y.0, etc.)
-<glossterm>may</glossterm> contain backwards incompatible changes if
-both of the following conditions are true:</para>
-<itemizedlist>
-<listitem>
-<para>The change was announced in the release notes for the previous
-version (major or minor).</para>
-</listitem>
-<listitem>
-<para>The change was announced in a release that occurred at least six
-months previously.</para>
-</listitem>
-</itemizedlist>
-</listitem>
-</itemizedlist>
-
-<para>By these rules, the TC can announce, in V5.1 for example, its
-plans to make a backwards incompatible change in V6.0. Then, in V6.0,
-if it's been at least six months since V5.1 was released, it can make
-that change.</para>
 
 </section>
 
@@ -1040,7 +983,7 @@ this specification and are gratefully acknowledged:</para>
 <section xml:id="s.50">
 <title>Changes in DocBook V5.0</title>
 
-<para>There are no user-visible changes in 5.0 (Committee Specification 3).
+<para>There are no user-visible changes in 5.0 (Committee Specification 1).
 </para>
 
 </section>
