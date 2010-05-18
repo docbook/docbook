@@ -786,10 +786,13 @@ advance notice to develop reasonable migration plans.</para>
 <para>With respect to schema changes, the following points
 <glossterm>must</glossterm> always apply:</para>
 
-<itemizedlist>
+<orderedlist>
 <listitem>
 <para>A point release (X.1 to X.2, X.2 to X.3, X.1 to X.1.2, etc.)
-<glossterm>must not</glossterm> contain any backwards incompatible changes.
+<glossterm>must not</glossterm> contain any backwards incompatible changes
+<phrase revisionflag="added">unless those changes correct obvious bugs accidentally
+introduced in the preceding
+version</phrase>.
 </para>
 </listitem>
 <listitem>
@@ -807,12 +810,19 @@ months previously.</para>
 </listitem>
 </itemizedlist>
 </listitem>
-</itemizedlist>
+</orderedlist>
 
 <para>By these rules, the TC can announce, in V5.1 for example, its
 plans to make a backwards incompatible change in V6.0. Then, in V6.0,
 if it's been at least six months since V5.1 was released, it can make
 that change.</para>
+
+<para><phrase revisionflag="added">The exclusion in point 1 is
+designed to allow the committee to correct errors accidentally
+introduced in a point release, that are technically backwards
+incompatible, without having to leave them in the schema until the next
+full version.</phrase>
+</para>
 
 </section>
 
