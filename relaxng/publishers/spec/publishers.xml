@@ -10,8 +10,8 @@
     xmlns:ns4="http://www.w3.org/1998/Math/MathML" xmlns:ns3="http://www.w3.org/1999/xhtml"
     xmlns:ns="http://docbook.org/ns/docbook">
     <info>
-        <releaseinfo role="cvs">$Id: publishers.xml 8215 2009-05-05 18:46:13Z shudson310
-        $</releaseinfo>
+        <releaseinfo role="cvs">$Id: publishers.xml 8215 2010-06-01 18:46:13Z shudson310
+            $</releaseinfo>
         <!-- product -->
         <productname>publishers</productname>
         <!-- productVersion -->
@@ -20,7 +20,7 @@
         <!-- stage -->
         <releaseinfo role="stage">cd</releaseinfo>
         <!-- revision -->
-        <biblioid class="pubsnumber">01</biblioid>
+        <biblioid class="pubsnumber">02</biblioid>
         <!-- language           en; see /article/@xml:lang -->
         <!-- form               xml -->
         <releaseinfo role="location">&root;specs</releaseinfo>
@@ -37,20 +37,25 @@
                 <surname>Hudson</surname>
             </personname>
             <affiliation>
-                <shortaffil>Flatirons</shortaffil>
-                <orgname>Flatirons Solutions Corporation</orgname>
-                <address><email>scott.hudson@flatironssolutions.com</email></address></affiliation></othercredit><authorgroup>
+                <shortaffil>Pelco</shortaffil>
+                <orgname>Pelco</orgname>
+                <address><email>scott.hudson@pelco.com</email></address>
+            </affiliation>
+        </othercredit>
+        <authorgroup>
             <editor>
                 <personname>
                     <firstname>Scott</firstname>
                     <surname>Hudson</surname>
                 </personname>
                 <affiliation>
-                    <shortaffil>Flatirons</shortaffil>
-                    <orgname>Flatirons Solutions Corporation</orgname>
-                    <address><email>scott.hudson@flatironssolutions.com</email></address></affiliation></editor>
+                    <shortaffil>Pelco</shortaffil>
+                    <orgname>Pelco</orgname>
+                    <address><email>scott.hudson@pelco.com</email></address>
+                </affiliation>
+            </editor>
         </authorgroup>
-        <pubdate>2009-05-05</pubdate>
+        <pubdate>2010-06-01</pubdate>
         <bibliomisc role="namespace">http://docbook.org/ns/docbook</bibliomisc>
         <!--
 <bibliorelation type="replaces" condition="online"
@@ -70,7 +75,7 @@
     xlink:href="http://docs.oasis-open.org/docbook/specs/docbook-4.5-spec.pdf"/>
 -->
         <copyright>
-            <year>2009</year>
+            <year>2010</year>
             <holder>The Organization for the Advancement of Structured Information Standards
                 [OASIS]. All Rights Reserved.</holder>
         </copyright>
@@ -90,14 +95,13 @@
                 textbooks and other document types as appropriate for this industry.</para>
             <para>The DocBook Publishers Schema is based on DocBook 5.0, and delivered in the
                 normative RelaxNG Schema format.</para>
-        </abstract><legalnotice role="status">
-            
-<para>This &standard; was
-    <link xlink:href="http://lists.oasis-open.org/archives/docbook-tc/200901/msg00014.html">approved</link>
-for publication by the OASIS DocBook Technical Committee. It represents the consensus of the committee.
-</para>
-
-<!--            <para>This is a &standard;. It was approved by the OASIS DocBook Publishers
+        </abstract>
+        <legalnotice role="status">
+            <para>This &standard; was <link
+                    xlink:href="http://lists.oasis-open.org/archives/docbook-tc/200901/msg00014.html"
+                    >approved</link> for publication by the OASIS DocBook Technical Committee. It
+                represents the consensus of the committee. </para>
+            <!--            <para>This is a &standard;. It was approved by the OASIS DocBook Publishers
                 subcommittee, but it does not necessarily represent the consensus of the OASIS
                 DocBook Technical Committee.</para>-->
             <para>Please send comments on this specification to the
@@ -106,9 +110,10 @@ for publication by the OASIS DocBook Technical Committee. It represents the cons
                     Subscription Manager</link>.</para>
             <para>The errata page for this specification is at <link
                     xlink:href="http://docs.oasis-open.org/docbook/specs/publishers-errata.html"
-            />.</para>
-        </legalnotice><legalnotice role="notices">
-            <para>Copyright © OASIS® 2009. All Rights Reserved.</para>
+                />.</para>
+        </legalnotice>
+        <legalnotice role="notices">
+            <para>Copyright © OASIS® 2010. All Rights Reserved.</para>
             <para>All capitalized terms in the following text have the meanings assigned to them in
                 the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full
                 Policy may be found at the OASIS website.</para>
@@ -161,7 +166,8 @@ for publication by the OASIS DocBook Technical Committee. It represents the cons
                 while reserving the right to enforce its marks against misleading uses. Please see
                     <link xlink:href="http://www.oasis-open.org/who/trademark.php"/> for above
                 guidance.</para>
-        </legalnotice></info>
+        </legalnotice>
+    </info>
     <toc/>
     <section xml:id="s.intro">
         <title>Introduction</title>
@@ -1140,6 +1146,9 @@ for publication by the OASIS DocBook Technical Committee. It represents the cons
                 <para>Jim Earley, Flatirons Solutions</para>
             </listitem>
             <listitem>
+                <para>Nic Gibson, Individual</para>
+            </listitem>
+            <listitem>
                 <para>Dick Hamilton, Individual</para>
             </listitem>
             <listitem>
@@ -1158,10 +1167,10 @@ for publication by the OASIS DocBook Technical Committee. It represents the cons
                 <para>Norman Walsh, Mark Logic Corporation</para>
             </listitem>
             <listitem>
-                <para>Keith Fahlgren, O'Reilly Media (Secretary)</para>
+                <para>Keith Fahlgren, Threepress Consulting, Inc. (Secretary)</para>
             </listitem>
             <listitem>
-                <para>Scott Hudson, Flatirons Solutions (Chair, Editor)</para>
+                <para>Scott Hudson, Pelco (Chair, Editor)</para>
             </listitem>
         </itemizedlist>
     </appendix>
@@ -8210,6 +8219,7 @@ for publication by the OASIS DocBook Technical Committee. It represents the cons
         <para>Revised Draft. 15 January 2009. Removed spurious "remap" attributes from examples.
         Added table mapping Dublin Core to DocBook equivalents per request from Jirka Kosek.</para>
         <para>Revised Draft. 7 May 2009. Added conformance statement.</para>
+        <para>DTD version generated per public review feedback. No change to spec required. 7 May 2010.</para>
         <!--
 <listitem xml:id="rfe.">
 <para>Fixed <link xlink:href="&RFE;aid=">RFE </link>:
