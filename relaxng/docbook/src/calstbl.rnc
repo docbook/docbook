@@ -449,6 +449,8 @@ div {
    db:refpurpose [ "A cell in a table" ]
 ]
 div {
+   ctrl:exclude [ from="db.entry" exclude="db.cals.table" ]
+   ctrl:exclude [ from="db.entry" exclude="db.cals.informaltable" ]
 
    db.entry.role.attribute = attribute role { text }
    db.entry.morerows.attribute =
@@ -609,9 +611,6 @@ div {
    db:refpurpose [ "A formal table in a document" ]
 ]
 div {
-
-   ctrl:exclude [ from="db.cals.table" exclude="db.cals.table" ]
-   ctrl:exclude [ from="db.cals.table" exclude="db.cals.informaltable" ]
 
    db.cals.table.role.attribute = attribute role { text }
    db.cals.table.label.attribute = db.label.attribute
