@@ -44,6 +44,8 @@ db.glossary.inlines =
  | db._firstterm
  | db._glossterm
 
+db.ubiq.inlines |= db._firstterm | db._glossterm
+
 # ======================================================================
 
 db.baseform.attribute =

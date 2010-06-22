@@ -653,11 +653,6 @@ db.ubiq.inlines =
  | db.subscript
  | db.superscript
  | db.wordasword
- | db._firstterm
- | db._glossterm
- | db.coref
-
-
 
 db._text         = (text | db.ubiq.inlines | db._phrase | db.replaceable)*
 
