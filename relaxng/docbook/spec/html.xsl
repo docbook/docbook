@@ -52,6 +52,30 @@ div.toc p b {
   list-style-type: decimal;
   color: #66116D;
 }
+
+body {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 10pt;
+}
+
+.rev-added {
+  background-color: #AAFFAA;
+}
+
+.rev-deleted {
+  background-color: #FFAAAA;
+  text-decoration: line-through;
+}
+
+.rev-changed {
+  background-color: #FFFFAA;
+}
+
+.rev-off {
+  background-color: black;
+  text-decoration: none;
+}
+
   </style>
 </xsl:template>
 
@@ -92,7 +116,7 @@ div.toc p b {
 
     <h2 class="pubdate">
       <xsl:value-of select="format-date(xs:date(db:pubdate[1]),
-	                                '[D01] [MNn,*-3] [Y0001]')"/>
+	                                '[D] [MNn] [Y0001]')"/>
     </h2>
 
     <xsl:variable name="odnRoot">
@@ -103,8 +127,10 @@ div.toc p b {
       <xsl:value-of select="'spec'"/>
       <xsl:text>-</xsl:text>
       <xsl:value-of select="db:releaseinfo[@role='stage'][1]"/>
-      <xsl:text>-</xsl:text>
-      <xsl:value-of select="db:biblioid[@class='pubsnumber'][1]"/>
+      <xsl:if test="db:biblioid[@class='pubsnumber'][1] != ''">
+        <xsl:text>-</xsl:text>
+        <xsl:value-of select="db:biblioid[@class='pubsnumber'][1]"/>
+      </xsl:if>
       <xsl:if test="ancestor::*[@xml:lang][1]
 		    and ancestor::*[@xml:lang][1]/@xml:lang != 'en'">
 	<xsl:text>-</xsl:text>
@@ -125,6 +151,22 @@ div.toc p b {
 	    </a>
 	  </dd>
 	</xsl:for-each>
+
+<!--
+        <xsl:if test="db:bibliorelation[@type='replaces']">
+          <xsl:variable name="r" select="string((db:bibliorelation[@type='replaces'])[1]/@xlink:href)"/>
+          <dt>Previous Version:</dt>
+          <xsl:for-each select="('.html','.pdf','.xml')">
+            <dd>
+              <a href="{$r}{.}">
+                <xsl:text>http://docs.oasis-open.org/docbook/specs/</xsl:text>
+                <xsl:value-of select="$r"/>
+                <xsl:value-of select="."/>
+              </a>
+            </dd>
+          </xsl:for-each>
+        </xsl:if>
+-->
       </dl>
     </div>
 
@@ -263,6 +305,14 @@ div.toc p b {
       <xsl:with-param name="allow-anchors" select="1"/>
     </xsl:apply-templates>
   </xsl:element>
+</xsl:template>
+
+<!-- ============================================================ -->
+
+<xsl:template match="db:phrase[@revisionflag]">
+  <span class="rev-{@revisionflag}">
+    <xsl:next-match/>
+  </span>
 </xsl:template>
 
 </xsl:stylesheet>
