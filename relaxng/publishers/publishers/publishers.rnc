@@ -129,7 +129,7 @@ db.bibliographic.elements =
 | db.title
 | db.titleabbrev
 
-  db.extension.blocks = db.dialogue | db.poetry
+  db.extension.blocks = db.dialogue | db.poetry | db.drama
 }
 include "../../docbook/src/bibliography.rnc"
 include "../../docbook/src/calstbl.rnc" 
