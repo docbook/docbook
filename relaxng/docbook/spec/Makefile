@@ -13,6 +13,9 @@ XSLPARAM=
 
 all: docbook.html docbook.pdf
 
+assembly.html: assembly.xml
+	$(XSLT) $< $(HTMLSTYLE) $@ $(XSLPARAM)
+
 docbook.html: docbook.xml html.xsl
 	jing ../docbook.rng $<
 	$(XSLT) $< $(HTMLSTYLE) $@ $(XSLPARAM)
