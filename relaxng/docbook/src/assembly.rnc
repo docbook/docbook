@@ -1,12 +1,12 @@
-# This file is part of DocBook V5.0
+# This file is a module of DocBook V5.0 to support modular DocBook assemblies.
 #
-# Copyright 1992-2008 HaL Computer Systems, Inc.,
+# Copyright 1992-2010 HaL Computer Systems, Inc.,
 # O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
 # Corporation, Norman Walsh, Sun Microsystems, Inc., and the
 # Organization for the Advancement of Structured Information
 # Standards (OASIS).
 #
-# Release: $Id$
+# Release: $Id: assembly.rnc 7466 2009-03-27 14:03:55Z shudson310 $
 #
 # Permission to use, copy, modify and distribute the DocBook schema
 # and its accompanying documentation for any purpose and without fee
@@ -28,13 +28,16 @@
 # ======================================================================
 
 namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 namespace rng  = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://www.ascc.net/xml/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
-include "../src/docbook.rnc" {
-   start |= db.assembly
+include "toc.rnc"
+include "index.rnc"
+include "core.rnc" {
+   start = db.assembly
 }
-include "../dbforms/htmlform.rnc"
-include "../src/assembly-core.rnc"
+
+include "assembly-core.rnc"

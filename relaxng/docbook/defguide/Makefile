@@ -10,9 +10,9 @@ SRCS = defguide.rnc
 
 BINARY = defguide.rnd
 
-all:: defguide.rng defguide.rnc defguide.dtd
+all:: defguide.rng defguide.rnc
 
-clean:: ; rm -f defguide.rng defguide.rnc defguide.dtd
+clean:: ; rm -f defguide.rng defguide.rnc
 
 $(_OUTTOP)/defguide/defguide.rng: src/annotations.rnc src/bibliography.rnc \
              src/callouts.rnc src/calstbl.rnc dbforms/htmlform.rnc \
@@ -31,6 +31,3 @@ defguide.rng: $(basename $(defguide_BINARY)).rnx
 
 defguide.rnc: defguide.rng
 	$(RUNTRANG) $< $@
-
-defguide.dtd: $(basename $(defguide_BINARY)).dtx defguide.rnc
-	$(XSLTPROC) -output $@ $(TOOLS)/xml2dtd.xsl $<

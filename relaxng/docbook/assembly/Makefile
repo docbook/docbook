@@ -2,17 +2,17 @@ include _header.mak
 
 REMOVESCHEMATRON=0
 
-SRCS = docbook.rnc
+SRCS = assembly.rnc
 
-BINARY = docbook.rnd
+BINARY = assembly.rnd
 
-all:: docbook.rng docbook.rnc docbook.sch
+all:: assembly.rng assembly.rnc assembly.sch
 
-clean:: ; rm -f docbook.rng docbook.rnc docbook.dtd docbook.sch
+clean:: ; rm -f assembly.rng assembly.rnc assembly.dtd assembly.sch
 
-$(_OUTTOP)/docbook/docbook.rng: src/annotations.rnc src/bibliography.rnc \
+$(_OUTTOP)/assembly/assembly.rng: src/annotations.rnc src/bibliography.rnc \
              src/callouts.rnc src/calstbl.rnc \
-             src/docbook.rnc src/ebnf.rnc src/glossary.rnc \
+             src/docbook.rnc src/assembly.rnc src/ebnf.rnc src/glossary.rnc \
              src/hier.rnc src/htmltbl.rnc \
              src/index.rnc src/math.rnc src/mathml.rnc \
              src/msgset.rnc src/pool.rnc src/qandaset.rnc \
@@ -22,19 +22,19 @@ $(_OUTTOP)/docbook/docbook.rng: src/annotations.rnc src/bibliography.rnc \
 
 include _footer.mak
 
-docbook.rng: $(basename $(docbook_BINARY)).rnx
+assembly.rng: $(basename $(assembly_BINARY)).rnx
 	$(XSLTPROC) --param remove-schematron $(REMOVESCHEMATRON) --output $@ $(TOOLS)/removedoc.xsl $<
 
-docbook.rnc: docbook.rng
+assembly.rnc: assembly.rng
 	$(RUNTRANG) $< $@
 
-#docbook.dtd: docbook.rnc
-#	$(MAKE) -C ../../tools/rng2dtd docbook.dtd
-#	cp ../../tools/rng2dtd/docbook.dtd .
+#assembly.dtd: assembly.rnc
+#	$(MAKE) -C ../../tools/rng2dtd assembly.dtd
+#	cp ../../tools/rng2dtd/assembly.dtd .
 
 # N.B. the schematron stylesheet is an XSLT 2.0 stylesheet!
-docbook.sch: $(basename $(docbook_BINARY)).rnx
+assembly.sch: $(basename $(assembly_BINARY)).rnx
 	$(SAXON) $< $(TOOLS)/schematron.xsl $@
 
-#docbook.xsd: docbook.dtd
+#assembly.xsd: assembly.dtd
 #	$(RUNTRANG) $< $@

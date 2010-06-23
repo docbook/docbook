@@ -6,7 +6,7 @@
 # Organization for the Advancement of Structured Information
 # Standards (OASIS).
 #
-# Release: $Id$
+# Release: $Id: hier.rnc 8569 2010-01-15 00:23:46Z nwalsh $
 #
 # Permission to use, copy, modify and distribute the DocBook schema
 # and its accompanying documentation for any purpose and without fee
@@ -27,14 +27,43 @@
 #
 # ======================================================================
 
-namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
 namespace rng  = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://www.ascc.net/xml/schematron"
 namespace db = "http://docbook.org/ns/docbook"
+namespace dbx = "http://sourceforge.net/projects/docbook/defguide/schema/extra-markup"
 default namespace = "http://docbook.org/ns/docbook"
 
-include "../src/docbook.rnc" {
-   start |= db.assembly
+start |= db.topic
+db.components |= db.topic
+
+[
+   db:refname [ "topic" ]
+   db:refpurpose [ "A modular unit of documentation not part of any particular narrative flow" ]
+]
+div {
+
+   db.topic.status.attribute = db.status.attribute
+
+   db.topic.role.attribute = attribute role { text }
+
+   db.topic.type.attribute = attribute type { text }
+
+   db.topic.attlist =
+      db.topic.role.attribute?
+    & db.topic.type.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.label.attribute?
+    & db.topic.status.attribute?
+
+   db.topic.info = db._info.title.req
+
+   db.topic =
+      element topic {
+         db.topic.attlist,
+         db.topic.info,
+         db.navigation.components*,
+         db.toplevel.blocks.or.sections,
+         db.navigation.components*
+      }
 }
-include "../dbforms/htmlform.rnc"
-include "../src/assembly-core.rnc"

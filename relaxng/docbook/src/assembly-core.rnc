@@ -1,0 +1,352 @@
+# This file is a module of DocBook V5.0 to support modular DocBook assemblies.
+#
+# Copyright 1992-2010 HaL Computer Systems, Inc.,
+# O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
+# Corporation, Norman Walsh, Sun Microsystems, Inc., and the
+# Organization for the Advancement of Structured Information
+# Standards (OASIS).
+#
+# Release: $Id: assembly.rnc 7466 2009-03-27 14:03:55Z shudson310 $
+#
+# Permission to use, copy, modify and distribute the DocBook schema
+# and its accompanying documentation for any purpose and without fee
+# is hereby granted in perpetuity, provided that the above copyright
+# notice and this paragraph appear in all copies. The copyright
+# holders make no representation about the suitability of the schema
+# for any purpose. It is provided "as is" without expressed or implied
+# warranty.
+#
+# If you modify the DocBook schema in any way, label your schema as a
+# variant of DocBook. See the reference documentation
+# (http://docbook.org/tdg5/en/html/ch05.html#s-notdocbook)
+# for more information.
+#
+# Please direct all questions, bug reports, or suggestions for changes
+# to the docbook@lists.oasis-open.org mailing list. For more
+# information, see http://www.oasis-open.org/docbook/.
+#
+# ======================================================================
+
+namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng  = "http://relaxng.org/ns/structure/1.0"
+namespace s = "http://www.ascc.net/xml/schematron"
+namespace db = "http://docbook.org/ns/docbook"
+default namespace = "http://docbook.org/ns/docbook"
+
+[
+   db:refname [ "assembly" ]
+   db:refpurpose [ "Defines the hierarchy and relationships for a collection of resources" ]
+]
+div {
+
+   db.assembly.role.attribute = attribute role { text }
+
+   db.assembly.attlist =
+      db.assembly.role.attribute?
+    & db.common.attributes
+
+   db.assembly.info = db._info
+
+   db.assembly =
+      element assembly {
+         db.assembly.attlist,
+         db.assembly.info,
+         db.resources+,
+         db.structure*,
+         db.relationships*,
+         db.transforms?
+      }
+}
+
+[
+   db:refname [ "resources" ]
+   db:refpurpose [ "Contains one or more resource objects that are managed by the assembly" ]
+]
+div {
+
+   db.resources.role.attribute = attribute role { text }
+
+   db.resources.attlist =
+      db.resources.role.attribute?
+    & db.common.attributes
+
+   db.resources =
+      element resources {
+         db.resources.attlist,
+         attribute grammar { text }?,
+         attribute description { text }?,
+         db.resource+
+      }
+}
+
+[
+   db:refname [ "resource" ]
+   db:refpurpose [ "Identifies an object managed within the assembly" ]
+]
+div {
+
+   db.resource.role.attribute = attribute role { text }
+
+   db.resource.attlist =
+      db.resource.role.attribute?
+    & db.common.attributes
+
+   db.resource = db.file.resource | db.container.resource
+
+   db.file.resource =
+      element resource {
+         db.resource.attlist,
+         attribute fileref { text },
+         attribute grammar { text }?,
+         attribute description { text }?,
+         empty
+      }
+
+   # FIXME: contents should be any valid DocBook content model fragment
+   db.container.resource =
+      element resource {
+         db.resource.attlist,
+         attribute grammar { text }?,
+         attribute description { text }?,
+         text
+      }
+}
+
+[
+   db:refname [ "structure" ]
+   db:refpurpose [ "Describes the structure of a document" ]
+]
+div {
+
+   db.structure.role.attribute = attribute role { text }
+
+   db.structure.attlist =
+      db.structure.role.attribute?
+    & db.common.attributes
+
+   db.structure.info = db._info.title.req
+
+   db.structure =
+      element structure {
+         db.structure.attlist,
+         attribute type {xsd:NMTOKEN}?,
+         attribute defaultformat {xsd:NMTOKEN}?,
+         db.output*,
+         db.filterin?,
+         db.filterout?,
+         db.structure.info,
+         db.revhistory?,
+         db.toc*,
+         db.module+,
+         db.index*
+      }
+}
+
+[
+   db:refname [ "output" ]
+   db:refpurpose [ "Specify an output format and/or file name and/or renderas" ]
+]
+div {
+
+   db.output.role.attribute = attribute role { text }
+
+   db.output.attlist =
+      db.output.role.attribute?
+    & db.common.attributes
+
+   db.output =
+      element output {
+         db.output.attlist
+       & attribute format { xsd:NMTOKENS }?
+       & attribute file { xsd:anyURI }?
+       & attribute renderas { xsd:NMTOKEN }?
+       & attribute grammar { xsd:NMTOKEN }?
+       & attribute transform { xsd:NMTOKEN }?
+       & attribute suppress { xsd:boolean }?
+      }
+}
+
+[
+   db:refname [ "module" ]
+   db:refpurpose [ "A modular component within a structure" ]
+]
+div {
+
+   db.module.role.attribute = attribute role { text }
+
+   db.module.attlist =
+      db.assembly.role.attribute?
+    & db.common.attributes
+
+   db.module.info = db._info
+
+   db.module =
+      element module {
+         db.module.attlist,
+         ( [ a:defaultValue = "auto" ]
+            attribute chunk { "yes" | "no" | "auto" }?
+          & attribute resourceref { xsd:IDREF }?
+          & attribute omittitles { xsd:boolean }?
+          & attribute contentonly {xsd:boolean }?
+          & attribute renderas {xsd:NMTOKEN}?),
+         ((db.output | db.filterin | db.filterout)*,
+            db.module.info,
+            db.toc*,
+            db.module*,
+            db.index*)
+      }
+}
+
+[
+   db:refname [ "filterout" ]
+   db:refpurpose [ "Elements with effectivity attributes matching this element are suppressed" ]
+]
+div {
+   db.filterout.role.attribute = attribute role { text }
+
+   db.filterout.attlist =
+      db.filterout.role.attribute?
+    & db.common.attributes
+
+   db.filterout =
+      element filterout {
+         db.filterout.attlist,
+         empty
+      }
+}
+
+[
+   db:refname [ "filterin" ]
+   db:refpurpose [ "Elements with effectivity attributes matching this element are allowed" ]
+]
+div {
+   db.filterin.role.attribute = attribute role { text }
+
+   db.filterin.attlist =
+      db.filterin.role.attribute?
+    & db.common.attributes
+
+   db.filterin =
+      element filterin {
+         db.filterin.attlist,
+         empty
+      }
+}
+
+[
+   db:refname [ "relationships" ]
+   db:refpurpose [ "Groups relationship elements to define associations between resources" ]
+]
+div {
+   db.relationships.role.attribute = attribute role { text }
+
+   db.relationships.attlist =
+      db.relationships.role.attribute?
+    & db.common.attributes
+
+   db.relationships =
+      element relationships {
+         db.relationships.attlist,
+         db.relationship+
+      }
+}
+
+[
+   db:refname [ "relationship" ]
+   db:refpurpose [ "A relationship associates one or more resources" ]
+]
+div {
+   db.relationship.role.attribute = attribute role { text }
+
+   db.relationship.attlist =
+      db.relationship.role.attribute?
+    & db.common.attributes
+
+   db.relationship =
+      element relationship {
+         db.relationship.attlist,
+         attribute type { xsd:NMTOKEN }?,
+         db.linkend.attribute?,
+         db.association,
+         db.instance+
+      }
+}
+
+[
+   db:refname [ "association" ]
+   db:refpurpose [ "Identifies the type of relationship between one or more resources" ]
+]
+div {
+   db.association.role.attribute = attribute role { text }
+
+   db.association.attlist =
+      db.association.role.attribute?
+    & db.common.attributes
+
+   db.association =
+      element association {
+         db.association.attlist,
+         db.linkend.attribute?,
+         text?
+      }
+}
+
+[
+   db:refname [ "instance" ]
+   db:refpurpose [ "Identifies a resource that is part of a relationship" ]
+]
+div {
+   db.instance.role.attribute = attribute role { text }
+
+   db.instance.attlist =
+      db.instance.role.attribute?
+    & db.common.attributes
+
+   db.instance =
+      element instance {
+         db.instance.attlist,
+         db.linkend.attribute,
+         empty
+      }
+}
+
+[
+   db:refname [ "transforms" ]
+   db:refpurpose [ "List of transforms for converting from non-DocBook schemas" ]
+]
+div {
+   db.transforms.role.attribute = attribute role { text }
+
+   db.transforms.attlist =
+      db.transforms.role.attribute?
+    & db.common.attributes
+
+   db.transforms =
+      element transforms {
+         db.transforms.attlist,
+         db.transform+
+      }
+}
+
+[
+   db:refname [ "transform" ]
+   db:refpurpose [ "Identifies a transform for converting from a non-DocBook schema" ]
+]
+div {
+
+   db.transform.role.attribute = attribute role { text }
+
+   db.transform.attlist =
+      db.transform.role.attribute?
+    & db.common.attributes
+
+   db.transform =
+      element transform {
+         db.transform.attlist,
+         ((attribute grammar { xsd:NMTOKEN }
+         & attribute fileref { text })
+        | (attribute name { xsd:NMTOKEN }
+         & attribute fileref {text}))
+      }
+}

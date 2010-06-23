@@ -36,7 +36,7 @@ clean:: ; rm -rf $(_OUTTOP) *.xsd
 
 .SUFFIXES:
 
-MODULES=docbook dbforms defguide docbookxi dbits
+MODULES=docbook assembly dbforms defguide docbookxi dbits dtd assemblydtd
 
 include $(addsuffix /Makefile,$(MODULES))
 
