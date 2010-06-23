@@ -1,4 +1,4 @@
-<!DOCTYPE db:book SYSTEM "../output.dtd">
+<!DOCTYPE db:book SYSTEM "../docbook.dtd">
 <db:book xmlns:db="http://docbook.org/ns/docbook">
 <db:info>
   <db:title>Book title</db:title>
