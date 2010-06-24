@@ -65,7 +65,7 @@ $Id$
 -->
 
 <bibliorelation type="references" condition="online"
-    xlink:href="http://docs.oasis-open.org/docbook/specs/docbook-5.1b1-spec-ed.html"/>
+    xlink:href="http://docs.oasis-open.org/docbook/specs/docbook-5.0-spec-os.html"/>
 
 <!--
 <bibliorelation type="references" condition="print"
@@ -210,9 +210,8 @@ Definition (DTD) versions are also available.
 
 <para>The Version 5.1 release adds a major new feature to DocBook: the
 ability to compose document assemblies specifically designed to be
-suitable for use in topic-based authoring methodologies.</para>
-
-<para>Version 5.1 also adds a <tag>topic</tag> element, in support of
+suitable for use in topic-based authoring methodologies.
+It also adds a <tag>topic</tag> element, in support of
 topic-based authoring, and fixes a small number of bugs.</para>
 
 <para>The DocBook Technical Committee welcomes bug reports and
@@ -221,11 +220,14 @@ of outstanding requests is available through the
 <link xlink:href="http://sourceforge.net/">SourceForge</link>
 <link xlink:href="&tracker;/?atid=384107&amp;group_id=21935&amp;func=browse">tracker</link>
 interface. This is also the preferred mechanism for submitting new requests.
-Old RFEs, from a previous legacy tracking system, are
-<link xlink:href="http://www.oasis-open.org/docbook/old-rfes.html">archived</link>
-for reference.</para>
+</para>
 
-<section xml:id="s.terminology"><title>Terminology</title>
+<section xml:id="s.terminology">
+<title>Terminology</title>
+
+<section xml:id="s.keywords">
+<title>Key words</title>
+
 <para>The key words <glossterm>must</glossterm>, <glossterm>must
 not</glossterm>, <glossterm>required</glossterm>,
 <glossterm>shall</glossterm>, <glossterm>shall not</glossterm>,
@@ -235,6 +237,7 @@ not</glossterm>, <glossterm>required</glossterm>,
 interpreted as described in <xref linkend="rfc2119"/>. Note that for
 reasons of style, these words are not capitalized in this
 document.</para>
+</section>
 </section>
 
 <section xml:id="normative.refs">
@@ -277,57 +280,59 @@ Add better support for modular documentation
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=1722935">1722935</link>
-DocBook 5: Adding proofreader in @class for othercredit?
+Add a <tag class="attvalue">proofreader</tag> value to the <tag class="attribute">class</tag>
+attribute for <tag>othercredit</tag>
 </para>
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=1770787">1770787</link>
-Rename firstname and surname
+Add <tag>givenname</tag> as an alternative for <tag>firstname</tag>
 </para>
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=1899655">1899655</link>
-More root elements
+Allow more elements to be the root of a DocBook document
 </para>
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=2100736">2100736</link>
-initializer should allow constants
+Allow <tag>constant</tag> in <tag>initializer</tag>
 </para>
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=2791288">2791288</link>
-add quote to corpauthor and gui elements
+Added several additional elements, including <tag>quote</tag>, to the ubiquitous inlines
 </para>
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=2820190">2820190</link>
-add a topic element
+Add a <tag>topic</tag> element
 </para>
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=2821653">2821653</link>
-indexterms in footnotes
+Remove the constraint that <tag>indexterm</tag> elements must not appear in
+<tag>footnote</tag>s
 </para>
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=2907124">2907124</link>
-Allow personal name components directly in bibliomset.
+Allow personal name components directly in <tag>bibliomset</tag>.
 </para>
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=2907125">2907125</link>
-Remark should allow all inlines
+Allow all inlines in <tag>remark</tag>
 </para>
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=2907131">2907131</link>
-SImpleSect in Colophon?
+Allow <tag>simplesect</tag> in <tag>colophon</tag>
 </para>
 </listitem>
 <listitem>
 <para>RFE <link xlink:href="https://sourceforge.net/tracker/index.php?func=detail&amp;group_id=21935&amp;atid=384107&amp;aid=2964576">2964576</link>
-disallow table in entry
+Fix the bug that allowed <tag>table</tag> to appear inside <tag>entry</tag>
 </para>
 </listitem>
 </itemizedlist>
@@ -650,20 +655,16 @@ this specification and are gratefully acknowledged:</para>
 
 <itemizedlist spacing="compact">
 <title>Participants</title>
-<listitem><para>Steve Cogorno, Sun Microsystems</para></listitem>
 <listitem><para>Gary Cornelius, Individual</para></listitem>
-<listitem><para>Adam Di Carlo, Debian</para></listitem>
 <listitem><para>Paul Grosso, Arbortext</para></listitem>
 <listitem><para>Dick Hamilton, Individual</para></listitem>
 <listitem><para>Nancy Harrison, IBM</para></listitem>
 <listitem><para>Scott Hudson, Individual</para></listitem>
-<listitem><para>Mark Johnson, Debian</para></listitem>
 <listitem><para>Gershon Joseph, Tech-Tav Documentation Ltd.</para></listitem>
 <listitem><para>Jirka Kosek, Individual</para></listitem>
 <listitem><para>Larry Rowland, Hewlett-Packard</para></listitem>
-<listitem><para>Michael Smith, Individual</para></listitem>
 <listitem><para>Robert Stayton, Individual (Secretary)</para></listitem>
-<listitem><para>Norman Walsh, Mark Logic Corporation (Chair, Editor)</para></listitem>
+<listitem><para>Norman Walsh, MarkLogic Corporation (Chair, Editor)</para></listitem>
 </itemizedlist>
 </appendix>
 

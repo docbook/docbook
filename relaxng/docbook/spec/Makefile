@@ -2,7 +2,7 @@ include ../../../../buildtools/Makefile.incl
 
 SAXON=$(CVSTOOLSROOT)/saxon
 XSLT=$(SAXON)
-HTMLSTYLE=html.xsl
+HTMLSTYLE=spec05html.xsl
 FOSTYLE=fo.xsl
 XML2RFC=/share/doctypes/ietf/xml2rfc/xml2rfc.tcl
 RFCBASE=draft-walsh-app-docbook-xml-
@@ -11,12 +11,12 @@ TIDY=tidy
 
 XSLPARAM=
 
-all: docbook.html docbook.pdf
+all: docbook.html
 
 assembly.html: assembly.xml
 	$(XSLT) $< $(HTMLSTYLE) $@ $(XSLPARAM)
 
-docbook.html: docbook.xml html.xsl
+docbook.html: docbook.xml $(HTMLSTYLE)
 	jing ../docbook.rng $<
 	$(XSLT) $< $(HTMLSTYLE) $@ $(XSLPARAM)
 	$(TIDY) -q -utf8 -mn -asxml $@
