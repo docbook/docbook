@@ -34,6 +34,12 @@ namespace s = "http://www.ascc.net/xml/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
+db.grammar.attribute =
+   [
+      db:refpurpose [ "Identifies the default markup grammar for resources in this collection" ]
+   ]
+   attribute grammar { text }
+
 [
    db:refname [ "assembly" ]
    db:refpurpose [ "Defines the hierarchy and relationships for a collection of resources" ]
@@ -67,15 +73,19 @@ div {
 
    db.resources.role.attribute = attribute role { text }
 
+   db.resources.grammar.attribute = db.grammar.attribute
+
    db.resources.attlist =
       db.resources.role.attribute?
+    & db.resources.grammar.attribute?
     & db.common.attributes
+
+   db.resources.info = db._info.title.forbidden
 
    db.resources =
       element resources {
          db.resources.attlist,
-         attribute grammar { text }?,
-         attribute description { text }?,
+         db.resources.info?,
          db.resource+
       }
 }
@@ -88,8 +98,17 @@ div {
 
    db.resource.role.attribute = attribute role { text }
 
+   db.resource.fileref.attribute =
+      [
+         db:refpurpose [ "Indentifies the location of the data by URI" ]
+      ]
+      attribute fileref { xsd:anyURI }
+
+   db.resource.grammar.attribute = db.grammar.attribute
+
    db.resource.attlist =
       db.resource.role.attribute?
+    & db.grammar.attribute?
     & db.common.attributes
 
    db.resource = db.file.resource | db.container.resource
@@ -97,9 +116,7 @@ div {
    db.file.resource =
       element resource {
          db.resource.attlist,
-         attribute fileref { text },
-         attribute grammar { text }?,
-         attribute description { text }?,
+         db.resource.fileref.attribute,
          empty
       }
 
@@ -107,8 +124,6 @@ div {
    db.container.resource =
       element resource {
          db.resource.attlist,
-         attribute grammar { text }?,
-         attribute description { text }?,
          text
       }
 }
@@ -121,8 +136,22 @@ div {
 
    db.structure.role.attribute = attribute role { text }
 
+   db.structure.type.attribute =
+      [
+         db:refpurpose [ "Identifies the structure type of the structure" ]
+      ]
+      attribute type { xsd:NMTOKEN }
+
+   db.structure.defaultformat.attribute =
+      [
+         db:refpurpose [ "Identifies the default format of the structure" ]
+      ]
+      attribute defaultformat { xsd:NMTOKEN }
+
    db.structure.attlist =
       db.structure.role.attribute?
+    & db.structure.type.attribute?
+    & db.structure.defaultformat.attribute?
     & db.common.attributes
 
    db.structure.info = db._info.title.req
@@ -130,8 +159,6 @@ div {
    db.structure =
       element structure {
          db.structure.attlist,
-         attribute type {xsd:NMTOKEN}?,
-         attribute defaultformat {xsd:NMTOKEN}?,
          db.output*,
          db.filterin?,
          db.filterout?,
@@ -151,19 +178,52 @@ div {
 
    db.output.role.attribute = attribute role { text }
 
+   db.output.format.attribute =
+      [
+         db:refpurpose [ "Identifies the format of the module or structure" ]
+      ]
+      attribute format { xsd:NMTOKEN }
+
+   db.output.file.attribute =
+      [
+         db:refpurpose [ "Specifies the output file for this module or structure" ]
+      ]
+      attribute file { xsd:anyURI }
+
+   db.output.renderas.attribute =
+      [
+         db:refpurpose [ "Specifies the DocBook element to which this unit should be renamed" ]
+      ]
+      attribute renderas { xsd:NMTOKEN }
+
+   db.output.grammar.attribute = db.grammar.attribute
+
+   db.output.transform.attribute =
+      [
+         db:refpurpose [ "Specifies the transformation that should be applied to this unit" ]
+      ]
+      attribute transform { xsd:NMTOKEN }
+
+   db.output.suppress.attribute =
+      [
+         db:refpurpose [ "Indicates whether or not this unit should be suppressed" ]
+      ]
+      attribute suppress { xsd:boolean }
+
    db.output.attlist =
       db.output.role.attribute?
     & db.common.attributes
+    & db.output.format.attribute?
+    & db.output.file.attribute?
+    & db.output.renderas.attribute?
+    & db.output.grammar.attribute?
+    & db.output.transform.attribute?
+    & db.output.suppress.attribute?
 
    db.output =
       element output {
-         db.output.attlist
-       & attribute format { xsd:NMTOKENS }?
-       & attribute file { xsd:anyURI }?
-       & attribute renderas { xsd:NMTOKEN }?
-       & attribute grammar { xsd:NMTOKEN }?
-       & attribute transform { xsd:NMTOKEN }?
-       & attribute suppress { xsd:boolean }?
+         db.output.attlist,
+         empty
       }
 }
 
@@ -175,8 +235,52 @@ div {
 
    db.module.role.attribute = attribute role { text }
 
+   db.module.chunk.enumeration =
+      ## This module will be in a chunk
+      "true"
+    | ## This module will not be in a chunk
+      "false"
+    | ## Chunking of this module depends on the overall chunking algorithm
+      "auto"
+
+   db.module.chunk.attribute =
+      [
+         a:defaultValue = "auto"
+         db:refpurpose [ "Specifies chunking for this module" ]
+      ]
+      attribute chunk { db.module.chunk.enumeration }
+
+   db.module.resourceref.attribute =
+      [
+         db:refpurpose [ "Indicates a single resource from which to construct this module" ]
+      ]
+      attribute resourceref { xsd:IDREF }
+
+   db.module.omittitles.attribute =
+      [
+         db:refpurpose [ "Indicates if titles should be omitted when including a resource" ]
+      ]
+      attribute omittitles { xsd:boolean }?
+
+   db.module.contentonly.attribute =
+      [
+         db:refpurpose [ "Indicates if only the content should be copied when including a resource" ]
+      ]
+      attribute contentonly {xsd:boolean }?
+
+   db.module.renderas.attribute =
+      [
+         db:refpurpose [ "Specifies the DocBook element to which this unit should be renamed" ]
+      ]
+      attribute renderas { xsd:NMTOKEN }
+
    db.module.attlist =
-      db.assembly.role.attribute?
+      db.module.role.attribute?
+    & db.module.chunk.attribute?
+    & db.module.resourceref.attribute?
+    & db.module.omittitles.attribute?
+    & db.module.contentonly.attribute?
+    & db.module.renderas.attrbribute?
     & db.common.attributes
 
    db.module.info = db._info
@@ -184,12 +288,6 @@ div {
    db.module =
       element module {
          db.module.attlist,
-         ( [ a:defaultValue = "auto" ]
-            attribute chunk { "yes" | "no" | "auto" }?
-          & attribute resourceref { xsd:IDREF }?
-          & attribute omittitles { xsd:boolean }?
-          & attribute contentonly {xsd:boolean }?
-          & attribute renderas {xsd:NMTOKEN}?),
          ((db.output | db.filterin | db.filterout)*,
             db.module.info,
             db.toc*,
@@ -259,15 +357,21 @@ div {
 div {
    db.relationship.role.attribute = attribute role { text }
 
+   db.relationship.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of the relationship" ]
+      ]
+      attribute type { xsd:NMTOKEN }
+
    db.relationship.attlist =
       db.relationship.role.attribute?
+    & db.relationship.type?
+    & db.linkend.attribute?
     & db.common.attributes
 
    db.relationship =
       element relationship {
          db.relationship.attlist,
-         attribute type { xsd:NMTOKEN }?,
-         db.linkend.attribute?,
          db.association,
          db.instance+
       }
@@ -282,12 +386,12 @@ div {
 
    db.association.attlist =
       db.association.role.attribute?
+    & db.linkend.attribute?
     & db.common.attributes
 
    db.association =
       element association {
          db.association.attlist,
-         db.linkend.attribute?,
          text?
       }
 }
@@ -337,16 +441,29 @@ div {
 
    db.transform.role.attribute = attribute role { text }
 
+   db.transform.grammar.attribute = db.grammar.attribute
+
+   db.transform.fileref.attribute =
+      [
+         db:refpurpose [ "Indentifies the location of the data by URI" ]
+      ]
+      attribute fileref { xsd:anyURI }
+
+   db.transform.name.attribute =
+      [
+         db:refpurpose [ "Identifies the location of the data by reference" ]
+      ]
+      attribute name { xsd:NMTOKEN }
+
    db.transform.attlist =
       db.transform.role.attribute?
+    & (db.grammar.attribute | db.name.attribute)
+    & db.fileref.attribute
     & db.common.attributes
 
    db.transform =
       element transform {
          db.transform.attlist,
-         ((attribute grammar { xsd:NMTOKEN }
-         & attribute fileref { text })
-        | (attribute name { xsd:NMTOKEN }
-         & attribute fileref {text}))
+         empty
       }
 }
