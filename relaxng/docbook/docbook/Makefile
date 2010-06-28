@@ -17,7 +17,7 @@ $(_OUTTOP)/docbook/docbook.rng: src/annotations.rnc src/bibliography.rnc \
              src/index.rnc src/math.rnc src/mathml.rnc \
              src/msgset.rnc src/pool.rnc src/qandaset.rnc \
              src/refentry.rnc src/refsect1.rnc src/sect1.rnc \
-             src/svg.rnc src/tasks.rnc src/toc.rnc \
+             src/svg.rnc src/tasks.rnc src/toc.rnc src/topic.rnc \
              src/xlink.rnc
 
 include _footer.mak
