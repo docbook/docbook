@@ -46,7 +46,11 @@ div {
 
    db.topic.role.attribute = attribute role { text }
 
-   db.topic.type.attribute = attribute type { text }
+   db.topic.type.attribute =
+      [
+         db:refpurpose [ "Identifies the topic type" ]
+      ]
+      attribute type { text }
 
    db.topic.attlist =
       db.topic.role.attribute?
