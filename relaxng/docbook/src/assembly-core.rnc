@@ -40,6 +40,8 @@ db.grammar.attribute =
    ]
    attribute grammar { text }
 
+# ======================================================================
+
 [
    db:refname [ "assembly" ]
    db:refpurpose [ "Defines the hierarchy and relationships for a collection of resources" ]
@@ -65,6 +67,8 @@ div {
       }
 }
 
+# ======================================================================
+
 [
    db:refname [ "resources" ]
    db:refpurpose [ "Contains one or more resource objects that are managed by the assembly" ]
@@ -89,6 +93,8 @@ div {
          db.resource+
       }
 }
+
+# ======================================================================
 
 [
    db:refname [ "resource" ]
@@ -127,6 +133,8 @@ div {
          text
       }
 }
+
+# ======================================================================
 
 [
    db:refname [ "structure" ]
@@ -169,6 +177,8 @@ div {
          db.navigation.components*
       }
 }
+
+# ======================================================================
 
 [
    db:refname [ "output" ]
@@ -226,6 +236,29 @@ div {
          empty
       }
 }
+
+# ======================================================================
+
+[
+   db:refname [ "override" ]
+   db:refpurpose [ "A wrapper for information that a module overrides in the resource it includes" ]
+]
+div {
+
+   db.override.role.attribute = attribute role { text }
+
+   db.override.attlist =
+      db.override.role.attribute?
+    & db.common.attributes
+
+   db.override =
+      element override {
+         db.override.attlist,
+         (db._title & db.info.elements*)
+      }
+}
+
+# ======================================================================
 
 [
    db:refname [ "module" ]
@@ -290,11 +323,14 @@ div {
          db.module.attlist,
          ((db.output | db.filterin | db.filterout)*,
             db.module.info,
+            db.override?,
             db.navigation.components*,
             db.module*,
             db.navigation.components*)
       }
 }
+
+# ======================================================================
 
 [
    db:refname [ "filterout" ]
@@ -314,6 +350,8 @@ div {
       }
 }
 
+# ======================================================================
+
 [
    db:refname [ "filterin" ]
    db:refpurpose [ "Elements with effectivity attributes matching this element are allowed" ]
@@ -332,6 +370,8 @@ div {
       }
 }
 
+# ======================================================================
+
 [
    db:refname [ "relationships" ]
    db:refpurpose [ "Groups relationship elements to define associations between resources" ]
@@ -349,6 +389,8 @@ div {
          db.relationship+
       }
 }
+
+# ======================================================================
 
 [
    db:refname [ "relationship" ]
@@ -377,6 +419,8 @@ div {
       }
 }
 
+# ======================================================================
+
 [
    db:refname [ "association" ]
    db:refpurpose [ "Identifies the type of relationship between one or more resources" ]
@@ -395,6 +439,8 @@ div {
          text?
       }
 }
+
+# ======================================================================
 
 [
    db:refname [ "instance" ]
@@ -415,6 +461,8 @@ div {
       }
 }
 
+# ======================================================================
+
 [
    db:refname [ "transforms" ]
    db:refpurpose [ "List of transforms for converting from non-DocBook schemas" ]
@@ -432,6 +480,8 @@ div {
          db.transform+
       }
 }
+
+# ======================================================================
 
 [
    db:refname [ "transform" ]
