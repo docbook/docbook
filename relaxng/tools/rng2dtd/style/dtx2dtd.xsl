@@ -275,7 +275,7 @@
                     or @type='ENTITY' or @type='NMTOKEN'">
       <xsl:value-of select="@type"/>
     </xsl:when>
-    <xsl:when test="@type='anyURI' or @type='token'
+    <xsl:when test="@type='anyURI' or @type='token' or @type='boolean'
                     or @type='decimal' or @type='integer'
                     or @type='positiveInteger'
                     or @type='nonNegativeInteger'
