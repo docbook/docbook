@@ -313,7 +313,7 @@ div {
     & db.module.resourceref.attribute?
     & db.module.omittitles.attribute?
     & db.module.contentonly.attribute?
-    & db.module.renderas.attrbribute?
+    & db.module.renderas.attribute?
     & db.common.attributes
 
    db.module.info = db._info
@@ -407,7 +407,7 @@ div {
 
    db.relationship.attlist =
       db.relationship.role.attribute?
-    & db.relationship.type?
+    & db.relationship.type.attribute?
     & db.linkend.attribute?
     & db.common.attributes
 
@@ -507,8 +507,8 @@ div {
 
    db.transform.attlist =
       db.transform.role.attribute?
-    & (db.grammar.attribute | db.name.attribute)
-    & db.fileref.attribute
+    & (db.grammar.attribute | db.transform.name.attribute)
+    & db.transform.fileref.attribute
     & db.common.attributes
 
    db.transform =
