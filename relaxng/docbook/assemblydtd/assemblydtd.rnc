@@ -32,7 +32,7 @@
 namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
-include "../src/docbook.rnc" {
+include "../assembly/assembly.rnc" {
 
 db.biblio.class.enumeration =
    ## A digital object identifier.
@@ -390,13 +390,16 @@ db.date.contentmodel = (text)
 
 # ======================================================================
 
-   db.resource =
-      element resource {
-         db.resource.attlist,
-         attribute fileref { text }?,
-         attribute grammar { text }?,
-         attribute description { text }?,
-         text
-      }
+db.resource.attlist =
+   db.resource.role.attribute?
+ & db.resource.fileref.attribute?
+ & db.grammar.attribute?
+ & db.common.attributes
+
+db.resource =
+   element resource {
+      db.resource.attlist,
+      text
+   }
 }
 

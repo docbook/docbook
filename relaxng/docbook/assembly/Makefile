@@ -12,7 +12,7 @@ clean:: ; rm -f assembly.rng assembly.rnc assembly.dtd assembly.sch
 
 $(_OUTTOP)/assembly/assembly.rng: src/annotations.rnc src/bibliography.rnc \
              src/callouts.rnc src/calstbl.rnc \
-             src/docbook.rnc src/assembly.rnc src/ebnf.rnc src/glossary.rnc \
+             src/docbook.rnc src/assembly-core.rnc src/ebnf.rnc src/glossary.rnc \
              src/hier.rnc src/htmltbl.rnc \
              src/index.rnc src/math.rnc src/mathml.rnc \
              src/msgset.rnc src/pool.rnc src/qandaset.rnc \

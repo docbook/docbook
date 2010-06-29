@@ -34,9 +34,7 @@ namespace s = "http://www.ascc.net/xml/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
-include "toc.rnc"
-include "index.rnc"
-include "core.rnc" {
+include "../docbook/docbook.rnc" {
    start = db.assembly
 }
 
