@@ -92,7 +92,9 @@
 
   <xsl:if test="not($pe)">
     <xsl:message terminate="yes">
-      <xsl:text>dtx:attdecl not an ancestor of a dtx:pe?</xsl:text>
+      <xsl:text>dtx:attdecl not an ancestor of a dtx:pe? (</xsl:text>
+      <xsl:value-of select="@name"/>
+      <xsl:text>)</xsl:text>
     </xsl:message>
   </xsl:if>
 
