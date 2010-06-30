@@ -61,7 +61,7 @@ div {
          db.assembly.attlist,
          db.assembly.info,
          db.resources+,
-         db.structure+,
+         db.structure*,
          db.relationships*,
          db.transforms?
       }
