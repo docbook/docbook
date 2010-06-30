@@ -35,7 +35,7 @@ namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
 include "../docbook/docbook.rnc" {
-   start = db.assembly
+   start = db.assembly|db.resources|db.relationships|db.transforms|db.module
 }
 
 include "../src/assembly-core.rnc"
