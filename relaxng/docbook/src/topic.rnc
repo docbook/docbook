@@ -34,7 +34,8 @@ namespace dbx = "http://sourceforge.net/projects/docbook/defguide/schema/extra-m
 default namespace = "http://docbook.org/ns/docbook"
 
 start |= db.topic
-db.components |= db.topic
+db.book.components |= db.topic*
+db.part.contentmodel |= db.topic+
 
 [
    db:refname [ "topic" ]

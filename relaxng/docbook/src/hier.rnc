@@ -114,6 +114,10 @@ div {
 
 # ======================================================================
 
+db.book.components = (db.navigation.components | db.components | db.divisions)*
+
+# ======================================================================
+
 [
    db:refname [ "book" ]
    db:refpurpose [ "A book" ]
@@ -137,7 +141,7 @@ div {
       element book {
          db.book.attlist,
          db.book.info,
-         (db.navigation.components | db.components | db.divisions)*
+         db.book.components
       }
 }
 
@@ -290,6 +294,7 @@ div {
 # ======================================================================
 
 db.part.components = db.navigation.components | db.components
+db.part.contentmodel = db.part.components+
 
 # ======================================================================
 
@@ -317,7 +322,7 @@ div {
          db.part.attlist,
          db.part.info,
          db.partintro?,
-         db.part.components+
+         db.part.contentmodel
       }
 }
 
