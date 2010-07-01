@@ -36,7 +36,7 @@ default namespace = "http://docbook.org/ns/docbook"
 
 db.grammar.attribute =
    [
-      db:refpurpose [ "Identifies the default markup grammar for resources in this collection" ]
+      db:refpurpose [ "Identifies the markup grammar of a resource" ]
    ]
    attribute grammar { text }
 
@@ -114,7 +114,7 @@ div {
 
    db.resource.attlist =
       db.resource.role.attribute?
-    & db.grammar.attribute?
+    & db.resource.grammar.attribute?
     & db.common.attributes
 
    db.resource = db.file.resource | db.container.resource
@@ -383,9 +383,12 @@ div {
       db.relationships.role.attribute?
     & db.common.attributes
 
+   db.relationships.info = db._info
+
    db.relationships =
       element relationships {
          db.relationships.attlist,
+         db.relationships.info,
          db.relationship+
       }
 }
@@ -411,32 +414,13 @@ div {
     & db.linkend.attribute?
     & db.common.attributes
 
+   db.relationship.info = db._info.title.req
+
    db.relationship =
       element relationship {
          db.relationship.attlist,
-         db.association,
+         db.relationship.info,
          db.instance+
-      }
-}
-
-# ======================================================================
-
-[
-   db:refname [ "association" ]
-   db:refpurpose [ "Identifies the type of relationship between one or more resources" ]
-]
-div {
-   db.association.role.attribute = attribute role { text }
-
-   db.association.attlist =
-      db.association.role.attribute?
-    & db.linkend.attribute?
-    & db.common.attributes
-
-   db.association =
-      element association {
-         db.association.attlist,
-         text?
       }
 }
 
@@ -474,9 +458,12 @@ div {
       db.transforms.role.attribute?
     & db.common.attributes
 
+   db.transforms.info = db._info
+
    db.transforms =
       element transforms {
          db.transforms.attlist,
+         db.transforms.info,
          db.transform+
       }
 }
@@ -507,7 +494,7 @@ div {
 
    db.transform.attlist =
       db.transform.role.attribute?
-    & (db.grammar.attribute | db.transform.name.attribute)
+    & (db.transform.grammar.attribute | db.transform.name.attribute)
     & db.transform.fileref.attribute
     & db.common.attributes
 
