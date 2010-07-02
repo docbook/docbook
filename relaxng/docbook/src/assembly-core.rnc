@@ -414,13 +414,32 @@ div {
     & db.linkend.attribute?
     & db.common.attributes
 
-   db.relationship.info = db._info.title.req
-
    db.relationship =
       element relationship {
          db.relationship.attlist,
-         db.relationship.info,
+         db.association,
          db.instance+
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "association" ]
+   db:refpurpose [ "Identifies the type of relationship between one or more resources" ]
+]
+div {
+   db.association.role.attribute = attribute role { text }
+
+   db.association.attlist =
+      db.association.role.attribute?
+    & db.linkend.attribute?
+    & db.common.attributes
+
+   db.association =
+      element association {
+         db.association.attlist,
+         text?
       }
 }
 
