@@ -15,10 +15,10 @@ $Id$
 </releaseinfo>
 
 <!-- product -->        <productname>docbook</productname>
-<!-- productVersion --> <productnumber>5.1b1</productnumber>
+<!-- productVersion --> <productnumber>5.1b2</productnumber>
 <!-- artifactType       spec; what else? :-) -->
 <!-- stage -->          <releaseinfo role="stage">ed</releaseinfo>
-<!-- revision -->       <biblioid class="pubsnumber">03</biblioid>
+<!-- revision -->       <biblioid class="pubsnumber">01</biblioid>
 <!-- language           en; see /article/@xml:lang -->
 <!-- form               xml -->
 
@@ -55,7 +55,7 @@ $Id$
 </editor>
 </authorgroup>
 
-<pubdate>2010-06-23</pubdate>
+<pubdate>2010-07-27</pubdate>
 
 <bibliomisc role="namespace">http://docbook.org/ns/docbook</bibliomisc>
 
@@ -268,9 +268,58 @@ document.</para>
 <section xml:id="s.docbook">
 <title>The DocBook RELAX NG Schema</title>
 
+<para>This release is DocBook V5.1b2.</para>
+
 <para>Summary of changes in 5.1 TBD.</para>
 
-<para>Requests for enhancement addressed by this release:</para>
+<para>Changes since 5.1b1:</para>
+
+<itemizedlist>
+<listitem>
+<para>Created a <code>db.any.docbook</code> pattern that matches any single DocBook pattern. This pattern
+allows, for example, the <tag>resource</tag> element to contain text or any (single) valid DocBook element.
+(Allowing for more than one element would introduce the possibility of invalid combinations that would not
+be easy to detect.)
+</para>
+</listitem>
+<listitem>
+<para>Added <tag class="attribute">renderas</tag> to <tag>structure</tag>. Changed <tag class="attribute">renderas</tag>
+(in at least these contexts) to be a <type>QName</type>).
+</para>
+</listitem>
+<listitem>
+<para>Added <tag>override</tag> to <tag>structure</tag>.
+</para>
+</listitem>
+<listitem>
+<para>Took <tag>info</tag> out of <tag>relationship</tag> and put <tag>association</tag> back in.
+</para>
+</listitem>
+<listitem>
+<para>Fixed content model of <tag>book</tag> and <tag>part</tag> to make <tag>topic</tag> an alternative and not
+part of the component mixture.
+</para>
+</listitem>
+<listitem>
+<para>Fixed a few pattern typos in <filename>assembly-core.rnc</filename>.
+</para>
+</listitem>
+<listitem>
+<para>Make <tag>structure</tag> optional in <tag>assembly</tag>.
+</para>
+</listitem>
+<listitem>
+<para>Removed the <tag class="attribute">description</tag> attribute from assemblies. No human readable content in
+attribute values! (This has turned out to be someone contentious within the Technical Committee.)
+</para>
+</listitem>
+<listitem>
+<para>Added more documentation, though it's still far from complete.
+</para>
+</listitem>
+</itemizedlist>
+
+<para>Requests for enhancement addressed in 5.1b1:</para>
 
 <itemizedlist>
 <listitem>
