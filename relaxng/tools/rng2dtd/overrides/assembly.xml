@@ -451,4 +451,11 @@
       </choice>
    </pe>
 
+   <!-- resources -->
+
+   <!-- modules -->
+
+   <del-pe name="db.container.module"/>
+   <del-pe name="db.resource.module"/>
+
 </dtd>
