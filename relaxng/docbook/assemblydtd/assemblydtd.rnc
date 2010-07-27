@@ -399,7 +399,24 @@ db.resource.attlist =
 db.resource =
    element resource {
       db.resource.attlist,
-      text
+      (text | db.any.docbook)
+   }
+
+# ======================================================================
+
+db.container.module = notAllowed
+db.resource.module = notAllowed
+
+db.module =
+   element module {
+      db.resource.module.attlist,
+      ((db.output | db.filterin | db.filterout)*,
+         ((db.module.info,
+          db.override?,
+          db.navigation.components*,
+          db.module*,
+          db.navigation.components*)
+         | db.any.docbook))
    }
 }
 
