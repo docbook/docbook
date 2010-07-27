@@ -6,7 +6,7 @@ SRCS = docbook.rnc
 
 BINARY = docbook.rnd
 
-all:: docbook.rng docbook.rnc docbook.sch
+all:: docbook.rng docbook.rnc docbook.sch any.docbook.rng any.docbook.rnc
 
 clean:: ; rm -f docbook.rng docbook.rnc docbook.dtd docbook.sch
 
@@ -21,6 +21,12 @@ $(_OUTTOP)/docbook/docbook.rng: src/annotations.rnc src/bibliography.rnc \
              src/xlink.rnc
 
 include _footer.mak
+
+any.docbook.rng: docbook.rng
+	$(SAXON) $< $(TOOLS)/all-patterns.xsl $@
+
+any.docbook.rnc: any.docbook.rng
+	$(RUNTRANG) $< $@
 
 docbook.rng: $(basename $(docbook_BINARY)).rnx
 	$(XSLTPROC) --param remove-schematron $(REMOVESCHEMATRON) --output $@ $(TOOLS)/removedoc.xsl $<
