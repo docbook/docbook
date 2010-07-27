@@ -38,4 +38,6 @@ include "../docbook/docbook.rnc" {
    start = db.assembly|db.resources|db.relationships|db.transforms|db.module
 }
 
+include "../any.docbook.rnc"
+
 include "../src/assembly-core.rnc"
