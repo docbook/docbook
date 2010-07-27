@@ -130,7 +130,7 @@ div {
    db.container.resource =
       element resource {
          db.resource.attlist,
-         text
+         (text | db.any.docbook)
       }
 }
 
@@ -156,21 +156,41 @@ div {
       ]
       attribute defaultformat { xsd:NMTOKEN }
 
+   db.structure.renderas.attribute =
+      [
+         db:refpurpose [ "Specifies the DocBook element to which this unit should be renamed" ]
+      ]
+      attribute renderas { xsd:QName }
+
    db.structure.attlist =
       db.structure.role.attribute?
     & db.structure.type.attribute?
+    & db.structure.renderas.attribute?
     & db.structure.defaultformat.attribute?
     & db.common.attributes
 
    db.structure.info = db._info.title.req
 
    db.structure =
+      [
+         s:pattern [
+            name = "Specification of renderas"
+            s:rule [
+               context = "db:structure"
+               s:assert [
+                  test = "@renderas and db:output/@renderas"
+                  "The renderas attribute can be specified on either the structure or output, but not both."
+               ]
+            ]
+         ]
+      ]
       element structure {
          db.structure.attlist,
          db.output*,
          db.filterin?,
          db.filterout?,
          db.structure.info,
+         db.override?,
          db.revhistory?,
          db.navigation.components*,
          db.module+,
@@ -204,7 +224,7 @@ div {
       [
          db:refpurpose [ "Specifies the DocBook element to which this unit should be renamed" ]
       ]
-      attribute renderas { xsd:NMTOKEN }
+      attribute renderas { xsd:QName }
 
    db.output.grammar.attribute = db.grammar.attribute
 
@@ -305,9 +325,9 @@ div {
       [
          db:refpurpose [ "Specifies the DocBook element to which this unit should be renamed" ]
       ]
-      attribute renderas { xsd:NMTOKEN }
+      attribute renderas { xsd:QName }
 
-   db.module.attlist =
+   db.resource.module.attlist =
       db.module.role.attribute?
     & db.module.chunk.attribute?
     & db.module.resourceref.attribute?
@@ -318,15 +338,57 @@ div {
 
    db.module.info = db._info
 
-   db.module =
+   db.module = db.resource.module | db.container.module
+
+   db.resource.module =
+      [
+         s:pattern [
+            name = "Specification of renderas"
+            s:rule [
+               context = "db:module"
+               s:assert [
+                  test = "@renderas and db:output/@renderas"
+                  "The renderas attribute can be specified on either the structure or output, but not both."
+               ]
+            ]
+         ]
+      ]
       element module {
-         db.module.attlist,
+         db.resource.module.attlist,
          ((db.output | db.filterin | db.filterout)*,
             db.module.info,
             db.override?,
             db.navigation.components*,
             db.module*,
             db.navigation.components*)
+      }
+
+   db.container.module.attlist =
+      db.module.role.attribute?
+    & db.module.chunk.attribute?
+    & db.module.omittitles.attribute?
+    & db.module.contentonly.attribute?
+    & db.module.renderas.attribute?
+    & db.common.attributes
+
+
+   db.container.module =
+      [
+         s:pattern [
+            name = "Specification of renderas"
+            s:rule [
+               context = "db:module"
+               s:assert [
+                  test = "@renderas and db:output/@renderas"
+                  "The renderas attribute can be specified on either the structure or output, but not both."
+               ]
+            ]
+         ]
+      ]
+      element module {
+         db.container.module.attlist,
+         ((db.output | db.filterin | db.filterout)*,
+            db.any.docbook)
       }
 }
 
