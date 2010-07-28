@@ -36,6 +36,10 @@ default namespace = "http://docbook.org/ns/docbook"
 start |= db.topic
 db.book.components |= db.topic*
 db.part.contentmodel |= db.topic+
+db.chapter.contentmodel |= db.topic+
+db.appendix.contentmodel |= db.topic+
+
+# ======================================================================
 
 [
    db:refname [ "topic" ]

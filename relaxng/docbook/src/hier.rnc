@@ -235,6 +235,10 @@ div {
 
 # ======================================================================
 
+db.appendix.contentmodel = db.component.contentmodel
+
+# ======================================================================
+
 [
    db:refname [ "appendix" ]
    db:refpurpose [ "An appendix in a book or article" ]
@@ -258,9 +262,13 @@ div {
       element appendix {
          db.appendix.attlist,
          db.appendix.info,
-         db.component.contentmodel
+         db.appendix.contentmodel
       }
 }
+
+# ======================================================================
+
+db.chapter.contentmodel = db.component.contentmodel
 
 # ======================================================================
 
@@ -287,7 +295,7 @@ div {
       element chapter {
          db.chapter.attlist,
          db.chapter.info,
-         db.component.contentmodel
+         db.chapter.contentmodel
       }
 }
 
