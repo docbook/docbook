@@ -379,7 +379,7 @@
 <xsl:template match="formalpara|figure|table[tgroup]|example|blockquote
                      |caution|important|note|warning|tip
                      |bibliodiv|glossarydiv|indexdiv
-		     |orderedlist|itemizedlist|variablelist|procedure
+		     |orderedlist|itemizedlist|variablelist|procedure|step
 		     |task|tasksummary|taskprerequisites|taskrelated
 		     |sidebar"
 	      priority="200">
