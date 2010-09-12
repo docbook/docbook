@@ -1092,13 +1092,18 @@
 </xsl:template>
 
 <xsl:template match="abstract" priority="300">
-  <xsl:if test="not(contains(name(parent::*),'info'))">
-    <xsl:call-template name="emit-message">
-      <xsl:with-param name="message">
-	<xsl:text>Check abstract; moved into info correctly?</xsl:text>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:if>
+  <xsl:choose>
+    <xsl:when test="not(contains(name(parent::*),'info'))">
+      <xsl:call-template name="emit-message">
+        <xsl:with-param name="message">
+          <xsl:text>Check abstract; moved into info correctly?</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates select="." mode="copy"/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="indexterm">
