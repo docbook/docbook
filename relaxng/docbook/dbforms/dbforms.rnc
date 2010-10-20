@@ -29,7 +29,7 @@
 
 namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
 namespace rng  = "http://relaxng.org/ns/structure/1.0"
-namespace s = "http://www.ascc.net/xml/schematron"
+namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
