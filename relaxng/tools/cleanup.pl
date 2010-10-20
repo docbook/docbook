@@ -15,7 +15,7 @@ use English;
 
 binmode(STDOUT, ":utf8");
 
-my $schematron_uri = "http://www.ascc.net/xml/schematron";
+my $schematron_uri = "http://purl.oclc.org/dsdl/schematron";
 my $schematron_pfx = "";
 
 my %xmlns = ();

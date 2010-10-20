@@ -5,7 +5,7 @@
                 xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
                 xmlns:doc="http://nwalsh.com/xmlns/schema-doc/"
 		xmlns:set="http://exslt.org/sets"
-		xmlns:s="http://www.ascc.net/xml/schematron"
+		xmlns:s="http://purl.oclc.org/dsdl/schematron"
                 exclude-result-prefixes="exsl ctrl s rng set"
                 version="1.0">
 

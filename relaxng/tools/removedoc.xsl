@@ -3,7 +3,7 @@
                 xmlns:exsl="http://exslt.org/common"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
-		xmlns:s="http://www.ascc.net/xml/schematron"
+		xmlns:s="http://purl.oclc.org/dsdl/schematron"
 		xmlns:db="http://docbook.org/ns/docbook"
 		xmlns:dbx = "http://sourceforge.net/projects/docbook/defguide/schema/extra-markup"
 		xmlns:html="http://www.w3.org/1999/xhtml"
