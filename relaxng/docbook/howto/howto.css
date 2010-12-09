@@ -67,3 +67,5 @@ dl            { margin-left: 3em;
 
 .yes     { color: green; }
 .no      { color: red; }
+
+.remark { background-color: yellow; }
