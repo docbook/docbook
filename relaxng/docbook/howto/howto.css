@@ -37,7 +37,7 @@ dl            { margin-left: 3em;
 		margin-top: 0px;
               }
 
-.screen, .programlisting { background-color: silver; padding: 4px; }
+.screen, .programlisting { background-color: #eee; padding: 4px; }
 .menuchoice, .guimenu, .guisubmenu, .guimenuitem { font-weight: bold; }
 .guibutton { background-color: silver; padding: 2px; }
 
