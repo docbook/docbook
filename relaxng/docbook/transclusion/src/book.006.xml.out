@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook">
+  <title>Definitive Printer Guide</title>
+  <chapter xml:id="buy">
+    <title>Buying printer</title>
+    <para>Grab money, go to shop, ...</para>
+  </chapter>
+  <chapter>
+    <title>Quick installation guide</title>
+    <para>Carefully follow all procedures bellow.</para>
+    <procedure xml:id="paper-insert"
+      xml:base="file:/e:/texts/docbook/tc/transclusions/procedure.001.xml">
+      <title>Inserting paper into printer</title>
+      <para>This procedure is targeted to printer owners. If you don't have printer, consider <link
+          linkend="buy">buying one</link>.</para>
+      <step xml:id="s1">
+        <para>Make sure that you have paper.</para>
+      </step>
+      <step>
+        <para>Insert paper into printer. If you don't have paper consult <xref linkend="s1"/></para>
+      </step>
+    </procedure>
+  </chapter>
+  <chapter>
+    <title>Maintenance</title>
+    <para>Be friendly to your printer when you speak to it.</para>
+    <para>If green led is blinking, please add missing paper using the following procedure.</para>
+    <procedure xml:id="paper-insert"
+      xml:base="file:/e:/texts/docbook/tc/transclusions/procedure.001.xml">
+      <title>Inserting paper into printer</title>
+      <para>This procedure is targeted to printer owners. If you don't have printer, consider <link
+          linkend="buy">buying one</link>.</para>
+      <step xml:id="s1">
+        <para>Make sure that you have paper.</para>
+      </step>
+      <step>
+        <para>Insert paper into printer. If you don't have paper consult <xref linkend="s1"/></para>
+      </step>
+    </procedure>
+  </chapter>
+</book>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook">
+  <info>
+    <title>Transclusions demo</title>
+    <definitions>
+      <def name="product-version">3.14</def>
+      <!-- Conditional definitions -->
+      <def name="product-name" os="win">Windows Protector</def>
+      <def name="product-name" os="linux">Linux Protector</def>
+      <def name="corp-name">ACME Inc.</def>
+    </definitions>
+  </info>
+  <para>The latest version of <application><ref name="product-name"/></application>
+    from <ref name="corp-name"/> is <ref name="product-version"/>.</para>
+</article>

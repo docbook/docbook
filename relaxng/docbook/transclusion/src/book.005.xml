@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook">
+  <title>Definitive Printer Guide</title>
+  <chapter xml:id="buy">
+    <title>Buying printer</title>
+    <para>Grab money, go to shop, ...</para>
+  </chapter>
+  <chapter>
+    <title>Quick installation guide</title>
+    <para>Carefully follow all procedures bellow.</para>
+    <ref fileref="procedure.001.xml" xml:id="install-proc" idfixup="prefix" prefix="install-proc_"/>
+  </chapter>
+  <chapter>
+    <title>Maintenance</title>
+    <para>Be friendly to your printer when you speak to it.</para>
+    <para>If green led is blinking, please add missing paper using the following procedure.</para>
+    <ref fileref="procedure.001.xml" xml:id="maintain-proc" idfixup="prefix" prefix="maintain-proc_"/>
+  </chapter>
+</book>

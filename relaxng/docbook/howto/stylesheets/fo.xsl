@@ -7,6 +7,9 @@
 
 <xsl:param name="profile.status">final</xsl:param>
 
+<!-- Name used in URIs -->
+<xsl:param name="basename" select="/*[1]/@xml:id"/>
+
 <xsl:param name="body.start.indent" select="'0pt'"/>
 <xsl:param name="title.margin.left" select="'0pt'"/>
 
@@ -62,7 +65,7 @@
 
   <fo:block font-size="12pt" font-family="sans-serif">Latest version:</fo:block>
   <fo:block xsl:use-attribute-sets="urilist">
-    <fo:inline>http://docbook.org/docs/howto/</fo:inline>
+    <fo:inline>http://docbook.org/docs/<xsl:value-of select="$basename"/>/</fo:inline>
   </fo:block>
 
   <xsl:if test="following-sibling::pubdate">
@@ -89,7 +92,9 @@
 
 <xsl:template match="pubdate" mode="datedURI">
   <xsl:variable name="uri">
-    <xsl:text>http://docbook.org/docs/howto/</xsl:text>
+    <xsl:text>http://docbook.org/docs/</xsl:text>
+    <xsl:value-of select="$basename"/>
+    <xsl:text>/</xsl:text>
     <xsl:value-of select="substring(.,1,4)"/>
     <xsl:text>-</xsl:text>
     <xsl:value-of select="substring(.,6,2)"/>
@@ -143,6 +148,8 @@
 </xsl:attribute-set>
 
 <xsl:param name="draft.watermark.image" select="''"/>
+
+<xsl:param name="header.column.widths" select="'1 4 1'"/>
 
 <xsl:param name="ulink.footnotes" select="1"/>
 

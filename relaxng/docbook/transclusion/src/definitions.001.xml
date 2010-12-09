@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://docbook.org/ns/docbook">
+  <def name="product-version">3.14</def>
+  <def name="product-name">FooWiz</def>
+  <def name="corp-name">ACME Inc.</def>
+</definitions>

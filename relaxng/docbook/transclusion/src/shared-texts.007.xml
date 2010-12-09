@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook">
+  <info>
+    <title><ref name="corp-name"/> company product guide</title>
+    <!-- Multiple definitions in single document -->
+    <definitions>
+      <def name="corp-name">ACME Inc.</def>
+    </definitions>
+  </info>
+  <article>
+    <info>
+      <title><ref name="product-name"/> Guide</title>
+      <definitions>
+        <def name="product-version">3.14</def>
+        <def name="product-name">FooWiz</def>
+      </definitions>
+    </info>
+    <para>The latest version of <application><ref name="product-name"/></application>
+      from <ref name="corp-name"/> is <ref name="product-version"/>.</para>
+  </article>
+  <article>
+    <info>
+      <title><ref name="product-name"/> Guide</title>
+      <definitions>
+        <def name="product-version">4.2</def>
+        <def name="product-name">Knit-o-Matic</def>
+      </definitions>
+    </info>
+    <para>The latest version of <application><ref name="product-name"/></application>
+      from <ref name="corp-name"/> is <ref name="product-version"/>.</para>
+  </article>
+</book>

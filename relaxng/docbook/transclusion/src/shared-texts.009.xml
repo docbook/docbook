@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook">
+  <info>
+    <title>Transclusions demo</title>
+    <definitions>
+      <def name="flow-chart-fig">
+        <figure xml:id="flow-chart">
+          <title>Sample figure</title>
+          <para>There should be nice flow chart graphics.</para>
+        </figure>
+      </def>
+    </definitions>
+  </info>
+  <ref name="flow-chart-fig"/>
+  <para><xref linkend="flow-chart"/></para>
+  <section>
+    <title>Sample section</title>
+    <ref name="flow-chart-fig"/>
+    <para><xref linkend="flow-chart"/></para>
+  </section>
+  <appendix>
+    <title>Sample appendix</title>
+    <para><xref linkend="flow-chart"/></para>
+  </appendix>
+</article>

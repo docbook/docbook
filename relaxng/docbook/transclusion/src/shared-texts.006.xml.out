@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook">
+  <info>
+    <title>Transclusions demo</title>
+  </info>
+  <para>The latest version of
+    <application>Windows ProtectorLinux Protector</application>
+    from ACME Inc. is 3.14.</para>
+</article>

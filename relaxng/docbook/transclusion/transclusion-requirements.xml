@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0" xml:id="transclusion-requirements">
+  <info>
+    <title>Requirements for transclusion in DocBook</title>
+    <authorgroup>
+    <author>
+      <personname><firstname>Jirka</firstname>
+        <surname>Kosek</surname></personname>
+      <email>jirka@kosek.cz</email>
+    </author>
+    </authorgroup>
+    <pubdate>2010-12-09</pubdate>
+  </info>
+
+<para>This document summarizes uses-cases for transclusion of content
+in DocBook documents. This document should help DocBook TC in deciding
+whether existing standards like XInclude are sufficient for the task
+or whether DocBook specific mechanism should be designed.</para>
+
+<note>
+<para>DocBook TC has not yet decided whether DocBook specific
+mechanism is really required or not. But draft proposal of such transclusion
+mechanism is available at <link
+xlink:href="http://docbook.org/docs/transclusion/"/>.</para>
+</note>
+
+<section xml:id="uc-1" xreflabel="UC-1">
+<title>UC-1: Shared strings</title>
+
+<para>Many technical publication use repeating boilerplate text for
+things like product names or product versions. It is useful if such
+text is defined only once per document (or set of documents) and then
+just referenced. This approach prevents typos and makes updates and
+rebranding of content very easy.</para>
+
+<section>
+<title>Current solutions</title>
+
+<section>
+<title>Entities</title>
+
+<para>This use-case can be solved by using <link
+xlink:href="http://www.w3.org/TR/REC-xml/#sec-internal-ent">internal
+entities</link>. This is well supported in processing tools and to
+some extent in authoring tools. However entities are somewhat hard to
+maintain when you use modular documents at the same time. Also
+entities and their references are not part of XDM so they do not
+survive XSLT processing which makes various <quote>document
+massaging</quote> tasks challenging.</para>
+
+<example><title>Using entities for shared strings</title>
+<programlisting language=""><![CDATA[<!ENTITY product-version "3.14">
+<!ENTITY product-name "FooWiz">
+<!ENTITY corp-name "ACME Inc.">
+
+…
+<para>The latest version of <application>&product-name;</application>
+from &corp-name; is &product-version;.</para>]]></programlisting>
+</example>
+
+</section>
+
+<section>
+<title>XInclude</title>
+
+<para><link
+	  xlink:href="http://www.w3.org/TR/xinclude/">XInclude</link>
+when combined with proper XPointer schema can be used for transclusion
+of single element or even only its text content. In this setup there
+can be separate file with definition of shared texts which are then
+reused in other documents.</para>
+
+<example><title>Definition file for further XInclude referencing</title>
+<programlisting><![CDATA[<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Shared texts</title>
+  <para><phrase xml:id="product-version">3.14</phrase></para>
+  <para><phrase xml:id="product-name">FooWiz</phrase></para>
+  <para><phrase xml:id="corp-name">ACME Inc.</phrase></para>
+</article>]]></programlisting>
+</example>
+
+<para>The problem is that support for different XPointer schemes
+varies between implementations. Almost all implementations support
+referencing to element specified by its ID as shown in the following
+example.</para>
+
+<example><title>Using XIncludes for shared texts</title>
+<programlisting><![CDATA[<… xmlns:xi="http://www.w3.org/2001/XInclude">
+…
+  <para>The latest version of <application><xi:include href="shared-texts.xml" xpointer="product-name"/></application>
+    from <xi:include href="shared-texts.xml" xpointer="corp-name"/>
+    is <xi:include href="shared-texts.xml" xpointer="product-version"/>.</para>
+…]]></programlisting>
+</example>
+
+<para>This solution has two problems. The actual reference to shared
+texts is very verbose because each <tag>xi:include</tag>
+element contains reference to the file with shared text
+definitions. Second problem is that such reference doesn't include
+only text of referenced element but whole element including <tag
+class="attribute">xml:id</tag> attribute. This leads to excessive
+markup and duplicated IDs in the composed document.</para>
+
+<para>Solution is to use more advanced XPointer scheme. This leads to
+the more arcane markup, support in tools is very bad, but there are no
+duplicated IDs and excessive markup.</para>
+
+<example><title>Using XIncludes for shared texts without duplicating
+source elements</title>
+<programlisting><![CDATA[<… xmlns:xi="http://www.w3.org/2001/XInclude">
+…
+  <para>The latest version of <application><xi:include href="shared-texts.xml" xpointer="xpath(id('product-name')/text())"/></application>
+    from <xi:include href="shared-texts.xml" xpointer="xpath(id('corp-name')/text())"/>
+    is <xi:include href="shared-texts.xml" xpointer="xpath(id('product-version')/text())"/>.</para>
+…]]></programlisting>
+</example>
+
+</section>
+
+</section>
+
+</section>
+
+<section xml:id="uc-2" xreflabel="UC-2">
+<title>UC-2: Shared strings in attribute values</title>
+
+<para>This use-cases is similar to <xref linkend="uc-1"/>. The only
+difference now is that shared text can appear in an attribute
+value. This is not very common requirement for DocBook document, but
+because of differences between element and attribute values in XML
+separate use-cases is created.</para>
+
+<section>
+<title>Current solutions</title>
+
+<section>
+<title>Entities</title>
+
+<para>This use-case can be solved only by using <link
+xlink:href="http://www.w3.org/TR/REC-xml/#sec-internal-ent">internal
+entities</link>. This is well supported in processing tools and to
+some extent in authoring tools.</para>
+
+<example><title>Using entities for shared strings in attribute values</title>
+<programlisting language=""><![CDATA[<!ENTITY product-version "3.14">
+<!ENTITY product-name "FooWiz">
+…
+<section xreflabel="Installation of &product-name; &product-version;">
+…]]></programlisting>
+</example>
+
+</section>
+
+</section>
+
+</section>
+
+<section xml:id="uc-3" xreflabel="UC-3">
+<title>UC-3: Conditional shared text</title>
+
+<para>Some documents use conditional content. Shared text then can be
+also subject to conditional processing.</para>
+
+<section>
+<title>Current solutions</title>
+
+<section>
+<title>Conditional sections</title>
+
+<para>This use-case can be solved by using <link
+xlink:href="http://www.w3.org/TR/REC-xml/#sec-condition-sect">conditional
+sections</link> which can enclose entity definitions.</para>
+
+<remark>Do we need example here? It is rarely used feature.</remark>
+
+</section>
+
+<section>
+<title>XInclude and profiling</title>
+
+<para>As typical XInclude scenarios include complete elements not just
+their content, it is possible to define several parallel elements
+with different profiling attributes set, enclose them with another
+element and then do inclusion.</para>
+
+<example><title>Definition file for further XInclude referencing with
+conditional text</title>
+<programlisting><![CDATA[<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Shared texts</title>
+  …
+  <para><phrase xml:id="product-name"><phrase os="win">Windows
+        Protector</phrase><phrase os="linux">Linux
+        Protector</phrase></phrase></para>
+  …
+</article>]]></programlisting>
+</example>
+
+</section>
+
+</section>
+
+</section>
+
+<section xml:id="uc-4" xreflabel="UC-4">
+<title>UC-4: Modularized documents</title>
+
+<para>For large documents it is often impractical to edit them as
+a single large XML file. It is practical to split large document
+(e.g. book) into few smaller ones (e.g. chapters) and just include
+them into <quote>master</quote> document. This approach is also useful
+for reusing of boilerplate texts like legalnotices.</para>
+
+<section>
+<title>Current solutions</title>
+
+<section>
+<title>Entities</title>
+
+<para>This use-case can be solved by using <link
+xlink:href="http://www.w3.org/TR/REC-xml/#sec-external-ent">external
+entities</link>. This is well supported in processing tools and to
+some extent in authoring tools. Also
+entities and their references are not part of XDM so they do not
+survive XSLT processing which makes various <quote>document
+massaging</quote> task challenging. External entities doesn't work
+very well if there are multiple levels of inclusions as entities can
+be declared only in the <quote>main</quote> document.</para>
+
+<example><title>Using entities for modularized documents</title>
+<programlisting language=""><![CDATA[…
+<!ENTITY chapter1 SYSTEM "chapter1.xml">
+<!ENTITY chapter2 SYSTEM "chapter2.xml">
+…
+<book …>
+  <info>
+    <title>A Book</title>
+  </info>
+  
+  &chapter1;
+  &chapter2;
+
+  <index/>
+</book>]]></programlisting>
+</example>
+
+</section>
+
+<section>
+<title>XInclude</title>
+
+<para><link
+	  xlink:href="http://www.w3.org/TR/xinclude/">XInclude</link>
+works very well for this use-case.</para>
+
+<example><title>Using XIncludes for modularized documents</title>
+<programlisting><![CDATA[<book … xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>A Book</title>
+  </info>
+  
+  <xi:include href="chapter1.xml"/>
+  <xi:include href="chapter2.xml"/>
+
+  <index/>
+</book>]]></programlisting>
+</example>
+
+</section>
+
+</section>
+
+</section>
+
+<section xml:id="uc-5" xreflabel="UC-5">
+<title>UC-5: Repeated transclusion in one <quote>master</quote> document</title>
+
+<para>Some types of documentation are highly modular and composed from large
+number of small units. These units can be whole chapters, smaller
+self-standing units like section or topic, or it can be quite small
+chunk of content like admonition. If each such unit is used only once
+in document then there is no problem and we are working only with highly
+modular document (see <xref linkend="uc-4"/>). But if one unit is
+included more then once then we can face several problems.</para>
+
+<para>If elements in units have assigned unique IDs (by using <tag
+class="attribute">xml:id</tag> attribute) then resulting document
+after transclusion contains duplicate IDs. This makes file technically
+invalid and processing tools have difficulties in interpreting
+cross-references found in document.</para>
+
+<para>There are different strategies which can be used to managed
+units and IDs which are transcluded more then once:</para>
+
+<itemizedlist>
+<listitem><para>Do nothing. This of course doesn't solve problem and
+result of processing is unpredictable.</para></listitem>
+<listitem><para>Preserve duplicated IDs only on their first occurrence
+(in document order). Other then first occurrences of ID are
+deleted. All links will then point to the first location in final
+composed document.</para></listitem>
+<listitem><para>Make each ID unique within transcluded unit (for
+example by prepending unit specific prefix to each ID). In this cases
+targets of all cross-references have to be adjusted. Several
+adjustment strategies are possible – link to the first occurrence,
+link to the <quote>closest occurrence</quote> (e.g. find minimum
+subtree rooted at ancestors that contains link
+target).</para></listitem>
+</itemizedlist>
+
+<section>
+<title>Current solution</title>
+
+<para>Unfortunately there is no satisfying solution to this
+use-case. DocBook XSL stylesheet can be customized to link only to the
+first occurrence of ID (see <link
+xlink:href="http://www.sagehill.net/docbookxsl/DuplicateIDs.html"/>).</para>
+
+</section>
+
+</section>
+
+<section xml:id="uc-6" xreflabel="UC-6">
+<title>UC-6: Transclusion of foreign content</title>
+
+<para>Sometimes it is necessary to include foreign content into
+DocBook document. Examples of such foreign content are:</para>
+
+<itemizedlist>
+<listitem><para>listing of program source;</para></listitem>
+<listitem><para>content in different vocabulary like DITA or TEI which has
+to be transformed into DocBook prior transclusion.</para></listitem>
+</itemizedlist>
+
+<section>
+<title>Current solution</title>
+
+<para>Text files with programlistings can be transcluded by DocBook
+<tag>textdata</tag> element or using <code>parse="text"</code>
+functionality of XInclude. There is no standardized way of
+transclusion of different vocabularies. Currently this has to be solved on
+application level.</para>
+
+</section>
+
+</section>
+
+<section xml:id="evaluation">
+<title>Evaluation of current technologies</title>
+
+<para>It is evident that the existing technologies are not able to
+handle use-cases <xref linkend="uc-5"/> and <xref
+linkend="uc-6"/>. All other use-cases except <xref linkend="uc-2"/>
+can be technically solved using XInclude. However XInclude usage is
+quite cumbersome. It seems that DocBook specific transclusion
+mechanism is needed. Proposal of such mechanism is now discussed by
+DocBook TC and it is available for wider review and comments at <link
+xlink:href="http://docbook.org/docs/transclusion/"/>.</para>
+
+</section>
+
+</article>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook" xml:id="art-1">
+  <title>Sample article</title>
+  <para>Leading text</para>
+  <ref fileref="module.001.xml"/>
+</article>

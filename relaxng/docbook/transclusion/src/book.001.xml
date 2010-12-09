@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook">
+  <title>Sample book</title>
+  <ref fileref="article.001.xml"/>
+  <ref fileref="shared-texts.002.xml"/>
+</book>

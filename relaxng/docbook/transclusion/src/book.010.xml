@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook">
+  <title>Sample book</title>
+  <ref fileref="shared-texts.009.xml"/>
+  <appendix>
+    <title>Source of module</title>
+    <programlisting><ref fileref="shared-texts.009.xml" parse="text"/></programlisting>
+  </appendix>
+</book>

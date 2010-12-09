@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<procedure xmlns="http://docbook.org/ns/docbook" xml:id="paper-insert">
+  <title>Inserting paper into printer</title>
+  <para>This procedure is targeted to printer owners.
+    If you don't have printer, consider <link linkend="buy">buying one</link>.</para>  
+  <step xml:id="s1"><para>Make sure that you have paper.</para></step>
+  <step><para>Insert paper into printer. If you don't have paper consult <xref linkend="s1"/></para></step>
+</procedure>

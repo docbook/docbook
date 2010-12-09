@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook">
+  <title>Sample book</title>
+  <article xmlns:ta="http://docbook.org/xslt/ns/transclusion-annotation"
+    xml:base="file:/e:/texts/docbook/tc/transclusions/shared-texts.009.xml" ta:linkscope="near"
+    ta:prefix="d3e5---">
+    <info>
+      <title>Transclusions demo</title>
+    </info>
+    <figure ta:linkscope="near" ta:prefix="d8e23---" xml:id="d8e23---flow-chart">
+      <title>Sample figure</title>
+      <para>There should be nice flow chart graphics.</para>
+    </figure>
+    <para><xref linkend="d8e23---flow-chart"/></para>
+    <section>
+      <title>Sample section</title>
+      <figure ta:linkscope="near" ta:prefix="d8e33---" xml:id="d8e33---flow-chart">
+        <title>Sample figure</title>
+        <para>There should be nice flow chart graphics.</para>
+      </figure>
+      <para><xref linkend="d8e23---flow-chart"/></para>
+    </section>
+    <appendix>
+      <title>Sample appendix</title>
+      <para><xref linkend="d8e23---flow-chart"/></para>
+    </appendix>
+  </article>
+</book>

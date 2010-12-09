@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook" xml:id="mod-1">
+  <title>Module which is going to be shared across several documents</title>
+  <para>Bla bla bla</para>
+</section>
+

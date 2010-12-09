@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0" xml:id="transclusion">
+  <info>
+    <title>DocBook Transclusion</title>
+    <authorgroup>
+    <author>
+      <personname><firstname>Jirka</firstname>
+        <surname>Kosek</surname></personname>
+      <email>jirka@kosek.cz</email>
+    </author>
+    </authorgroup>
+    <pubdate>2010-12-09</pubdate>
+  </info>
+
+<para>This document describes syntax, semantics and processing model
+of DocBook transclusion mechanism. Please be aware that this is early
+stage draft – everything described below might change or disappear
+completely. This proposal tries to resolve <citetitle
+xlink:href="http://docbook.org/docs/transclusion-requirements/">Requirements
+for transclusion in DocBook</citetitle>.  DocBook TC welcomes any
+feedback on this draft, especially from users and developers of
+DocBook authoring and processing tools. Plese direct your comments to
+DocBook mailing list by sending email to
+<email>docbook@lists.oasis-open.org</email>.</para>
+
+<remark>Actually, for now the document is written more like
+tutorial. If DocBook TC decides to incorporate this into DocBook, more
+formal and precise specification will follow.</remark>
+
+<para>Transclusion in document is described by <tag>ref</tag> element
+which references content to transclude. There are two basic types of
+reference – inline and external. Inline references reference content
+which is defined in some other place using <tag>definitions</tag>
+element. External reference references some external content which
+might or might not be written using DocBook vocabulary.</para>
+
+<section>
+<title>Inline reference</title>
+
+<para>Inline reference is denoted by <tag>ref</tag> element with an
+mandatory <tag class="attribute">name</tag> attribute which contains
+name of referenced content. This name is case-sensitive and document
+must contain definition of referenced content in the
+<tag>definitions</tag> element.</para>
+
+<example>
+<title>Simple usage of inline references and defintions</title>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.001.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.001.xml.out'/>
+</textobject></programlisting>
+</example>
+
+<para>Definition can contain arbitrary markup not just text. All child
+nodes of <tag>def</tag> element are transcluded by corresponding
+<tag>ref</tag> element.</para>
+
+<example>
+<title>Inline definition with a nested markup</title>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.002.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.002.xml.out'/>
+</textobject></programlisting>
+</example>
+
+<para>Definitions can be placed directly inside <tag>info</tag>
+element or they can be stored in a separate file which can be
+referenced by multiple documents.</para>
+
+<example>
+<title>Definitions stored in a separate document (<filename>definitions.001.xml</filename>)</title>
+<programlisting><textobject>
+<textdata fileref='src/definitions.001.xml'/>
+</textobject></programlisting>
+</example>
+
+<example>
+<title>Usage of definitions stored in a separate document</title>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.003.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.003.xml.out'/>
+</textobject></programlisting>
+</example>
+
+<para>Definitions from external file can be locally redefined.</para>
+
+<example>
+<title>Redefinition of definition provided in an external file</title>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.004.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.004.xml.out'/>
+</textobject></programlisting>
+</example>
+
+<para>Definitions can be conditional. All effectivity attributes can
+be used to set conditions on definitions.</para>
+
+<remark>Gershon: I'd like to see examples 14 and 15 be followed by
+a more complex exmaple that demonstrates the different result
+depending on processing order, so that we can also determine which
+order should be normative and correct per the DocBook spec.</remark>
+
+<example>
+<title>Conditional definitions</title>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.005.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.005.xml.out'/>
+</textobject></programlisting>
+</example>
+
+<para>Effectivity attributes can be also used on references itself.</para>
+
+<example>
+<title>Conditional references</title>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.006.xml'/>
+</textobject></programlisting>
+</example>
+
+<para>Definitions are valid only in subtree rooted at parent of
+<tag>info</tag> element containing definitions.</para>
+
+<example>
+<title>Scope of defintions</title>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.007.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.007.xml.out'/>
+</textobject></programlisting>
+</example>
+
+<para>Reference can point to particular external definitions file not to
+all in-scope definitions.</para>
+
+<example>
+<title>Reference to particular definition file</title>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.008.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/shared-texts.008.xml.out'/>
+</textobject></programlisting>
+</example>
+
+<procedure>
+<title>Finding reference definition for <tag>ref</tag> element with
+just <tag class="attribute">name</tag> attribute</title>
+
+<step>
+<para>Transclusion processor implementation might provide mechanism
+for overriding any definition. This mechanism is used first when finding
+definition of reference.</para>
+</step>
+<step xml:id="ref-resolution-s2">
+<para>The closest element containing
+<literal>info/definitions</literal> is found on
+ancestor-or-self:: XPath axis.</para>
+<substeps>
+<step><para>If <tag>definitions</tag> contains <tag
+class="attribute">definitionfile</tag> attribute then content of referenced file is
+treated as if it was inserted before the respective
+<tag>definitions</tag> element.</para></step>
+<step><para>If there are multiple matching
+<literal>info/definitions/def</literal> elements then the last one is
+used. If there is no matching definition then we continue with <xref linkend="ref-resolution-s2"/>.</para></step>
+</substeps>
+</step>
+<step><para>If no matching definition was find so far, error is raised.</para></step>
+</procedure>
+
+<procedure>
+<title>Finding reference definition for <tag>ref</tag> element with
+<tag class="attribute">definitionfile</tag> attribute</title>
+
+<step>
+<para>Referenced definition file is searched for definition
+(<tag>def</tag> element with matching value in a <tag
+class="attribute">name</tag> attribute).</para>
+<remark>Should be <phrase role="attribute">definitionfile</phrase>
+attribute supported here for chaining of definitions? Probably yes.</remark>
+</step>
+<step><para>If no matching definition is found, error is raised.</para></step>
+</procedure>
+
+</section>
+
+<section>
+<title>External references</title>
+
+<para>External reference is denoted by <tag>ref</tag> element with
+a mandatory <tag class="attribute">fileref</tag> attribute which
+contains URI of referenced document. Reference is replaced with
+content of referenced document. The outermost transcluded element is
+augmented with <tag class="attribute">xml:base</tag> attribute in
+order to retain relative references.</para>
+
+<example>
+<title>External reference</title>
+<programlisting><textobject>
+<textdata fileref='src/article.001.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/article.001.xml.out'/>
+</textobject></programlisting>
+</example>
+
+<para>It is possible to specify additional attributes <tag
+class="attribute">xpointer</tag>, <tag class="attribute">parse</tag>
+and <tag class="attribute">encoding</tag> – their meaning is identical
+to corresponding attributes from <link
+xlink:href="http://www.w3.org/TR/xinclude/">XInclude</link>.</para>
+
+<para>Please note that while process similar to XInclude <link
+xlink:href="http://www.w3.org/TR/xinclude/#base">Base URI Fixup</link>
+is performed, <link
+xlink:href="http://www.w3.org/TR/xinclude/#language">Language
+Fixup</link> is not performed.<footnote><para>This effectively means
+that it is not necessary to specify <tag
+class="attribute">xml:lang</tag> on each module.</para></footnote></para>
+
+<example>
+<title>Transclusion of document which contains further references</title>
+<programlisting><textobject>
+<textdata fileref='src/book.001.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/book.001.xml.out'/>
+</textobject></programlisting>
+</example>
+
+</section>
+
+<section>
+<title>Special ID/IDREF processing</title>
+
+<para>Transcluded content can contain <tag
+class="attribute">xml:id</tag> attributes. If one fragment is
+transcluded more then once resulting document after transclusion will
+contain duplicate IDs. Same problem may arise if IDs are colliding in
+transcluded modules. To overcome this problem all IDs and references
+to them can be adjusted during the transclusion process.</para>
+
+<para>If there is <tag class="attribute">xml:id</tag> attribute present
+on <tag>ref</tag> element, then this ID will replace <tag
+class="attribute">xml:id</tag> on the outermost element of transcluded
+content. It is error to transclude content which is not enclosed in
+a single element and specifying <tag class="attribute">xml:id</tag>
+attribute on <tag>ref</tag> element.</para>
+
+<para>How IDs are going to be adjusted during transclusion is
+controlled by <tag class="attribute">idfixup</tag> attribute on
+<tag>ref</tag> element. It can have one of the following
+values.</para>
+
+<variablelist>
+<varlistentry>
+<term><tag class="attvalue">none</tag></term>
+<listitem><para>No ID adjustment is done</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><tag class="attvalue">strip</tag></term>
+<listitem><para>All IDs are stripped (except <tag
+class="attribute">xml:id</tag> inherited from <tag>ref</tag> element)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><tag class="attvalue">prefix</tag></term>
+<listitem><para>All IDs are prefixed with a value specified in <tag
+class="attribute">prefix</tag> attribute</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><tag class="attvalue">auto</tag></term>
+<listitem><para>All IDs are prefixed with a value which is unique for
+each <tag>ref</tag> element<footnote><para>For example XSLT based
+implementations can use <function>generate-id()</function> on
+<tag>ref</tag> element to generate such unique
+prefix.</para></footnote></para>
+<para>This is default behavior if attribute is not specified.</para></listitem>
+</varlistentry>
+</variablelist>
+
+<para>Of course if IDs are adjusted then corresponding references has
+to be also corrected. This is controlled by <tag
+class="attribute">linkscope</tag> attribute. It can have one of the
+following values.</para>
+
+<variablelist>
+<varlistentry>
+<term><tag class="attvalue">user</tag></term>
+<listitem><para>No IDREF adjustment is done</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><tag class="attvalue">local</tag></term>
+<listitem><para>All IDREFs in transcluded content are prefixed by user
+specified prefix (when <literal>idfixup="prefix"</literal>) or
+auto-generated prefix (when <literal>idfixup="auto"</literal>).</para>
+<para>Using this value with other <tag class="attribute">idfixup</tag>
+values is an error.<remark>Maybe raising error is to strict approach.</remark></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><tag class="attvalue">near</tag></term>
+<listitem><para>All IDREFs in transcluded content are adjusted to
+point to the closest element which has matching ID. Matching ID
+doesn't mean string equality between ID and IDREF values – it is
+sufficient if second part of ID and IDREF after removal of
+possibly added prefixes is matching.</para>
+<para>When searching for closest element ancestor elements of
+element with IDREF attribute are gradually inspected and matching ID
+is searched between all descendants. If there is no matching ID, then
+parent is inspected and so on until match is found or document root is
+reached.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><tag class="attvalue">global</tag></term>
+<listitem><para>All IDREFs in transcluded content are adjusted to
+point to the first element in document order which has matching ID. Matching ID
+doesn't mean string equality between ID and IDREF values – it is
+sufficient if second part of ID and IDREF after removal of
+possibly added prefixes is matching.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para>By using various combinations of <tag
+class="attribute">idfixup</tag> and <tag
+class="attribute">linkscope</tag> attributes we can achieve different
+linking behavior. Following examples show effect of using those two
+attributes. Examples are transcluding the following procedure which
+contains one internal link and one external (points to target outside
+of this module).</para>
+
+<example>
+<title>Module with sample procedure</title>
+<programlisting><textobject>
+<textdata fileref='src/procedure.001.xml'/>
+</textobject></programlisting>
+</example>
+
+<para>Now lets assume that we want to transclude this module twice to
+show how we can deal with duplicate IDs problem.</para>
+
+<example>
+<title>Automatic ID/IDREF adjustment</title>
+<programlisting><textobject>
+<textdata fileref='src/book.002.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/book.002.xml.out'/>
+</textobject></programlisting>
+<para>We haven't specified <tag class="attribute">idfixup</tag> and
+<tag class="attribute">linkscope</tag> attributes so default behavior
+is triggered. All IDs in transcluded modules are automatically
+prefixed to prevent ID collisions. Then IDREFs are fixed so links
+point to the nearest possible target. For example link from step 2 to
+step 1 in procedure always points to the same instance of
+procedure. However <quote>buy</quote> link is pointing correctly to target in
+the main document.</para>
+</example>
+
+<example>
+<title>Global linkscope</title>
+<programlisting><textobject>
+<textdata fileref='src/book.003.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/book.003.xml.out'/>
+</textobject></programlisting>
+<para>We used <literal>linkscope="global"</literal> on the second
+transclusion. Result is that link from step 2 in the second procedure
+now links to step 1 in the first procedure.</para>
+</example>
+
+<example>
+<title>Local linkscope</title>
+<programlisting><textobject>
+<textdata fileref='src/book.004.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/book.004.xml.out'/>
+</textobject></programlisting>
+<para>We used <literal>linkscope="local"</literal> on the first
+transclusion. This means that no link from this transclusion can point
+outside of this transclusion. Because there was such link
+(<quote>buy</quote> link), result of transclusion is broken because
+there is no corresponding target for IDREF
+<literal>d2e22---buy</literal>.</para>
+</example>
+
+<example>
+<title>Manually assigned prefix</title>
+<programlisting><textobject>
+<textdata fileref='src/book.005.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/book.005.xml.out'/>
+</textobject></programlisting>
+<para>If we care about resulting IDs after transclusion we can
+manually assign some meaningful prefix before IDs in transcluded document.</para>
+</example>
+
+<example>
+<title>Disabling ID fixup</title>
+<programlisting><textobject>
+<textdata fileref='src/book.006.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/book.006.xml.out'/>
+</textobject></programlisting>
+<para>We have disabled ID fixup by
+<literal>idfixup="none"</literal>. The resulting document thus contain
+duplicated IDs.</para>
+</example>
+
+<example>
+<title>Stripping IDs</title>
+<programlisting><textobject>
+<textdata fileref='src/book.007.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/book.007.xml.out'/>
+</textobject></programlisting>
+<para>We have stripped all IDs from the second transcluded procedure by
+<literal>idfixup="strip"</literal>. Thus there are no duplicate IDs in
+the resulting document and links from second procedure always target
+first one. However IDs in the first procedure were automatically
+prefixed.</para>
+</example>
+
+<example>
+<title>Retaining original IDs</title>
+<programlisting><textobject>
+<textdata fileref='src/book.008.xml'/>
+</textobject></programlisting>
+<para>Result of transclusion:</para>
+<programlisting><textobject>
+<textdata fileref='src/book.008.xml.out'/>
+</textobject></programlisting>
+<para>We have stripped all IDs from the second transcluded procedure by
+<literal>idfixup="strip"</literal>. Thus there are no duplicate IDs in
+the resulting document and links from second procedure always target
+first one. IDs in the first procedure were not automatically prefixed
+since we have specified <literal>idfixup="none"</literal>.</para>
+</example>
+
+<remark>Should be there option to preserve original IDs (without
+prefix) in output when doing prefixes?</remark>
+
+</section>
+
+<section>
+<title>Transformations</title>
+
+<remark>FIXME: This should provide some very generic mechanism for
+applying various transformations on referenced content before actual
+transclusion. For example DITA -> DocBook, V4.x -> V5.0 conversion and
+so on.</remark>
+
+<para>FIXME: TC decided this is not in scope of transclusions. Sources should
+be prepared in advance.</para>
+
+</section>
+
+<section>
+<title>Evaluation</title>
+
+<para>The above presented DocBook transclusion proposal solves all
+<link
+xlink:href="http://docbook.org/docs/transclusion-requirements/">use
+cases</link> except <link
+xlink:href="http://docbook.org/docs/transclusion-requirements/#uc-2">UC-2</link>. Transclusions
+are more usable and can solve various problems introduced by multiple
+inclusion of the same content. Some of those problems can be solved by
+using XInclude – but syntax is cumbersome and there is no good
+interoperability between various XInclude implementations.</para>
+
+<para>For above stated reasons I think that transclusions should be
+added into core DocBook. I don't think that making them separate XML
+transclusion standard is viable approach. Transclusion processor has
+to know which attributes are of ID/IDREF type for each document
+type. History shown that generic standards  relying on access to
+a schema are not successful.</para>
+
+</section>
+
+<appendix>
+<title>DocBook schema with support for transclusions</title>
+
+<programlisting><textobject>
+<textdata fileref='src/db-transclusions.rnc'/>
+</textobject></programlisting>
+
+<remark>Should we allow multiple file references in @definitionfile?</remark>
+
+<remark>Should we allow <phrase>ref</phrase> inside <phrase>def</phrase>?
+(Probably yes).</remark>
+
+</appendix>
+
+<appendix>
+<title>Sample transclusion processor written in XSLT 2.0</title>
+
+<para>Please note that this sample transclusion processor is not yet
+feature complete. It supports only subset of proposal.</para>
+
+<programlisting><textobject>
+<textdata fileref='src/transclude.xsl'/>
+</textobject></programlisting>
+
+</appendix>
+
+<appendix>
+<title>Mapping Transclusions to XInclude</title>
+
+<para>Some basic functionality of transclusions can be directly mapped
+into XInclude as show in the table below. However there are still some
+very important features which can't be replicated with pure XInclude,
+namely:</para>
+
+<itemizedlist>
+<listitem><para>ID/IDREF fixup – it was one of the most important
+requirements to provide solution to duplicate IDs problem;</para></listitem>
+<listitem><para>profiling – it's not possible to specify profiling
+attributes on <tag>xi:include</tag> element as it is subject to
+special handling;</para></listitem>
+<listitem><para>changing ID during transclusion – it's not possible to
+specify new xml:id value for transcluded content on
+<tag>xi:include</tag> element as it is subject to special
+handling;</para></listitem>
+<listitem><para>redefinitions are not supported. Having more
+definitions in one file will lead to an invalid file as each definition
+has to be identified by an unique <tag class="attribute">xml:id</tag>.</para></listitem>
+</itemizedlist>
+
+<table>
+<title>Mapping Transclusions to XInclude</title>
+<tgroup cols="3">
+<thead>
+<row>
+<entry>Transclusion construct</entry>
+<entry>XInclude equivalent</entry>
+<entry>Note</entry>
+</row>
+</thead>
+<tbody>
+<row valign="top">
+<entry><code>&lt;ref name="<replaceable>foo</replaceable>"/></code></entry>
+<entry><code>&lt;xi:include xpointer="xpath(id(<replaceable>foo</replaceable>)/node())"/></code></entry>
+<entry>XInclude implementations are not required to support missing
+<tag class="attribute">href</tag> attribute. See <link
+xlink:href="http://www.w3.org/TR/xinclude/#include-location"/></entry>
+</row>
+<row valign="top">
+<entry><code>&lt;ref definitionfile="<replaceable>bar</replaceable>" name="<replaceable>foo</replaceable>"/></code></entry>
+<entry><code>&lt;xi:include href="<replaceable>bar</replaceable>" xpointer="xpath(id(<replaceable>foo</replaceable>)/node())"/></code></entry>
+<entry></entry>
+</row>
+<row valign="top">
+<entry><code>&lt;ref fileref="<replaceable>foo</replaceable>"/></code></entry>
+<entry><code>&lt;xi:include href="<replaceable>foo</replaceable>"/></code></entry>
+<entry></entry>
+</row>
+<row valign="top">
+<entry><code>&lt;definitions definitionfile="<replaceable>foo</replaceable>"/></code></entry>
+<entry><code>&lt;xi:include href="<replaceable>foo</replaceable>"/></code></entry>
+<entry>DocBook schema and stylesheets has to be modified to ignore
+elements which are inserted only for further referencing.</entry>
+</row>
+<row valign="top">
+<entry><code>&lt;def name="<replaceable>foo</replaceable>">…&lt;/def></code></entry>
+<entry><code>&lt;phrase xml:id="<replaceable>foo</replaceable>">…&lt;/phrase></code></entry>
+<entry>Any generic DocBook element can be used instead of
+<tag>phrase</tag>. Element itself is not transcluded.</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+<note>
+<para>Please note that <literal>xpath()</literal> XPointer scheme is
+not widely supported. Formerly <literal>xpointer()</literal> schema
+was popular although it's standardization was never finished. Later on
+<literal>xpath()</literal> schema appeared in the list of registered
+schemes <link
+xlink:href="http://www.w3.org/2005/04/xpointer-schemes/"/>. Today two
+special schemes exists – <literal>xpath1()</literal> and
+<literal>xpath2()</literal> – for respective versions of XPath
+language.</para>
+</note>
+
+</appendix>
+
+</article>

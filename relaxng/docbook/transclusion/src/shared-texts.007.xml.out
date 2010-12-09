@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook">
+  <info>
+    <title>ACME Inc. company product guide</title>
+  </info>
+  <article>
+    <info>
+      <title>FooWiz Guide</title>
+    </info>
+    <para>The latest version of <application>FooWiz</application>
+      from ACME Inc. is 3.14.</para>
+  </article>
+  <article>
+    <info>
+      <title>Knit-o-Matic Guide</title>
+    </info>
+    <para>The latest version of <application>Knit-o-Matic</application>
+      from ACME Inc. is 4.2.</para>
+  </article>
+</book>

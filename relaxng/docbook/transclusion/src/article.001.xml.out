@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook">
+  <title>Sample article</title>
+  <para>Leading text</para>
+  <section xml:base="file:/e:/texts/docbook/tc/transclusions/module.001.xml">
+    <title>Module which is going to be shared across several documents</title>
+    <para>Bla bla bla</para>
+  </section>
+</article>

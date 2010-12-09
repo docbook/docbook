@@ -1,0 +1,82 @@
+# TODO
+# - use DocBook schema coding style
+
+default namespace db = "http://docbook.org/ns/docbook"
+
+include "docbook.rnc"
+
+# element for referencing content
+db.ref = 
+  element ref { 
+    (db.ref.inline | db.ref.external)
+  }
+
+# common content
+db.ref.common =
+  db.effectivity.attributes,
+  attribute xml:id { xsd:ID }?,
+  attribute linkscope { "user" | "local" | "near" | "global"}?,
+  attribute idfixup { "none" | "strip" | "prefix" | "auto" }?,
+  attribute prefix { xsd:NCName }?,
+  (db.transform*)
+
+# inline content is grabed from local definitions or from external definitions file
+db.ref.inline =
+  attribute definitionfile { xsd:anyURI }?,
+  attribute name { xsd:NCName },
+  db.ref.common
+
+# content from external sources
+db.ref.external =
+  attribute fileref { xsd:anyURI },
+  attribute xpointer { text }?,
+  attribute encoding { text }?,
+  attribute parse { "xml" | "text" }?,
+  db.ref.common
+  
+# FIXME: specify all kinds of possible transformations
+db.transform = empty  
+
+# element for defitions
+db.definitions =
+  element definitions {
+    attribute definitionfile { xsd:anyURI }?,
+    db.def*
+  }
+  
+# single definition
+db.def = 
+  element def {
+    attribute name { xsd:NCName },
+    db.effectivity.attributes,
+    (text & db._any*)
+  }
+  
+# hooks into standard schema
+
+# allow references to appear almost everywhere
+db.ubiq.inlines |= db.ref*
+
+db.divisions |= db.ref
+db.components |= db.ref
+
+db.toplevel.sections |=
+   (db.section|db.ref)+ | (db.simplesect|db.ref)+
+
+db.recursive.sections |=
+   (db.section|db.ref)+ | (db.simplesect|db.ref)+
+
+db.part.components |= db.ref
+
+db.reference.components |= db.ref
+
+db.all.blocks |= db.ref
+
+db.info.elements |= db.ref
+
+# definitions can be only inside info elements
+db.info.elements |= db.definitions
+
+# or they can be provided in a separate file
+start |= db.definitions
+

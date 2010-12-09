@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook">
+  <title>Sample book</title>
+  <article xmlns:ta="http://docbook.org/xslt/ns/transclusion-annotation"
+    xml:base="file:/e:/texts/docbook/tc/transclusions/article.001.xml">
+    <title>Sample article</title>
+    <para>Leading text</para>
+    <section xml:base="file:/e:/texts/docbook/tc/transclusions/module.001.xml">
+      <title>Module which is going to be shared across several documents</title>
+      <para>Bla bla bla</para>
+    </section>
+  </article>
+  <article xmlns:ta="http://docbook.org/xslt/ns/transclusion-annotation"
+    xml:base="file:/e:/texts/docbook/tc/transclusions/shared-texts.002.xml">
+    <info>
+      <title>Transclusions demo</title>
+      <author>
+        <personname><firstname>Jirka</firstname><surname>Kosek</surname></personname>
+      </author>
+    </info>
+    <para>This article was written by
+          <personname><firstname>Jirka</firstname><surname>Kosek</surname></personname> when there
+      was 25C outside.</para>
+  </article>
+</book>
