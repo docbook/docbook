@@ -13,6 +13,34 @@
     <pubdate>2010-12-09</pubdate>
   </info>
 
+<!-- TODO:
+
+
+> We need to explain somewhere that the definitions element
+> is removed as a result of the transclusion (if that, in fact,
+> is what we want-that's what the examples make it look like).
+
+> I still don't see where we explain what happens when a 
+> transcluded region contains an info element with definitions,
+> especially in the case where we have profiling attributes
+> involved.
+
+> In Example 6, I don't see why os="linux" is chosen.
+> Perhaps we just need to say:
+> 
+>  Result of transclusion when os="linux"
+> 
+> or something like that to make this clearer.
+
+> Example 7 does not show the results of the transclusion.
+> (And when it does, it will have to say what value of os was used.)
+
+> We need to say what happens with a ref element has both a name
+> attribute and a fileref attribute.
+
+
+-->
+
 <para>This document describes syntax, semantics and processing model
 of DocBook transclusion mechanism. Please be aware that this is early
 stage draft – everything described below might change or disappear
