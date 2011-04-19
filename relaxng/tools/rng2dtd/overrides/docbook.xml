@@ -80,6 +80,11 @@
       <attdecl name="class">
          <ref name="db.orgname.class.enumeration"/>
       </attdecl>
+      <optional>
+        <attdecl name="otherclass">
+          <data type="NMTOKEN"/>
+        </attdecl>
+      </optional>
    </pe>
 
    <pe name="db.biblio.class.enumeration">
@@ -102,6 +107,11 @@
       <attdecl name="class">
          <ref name="db.biblio.class.enumeration"/>
       </attdecl>
+      <optional>
+        <attdecl name="otherclass">
+          <data type="NMTOKEN"/>
+        </attdecl>
+      </optional>
    </pe>
 
    <pe name="db.othercredit.class.enumeration">
@@ -130,6 +140,11 @@
       <attdecl name="class">
          <ref name="db.othercredit.class.enumeration"/>
       </attdecl>
+      <optional>
+        <attdecl name="otherclass">
+          <data type="NMTOKEN"/>
+        </attdecl>
+      </optional>
    </pe>
 
    <pe name="db.bibliorelation.type.enumeration">
@@ -291,6 +306,48 @@
          <attdecl name="action">
             <ref name="db.keycombo.action.enumeration"/>
          </attdecl>
+      </optional>
+   </pe>
+
+   <pe name="db.systemitem.class.enumeration">
+      <choice>
+        <value>daemon</value>
+        <value>domainname</value>
+        <value>etheraddress</value>
+        <value>event</value>
+        <value>eventhandler</value>
+        <value>filesystem</value>
+        <value>fqdomainname</value>
+        <value>groupname</value>
+        <value>ipaddress</value>
+        <value>library</value>
+        <value>macro</value>
+        <value>netmask</value>
+        <value>newsgroup</value>
+        <value>osname</value>
+        <value>process</value>
+        <value>protocol</value>
+        <value>resource</value>
+        <value>securitycontext</value>
+        <value>server</value>
+        <value>service</value>
+        <value>systemname</value>
+        <value>username</value>
+        <value>other</value>
+      </choice>
+   </pe>
+
+   <del-pe name="db.systemitem.class-other.attributes"/>
+   <del-pe name="db.systemitem.class-enum.attribute"/>
+
+   <pe name="db.systemitem.class.attribute">
+      <attdecl name="class">
+         <ref name="db.systemitem.class.enumeration"/>
+      </attdecl>
+      <optional>
+        <attdecl name="otherclass">
+          <data type="NMTOKEN"/>
+        </attdecl>
       </optional>
    </pe>
 

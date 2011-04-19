@@ -86,6 +86,8 @@ div {
       "protocol"
     | ## A resource
       "resource"
+    | ## A security context (a role, permission, or security token, for example)
+      "securitycontext"
     | ## A server (mail.example.com)
       "server"
     | ## A service (ppp)
@@ -95,11 +97,30 @@ div {
     | ## A user name (ndw)
       "username"
 
-   db.systemitem.class.attribute =
+   db.systemitem.class-enum.attribute =
       [
          db:refpurpose [ "Identifies the nature of the system item" ]
       ]
-      attribute class { db.systemitem.class.enumeration }
+   attribute class { db.systemitem.class.enumeration } ?
+
+   db.systemitem.class-other.attribute =
+      [
+         db:refpurpose [ "Identifies the nature of the non-standard system item" ]
+      ]
+      attribute otherclass { xsd:NMTOKEN }
+
+   db.systemitem.class-other.attributes =
+      [
+         db:refpurpose [ "Identifies the kind of systemitemgraphic identifier" ]
+      ]
+      attribute class {
+         ## Indicates that the system item is some 'other' kind.
+         "other"
+      }
+    & db.systemitem.class-other.attribute
+
+   db.systemitem.class.attribute =
+      (db.systemitem.class-enum.attribute | db.systemitem.class-other.attributes)
 
    db.systemitem.role.attribute = attribute role { text }
 
