@@ -454,6 +454,10 @@ div {
 # ======================================================================
 
 db.article.components = db.toplevel.sections
+db.article.navcomponents =
+   db.navigation.components
+ | db.acknowledgements | db.dedication
+ | db.appendix | db.colophon
 
 # ======================================================================
 
@@ -502,10 +506,10 @@ div {
       element article {
          db.article.attlist,
          db.article.info,
-         (db.navigation.components | db.appendix | db.acknowledgements | db.colophon)*,
+         db.article.navcomponents*,
          ((db.all.blocks+, db.article.components?)
           | db.article.components),
-         (db.navigation.components | db.appendix | db.acknowledgements | db.colophon)*
+         db.article.navcomponents*
       }
 }
 
