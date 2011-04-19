@@ -33,6 +33,7 @@ namespace xi = "http://www.w3.org/2001/XInclude"
 namespace db = "http://docbook.org/ns/docbook"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 
+db.set.components |= db.xi.include
 db.divisions |= db.xi.include
 db.components |= db.xi.include
 
