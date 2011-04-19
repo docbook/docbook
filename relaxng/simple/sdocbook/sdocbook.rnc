@@ -4,7 +4,7 @@
 #
 # Author: Norman Walsh, <ndw@nwalsh.com>
 # Source: Derived from DocBook XML V4.3
-# Release: $Id$
+# Release: $Id: sdocbook.rnc 6104 2006-07-21 17:21:17Z nwalsh $
 #
 # ======================================================================
 
@@ -110,8 +110,8 @@ include "../../docbook/src/pool.rnc" {
     | db.titleabbrev
 
    db.list.blocks = db.itemizedlist|db.orderedlist|db.variablelist
-   db.admonition.blocks = db.note
-   db.verbatim.blocks = db.literallayout|db.programlisting
+   db.admonition.blocks = notAllowed
+   db.verbatim.blocks = db.literallayout
    db.para.blocks = db.para
    db.publishing.blocks = db.blockquote|db.sidebar|db.epigraph
    db.graphic.blocks = db.mediaobject
@@ -164,7 +164,7 @@ include "../../docbook/src/pool.rnc" {
 
    db.markup.inlines = db.literal | db.email
 
-   db.technical.inlines = db.replaceable | db.option | db.systemitem
+   db.technical.inlines = db.replaceable
    db.error.inlines = empty
    db.oo.inlines = empty
 
@@ -222,4 +222,6 @@ include "../../docbook/src/pool.rnc" {
          db.para.info,
          db.all.inlines*
       }
+
+   db.formalpara = notAllowed
 }

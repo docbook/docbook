@@ -8,6 +8,7 @@
 
 include ../../../buildtools/Makefile.incl
 
+SAXON=$(CVSTOOLSROOT)/saxon
 XSLTPROC=xsltproc
 PERL=perl
 MV ?= mv
@@ -35,7 +36,7 @@ clean:: ; rm -rf $(_OUTTOP)
 
 .SUFFIXES:
 
-MODULES=sdocbook
+MODULES=sdocbook dtd
 
 include $(addsuffix /Makefile,$(MODULES))
 

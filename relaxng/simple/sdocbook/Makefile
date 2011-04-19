@@ -29,7 +29,7 @@ sdocbook.dtd: $(basename $(sdocbook_BINARY)).dtx sdocbook.rnc
 	$(XSLTPROC) -output $@ $(TOOLS)/xml2dtd.xsl $<
 
 sdocbook.sch: $(basename $(sdocbook_BINARY)).rnx
-	$(XSLTPROC) --output $@ $(TOOLS)/schematron.xsl $<
+	$(SAXON) $< $(TOOLS)/schematron.xsl $@
 
 sdocbook.xsd: sdocbook.dtd
 	$(RUNTRANG) $< $@
