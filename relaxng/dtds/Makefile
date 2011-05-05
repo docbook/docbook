@@ -2,9 +2,11 @@ TRANG=/sourceforge/docbook/buildtools/runtrang
 XSLT=/sourceforge/docbook/buildtools/xslt
 XSLTPROC=xsltproc
 PERL=perl
+XPROC=calabash
 
 .PHONY: clean
 
+DEBUG=0
 TARGETS=docbook assembly publishers
 
 all: $(addsuffix .dtd,$(TARGETS))
@@ -19,8 +21,8 @@ clean:
 ########################################################################
 # DocBook DTD
 
-docbook.dtd: docbook.rng
-	touch $@
+docbook.dtd: docbook.rng docbook/override.xml
+	$(XPROC) -isource=$< -oresult=$@ ../tools/rng2dtd/rng2dtd.xpl override=docbook/override.xml debug=$(DEBUG)
 
 docbook.rng: build/docbook/docbook.rnx
 	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
