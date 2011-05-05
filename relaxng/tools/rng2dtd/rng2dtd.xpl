@@ -43,7 +43,11 @@
 
 <!-- ============================================================ -->
 
-  <p:variable name="override.xml" select="resolve-uri($override)"/>
+  <!-- this works around a (temporary!?) bug in Calabash -->
+  <p:variable name="sbu"
+              select="'file:///projects/docbook/docbook/relaxng/tools/rng2dtd/rng2dtd.xpl'"/>
+
+  <p:variable name="override.xml" select="resolve-uri($override,$sbu)"/>
 
 <!-- ============================================================ -->
 

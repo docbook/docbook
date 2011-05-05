@@ -30,7 +30,7 @@ clean:
 # DocBook DTD
 
 docbook.dtd: docbook.rng docbook/override.xml
-	$(XPROC) -isource=$< -oresult=$@ ../tools/rng2dtd/rng2dtd.xpl override=docbook/override.xml debug=$(DEBUG)
+	$(XPROC) -isource=$< -oresult=$@ ../tools/rng2dtd/rng2dtd.xpl override=/projects/docbook/docbook/relaxng/dtds/docbook/override.xml debug=$(DEBUG)
 
 docbook.rng: build/docbook/docbook.rnx
 	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
@@ -53,8 +53,8 @@ build/docbook/docbook.rnx: build/docbook/docbook.rng
 #
 # FIXME: these dependencies are a bit of a hack...
 
-assembly.dtd: assembly.rng
-	touch $@
+assembly.dtd: assembly.rng assembly/override.xml
+	$(XPROC) -isource=$< -oresult=$@ ../tools/rng2dtd/rng2dtd.xpl override=/projects/docbook/docbook/relaxng/dtds/assembly/override.xml debug=$(DEBUG)
 
 assembly.rng: build/assembly/assembly.rnx
 	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
@@ -76,8 +76,8 @@ build/assembly/assembly.rnx: build/assembly/assembly.rng
 ########################################################################
 # Publishers
 
-publishers.dtd: publishers.rng
-	touch $@
+publishers.dtd: publishers.rng publishers/override.xml
+	$(XPROC) -isource=$< -oresult=$@ ../tools/rng2dtd/rng2dtd.xpl override=/projects/docbook/docbook/relaxng/dtds/publishers/override.xml debug=$(DEBUG)
 
 publishers.rng: build/publishers/publishers.rnx
 	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
