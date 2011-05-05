@@ -30,11 +30,11 @@
 
 namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
 namespace rng  = "http://relaxng.org/ns/structure/1.0"
-namespace s = "http://www.ascc.net/xml/schematron"
+namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
-include "../../docbook/src/core.rnc" {
+include "../docbook/core.rnc" {
   start = db.set
    | db.book
    | db.divisions
@@ -131,19 +131,19 @@ db.bibliographic.elements =
 
   db.extension.blocks = db.dialogue | db.poetry | db.drama
 }
-include "../../docbook/src/bibliography.rnc"
-include "../../docbook/src/calstbl.rnc" 
-include "../../docbook/src/callouts.rnc" 
+include "../docbook/bibliography.rnc"
+include "../docbook/calstbl.rnc" 
+include "../docbook/callouts.rnc" 
 db.programlisting = notAllowed
-include "../../docbook/src/glossary.rnc"
-include "../../docbook/src/index.rnc"
-include "../../docbook/src/markup.rnc" 
+include "../docbook/glossary.rnc"
+include "../docbook/index.rnc"
+include "../docbook/markup.rnc" 
 db.programming.inlines = notAllowed
-include "../../docbook/src/math.rnc"
-include "../../docbook/src/mathml.rnc"
-include "../../docbook/src/qandaset.rnc"
-include "../../docbook/src/svg.rnc"
-include "../../docbook/src/tasks.rnc"
+include "../docbook/math.rnc"
+include "../docbook/mathml.rnc"
+include "../docbook/qandaset.rnc"
+include "../docbook/svg.rnc"
+include "../docbook/tasks.rnc"
 include "dcterms.rnc" {start |= notAllowed}
 include "dcmitype.rnc"
 

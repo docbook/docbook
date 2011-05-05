@@ -1,5 +1,5 @@
 default namespace = "http://purl.org/dc/terms/"
-namespace s = "http://www.ascc.net/xml/schematron"
+namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 namespace dbx = "http://sourceforge.net/projects/docbook/defguide/schema/extra-markup"
 namespace xlink = "http://www.w3.org/1999/xlink"

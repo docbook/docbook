@@ -33,7 +33,7 @@ namespace its = "http://www.w3.org/2005/11/its"
 namespace html = "http://www.w3.org/1999/xhtml"
 
 # Include base DocBook schema
-include "../src/docbook.rnc"
+include "../docbook/docbook.rnc"
 {
    # Exclude ITS markup from "wildcard" element
    db._any =

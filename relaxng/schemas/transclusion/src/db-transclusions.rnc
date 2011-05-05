@@ -3,7 +3,7 @@
 
 default namespace db = "http://docbook.org/ns/docbook"
 
-include "docbook.rnc"
+include "../../docbook/docbook.rnc"
 
 # element for referencing content
 db.ref = 

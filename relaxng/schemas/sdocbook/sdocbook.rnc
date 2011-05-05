@@ -16,7 +16,7 @@ default namespace = "http://docbook.org/ns/docbook"
 
 start = db.article
 
-include "../../docbook/src/hier.rnc" {
+include "../docbook/hier.rnc" {
    # Set is recursive so we have to do this so that its definition will be pruned
    db.set.components = notAllowed
 
@@ -38,7 +38,7 @@ include "../../docbook/src/hier.rnc" {
       }
 }
 
-include "../../docbook/src/bibliography.rnc" {
+include "../docbook/bibliography.rnc" {
    db.bibliolist = notAllowed
    db.biblioset = notAllowed
    db.biblioref = notAllowed
@@ -60,10 +60,10 @@ include "../../docbook/src/bibliography.rnc" {
       }
 }
 
-include "../../docbook/src/calstbl.rnc"
-include "../../docbook/src/htmltbl.rnc"
+include "../docbook/calstbl.rnc"
+include "../docbook/htmltbl.rnc"
 
-include "../../docbook/src/pool.rnc" {
+include "../docbook/pool.rnc" {
    db.common.attributes =
       attribute xml:id { xsd:ID }?,
       attribute version { text }?,
