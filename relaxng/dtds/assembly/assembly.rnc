@@ -32,7 +32,7 @@
 namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
-include "../assembly/assembly.rnc" {
+include "../../schemas/assembly/assembly.rnc" {
 
 db.biblio.class.enumeration =
    ## A digital object identifier.

@@ -32,7 +32,7 @@
 namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
-include "../src/docbook.rnc" {
+include "../../schemas/publishers/publishers.rnc" {
 
 db.biblio.class.enumeration =
    ## A digital object identifier.
@@ -157,16 +157,16 @@ db.indexterm.startofrange = db.indexterm
 db.indexterm.endofrange = db.indexterm
 
 # ======================================================================
-
-   db.html.caption = db.caption
-
-   db.caption =
-      element caption {
-         db.caption.attlist,
-         db.html.caption.attlist,
-         (db.all.inlines | db.caption.info | db.all.blocks)*
-      }
-
+#
+#   db.html.caption = db.caption
+#
+#   db.caption =
+#      element caption {
+#         db.caption.attlist,
+#         db.html.caption.attlist,
+#         (db.all.inlines | db.caption.info | db.all.blocks)*
+#      }
+#
 # ======================================================================
 
 db.imagedata.mathml = db.imagedata
@@ -178,203 +178,174 @@ db.area.inareaset = db.area
 
 # ======================================================================
 
-   db.group.role.attribute = attribute role { text }
-   db.group.rep.attribute = db.rep.attribute
-   db.group.choice.attribute = db.choice.opt.attribute
-
-   db.group.attlist =
-      db.group.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    & db.group.rep.attribute?
-    & db.group.choice.attribute?
-
-   db.group =
-      element group {
-         db.group.attlist,
-         (db.arg
-          | db.group
-          | db.option
-          | db.synopfragmentref
-          | db.replaceable
-          | db.sbr
-          | db.methodparam
-          | db.paramdef)+
-      }
-
-   db.group.methodparam = db.group
-   db.group.paramdef = db.group
-
-# ======================================================================
-
    db.titlereq.info = db.info
    db.titleonly.info = db.info
    db.titleonlyreq.info = db.info
    db.titleforbidden.info = db.info
 
 # ======================================================================
-
-   db.thead.role.attribute = attribute role { text }
-
-   db.thead.attlist =
-      db.thead.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    & db.valign.attribute?
-    & db.html.coreattrs
-    & db.html.i18n
-    & db.html.events
-    & db.html.cellhalign
-    & db.html.cellvalign
-
-   db.thead =
-      element thead {
-         db.thead.attlist,
-         ((db.colspec*, db.row+) | db.html.tr+)
-      }
-
-   db.html.thead = db.thead
-   db.cals.thead = db.thead
-
+#
+#   db.thead.role.attribute = attribute role { text }
+#
+#   db.thead.attlist =
+#      db.thead.role.attribute?
+#    & db.common.attributes
+#    & db.common.linking.attributes
+#    & db.valign.attribute?
+#    & db.html.coreattrs
+#    & db.html.i18n
+#    & db.html.events
+#    & db.html.cellhalign
+#    & db.html.cellvalign
+#
+#   db.thead =
+#      element thead {
+#         db.thead.attlist,
+#         ((db.colspec*, db.row+) | db.html.tr+)
+#      }
+#
+#   db.html.thead = db.thead
+#   db.cals.thead = db.thead
+#
 # ======================================================================
-
-   db.tfoot.role.attribute = attribute role { text }
-
-   db.tfoot.attlist =
-      db.tfoot.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    & db.valign.attribute?
-    & db.html.coreattrs
-    & db.html.i18n
-    & db.html.events
-    & db.html.cellhalign
-    & db.html.cellvalign
-
-   db.tfoot =
-      element tfoot {
-         db.tfoot.attlist,
-         ((db.colspec*, db.row+) | db.html.tr+)
-      }
-
-   db.html.tfoot = db.tfoot
-   db.cals.tfoot = db.tfoot
-
+#
+#   db.tfoot.role.attribute = attribute role { text }
+#
+#   db.tfoot.attlist =
+#      db.tfoot.role.attribute?
+#    & db.common.attributes
+#    & db.common.linking.attributes
+#    & db.valign.attribute?
+#    & db.html.coreattrs
+#    & db.html.i18n
+#    & db.html.events
+#    & db.html.cellhalign
+#    & db.html.cellvalign
+#
+#   db.tfoot =
+#      element tfoot {
+#         db.tfoot.attlist,
+#         ((db.colspec*, db.row+) | db.html.tr+)
+#      }
+#
+#   db.html.tfoot = db.tfoot
+#   db.cals.tfoot = db.tfoot
+#
 # ======================================================================
-
-   db.tbody.role.attribute = attribute role { text }
-
-   db.tbody.attlist =
-      db.tbody.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    & db.valign.attribute?
-    & db.html.coreattrs
-    & db.html.i18n
-    & db.html.events
-    & db.html.cellhalign
-    & db.html.cellvalign
-
-   db.tbody =
-      element tbody {
-         db.tbody.attlist,
-         (db.row+ | db.html.tr+)
-      }
-
-   db.html.tbody = db.tbody
-   db.cals.tbody = db.tbody
-
+#
+#   db.tbody.role.attribute = attribute role { text }
+#
+#   db.tbody.attlist =
+#      db.tbody.role.attribute?
+#    & db.common.attributes
+#    & db.common.linking.attributes
+#    & db.valign.attribute?
+#    & db.html.coreattrs
+#    & db.html.i18n
+#    & db.html.events
+#    & db.html.cellhalign
+#    & db.html.cellvalign
+#
+#   db.tbody =
+#      element tbody {
+#         db.tbody.attlist,
+#         (db.row+ | db.html.tr+)
+#      }
+#
+#   db.html.tbody = db.tbody
+#   db.cals.tbody = db.tbody
+#
 # ======================================================================
 
    db.entrytbl.row = db.row
-   db.cals.entrytbl.thead = db.thead
-   db.cals.entrytbl.tbody = db.tbody
+   db.cals.entrytbl.thead = db.cals.thead
+   db.cals.entrytbl.tbody = db.cals.tbody
 
 # ======================================================================
-
-   db.table.role.attribute = attribute role { text }
-   db.table.label.attribute = db.label.attribute
-
-   db.table.attlist =
-      db.table.role.attribute?
-    & db.table.label.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    & db.tabstyle.attribute?
-    & db.floatstyle.attribute?
-    & db.orient.attribute?
-    & db.colsep.attribute?
-    & db.rowsep.attribute?
-    & db.frame.attribute?
-    & db.pgwide.attribute?
-    & [
-       db:refpurpose [ "Indicates if the short or long title should be used in a List of Tables" ]
-    ]
-      attribute shortentry {
-         ## Indicates that the full title should be used.
-         "0"
-       | ## Indicates that the short short title (titleabbrev) should be used.
-         "1" }?
-    & [
-       db:refpurpose [ "Indicates if the table should appear in a List of Tables" ]
-      ]
-      attribute tocentry {
-         ## Indicates that the table should not occur in the List of Tables.
-         "0"
-       | ## Indicates that the table should appear in the List of Tables.
-         "1" }?
-    & db.rowheader.attribute?
-    & db.html.coreattrs
-    & db.html.i18n
-    & db.html.events
-    & db.html.table.attributes
-
-   db.table = element table {
-      db.table.attlist,
-      ((db.cals.table.info,
-         (db.alt? & db.indexing.inlines* & db.textobject*),
-         (db.mediaobject+|db.tgroup+),
-         db.caption?)
-       | db.html.table.model)
-   }
-
-   db.cals.table = db.table
-   db.html.table = db.table
-
+#
+#   db.table.role.attribute = attribute role { text }
+#   db.table.label.attribute = db.label.attribute
+#
+#   db.table.attlist =
+#      db.table.role.attribute?
+#    & db.table.label.attribute?
+#    & db.common.attributes
+#    & db.common.linking.attributes
+#    & db.tabstyle.attribute?
+#    & db.floatstyle.attribute?
+#    & db.orient.attribute?
+#    & db.colsep.attribute?
+#    & db.rowsep.attribute?
+#    & db.frame.attribute?
+#    & db.pgwide.attribute?
+#    & [
+#       db:refpurpose [ "Indicates if the short or long title should be used in a List of Tables" ]
+#    ]
+#      attribute shortentry {
+#         ## Indicates that the full title should be used.
+#         "0"
+#       | ## Indicates that the short short title (titleabbrev) should be used.
+#         "1" }?
+#    & [
+#       db:refpurpose [ "Indicates if the table should appear in a List of Tables" ]
+#      ]
+#      attribute tocentry {
+#         ## Indicates that the table should not occur in the List of Tables.
+#         "0"
+#       | ## Indicates that the table should appear in the List of Tables.
+#         "1" }?
+#    & db.rowheader.attribute?
+#    & db.html.coreattrs
+#    & db.html.i18n
+#    & db.html.events
+#    & db.html.table.attributes
+#
+#   db.table = element table {
+#      db.table.attlist,
+#      ((db.cals.table.info,
+#         (db.alt? & db.indexing.inlines* & db.textobject*),
+#         (db.mediaobject+|db.tgroup+),
+#         db.caption?)
+#       | db.html.table.model)
+#   }
+#
+#   db.cals.table = db.table
+#   db.html.table = db.table
+#
 # ======================================================================
-
-   db.informaltable.role.attribute = attribute role { text }
-
-   db.informaltable.attlist =
-      db.informaltable.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    & db.tabstyle.attribute?
-    & db.floatstyle.attribute?
-    & db.orient.attribute?
-    & db.colsep.attribute?
-    & db.rowsep.attribute?
-    & db.frame.attribute?
-    & db.pgwide.attribute?
-    & db.rowheader.attribute?
-    & db.html.coreattrs
-    & db.html.i18n
-    & db.html.events
-    & db.html.table.attributes
-
-   db.informaltable =
-      element informaltable {
-         db.informaltable.attlist,
-         ((db.cals.informaltable.info,
-            (db.alt? & db.indexing.inlines* & db.textobject*),
-            (db.mediaobject+|db.tgroup+),
-            db.caption?)
-          | db.html.informaltable.model)
-      }
-
-   db.html.informaltable = db.informaltable
-   db.cals.informaltable = db.informaltable
-
+#
+#   db.informaltable.role.attribute = attribute role { text }
+#
+#   db.informaltable.attlist =
+#      db.informaltable.role.attribute?
+#    & db.common.attributes
+#    & db.common.linking.attributes
+#    & db.tabstyle.attribute?
+#    & db.floatstyle.attribute?
+#    & db.orient.attribute?
+#    & db.colsep.attribute?
+#    & db.rowsep.attribute?
+#    & db.frame.attribute?
+#    & db.pgwide.attribute?
+#    & db.rowheader.attribute?
+#    & db.html.coreattrs
+#    & db.html.i18n
+#    & db.html.events
+#    & db.html.table.attributes
+#
+#   db.informaltable =
+#      element informaltable {
+#         db.informaltable.attlist,
+#         ((db.cals.informaltable.info,
+#            (db.alt? & db.indexing.inlines* & db.textobject*),
+#            (db.mediaobject+|db.tgroup+),
+#            db.caption?)
+#          | db.html.informaltable.model)
+#      }
+#
+#   db.html.informaltable = db.informaltable
+#   db.cals.informaltable = db.informaltable
+#
 # ======================================================================
 
    db.info.extension = notAllowed
@@ -387,5 +358,19 @@ db.inlineequation.content = db.inlinemediaobject+ | db.mathphrase+
 # ======================================================================
 
 db.date.contentmodel = (text)
+
+# ======================================================================
+
+SimpleLiteral = notAllowed
+dcterms.any = notAllowed
+
+
+   db.colophon =
+      element colophon {
+         db.colophon.attlist,
+         db.colophon.info,
+         ((db.all.blocks+, db.simplesect*) | db.simplesect+)
+      }
+
 
 }
