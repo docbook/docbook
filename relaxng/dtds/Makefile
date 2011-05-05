@@ -19,6 +19,14 @@ clean:
 # FIXME: the dependencies should include all the source .rnc files
 
 ########################################################################
+
+.gitignore:
+	@echo .gitignore > $@
+	@echo build >> $@
+	@for f in $(addsuffix .rng,$(TARGETS)); do echo $$f; done >> $@
+	@for f in $(addsuffix .dtd,$(TARGETS)); do echo $$f; done >> $@
+
+########################################################################
 # DocBook DTD
 
 docbook.dtd: docbook.rng docbook/override.xml
