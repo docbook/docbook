@@ -19,6 +19,14 @@ clean:
 ########################################################################
 # General rules
 
+.gitignore:
+	@echo .gitignore > $@
+	@echo build >> $@
+	@echo defguide.rnd >> $@
+	@for f in $(addsuffix .sch,$(TARGETS)); do echo $$f; done >> $@
+	@for f in $(addsuffix .rnc,$(TARGETS)); do echo $$f; done >> $@
+	@for f in $(addsuffix .rng,$(TARGETS)); do echo $$f; done >> $@
+
 %.rnc: %.rng
 	$(TRANG) $< $@
 
