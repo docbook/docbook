@@ -130,7 +130,7 @@ div {
    db.container.resource =
       element resource {
          db.resource.attlist,
-         (text | db.any.docbook)
+         (text | db._any.docbook)
       }
 }
 
@@ -388,7 +388,7 @@ div {
       element module {
          db.container.module.attlist,
          ((db.output | db.filterin | db.filterout)*,
-            db.any.docbook)
+            db._any.docbook)
       }
 }
 
