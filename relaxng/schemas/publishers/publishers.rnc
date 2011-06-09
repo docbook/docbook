@@ -1,4 +1,4 @@
-# This file is a customization of DocBook V5.0 created by the 
+# This file is a customization of DocBook V5.0 created by the
 # OASIS DocBook Publishers Subcommittee.
 #
 # Copyright 1992-2007 HaL Computer Systems, Inc.,
@@ -34,7 +34,7 @@ namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
-include "../docbook/core.rnc" {
+include "../docbook/docbook.rnc" {
   start = db.set
    | db.book
    | db.divisions
@@ -45,276 +45,485 @@ include "../docbook/core.rnc" {
    | db.drama
    | db.poetry
    | db.dialogue
-   
- db.sidebar =
-      element sidebar {
-         db.sidebar.attlist,
-         db._title, 
-         db.sidebar.info,
-         db.all.blocks+, db.recursive.sections*
-      }
-db.person =
-      element person {
-         db.person.attlist,
-         db.personname,
-         (db.address|db.affiliation|db.email|db.uri|db.personblurb|db.mediaobject)*
-      }
-      
-db.org =
-      element org {
-         db.org.attlist,
-         db.orgname,
-         (db.address|db.affiliation|db.email|db.uri|db.orgdiv|db.mediaobject)*
-      }
 
-db.parameter = notAllowed
+  [
+     db:refname [ "sidebar" ]
+     db:refpurpose [ "A portion of a document that is isolated from the main narrative flow" ]
+  ]
+  div {
+     db.sidebar =
+        element sidebar {
+           db.sidebar.attlist,
+           db._title,
+           db.sidebar.info,
+           db.all.blocks+, db.recursive.sections*
+        }
+  }
 
-db.info =
-element info
-{
-db.info.attlist,
-(
-db._title
-& (db.info.elements*|db.dublincore.elements*)
-)
-}
+  [
+     db:refname [ "person" ]
+     db:refpurpose [ "A person and associated metadata" ]
+  ]
+  div {
+     db.person =
+        element person {
+           db.person.attlist,
+           db.personname,
+           (db.address|db.affiliation|db.email|db.uri|db.personblurb|db.mediaobject)*
+        }
+  }
 
-db.titleforbidden.info =
-element info
-{
-db.titleforbidden.info.attlist,
-(db.info.elements*|db.dublincore.elements*)
-}
+  [
+     db:refname [ "org" ]
+     db:refpurpose [ "An organization and associated metadata" ]
+  ]
+  div {
+     db.org =
+        element org {
+           db.org.attlist,
+           db.orgname,
+           (db.address|db.affiliation|db.email|db.uri|db.orgdiv|db.mediaobject)*
+        }
+  }
 
-db.titleonly.info =
-element info
-{
-db.titleonly.info.attlist,
-(
-db._title.only
-& (db.info.elements*|db.dublincore.elements*)
-)
-}
+  db.parameter = notAllowed
 
-db.titleonlyreq.info =
-element info
-{
-db.titleonlyreq.info.attlist,
-(
-db._title.onlyreq
-& (db.info.elements*|db.dublincore.elements*)
-)
-}
+  [
+     db:refname [ "info" ]
+     db:refpurpose [ "A wrapper for information about a component or other block" ]
+  ]
+  div {
+     db.info = element info {
+        db.info.attlist,
+        (
+           db._title
+         & (db.info.elements*|db.dublincore.elements*)
+        )
+     }
+  }
 
-db.titlereq.info =
-element info
-{
-db.titlereq.info.attlist,
-(
-db._title.req
-& (db.info.elements*|db.dublincore.elements*)
-)
-}
+  [
+     db:refname [ "info" ]
+     db:refpurpose [ "A wrapper for information about a component or other block without a title" ]
+  ]
+  div {
+     db.titleforbidden.info = element info {
+        db.titleforbidden.info.attlist,
+        (db.info.elements*|db.dublincore.elements*)
+     }
+  }
 
-db.bibliographic.elements =
-(db.info.elements*|db.dublincore.elements*)
-| db.publishing.inlines
-| db.citerefentry
-| db.citetitle
-| db.citebiblioid
-| db.person
-| db.personblurb
-| db.personname
-| db.subtitle
-| db.title
-| db.titleabbrev
+  [
+     db:refname [ "info" ]
+     db:refpurpose [ "A wrapper for information about a component or other block with only a title" ]
+  ]
+  div {
+     db.titleonly.info = element info {
+        db.titleonly.info.attlist,
+        (
+           db._title.only
+         & (db.info.elements*|db.dublincore.elements*)
+        )
+     }
+  }
+
+  [
+     db:refname [ "info" ]
+     db:refpurpose [ "A wrapper for information about a component or other block with only a required title" ]
+  ]
+  div {
+     db.titleonlyreq.info = element info {
+        db.titleonlyreq.info.attlist,
+        (
+           db._title.onlyreq
+         & (db.info.elements*|db.dublincore.elements*)
+        )
+     }
+  }
+
+  [
+     db:refname [ "info" ]
+     db:refpurpose [ "A wrapper for information about a component or other block with a required title" ]
+  ]
+  div {
+     db.titlereq.info = element info {
+        db.titlereq.info.attlist,
+        (
+           db._title.req
+         & (db.info.elements*|db.dublincore.elements*)
+        )
+     }
+  }
+
+  db.bibliographic.elements =
+     (db.info.elements*|db.dublincore.elements*)
+   | db.publishing.inlines
+   | db.citerefentry
+   | db.citetitle
+   | db.citebiblioid
+   | db.person
+   | db.personblurb
+   | db.personname
+   | db.subtitle
+   | db.title
+   | db.titleabbrev
 
   db.extension.blocks = db.dialogue | db.poetry | db.drama
+
+  # Excluded by Publishers:
+
+  db.accel = notAllowed
+  db.annotation = notAllowed
+  db.application = notAllowed
+  db.arc = notAllowed
+  db.arg = notAllowed
+  db.caution = notAllowed
+  db.citerefentry = notAllowed
+  db.classname = notAllowed
+  db.classsynopsis = notAllowed
+  db.classsynopsisinfo = notAllowed
+  db.cmdsynopsis = notAllowed
+  db.code = notAllowed
+  db.col = notAllowed
+  db.colgroup = notAllowed
+  db.command = notAllowed
+  db.computeroutput = notAllowed
+  db.constant = notAllowed
+  db.constraint = notAllowed
+  db.constraintdef = notAllowed
+  db.constructorsynopsis = notAllowed
+  db.database = notAllowed
+  db.destructorsynopsis = notAllowed
+  db.envar = notAllowed
+  db.errorcode = notAllowed
+  db.errorname = notAllowed
+  db.errortext = notAllowed
+  db.errortype = notAllowed
+  db.exceptionname = notAllowed
+  db.extendedlink = notAllowed
+  db.fieldsynopsis = notAllowed
+  db.filename = notAllowed
+  db.funcdef = notAllowed
+  db.funcparams = notAllowed
+  db.funcprototype = notAllowed
+  db.funcsynopsis = notAllowed
+  db.funcsynopsisinfo = notAllowed
+  db.function = notAllowed
+  db.group = notAllowed
+  db.group.paramdef = notAllowed
+  db.group.methodparam = notAllowed
+  db.guibutton = notAllowed
+  db.guiicon = notAllowed
+  db.guilabel = notAllowed
+  db.guimenu = notAllowed
+  db.guimenuitem = notAllowed
+  db.guisubmenu = notAllowed
+  db.hardware = notAllowed
+  db.important = notAllowed
+  db.indexdiv = notAllowed
+  db.indexentry = notAllowed
+  db.initializer = notAllowed
+  db.interfacename = notAllowed
+  db.keycap = notAllowed
+  db.keycode = notAllowed
+  db.keycombo = notAllowed
+  db.keysym = notAllowed
+  db.lhs = notAllowed
+  db.lineannotation = notAllowed
+  db.locator = notAllowed
+  db.manvolnum = notAllowed
+  db.markup = notAllowed
+  db.menuchoice = notAllowed
+  db.methodname = notAllowed
+  db.methodparam = notAllowed
+  db.methodsynopsis = notAllowed
+  db.modifier = notAllowed
+  db.mousebutton = notAllowed
+  db.msg = notAllowed
+  db.msgaud = notAllowed
+  db.msgentry = notAllowed
+  db.msgexplan = notAllowed
+  db.msginfo = notAllowed
+  db.msglevel = notAllowed
+  db.msgmain = notAllowed
+  db.msgorig = notAllowed
+  db.msgrel = notAllowed
+  db.msgset = notAllowed
+  db.msgsub = notAllowed
+  db.msgtext = notAllowed
+  db.nonterminal = notAllowed
+  db.ooclass = notAllowed
+  db.ooexception = notAllowed
+  db.oointerface = notAllowed
+  db.option = notAllowed
+  db.package = notAllowed
+  db.paramdef = notAllowed
+  db.parameter = notAllowed
+  db.primaryie = notAllowed
+  db.production = notAllowed
+  db.productionrecap = notAllowed
+  db.productionset = notAllowed
+  db.programlisting = notAllowed
+  db.programlistingco = notAllowed
+  db.prompt = notAllowed
+  db.property = notAllowed
+  db.refclass = notAllowed
+  db.refdescriptor = notAllowed
+  db.refentry = notAllowed
+  db.refentrytitle = notAllowed
+  db.reference = notAllowed
+  db.refmeta = notAllowed
+  db.refmiscinfo = notAllowed
+  db.refname = notAllowed
+  db.refnamediv = notAllowed
+  db.refpurpose = notAllowed
+  db.refsect1 = notAllowed
+  db.refsect2 = notAllowed
+  db.refsect3 = notAllowed
+  db.refsection = notAllowed
+  db.refsynopsisdiv = notAllowed
+  db.replaceable = notAllowed
+  db.returnvalue = notAllowed
+  db.rhs = notAllowed
+  db.sbr = notAllowed
+  db.screen = notAllowed
+  db.screenco = notAllowed
+  db.screenshot = notAllowed
+  db.sect1 = notAllowed
+  db.sect2 = notAllowed
+  db.sect3 = notAllowed
+  db.sect4 = notAllowed
+  db.sect5 = notAllowed
+  db.seealsoie = notAllowed
+  db.seeie = notAllowed
+  db.seg = notAllowed
+  db.seglistitem = notAllowed
+  db.segmentedlist = notAllowed
+  db.segtitle = notAllowed
+  db.shortcut = notAllowed
+  db.simplemsgentry = notAllowed
+  db.symbol = notAllowed
+  db.synopfragment = notAllowed
+  db.synopfragmentref = notAllowed
+  db.synopsis = notAllowed
+  db.systemitem = notAllowed
+  db.tag = notAllowed
+  db.td = notAllowed
+  db.tertiaryie = notAllowed
+  db.th = notAllowed
+  db.tip = notAllowed
+  db.tocdiv = notAllowed
+  db.tocentry = notAllowed
+  db.token = notAllowed
+  db.tr = notAllowed
+  db.type = notAllowed
+  db.userinput = notAllowed
+  db.varargs = notAllowed
+  db.varname = notAllowed
+  db.void = notAllowed
+  db.warning = notAllowed
+
+  db.html.table = notAllowed
+
+  # Patterns that need to be patched after the exclusions
+
+  db.toplevel.sections = (db.section+, db.simplesect*) | db.simplesect+
+  db.recursive.sections = (db.section+, db.simplesect*) | db.simplesect+
+  db.table.choice = db.cals.table
+  db.informaltable.choice = db.cals.informaltable
+
+  [
+     db:refname [ "index" ]
+     db:refpurpose [ "An index to a book or part of a book" ]
+  ]
+  div {
+     db.index =
+        element index {
+           db.index.attlist,
+           db.index.info,
+           db.all.blocks*
+        }
+  }
 }
-include "../docbook/bibliography.rnc"
-include "../docbook/calstbl.rnc" 
-include "../docbook/callouts.rnc" 
-db.programlisting = notAllowed
-include "../docbook/glossary.rnc"
-include "../docbook/index.rnc"
-include "../docbook/markup.rnc" 
-db.programming.inlines = notAllowed
-include "../docbook/math.rnc"
-include "../docbook/mathml.rnc"
-include "../docbook/qandaset.rnc"
-include "../docbook/svg.rnc"
-include "../docbook/tasks.rnc"
-include "dcterms.rnc" {start |= notAllowed}
+
+include "dcterms.rnc"
 include "dcmitype.rnc"
 
-            db.dublincore.elements = 
-            dcterms.title
-            | dcterms.creator 
-            | dcterms.subject
-            | dcterms.description
-            | dcterms.publisher
-            | dcterms.contributor
-            | dcterms.date
-            | dcterms.type
-            | dcterms.format
-            | dcterms.identifier
-            | dcterms.source
-            | dcterms.language
-            | dcterms.relation
-            | dcterms.coverage
-            | dcterms.rights
-            | dcterms.alternative
-            | dcterms.tableOfContents
-            | dcterms.abstract
-            | dcterms.created
-            | dcterms.valid
-            | dcterms.available
-            | dcterms.issued
-            | dcterms.modified
-            | dcterms.dateAccepted
-            | dcterms.dateCopyrighted
-            | dcterms.dateSubmitted
-            | dcterms.extent
-            | dcterms.medium
-            | dcterms.isVersionOf
-            | dcterms.hasVersion
-            | dcterms.isReplacedBy
-            | dcterms.replaces
-            | dcterms.isRequiredBy
-            | dcterms.requires
-            | dcterms.isPartOf
-            | dcterms.hasPart
-            | dcterms.isReferencedBy
-            | dcterms.references
-            | dcterms.isFormatOf
-            | dcterms.hasFormat
-            | dcterms.conformsTo
-            | dcterms.spatial
-            | dcterms.temporal
-            | dcterms.audience
-            | dcterms.accrualMethod
-            | dcterms.accrualPeriodicity
-            | dcterms.accrualPolicy
-            | dcterms.instructionalMethod
-            | dcterms.provenance
-            | dcterms.rightsHolder
-            | dcterms.mediator
-            | dcterms.educationLevel
-            | dcterms.accessRights
-            | dcterms.license
-            | dcterms.bibliographicCitation
+db.dublincore.elements =
+   dcterms.title
+ | dcterms.creator
+ | dcterms.subject
+ | dcterms.description
+ | dcterms.publisher
+ | dcterms.contributor
+ | dcterms.date
+ | dcterms.type
+ | dcterms.format
+ | dcterms.identifier
+ | dcterms.source
+ | dcterms.language
+ | dcterms.relation
+ | dcterms.coverage
+ | dcterms.rights
+ | dcterms.alternative
+ | dcterms.tableOfContents
+ | dcterms.abstract
+ | dcterms.created
+ | dcterms.valid
+ | dcterms.available
+ | dcterms.issued
+ | dcterms.modified
+ | dcterms.dateAccepted
+ | dcterms.dateCopyrighted
+ | dcterms.dateSubmitted
+ | dcterms.extent
+ | dcterms.medium
+ | dcterms.isVersionOf
+ | dcterms.hasVersion
+ | dcterms.isReplacedBy
+ | dcterms.replaces
+ | dcterms.isRequiredBy
+ | dcterms.requires
+ | dcterms.isPartOf
+ | dcterms.hasPart
+ | dcterms.isReferencedBy
+ | dcterms.references
+ | dcterms.isFormatOf
+ | dcterms.hasFormat
+ | dcterms.conformsTo
+ | dcterms.spatial
+ | dcterms.temporal
+ | dcterms.audience
+ | dcterms.accrualMethod
+ | dcterms.accrualPeriodicity
+ | dcterms.accrualPolicy
+ | dcterms.instructionalMethod
+ | dcterms.provenance
+ | dcterms.rightsHolder
+ | dcterms.mediator
+ | dcterms.educationLevel
+ | dcterms.accessRights
+ | dcterms.license
+ | dcterms.bibliographicCitation
 
- db.speaker.role.attribute = attribute role { text }
- 
+[
+   db:refname [ "speaker" ]
+   db:refpurpose [ "Designates a person who is giving a speech or lecture." ]
+]
+div {
+   db.speaker.role.attribute = attribute role { text }
+
    db.speaker.attlist =
-    db.speaker.role.attribute?
+      db.speaker.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
- 
- db.speaker =  
-  [
-    db:refpurpose [ "Designates a person who is giving a speech or lecture."
-    ]
-  ]
-       element speaker {
-       db.speaker.attlist,
-       ( db.person
+
+   db.speaker = element speaker {
+      db.speaker.attlist,
+      (db.person
        | text)*
-       }
-       
-    db.line.role.attribute = attribute role { text }
-       
-    db.line.attlist =
-    db.line.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    
-    db.line = 
-  [
-    db:refpurpose [ "A line of dialogue or other form of communication."
-    ]
-  ]
-         element line {
-       db.line.attlist,
-       (db.all.inlines | text)+
-       }
-       
-    db.linegroup.role.attribute = attribute role { text }
-       
-    db.linegroup.attlist =
-    db.linegroup.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-       
-db.linegroup = 
-  [
-    db:refpurpose [ "A grouping of lines in dialogue or other form of communication."
-    ]
-  ]
-     element linegroup {
-   db.linegroup.attlist,
-   db.speaker*, (db.line|db.all.blocks)+
    }
-       
- db.poetry = 
-  [
-    db:refpurpose [ "A container for poetry."
-    ]
-  ]
-        element poetry {
+}
+
+[
+   db:refname [ "line" ]
+   db:refpurpose [ "A line of dialogue or other form of communication." ]
+]
+div {
+   db.line.role.attribute = attribute role { text }
+
+   db.line.attlist =
+      db.line.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.line = element line {
+      db.line.attlist,
+      (db.all.inlines | text)+
+   }
+}
+
+[
+   db:refname [ "linegroup" ]
+   db:refpurpose [ "A grouping of lines in dialogue or other form of communication." ]
+]
+div {
+   db.linegroup.role.attribute = attribute role { text }
+
+   db.linegroup.attlist =
+      db.linegroup.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.linegroup = element linegroup {
+      db.linegroup.attlist,
+      db.speaker*, (db.line|db.all.blocks)+
+   }
+}
+
+[
+   db:refname [ "poetry" ]
+   db:refpurpose [ "A container for poetry." ]
+]
+div {
+   db.poetry.info =
+      db._info.title.only
+
+   db.poetry.role.attribute = attribute role { text }
+
+   db.poetry.attlist =
+      db.poetry.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.poetry = element poetry {
       db.poetry.attlist,
       db.poetry.info?,
       (db.mediaobject|db.linegroup|db.line|db.all.blocks)+
-      }
-      
- db.poetry.info =
-     db._info.title.only
-     
-  db.poetry.role.attribute = attribute role { text }
-  
-  db.poetry.attlist =
-    db.poetry.role.attribute?
+   }
+}
+
+[
+   db:refname [ "dialogue" ]
+   db:refpurpose [ "A container for speeches and other forms of communication involving dialogue." ]
+]
+div {
+   db.dialogue.info =
+      db._info.title.only
+
+   db.dialogue.role.attribute = attribute role { text }
+
+   db.dialogue.attlist =
+      db.dialogue.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
-      
- db.dialogue = 
-  [
-    db:refpurpose [ "A container for speeches and other forms of communication involving dialogue."
-    ]
-  ]
-        element dialogue {
+
+   db.dialogue = element dialogue {
       db.dialogue.attlist,
       db.dialogue.info?,
       (db.mediaobject|db.linegroup|db.line|db.all.blocks)+
-      }
-      
-  db.dialogue.info =
-     db._info.title.only
-     
-  db.dialogue.role.attribute = attribute role { text }
-     
-  db.dialogue.attlist =
-    db.dialogue.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    
- db.drama = 
-  [
-    db:refpurpose [ "A container for plays and other forms of dramatic presentation."
-    ]
-  ]
-        element drama {
+   }
+}
+
+[
+   db:refname [ "drama" ]
+   db:refpurpose [ "A container for plays and other forms of dramatic presentation." ]
+]
+div {
+   db.drama = element drama {
       db.drama.attlist,
       db.drama.info?,
       (db.mediaobject|db.linegroup|db.line|db.all.blocks)+
-      }
-      
-  db.drama.info =
-     db._info.title.only
-     
-  db.drama.role.attribute = attribute role { text }
-     
-  db.drama.attlist =
-    db.drama.role.attribute?
+   }
+
+   db.drama.info =
+      db._info.title.only
+
+   db.drama.role.attribute = attribute role { text }
+
+   db.drama.attlist =
+      db.drama.role.attribute?
     & db.common.attributes
-    & db.common.linking.attributes    
+    & db.common.linking.attributes
+}
+
