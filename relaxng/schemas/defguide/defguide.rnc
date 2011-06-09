@@ -36,5 +36,5 @@ default namespace = "http://docbook.org/ns/docbook"
 include "../docbook/docbook.rnc" {
    start |= db.assembly
 }
-include "../dbforms/htmlform.rnc"
+#include "../dbforms/htmlform.rnc"
 include "../assembly/core.rnc"
