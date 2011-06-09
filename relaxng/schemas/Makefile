@@ -9,11 +9,13 @@ TARGETS=docbook docbookxi assembly dbits dbforms transclusion sdocbook \
         publishers \
         slides slides-full website website-full
 
-all: defguide.rnd $(addsuffix .rnc,$(TARGETS)) $(addsuffix .sch,$(TARGETS))
+RNDFILES=defguide.rnd publishers.rnd
+
+all: $(RNDFILES) $(addsuffix .rnc,$(TARGETS)) $(addsuffix .sch,$(TARGETS))
 
 clean:
 	rm -rf build
-	rm -f defguide.rnd $(addsuffix .sch,$(TARGETS))
+	rm -f $(RNDFILES) $(addsuffix .sch,$(TARGETS))
 	rm -f $(addsuffix .rnc,$(TARGETS)) $(addsuffix .rng,$(TARGETS))
 
 ########################################################################
@@ -22,7 +24,7 @@ clean:
 .gitignore:
 	@echo .gitignore > $@
 	@echo build >> $@
-	@echo defguide.rnd >> $@
+	@for f in $(RNDFILES); do echo $$f; done >> $@
 	@for f in $(addsuffix .sch,$(TARGETS)); do echo $$f; done >> $@
 	@for f in $(addsuffix .rnc,$(TARGETS)); do echo $$f; done >> $@
 	@for f in $(addsuffix .rng,$(TARGETS)); do echo $$f; done >> $@
@@ -175,6 +177,9 @@ build/transclusion/transclusion.rnx: build/transclusion/transclusion.rng
 
 publishers.rng: build/publishers/publishers.rnx
 	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+
+publishers.rnd: build/publishers/publishers.rnx
+	$(XSLTPROC) -output $@ ../tools/rngdocxml.xsl $<
 
 publishers.sch: build/publishers/publishers.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
