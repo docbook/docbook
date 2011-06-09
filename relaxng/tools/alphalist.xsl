@@ -10,7 +10,7 @@
 <xsl:output method="text"/>
 
 <xsl:template match="/">
-  <xsl:for-each-group select="//rng:element[@name]" group-by="@name">
+  <xsl:for-each-group select="//rng:define[rng:element]" group-by="@name">
     <xsl:sort data-type="text" select="current-grouping-key()"/>
     <xsl:value-of select="current-grouping-key()"/>
     <xsl:text>&#10;</xsl:text>
