@@ -52,7 +52,6 @@
 
   <xsl:template match="rng:include" mode="include">
     <xsl:variable name="doc" select="document(@href,.)"/>
-
     <xsl:variable name="nestedGrammar">
       <xsl:apply-templates select="$doc/rng:grammar/*" mode="include"/>
       <xsl:apply-templates mode="markOverride"/>
@@ -79,6 +78,13 @@
   </xsl:template>
 
   <!-- ====================================================================== -->
+
+  <xsl:template match="rng:div" mode="markOverride">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates select="markOverride"/>
+    </xsl:copy>
+  </xsl:template>
 
   <xsl:template match="*" mode="markOverride">
     <xsl:copy>
@@ -349,11 +355,28 @@
     <xsl:variable name="unused">
       <xsl:for-each select="$doc//rng:define[@name]">
 	<xsl:variable name="name" select="@name"/>
-	<xsl:if test="count(key('refs',@name)) = 0">1</xsl:if>
+	<xsl:if test="count(key('refs',@name)) = 0">
+          <xsl:text>1</xsl:text>
+        </xsl:if>
       </xsl:for-each>
-      <xsl:for-each select="$doc//rng:div">
-	<xsl:if test="not(.//rng:*)">1</xsl:if>
+      <xsl:for-each select="$doc//rng:ref[@name]">
+	<xsl:variable name="name" select="@name"/>
+	<xsl:if test="count(key('defs',@name)) = 0">
+          <xsl:text>1</xsl:text>
+        </xsl:if>
       </xsl:for-each>
+      <xsl:if test="$doc//rng:div[not(.//rng:*)]">
+        <xsl:text>1</xsl:text>
+      </xsl:if>
+      <xsl:if test="$doc//rng:choice[not(*)]">
+        <xsl:text>1</xsl:text>
+      </xsl:if>
+      <xsl:if test="$doc//rng:zeroOrMore[not(*)]">
+        <xsl:text>1</xsl:text>
+      </xsl:if>
+      <xsl:if test="$doc//rng:define[not(*)]">
+        <xsl:text>1</xsl:text>
+      </xsl:if>
     </xsl:variable>
 
     <xsl:choose>
@@ -392,7 +415,7 @@
 
   <xsl:template match="rng:define[@name]" mode="remove-unused">
     <xsl:choose>
-      <xsl:when test="key('refs', @name) != 0">
+      <xsl:when test="key('refs', @name) != 0 and *">
 	<xsl:copy>
 	  <xsl:copy-of select="@*"/>
 	  <xsl:apply-templates mode="remove-unused"/>
@@ -401,6 +424,40 @@
       <xsl:when test="$debug != 0">
 	<xsl:message>   Removing <xsl:value-of select="@name"/>...</xsl:message>
       </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="rng:ref[@name]" mode="remove-unused">
+    <xsl:choose>
+      <xsl:when test="key('defs',@name)/rng:notAllowed or count(key('defs',@name)) = 0">
+        <xsl:message>
+          <xsl:text>   Removing ref to notAllowed element: </xsl:text>
+          <xsl:value-of select="@name"/>
+        </xsl:message>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="remove-unused"/>
+	</xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="rng:choice|rng:zeroOrMore" mode="remove-unused">
+    <xsl:choose>
+      <xsl:when test="*">
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="remove-unused"/>
+	</xsl:copy>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>
+          <xsl:text>   Removing empty </xsl:text>
+          <xsl:value-of select="local-name(.)"/>
+        </xsl:message>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
