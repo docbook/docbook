@@ -82,7 +82,7 @@ div {
       element production {
          db.production.attlist,
          db.lhs,
-         db.rhs,
+         db.rhs+,
          db.constraint*
       }
 }
