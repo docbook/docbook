@@ -3898,7 +3898,7 @@ div {
    db.contrib =
       element contrib {
          db.contrib.attlist,
-         db._text
+         db.all.inlines*
       }
 }
 
