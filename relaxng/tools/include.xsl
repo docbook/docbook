@@ -444,7 +444,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="rng:choice|rng:zeroOrMore" mode="remove-unused">
+  <xsl:template match="rng:optional|rng:choice|rng:zeroOrMore" mode="remove-unused">
     <xsl:choose>
       <xsl:when test="*">
 	<xsl:copy>
