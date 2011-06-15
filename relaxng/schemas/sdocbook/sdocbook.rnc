@@ -10,60 +10,149 @@
 
 namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
 namespace rng  = "http://relaxng.org/ns/structure/1.0"
-namespace s = "http://www.ascc.net/xml/schematron"
+namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 default namespace = "http://docbook.org/ns/docbook"
 
 start = db.article
 
 include "../docbook/hier.rnc" {
+   start = empty
+
    # Set is recursive so we have to do this so that its definition will be pruned
    db.set.components = notAllowed
 
    db.toplevel.sections = db.section+
-
    db.recursive.sections = db.section+
-
    db.article.components = db.section+
 
-   db.ackno = notAllowed
+   db.acknowledgements = notAllowed
+   db.colophon = notAllowed
+   db.dedication = notAllowed
 
-   db.article =
-      element article {
-         db.article.attlist,
-         db.article.info,
-         ((db.all.blocks+, db.article.components?)
-          | db.article.components),
-         (db.appendix | db.navigation.components | db.ackno)*
-      }
+   [
+      db:refname [ "article" ]
+      db:refpurpose [ "An article" ]
+   ]
+   div {
+      db.article =
+         element article {
+            db.article.attlist,
+            db.article.info,
+            ((db.all.blocks+, db.article.components?)
+             | db.article.components),
+            (db.appendix | db.navigation.components | db.ackno)*
+         }
+   }
 }
 
 include "../docbook/bibliography.rnc" {
    db.bibliolist = notAllowed
    db.biblioset = notAllowed
    db.biblioref = notAllowed
+   db.biblioentry = notAllowed
 
-   db.bibliography =
-      element bibliography {
-         db.bibliography.attlist,
-         db.bibliography.info,
-         db.all.blocks*,
-         (db.bibliodiv+ | db.bibliomixed+)
-      }
+   [
+      db:refname [ "bibliography" ]
+      db:refpurpose [ "A bibliography" ]
+   ]
+   div {
+      db.bibliography =
+         element bibliography {
+            db.bibliography.attlist,
+            db.bibliography.info,
+            db.all.blocks*,
+            (db.bibliodiv+ | db.bibliomixed+)
+         }
+   }
 
-   db.bibliodiv =
-      element bibliodiv {
-         db.bibliodiv.attlist,
-         db.bibliodiv.info,
-         db.all.blocks*,
-         db.bibliomixed+
-      }
+   [
+      db:refname [ "bibliodiv" ]
+      db:refpurpose [ "A section of a bibliography" ]
+   ]
+   div {
+      db.bibliodiv =
+         element bibliodiv {
+            db.bibliodiv.attlist,
+            db.bibliodiv.info,
+            db.all.blocks*,
+            db.bibliomixed+
+         }
+   }
 }
 
 include "../docbook/calstbl.rnc"
 include "../docbook/htmltbl.rnc"
 
+include "../docbook/os.rnc" {
+   start = empty
+   db.cmdsynopsis = notAllowed
+   db.envar = notAllowed
+   db.prompt = notAllowed
+   db.synopfragment = notAllowed
+   db.synopfragmentref = notAllowed
+   db.arg = notAllowed
+   db.group = notAllowed
+}
+
+include "../docbook/programming.rnc" {
+   db.synopsis = notAllowed
+   db.classname = notAllowed
+   db.classsynopsis = notAllowed
+   db.classsynopsisinfo = notAllowed
+   db.constructorsynopsis = notAllowed
+   db.destructorsynopsis = notAllowed
+   db.fieldsynopsis = notAllowed
+   db.exceptionname = notAllowed
+   db.fundef = notAllowed
+   db.funcparams = notAllowed
+   db.funcprototype = notAllowed
+   db.funcsynopsis = notAllowed
+   db.funcsynopsisinfo = notAllowed
+   db.function = notAllowed
+   db.group.paramdef = notAllowed
+   db.group.methodparam = notAllowed
+   db.methodname = notAllowed
+   db.methodparam = notAllowed
+   db.methodsynopsis = notAllowed
+   db.ooclass = notAllowed
+   db.ooexception = notAllowed
+   db.oointerface = notAllowed
+   db.interfacename = notAllowed
+   db.paramdef = notAllowed
+   db.parameter = notAllowed
+   db.initializer = notAllowed
+   db.modifier = notAllowed
+   db.property = notAllowed
+   db.returnvalue = notAllowed
+   db.varname = notAllowed
+   db.type = notAllowed
+}
+
+include "../docbook/technical.rnc" {
+   db.optional = notAllowed
+}
+
+include "../docbook/markup.rnc" {
+   db.tag = notAllowed
+   db.markup = notAllowed
+   db.token = notAllowed
+   db.symbol = notAllowed
+   db.code = notAllowed
+   db.constant = notAllowed
+   db.uri = notAllowed
+}
+
+include "../docbook/admonitions.rnc" {
+   db.caution = notAllowed
+   db.important = notAllowed
+   db.tip = notAllowed
+   db.warning = notAllowed
+}
+
 include "../docbook/pool.rnc" {
+   start = empty
+
    db.common.attributes =
       attribute xml:id { xsd:ID }?,
       attribute version { text }?,
@@ -110,7 +199,7 @@ include "../docbook/pool.rnc" {
     | db.titleabbrev
 
    db.list.blocks = db.itemizedlist|db.orderedlist|db.variablelist
-   db.admonition.blocks = notAllowed
+   db.admonition.blocks = db.note
    db.verbatim.blocks = db.literallayout
    db.para.blocks = db.para
    db.publishing.blocks = db.blockquote|db.sidebar|db.epigraph
@@ -191,37 +280,77 @@ include "../docbook/pool.rnc" {
       (db.affiliation
        | db.email)*
 
-   db.abbrev =
-      element abbrev {
-         db.abbrev.attlist,
-         (db._text | db.trademark)*
-      }
+   [
+      db:refname [ "abbrev" ]
+      db:refpurpose [ "An abbreviation, especially one followed by a period" ]
+   ]
+   div {
+      db.abbrev =
+         element abbrev {
+            db.abbrev.attlist,
+            (db._text | db.trademark)*
+         }
+   }
 
-   db.acronym =
-      element acronym {
-         db.acronym.attlist,
-         (db._text | db.trademark)*
-      }
+   [
+      db:refname [ "acronym" ]
+      db:refpurpose [ "An often pronounceable word made from the initial (or selected) letters of a name or phrase" ]
+   ]
+   div {
+      db.acronym =
+         element acronym {
+            db.acronym.attlist,
+            (db._text | db.trademark)*
+         }
+   }
 
-   db.attribution =
-      element attribution {
-         db.attribution.attlist,
-         (db._text | db.personname | db.citetitle)*
-      }
+   [
+      db:refname [ "attribution" ]
+      db:refpurpose [ "The source of a block quote or epigraph" ]
+   ]
+   div {
+      db.attribution =
+         element attribution {
+            db.attribution.attlist,
+            (db._text | db.personname | db.citetitle)*
+         }
+   }
 
-   db.affiliation =
-      element affiliation {
-         db.affiliation.attlist,
-         db.jobtitle*,
-         db.orgname?
-      }
+   [
+      db:refname [ "affiliation" ]
+      db:refpurpose [ "The institutional affiliation of an individual" ]
+   ]
+   div {
+      db.affiliation =
+         element affiliation {
+            db.affiliation.attlist,
+            db.orgname?
+         }
+   }
 
-   db.para =
-      element para {
-         db.para.attlist,
-         db.para.info,
-         db.all.inlines*
-      }
+   [
+      db:refname [ "para" ]
+      db:refpurpose [ "A paragraph" ]
+   ]
+   div {
+      db.para =
+         element para {
+            db.para.attlist,
+            db.para.info,
+            db.all.inlines*
+         }
+   }
 
    db.formalpara = notAllowed
+   db.procedure = notAllowed
+   db.stepalternatives = notAllowed
+   db.step = notAllowed
+   db.substeps = notAllowed
+   db._any = notAllowed
+   db.address = notAllowed
+   db.anchor = notAllowed
+   db.citation = notAllowed
+   db.simpara = notAllowed
+   db.person = notAllowed
+   db.shortaffil = notAllowed
 }
