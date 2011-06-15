@@ -185,7 +185,7 @@ div {
 
    db.indexterm.startofrange.attlist =
       db.indexterm.startofrange.role.attribute?
-    & db.common.attributes
+    & db.common.idreq.attributes
     & db.common.linking.attributes
     & db.significance.attribute?
     & db.zone.attribute?
