@@ -600,6 +600,8 @@ db.biblio.class.enumeration =
    "isrn"
  | ## An international standard serial number.
    "issn"
+ | ## An international standard text code.
+   "istc"
  | ## A Library of Congress reference number.
    "libraryofcongress"
  | ## A publication number (an internal number or possibly organizational standard).
