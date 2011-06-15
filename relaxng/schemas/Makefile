@@ -9,7 +9,7 @@ TARGETS=docbook docbookxi assembly dbits dbforms transclusion sdocbook \
         publishers \
         slides slides-full website website-full
 
-RNDFILES=defguide.rnd publishers.rnd
+RNDFILES=defguide.rnd publishers.rnd sdocbook.rnd
 
 all: $(RNDFILES) $(addsuffix .rnc,$(TARGETS)) $(addsuffix .sch,$(TARGETS))
 
@@ -200,6 +200,9 @@ build/publishers/publishers.rnx: build/publishers/publishers.rng
 
 sdocbook.rng: build/sdocbook/sdocbook.rnx
 	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+
+sdocbook.rnd: build/sdocbook/sdocbook.rnx
+	$(XSLTPROC) -output $@ ../tools/rngdocxml.xsl $<
 
 sdocbook.sch: build/sdocbook/sdocbook.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
