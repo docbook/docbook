@@ -90,7 +90,7 @@ div {
       element resources {
          db.resources.attlist,
          db.resources.info?,
-         db.resource+
+         (db.description*, db.resource+)
       }
 }
 
@@ -123,14 +123,14 @@ div {
       element resource {
          db.resource.attlist,
          db.resource.fileref.attribute,
-         empty
+         db.description*
       }
 
    # FIXME: contents should be any valid DocBook content model fragment
    db.container.resource =
       element resource {
          db.resource.attlist,
-         (text | db._any.docbook)
+         (text | db.description | db._any.docbook)*
       }
 }
 
@@ -186,10 +186,7 @@ div {
       ]
       element structure {
          db.structure.attlist,
-         db.output*,
-         db.filterin?,
-         db.filterout?,
-         db.structure.info,
+         (db.output* & db.filterin? & db.filterout? & db.structure.info),
          db.override?,
          db.revhistory?,
          db.navigation.components*,
@@ -208,11 +205,26 @@ div {
 
    db.output.role.attribute = attribute role { text }
 
+   db.output.chunk.enumeration =
+      ## This module will be in a chunk
+      "true"
+    | ## This module will not be in a chunk
+      "false"
+    | ## Chunking of this module depends on the overall chunking algorithm
+      "auto"
+
+   db.output.chunk.attribute =
+      [
+         a:defaultValue = "auto"
+         db:refpurpose [ "Specifies chunking for this module" ]
+      ]
+      attribute chunk { db.module.chunk.enumeration }
+
    db.output.format.attribute =
       [
          db:refpurpose [ "Identifies the format of the module or structure" ]
       ]
-      attribute format { xsd:NMTOKEN }
+      attribute format { xsd:NMTOKEN+ }
 
    db.output.file.attribute =
       [
@@ -243,6 +255,7 @@ div {
    db.output.attlist =
       db.output.role.attribute?
     & db.common.attributes
+    & db.output.chunk.attribute?
     & db.output.format.attribute?
     & db.output.file.attribute?
     & db.output.renderas.attribute?
@@ -441,8 +454,14 @@ div {
 div {
    db.relationships.role.attribute = attribute role { text }
 
+   db.relationships.type.attribute = attribute type { xsd:NMTOKEN+ }
+
+   db.relationships.instance.attribute = attribute instance { text }
+
    db.relationships.attlist =
       db.relationships.role.attribute?
+    & db.relationships.type.attribute?
+    & db.relationships.instance.attribute?
     & db.common.attributes
 
    db.relationships.info = db._info
@@ -514,8 +533,11 @@ div {
 div {
    db.instance.role.attribute = attribute role { text }
 
+   db.instance.linking.attribute = attribute linking { xsd:NMTOKEN+ }
+
    db.instance.attlist =
       db.instance.role.attribute?
+    & db.instance.linking.attribute?
     & db.common.attributes
 
    db.instance =
@@ -585,3 +607,25 @@ div {
          empty
       }
 }
+
+# ======================================================================
+
+[
+   db:refname [ "description" ]
+   db:refpurpose [ "A description of a resource or resources" ]
+]
+div {
+
+   db.description.role.attribute = attribute role { text }
+
+   db.description.attlist =
+      db.description.role.attribute?
+    & db.common.attributes
+
+   db.description =
+      element description {
+         db.description.attlist,
+         db._text
+      }
+}
+
