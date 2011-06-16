@@ -1,12 +1,7 @@
-# The DocBook Schemas
+# The rewind-50 branch
 
-This repository contains the sources for the DocBook schemas.
+The /only/ purpose of the rewind-50 branch is to provide access to the
+(almost) official V5.0 schemas. I say "almost" because I did make one
+small change, I updated the Schematron namespace URI.
 
-# Schema building
-
-The published schemas are built from these sources.
-
-# TODO
-
-Norm is in the process of a significant reorganization of the material in
-this repository
+/No more changes are expected to occur on this branch/. EVER.
