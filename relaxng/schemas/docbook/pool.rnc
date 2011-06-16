@@ -458,15 +458,12 @@ db.verbatim.xml.space.attribute =
       "preserve"
    }
 
-db.verbatim.common.attributes =
+db.verbatim.attributes =
    db.verbatim.continuation.attribute?
  & db.verbatim.linenumbering.attribute?
  & db.verbatim.startinglinenumber.attribute?
- & db.verbatim.xml.space.attribute?
-
-db.verbatim.attributes =
-   db.verbatim.common.attributes
  & db.verbatim.language.attribute?
+ & db.verbatim.xml.space.attribute?
 
 # ======================================================================
 
@@ -603,8 +600,6 @@ db.biblio.class.enumeration =
    "isrn"
  | ## An international standard serial number.
    "issn"
- | ## An international standard text code.
-   "istc"
  | ## A Library of Congress reference number.
    "libraryofcongress"
  | ## A publication number (an internal number or possibly organizational standard).
@@ -658,6 +653,11 @@ db.ubiq.inlines =
  | db.subscript
  | db.superscript
  | db.wordasword
+ | db._firstterm
+ | db._glossterm
+ | db.coref
+
+
 
 db._text         = (text | db.ubiq.inlines | db._phrase | db.replaceable)*
 
@@ -2609,7 +2609,7 @@ div {
       db.address.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
-    & db.verbatim.common.attributes
+    & db.verbatim.attributes
 
    db.address =
       element address {
@@ -3901,7 +3901,7 @@ div {
    db.contrib =
       element contrib {
          db.contrib.attlist,
-         db.all.inlines*
+         db._text
       }
 }
 

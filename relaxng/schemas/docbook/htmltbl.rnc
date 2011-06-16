@@ -303,18 +303,10 @@ div {
    db:refpurpose [ "An HTML table without a title" ]
 ]
 div {
-   db.html.informaltable.role.attribute = attribute role { text }
-   db.html.informaltable.label.attribute = db.label.attribute
 
    db.html.informaltable.attlist =
       db.html.attrs
     & db.html.table.attributes
-    & db.html.informaltable.role.attribute?
-    & db.html.informaltable.label.attribute?
-    & db.orient.attribute?
-    & db.pgwide.attribute?
-    & db.tabstyle.attribute?
-    & db.floatstyle.attribute?
 
    db.html.informaltable =
       element informaltable {

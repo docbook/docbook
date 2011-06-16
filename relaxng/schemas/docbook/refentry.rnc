@@ -59,15 +59,13 @@ db.reference.components = db.refentry
 ]
 div {
 
-   db.reference.status.attribute = db.status.attribute
-
    db.reference.role.attribute = attribute role { text }
 
    db.reference.attlist =
       db.reference.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
-    & db.reference.status.attribute?
+    & db.status.attribute?
     & db.label.attribute?
 
    db.reference.info = db._info.title.req
@@ -88,7 +86,6 @@ div {
    db:refpurpose [ "A reference page (originally a UNIX man-style reference page)" ]
 ]
 div {
-   db.refentry.status.attribute = db.status.attribute
 
    db.refentry.role.attribute = attribute role { text }
 
@@ -96,7 +93,7 @@ div {
       db.refentry.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
-    & db.refentry.status.attribute?
+    & db.status.attribute?
     & db.label.attribute?
 
    db.refentry.info = db._info.title.forbidden
@@ -351,7 +348,6 @@ div {
    db:refpurpose [ "A recursive section in a refentry" ]
 ]
 div {
-   db.refsection.status.attribute = db.status.attribute
 
    db.refsection.role.attribute = attribute role { text }
 
@@ -359,7 +355,7 @@ div {
       db.refsection.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
-    & db.refsection.status.attribute?
+    & db.status.attribute?
     & db.label.attribute?
 
    db.refsection.info = db._info.title.req

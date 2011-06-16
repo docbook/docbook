@@ -44,7 +44,6 @@ db.prompt.inlines |= db.co
 db.systemitem.inlines |= db.co
 db.userinput.inlines |= db.co
 db.replaceable.inlines |= db.co
-db.ubiq.inlines |= db.coref
 
 db.mediaobject.content |= db.imageobjectco
 

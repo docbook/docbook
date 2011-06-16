@@ -114,10 +114,6 @@ div {
 
 # ======================================================================
 
-db.book.components = (db.navigation.components | db.components | db.divisions)*
-
-# ======================================================================
-
 [
    db:refname [ "book" ]
    db:refpurpose [ "A book" ]
@@ -141,7 +137,7 @@ div {
       element book {
          db.book.attlist,
          db.book.info,
-         db.book.components
+         (db.navigation.components | db.components | db.divisions)*
       }
 }
 
@@ -235,10 +231,6 @@ div {
 
 # ======================================================================
 
-db.appendix.contentmodel = db.component.contentmodel
-
-# ======================================================================
-
 [
    db:refname [ "appendix" ]
    db:refpurpose [ "An appendix in a book or article" ]
@@ -262,13 +254,9 @@ div {
       element appendix {
          db.appendix.attlist,
          db.appendix.info,
-         db.appendix.contentmodel
+         db.component.contentmodel
       }
 }
-
-# ======================================================================
-
-db.chapter.contentmodel = db.component.contentmodel
 
 # ======================================================================
 
@@ -295,14 +283,13 @@ div {
       element chapter {
          db.chapter.attlist,
          db.chapter.info,
-         db.chapter.contentmodel
+         db.component.contentmodel
       }
 }
 
 # ======================================================================
 
 db.part.components = db.navigation.components | db.components
-db.part.contentmodel = db.part.components+
 
 # ======================================================================
 
@@ -330,7 +317,7 @@ div {
          db.part.attlist,
          db.part.info,
          db.partintro?,
-         db.part.contentmodel
+         db.part.components+
       }
 }
 
@@ -454,10 +441,6 @@ div {
 # ======================================================================
 
 db.article.components = db.toplevel.sections
-db.article.navcomponents =
-   db.navigation.components
- | db.acknowledgements | db.dedication
- | db.appendix | db.colophon
 
 # ======================================================================
 
@@ -506,10 +489,10 @@ div {
       element article {
          db.article.attlist,
          db.article.info,
-         db.article.navcomponents*,
+         (db.navigation.components | db.appendix | db.acknowledgements | db.colophon)*,
          ((db.all.blocks+, db.article.components?)
           | db.article.components),
-         db.article.navcomponents*
+         (db.navigation.components | db.appendix | db.acknowledgements | db.colophon)*
       }
 }
 
