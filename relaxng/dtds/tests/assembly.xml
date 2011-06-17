@@ -1,0 +1,9 @@
+<!DOCTYPE assembly SYSTEM "../assembly.dtd">
+<assembly xmlns="http://docbook.org/ns/docbook" version="5.0 dtd">
+<title>Assembly Title</title>
+
+<resources>
+<resource/>
+</resources>
+
+</assembly>
