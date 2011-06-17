@@ -454,9 +454,11 @@ div {
 div {
    db.relationships.role.attribute = attribute role { text }
 
-   db.relationships.type.attribute = attribute type { xsd:NMTOKEN+ }
-
-   db.relationships.instance.attribute = attribute instance { text }
+   db.relationships.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of the contained relationships" ]
+      ]
+      attribute type { xsd:NMTOKEN+ }
 
    db.relationships.attlist =
       db.relationships.role.attribute?
@@ -470,7 +472,7 @@ div {
       element relationships {
          db.relationships.attlist,
          db.relationships.info,
-         db.relationship+
+         (db.relationship|db.instance)+
       }
 }
 
@@ -533,7 +535,11 @@ div {
 div {
    db.instance.role.attribute = attribute role { text }
 
-   db.instance.linking.attribute = attribute linking { xsd:NMTOKEN+ }
+   db.instance.linking.attribute =
+      [
+         db:refpurpose [ "Specifies the type of link for this instance" ]
+      ]
+      attribute linking { xsd:NMTOKEN+ }
 
    db.instance.attlist =
       db.instance.role.attribute?
