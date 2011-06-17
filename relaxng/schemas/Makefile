@@ -83,7 +83,8 @@ build/defguide/defguide.rng: defguide/defguide.rnc
 	@if !([ -d build/defguide ]); then mkdir -p build/defguide; fi
 	$(TRANG) $< $@
 
-build/defguide/defguide.rnx: build/defguide/defguide.rng
+build/defguide/defguide.rnx: build/defguide/defguide.rng \
+             $(wildcard docbook/*.rnc) $(wildcard assembly/*.rnc)
 	$(XSLT) -saxon $< ../tools/include.xsl build/defguide/defguide.rnx, use.extensions=1
 	$(XSLT) -saxon build/defguide/defguide.rnx, ../tools/augment.xsl build/defguide/defguide.rnx,, use.extensions=1
 	$(PERL) ../tools/cleanup.pl build/defguide/defguide.rnx,, > $@
