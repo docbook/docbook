@@ -272,7 +272,7 @@
 <xsl:template match="dtx:data">
   <xsl:choose>
     <xsl:when test="@type='IDREF' or @type='IDREFS' or @type='ID'
-                    or @type='ENTITY' or @type='NMTOKEN'">
+                    or @type='ENTITY' or @type='NMTOKEN' or @type='NMTOKENS'">
       <xsl:value-of select="@type"/>
     </xsl:when>
     <xsl:when test="@type='anyURI' or @type='QName' or @type='token' or @type='boolean'
