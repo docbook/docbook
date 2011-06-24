@@ -224,7 +224,7 @@ div {
       [
          db:refpurpose [ "Identifies the format of the module or structure" ]
       ]
-      attribute format { xsd:NMTOKEN+ }
+      attribute format { xsd:NMTOKENS }
 
    db.output.file.attribute =
       [
@@ -458,7 +458,7 @@ div {
       [
          db:refpurpose [ "Identifies the type of the contained relationships" ]
       ]
-      attribute type { xsd:NMTOKEN+ }
+      attribute type { xsd:NMTOKENS }
 
    db.relationships.attlist =
       db.relationships.role.attribute?
@@ -539,7 +539,7 @@ div {
       [
          db:refpurpose [ "Specifies the type of link for this instance" ]
       ]
-      attribute linking { xsd:NMTOKEN+ }
+      attribute linking { xsd:NMTOKENS }
 
    db.instance.attlist =
       db.instance.role.attribute?
