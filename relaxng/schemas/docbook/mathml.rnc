@@ -38,6 +38,8 @@ db.equation.content |= db._any.mml+
 db.inlineequation.content |= db._any.mml+
 db.imageobject.content |= db.imagedata.mathml
 
+db.imagedata.mathml.content = db._any.mml
+
 # ============================================================
 
 [
@@ -72,7 +74,7 @@ div {
       element imagedata {
          db.imagedata.mathml.attlist,
          db.imagedata.mathml.info,
-         db._any.mml+
+         db.imagedata.mathml.content+
       }
 }
 

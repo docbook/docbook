@@ -36,6 +36,8 @@ default namespace = "http://docbook.org/ns/docbook"
 
 db.imageobject.content |= db.imagedata.svg
 
+db.imagedata.svg.content = db._any.svg
+
 # ============================================================
 
 [
@@ -70,7 +72,7 @@ div {
       element imagedata {
          db.imagedata.svg.attlist,
          db.imagedata.svg.info,
-         db._any.svg+
+         db.imagedata.svg.content+
       }
 }
 
