@@ -33,8 +33,8 @@ div {
          sl.slides.attlist,
          sl.slides.info,
          (db.all.blocks|sl.speakernotes)*,
-         sl.foil*,
-         sl.foilgroup*
+         ((sl.foil+)
+            | (sl.foil*, sl.foilgroup+, sl.foil?))
       }
 }
 
