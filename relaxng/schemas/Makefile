@@ -1,4 +1,4 @@
-TRANG=java -cp ../../lib/trang.jar com.thaiopensource.relaxng.translate.Driver
+TRANG=trang
 XSLT=/sourceforge/docbook/buildtools/xslt
 XSLTPROC=xsltproc
 PERL=perl
