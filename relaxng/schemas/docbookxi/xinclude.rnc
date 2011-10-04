@@ -30,8 +30,9 @@
 namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
 namespace rng  = "http://relaxng.org/ns/structure/1.0"
 namespace xi = "http://www.w3.org/2001/XInclude"
-namespace db = "http://docbook.org/ns/docbook"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+default namespace db = "http://docbook.org/ns/docbook"
+namespace local = ""
 
 db.set.components |= db.xi.include
 db.divisions |= db.xi.include
@@ -51,6 +52,13 @@ db.all.blocks |= db.xi.include
 db.all.inlines |= db.xi.include
 
 db.info.elements |= db.xi.include
+
+db.imagedata.svg.content |= db.xi.include
+db.imagedata.mathml.content |= db.xi.include
+
+db.equation.content |= db.xi.include+
+db.inlineequation.content |= db.xi.include+
+db.imageobject.content |= db.xi.include
 
 ctrl:conditional [
   pattern="db.refentry"
@@ -225,19 +233,21 @@ ctrl:conditional [
    db:refpurpose [ "An XInclude" ]
 ]
 div {
+   db.any.other.attribute = attribute * - local:* { text }
 
    db.xi.include.attlist =
-     attribute href { xsd:anyURI { pattern = "[^#]+" } }?,
-     [ a:defaultValue="xml" ] attribute parse { "xml" | "text" }?,
-     attribute xpointer { text }?,
-     attribute encoding { text }?,
-     attribute accept { text }?,
-     attribute accept-language { text }?
+      attribute href { xsd:anyURI { pattern = "[^#]+" } }?,
+      [ a:defaultValue="xml" ] attribute parse { "xml" | "text" }?,
+      attribute xpointer { text }?,
+      attribute encoding { text }?,
+      attribute accept { text }?,
+      attribute accept-language { text }?,
+      db.any.other.attribute*
 
    db.xi.include =
       element xi:include {
-        db.xi.include.attlist,
-        db.xi.fallback?
+         db.xi.include.attlist,
+         db.xi.fallback?
       }
 }
 
