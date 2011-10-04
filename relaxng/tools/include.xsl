@@ -63,6 +63,18 @@
     <xsl:message>Included <xsl:value-of select="@href"/></xsl:message>
   </xsl:template>
 
+  <!-- This is a total hack. It works around the fact that my RNG flattening
+       tools aren't really RNG-aware. Trang puts @ns="" on the xinclude.rng
+       file, but I don't get that right when I flatten; so hack it. -->
+  <xsl:template match="rng:nsName[not(@ns) and ancestor::rng:define[@name='db.any.other.attribute']]"
+                mode="include">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:attribute name="ns"></xsl:attribute>
+      <xsl:apply-templates mode="include"/>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="*" mode="include">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
