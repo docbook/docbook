@@ -10,6 +10,7 @@
   <xsl:template match="/">
     <s:schema>
       <s:ns prefix="db" uri="http://docbook.org/ns/docbook"/>
+      <s:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
 
       <xsl:for-each-group select="//s:pattern" group-by="@name">
 	<xsl:sort data-type="text" order="ascending"/>
@@ -20,16 +21,16 @@
 	    <xsl:sort data-type="text" order="ascending"/>
 
 	    <s:rule context="{current-grouping-key()}">
-	    
+
 	      <xsl:for-each-group select="current-group()/s:assert" group-by="@test">
 		<xsl:sort data-type="text" order="ascending"/>
-		
+
 		<xsl:apply-templates select="current-group()[1]"/>
 	      </xsl:for-each-group>
 
 	      <xsl:for-each-group select="current-group()/s:report" group-by="@test">
 		<xsl:sort data-type="text" order="ascending"/>
-		
+
 		<xsl:apply-templates select="current-group()[1]"/>
 	      </xsl:for-each-group>
 	    </s:rule>
