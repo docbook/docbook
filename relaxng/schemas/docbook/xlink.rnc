@@ -35,6 +35,140 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 default namespace = "http://docbook.org/ns/docbook"
 
+db.xlink.extended.type.attribute =
+   [
+      db:refpurpose [ "Identifies the XLink extended link type" ]
+      s:pattern [
+         name = "XLink extended placement"
+         s:rule [
+            context = "*[@xlink:type='extended']"
+            s:assert [
+               test = "not(parent::*[@xlink:type='extended'])"
+               "An XLink extended type element may not occur as the direct child of an XLink extended type element."
+            ]
+         ]
+      ]
+   ]
+   attribute xlink:type {
+      ## An XLink extended link type
+      "extended"
+   }
+
+db.xlink.locator.type.attribute =
+   [
+      db:refpurpose [ "Identifies the XLink locator link type" ]
+      s:pattern [
+         name = "XLink locator placement"
+         s:rule [
+            context = "*[@xlink:type='locator']"
+            s:assert [
+               test = "not(parent::*[@xlink:type='extended'])"
+               "An XLink locator type element must occur as the direct child of an XLink extended type element."
+            ]
+         ]
+      ]
+   ]
+   attribute xlink:type {
+      ## An XLink locator link type
+      "locator"
+   }
+
+db.xlink.arc.type.attribute =
+   [
+      db:refpurpose [ "Identifies the XLink arc link type" ]
+      s:pattern [
+         name = "XLink arc placement"
+         s:rule [
+            context = "*[@xlink:type='arc']"
+            s:assert [
+               test = "parent::*[@xlink:type='extended']"
+               "An XLink arc type element must occur as the direct child of an XLink extended type element."
+            ]
+         ]
+      ]
+   ]
+   attribute xlink:type {
+      ## An XLink arc link type
+      "arc"
+   }
+
+db.xlink.resource.type.attribute =
+   [
+      db:refpurpose [ "Identifies the XLink resource link type" ]
+      s:pattern [
+         name = "XLink resource placement"
+         s:rule [
+            context = "*[@xlink:type='resource']"
+            s:assert [
+               test = "not(parent::*[@xlink:type='extended'])"
+               "An XLink resource type element must occur as the direct child of an XLink extended type element."
+            ]
+         ]
+      ]
+   ]
+   attribute xlink:type {
+      ## An XLink resource link type
+      "resource"
+   }
+
+db.xlink.title.type.attribute =
+   [
+      db:refpurpose [ "Identifies the XLink title link type" ]
+      s:pattern [
+         name = "XLink title placement"
+         s:rule [
+            context = "*[@xlink:type='title']"
+            s:assert [
+               test = "not(parent::*[@xlink:type='extended']) and not(parent::*[@xlink:type='locator']) and not(parent::*[@xlink:type='arc'])"
+               "An XLink title type element must occur as the direct child of an XLink extended, locator, or arc type element."
+            ]
+         ]
+      ]
+   ]
+   attribute xlink:type {
+      ## An XLink title link type
+      "title"
+   }
+
+db.xlink.extended.link.attributes =
+   db.xlink.extended.type.attribute
+ & db.xlink.role.attribute?
+ & db.xlink.title.attribute?
+
+db.xlink.locator.link.attributes =
+   db.xlink.locator.type.attribute
+ & db.xlink.href.attribute
+ & db.xlink.role.attribute?
+ & db.xlink.title.attribute?
+ & db.xlink.label.attribute?
+
+db.xlink.arc.link.attributes =
+   db.xlink.arc.type.attribute
+ & db.xlink.arcrole.attribute?
+ & db.xlink.title.attribute?
+ & db.xlink.show.attribute?
+ & db.xlink.actuate.attribute?
+ & db.xlink.from.attribute?
+ & db.xlink.to.attribute?
+
+db.xlink.resource.link.attributes =
+   db.xlink.resource.type.attribute
+ & db.xlink.role.attribute?
+ & db.xlink.title.attribute?
+ & db.xlink.label.attribute?
+
+db.xlink.title.link.attributes =
+   db.xlink.title.type.attribute
+
+db.xlink.attributes |=
+   db.xlink.extended.link.attributes
+ | db.xlink.locator.link.attributes
+ | db.xlink.arc.link.attributes
+ | db.xlink.resource.link.attributes
+ | db.xlink.title.link.attributes
+
+# /Hack hack hack
+
 db.info.elements |= db.extendedlink
 
 db.xlink.from.attribute =

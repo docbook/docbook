@@ -211,12 +211,12 @@ db.xlink.href.attribute =
    ]
    attribute xlink:href { xsd:anyURI }
 
-db.xlink.type.attribute =
+db.xlink.simple.type.attribute =
    [
       db:refpurpose [ "Identifies the XLink link type" ]
    ]
    attribute xlink:type {
-      ## An XLink simple link
+      ## An XLink simple link type
       "simple"
    }
 
@@ -287,14 +287,16 @@ db.xlink.actuate.attribute =
    ]
    attribute xlink:actuate { db.xlink.actuate.enumeration }
 
-db.href.attributes =
-   db.xlink.href.attribute
- & db.xlink.type.attribute?
+db.xlink.simple.link.attributes =
+   db.xlink.simple.type.attribute?
+ & db.xlink.href.attribute?
  & db.xlink.role.attribute?
  & db.xlink.arcrole.attribute?
  & db.xlink.title.attribute?
  & db.xlink.show.attribute?
  & db.xlink.actuate.attribute?
+
+db.xlink.attributes = db.xlink.simple.link.attributes
 
 # ======================================================================
 
@@ -391,10 +393,10 @@ db.common.idreq.attributes =
  & db.common.base.attributes
 
 db.common.linking.attributes =
-   (db.linkend.attribute | db.href.attributes)?
+   (db.linkend.attribute | db.xlink.attributes)?
 
 db.common.req.linking.attributes =
-   db.linkend.attribute | db.href.attributes
+   db.linkend.attribute | db.xlink.attributes
 
 db.common.data.attributes =
    [

@@ -24,7 +24,7 @@ db.technical.inlines |= rddl.resource
 ]
 div {
 
-   rddl.resource.type.attribute = db.xlink.type.attribute
+   rddl.resource.type.attribute = db.xlink.simple.type.attribute
    rddl.resource.arcrole.attribute = db.xlink.arcrole.attribute
    rddl.resource.role.attribute = db.xlink.role.attribute
    rddl.resource.href.attribute = db.xlink.href.attribute
