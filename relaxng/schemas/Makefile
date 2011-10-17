@@ -248,6 +248,7 @@ slides-full.sch: build/slides-full/slides-full.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
 
 build/slides-full/slides-full.rng: slides-full/slides-full.rnc \
+             $(filter-out slides/slides.rnc, $(wildcard slides/*.rnc)) \
              $(filter-out slides-full/slides-full.rnc, $(wildcard slides-full/*.rnc)) \
              $(wildcard docbook/*.rnc) $(wildcard docbookxi/*.rnc)
 	@if !([ -d build/slides-full ]); then mkdir -p build/slides-full; fi
