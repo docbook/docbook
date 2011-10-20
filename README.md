@@ -1,12 +1,13 @@
 # The DocBook Schemas
 
-This repository contains the sources for the DocBook schemas.
+This repository contains the sources for the DocBook schemas. All of
+the revision history from the Sourceforge days has been preserved.
 
-# Schema building
+## Cheeky monkey
 
-The published schemas are built from these sources.
+"It's easier to ask for forgiveness than it is to get permission"
 
-# TODO
-
-Norm is in the process of a significant reorganization of the material in
-this repository
+Norm initially moved the schema repository here as a private
+experiment. It's turned out to be so useful that he's going to see if
+he can get community buy-in to let him keep them here. He might not
+succeed.
