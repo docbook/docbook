@@ -215,7 +215,7 @@ div {
    db.extendedlink =
       element extendedlink {
          db.extendedlink.attlist,
-         (db.locator|db.arc)+
+         (db.locator|db.arc|db.link)+
       }
 }
 
