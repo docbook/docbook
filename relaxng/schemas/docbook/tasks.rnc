@@ -59,7 +59,7 @@ div {
          db.task.info,
          db.tasksummary?,
          db.taskprerequisites?,
-         db.procedure,
+         db.procedure+,
          db.example*,
          db.taskrelated?
       }
