@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:exsl="http://exslt.org/common"
-		xmlns:set="http://exslt.org/sets"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
                 xmlns:doc="http://nwalsh.com/xmlns/schema-doc/"
 		xmlns:s="http://purl.oclc.org/dsdl/schematron"
-                exclude-result-prefixes="exsl ctrl s set"
-                extension-element-prefixes="exsl"
-                version="1.0">
+                exclude-result-prefixes="ctrl s"
+                version="2.0">
 
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
   <xsl:strip-space elements="*"/>
@@ -24,19 +21,19 @@
     <xsl:message>Expand content models</xsl:message>
     <xsl:variable name="expanded">
       <xsl:call-template name="expand">
-	<xsl:with-param name="root" select="exsl:node-set($grouped)"/>
+	<xsl:with-param name="root" select="$grouped"/>
       </xsl:call-template>
     </xsl:variable>
 
     <xsl:message>Classify element content</xsl:message>
     <xsl:variable name="classified">
-      <xsl:apply-templates select="exsl:node-set($expanded)" mode="classify"/>
+      <xsl:apply-templates select="$expanded" mode="classify"/>
     </xsl:variable>
 
     <xsl:message>Flatten nested choices</xsl:message>
     <xsl:variable name="flattened">
       <xsl:call-template name="flatten">
-	<xsl:with-param name="root" select="exsl:node-set($classified)"/>
+	<xsl:with-param name="root" select="$classified"/>
       </xsl:call-template>
     </xsl:variable>
 
@@ -47,12 +44,13 @@
 
   <xsl:template match="rng:define[count(*) &gt; 1]
 		       |rng:zeroOrMore[count(*) &gt; 1]
-		       |rng:oneOrMore[count(*) &gt; 1]"
+		       |rng:oneOrMore[count(*) &gt; 1]
+		       |rng:optional[count(*) &gt; 1]"
 		mode="group">
     <xsl:variable name="refs">
       <xsl:text>0</xsl:text>
       <xsl:for-each select=".//rng:ref">
-	<xsl:if test="key('defs',@name)/rng:element">1</xsl:if>
+        <xsl:if test="key('defs',@name)/rng:element">1</xsl:if>
       </xsl:for-each>
       <xsl:if test="count(rng:attribute|rng:optional/rng:attribute) &gt; 0">1</xsl:if>
     </xsl:variable>
@@ -104,7 +102,7 @@
 	  <xsl:apply-templates select="$root" mode="expand"/>
 	</xsl:variable>
 	<xsl:call-template name="expand">
-	  <xsl:with-param name="root" select="exsl:node-set($expanded)"/>
+	  <xsl:with-param name="root" select="$expanded"/>
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
@@ -204,7 +202,7 @@
 		            |.//rng:ref[key('defs',@name)/rng:attribute]
 		            |.//rng:attribute]"/>
     <xsl:variable name="rules" select="s:*"/>
-    <xsl:variable name="cmod" select="set:difference(*,$attr|rng:notAllowed|$rules)"/>
+    <xsl:variable name="cmod" select="* except ($attr|rng:notAllowed|$rules)"/>
 
     <xsl:copy>
       <xsl:copy-of select="@*"/>
@@ -268,7 +266,7 @@
 	</xsl:variable>
 
 	<xsl:call-template name="flatten">
-	  <xsl:with-param name="root" select="exsl:node-set($flattened)"/>
+	  <xsl:with-param name="root" select="$flattened"/>
 	  <xsl:with-param name="count" select="$count + 1"/>
 	</xsl:call-template>
       </xsl:when>
@@ -355,10 +353,6 @@
 	</xsl:copy>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-
-  <xsl:template match="rng:choice[count(*)=1]" mode="flatten">
-    <xsl:apply-templates mode="flatten"/>
   </xsl:template>
 
   <xsl:template match="*" mode="flatten">
