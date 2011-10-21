@@ -524,6 +524,10 @@ that points to it.</para>
 <para>The <tag class="attribute">language</tag> attribute will be removed from
 <tag>address</tag>; use <tag class="attribute">xml:lang</tag> instead.</para>
 </listitem>
+<listitem>
+<para>The <tag>arc</tag> and <tag>locator</tag> elements will be dropped; instead
+<tag>link</tag> will be allowed in <tag>extendedlink</tag>.</para>
+</listitem>
 </orderedlist>
 </section>
 </section>
