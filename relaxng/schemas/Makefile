@@ -1,7 +1,7 @@
 TRANG=trang
 XSLT=/sourceforge/docbook/buildtools/xslt
-XSLTPROC=xsltproc
 PERL=perl
+REMOVESCH=0
 
 .PHONY: clean
 
@@ -36,7 +36,7 @@ clean:
 # DocBook
 
 docbook.rng: build/docbook/docbook.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 docbook.sch: build/docbook/docbook.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -47,15 +47,15 @@ build/docbook/docbook.rng: docbook/docbook.rnc \
 	$(TRANG) $< $@
 
 build/docbook/docbook.rnx: build/docbook/docbook.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/docbook/docbook.rnx, use.extensions=1
-	$(XSLT) -saxon build/docbook/docbook.rnx, ../tools/augment.xsl build/docbook/docbook.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/docbook/docbook.rnx,
+	$(XSLT) -saxon build/docbook/docbook.rnx, ../tools/augment.xsl build/docbook/docbook.rnx,,
 	$(PERL) ../tools/cleanup.pl build/docbook/docbook.rnx,, > $@
 
 ########################################################################
 # DocBook XInclude
 
 docbookxi.rng: build/docbookxi/docbookxi.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 docbookxi.sch: build/docbookxi/docbookxi.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -67,8 +67,8 @@ build/docbookxi/docbookxi.rng: docbookxi/docbookxi.rnc \
 	$(TRANG) $< $@
 
 build/docbookxi/docbookxi.rnx: build/docbookxi/docbookxi.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/docbookxi/docbookxi.rnx, use.extensions=1
-	$(XSLT) -saxon build/docbookxi/docbookxi.rnx, ../tools/augment.xsl build/docbookxi/docbookxi.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/docbookxi/docbookxi.rnx,
+	$(XSLT) -saxon build/docbookxi/docbookxi.rnx, ../tools/augment.xsl build/docbookxi/docbookxi.rnx,,
 	$(PERL) ../tools/cleanup.pl build/docbookxi/docbookxi.rnx,, > $@
 
 ########################################################################
@@ -78,7 +78,7 @@ build/docbookxi/docbookxi.rnx: build/docbookxi/docbookxi.rng
 # schema for any other purpose
 
 defguide.rnd: build/defguide/defguide.rnx
-	$(XSLTPROC) -output $@ ../tools/rngdocxml.xsl $<
+	$(XSLT) $< ../tools/rngdocxml.xsl $@
 
 build/defguide/defguide.rng: defguide/defguide.rnc build/docbook/any.docbook.rnc
 	@if !([ -d build/defguide ]); then mkdir -p build/defguide; fi
@@ -86,15 +86,15 @@ build/defguide/defguide.rng: defguide/defguide.rnc build/docbook/any.docbook.rnc
 
 build/defguide/defguide.rnx: build/defguide/defguide.rng \
              $(wildcard docbook/*.rnc) $(wildcard assembly/*.rnc)
-	$(XSLT) -saxon $< ../tools/include.xsl build/defguide/defguide.rnx, use.extensions=1
-	$(XSLT) -saxon build/defguide/defguide.rnx, ../tools/augment.xsl build/defguide/defguide.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/defguide/defguide.rnx,
+	$(XSLT) -saxon build/defguide/defguide.rnx, ../tools/augment.xsl build/defguide/defguide.rnx,,
 	$(PERL) ../tools/cleanup.pl build/defguide/defguide.rnx,, > $@
 
 ########################################################################
 # DocBook Assembly
 
 assembly.rng: build/assembly/assembly.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 assembly.sch: build/assembly/assembly.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -106,8 +106,8 @@ build/assembly/assembly.rng: assembly/assembly.rnc docbook.rnc \
 	$(TRANG) $< $@
 
 build/assembly/assembly.rnx: build/assembly/assembly.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/assembly/assembly.rnx, use.extensions=1
-	$(XSLT) -saxon build/assembly/assembly.rnx, ../tools/augment.xsl build/assembly/assembly.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/assembly/assembly.rnx,
+	$(XSLT) -saxon build/assembly/assembly.rnx, ../tools/augment.xsl build/assembly/assembly.rnx,,
 	$(PERL) ../tools/cleanup.pl build/assembly/assembly.rnx,, > $@
 
 # A schema that contains a pattern for any DocBook element
@@ -122,7 +122,7 @@ build/docbook/any.docbook.rng: docbook.rng
 # DocBook ITS
 
 dbits.rng: build/dbits/dbits.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 dbits.sch: build/dbits/dbits.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -133,15 +133,15 @@ build/dbits/dbits.rng: dbits/dbits.rnc docbook.rnc \
 	$(TRANG) $< $@
 
 build/dbits/dbits.rnx: build/dbits/dbits.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/dbits/dbits.rnx, use.extensions=1
-	$(XSLT) -saxon build/dbits/dbits.rnx, ../tools/augment.xsl build/dbits/dbits.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/dbits/dbits.rnx,
+	$(XSLT) -saxon build/dbits/dbits.rnx, ../tools/augment.xsl build/dbits/dbits.rnx,,
 	$(PERL) ../tools/cleanup.pl build/dbits/dbits.rnx,, > $@
 
 ########################################################################
 # DocBook Forms
 
 dbforms.rng: build/dbforms/dbforms.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 dbforms.sch: build/dbforms/dbforms.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -152,15 +152,15 @@ build/dbforms/dbforms.rng: dbforms/dbforms.rnc docbook.rnc \
 	$(TRANG) $< $@
 
 build/dbforms/dbforms.rnx: build/dbforms/dbforms.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/dbforms/dbforms.rnx, use.extensions=1
-	$(XSLT) -saxon build/dbforms/dbforms.rnx, ../tools/augment.xsl build/dbforms/dbforms.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/dbforms/dbforms.rnx,
+	$(XSLT) -saxon build/dbforms/dbforms.rnx, ../tools/augment.xsl build/dbforms/dbforms.rnx,,
 	$(PERL) ../tools/cleanup.pl build/dbforms/dbforms.rnx,, > $@
 
 ########################################################################
 # DocBook Transclusion
 
 transclusion.rng: build/transclusion/transclusion.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 transclusion.sch: build/transclusion/transclusion.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -170,18 +170,18 @@ build/transclusion/transclusion.rng: transclusion/src/db-transclusions.rnc docbo
 	$(TRANG) $< $@
 
 build/transclusion/transclusion.rnx: build/transclusion/transclusion.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/transclusion/transclusion.rnx, use.extensions=1
-	$(XSLT) -saxon build/transclusion/transclusion.rnx, ../tools/augment.xsl build/transclusion/transclusion.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/transclusion/transclusion.rnx,
+	$(XSLT) -saxon build/transclusion/transclusion.rnx, ../tools/augment.xsl build/transclusion/transclusion.rnx,,
 	$(PERL) ../tools/cleanup.pl build/transclusion/transclusion.rnx,, > $@
 
 ########################################################################
 # Publishers
 
 publishers.rng: build/publishers/publishers.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 publishers.rnd: build/publishers/publishers.rnx
-	$(XSLTPROC) -output $@ ../tools/rngdocxml.xsl $<
+	$(XSLT) $< ../tools/rngdocxml.xsl $@
 
 publishers.sch: build/publishers/publishers.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -192,8 +192,8 @@ build/publishers/publishers.rng: publishers/publishers.rnc \
 	$(TRANG) $< $@
 
 build/publishers/publishers.rnx: build/publishers/publishers.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/publishers/publishers.rnx, use.extensions=1
-	$(XSLT) -saxon build/publishers/publishers.rnx, ../tools/augment.xsl build/publishers/publishers.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/publishers/publishers.rnx,
+	$(XSLT) -saxon build/publishers/publishers.rnx, ../tools/augment.xsl build/publishers/publishers.rnx,,
 	$(PERL) ../tools/cleanup.pl build/publishers/publishers.rnx,, > $@
 
 
@@ -201,10 +201,10 @@ build/publishers/publishers.rnx: build/publishers/publishers.rng
 # Simplified DocBook
 
 sdocbook.rng: build/sdocbook/sdocbook.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 sdocbook.rnd: build/sdocbook/sdocbook.rnx
-	$(XSLTPROC) -output $@ ../tools/rngdocxml.xsl $<
+	$(XSLT) $< ../tools/rngdocxml.xsl $@
 
 sdocbook.sch: build/sdocbook/sdocbook.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -215,15 +215,15 @@ build/sdocbook/sdocbook.rng: sdocbook/sdocbook.rnc \
 	$(TRANG) $< $@
 
 build/sdocbook/sdocbook.rnx: build/sdocbook/sdocbook.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/sdocbook/sdocbook.rnx, use.extensions=1
-	$(XSLT) -saxon build/sdocbook/sdocbook.rnx, ../tools/augment.xsl build/sdocbook/sdocbook.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/sdocbook/sdocbook.rnx,
+	$(XSLT) -saxon build/sdocbook/sdocbook.rnx, ../tools/augment.xsl build/sdocbook/sdocbook.rnx,,
 	$(PERL) ../tools/cleanup.pl build/sdocbook/sdocbook.rnx,, > $@
 
 ########################################################################
 # Slides
 
 slides.rng: build/slides/slides.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 slides.sch: build/slides/slides.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -234,15 +234,15 @@ build/slides/slides.rng: slides/slides.rnc \
 	$(TRANG) $< $@
 
 build/slides/slides.rnx: build/slides/slides.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/slides/slides.rnx, use.extensions=1
-	$(XSLT) -saxon build/slides/slides.rnx, ../tools/augment.xsl build/slides/slides.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/slides/slides.rnx,
+	$(XSLT) -saxon build/slides/slides.rnx, ../tools/augment.xsl build/slides/slides.rnx,,
 	$(PERL) ../tools/cleanup.pl build/slides/slides.rnx,, > $@
 
 ########################################################################
 # Slides Full
 
 slides-full.rng: build/slides-full/slides-full.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 slides-full.sch: build/slides-full/slides-full.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -255,15 +255,15 @@ build/slides-full/slides-full.rng: slides-full/slides-full.rnc \
 	$(TRANG) $< $@
 
 build/slides-full/slides-full.rnx: build/slides-full/slides-full.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/slides-full/slides-full.rnx, use.extensions=1
-	$(XSLT) -saxon build/slides-full/slides-full.rnx, ../tools/augment.xsl build/slides-full/slides-full.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/slides-full/slides-full.rnx,
+	$(XSLT) -saxon build/slides-full/slides-full.rnx, ../tools/augment.xsl build/slides-full/slides-full.rnx,,
 	$(PERL) ../tools/cleanup.pl build/slides-full/slides-full.rnx,, > $@
 
 ########################################################################
 # Website
 
 website.rng: build/website/website.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 website.sch: build/website/website.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -274,15 +274,15 @@ build/website/website.rng: website/website.rnc \
 	$(TRANG) $< $@
 
 build/website/website.rnx: build/website/website.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/website/website.rnx, use.extensions=1
-	$(XSLT) -saxon build/website/website.rnx, ../tools/augment.xsl build/website/website.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/website/website.rnx,
+	$(XSLT) -saxon build/website/website.rnx, ../tools/augment.xsl build/website/website.rnx,,
 	$(PERL) ../tools/cleanup.pl build/website/website.rnx,, > $@
 
 ########################################################################
 # Website Full
 
 website-full.rng: build/website-full/website-full.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
+	$(XSLT) $< ../tools/removedoc.xsl $@ remove-schematron=$(REMOVESCH)
 
 website-full.sch: build/website-full/website-full.rnx
 	$(XSLT) -saxon $< ../tools/schematron.xsl $@
@@ -293,7 +293,7 @@ build/website-full/website-full.rng: website-full/website-full.rnc \
 	$(TRANG) $< $@
 
 build/website-full/website-full.rnx: build/website-full/website-full.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/website-full/website-full.rnx, use.extensions=1
-	$(XSLT) -saxon build/website-full/website-full.rnx, ../tools/augment.xsl build/website-full/website-full.rnx,, use.extensions=1
+	$(XSLT) -saxon $< ../tools/include.xsl build/website-full/website-full.rnx,
+	$(XSLT) -saxon build/website-full/website-full.rnx, ../tools/augment.xsl build/website-full/website-full.rnx,,
 	$(PERL) ../tools/cleanup.pl build/website-full/website-full.rnx,, > $@
 
