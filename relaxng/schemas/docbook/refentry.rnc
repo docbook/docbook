@@ -77,7 +77,7 @@ div {
          db.reference.attlist,
          db.reference.info,
          db.partintro?,
-         db.reference.components+
+         db.reference.components*
       }
 }
 

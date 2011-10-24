@@ -262,7 +262,7 @@ div {
       element appendix {
          db.appendix.attlist,
          db.appendix.info,
-         db.appendix.contentmodel
+         db.appendix.contentmodel?
       }
 }
 
@@ -295,7 +295,7 @@ div {
       element chapter {
          db.chapter.attlist,
          db.chapter.info,
-         db.chapter.contentmodel
+         db.chapter.contentmodel?
       }
 }
 
@@ -330,7 +330,7 @@ div {
          db.part.attlist,
          db.part.info,
          db.partintro?,
-         db.part.contentmodel
+         db.part.contentmodel?
       }
 }
 
@@ -359,7 +359,7 @@ div {
       element preface {
          db.preface.attlist,
          db.preface.info,
-         db.component.contentmodel
+         db.component.contentmodel?
       }
 }
 
@@ -388,7 +388,7 @@ div {
       element partintro {
          db.partintro.attlist,
          db.partintro.info,
-         db.toplevel.blocks.or.sections
+         db.toplevel.blocks.or.sections?
       }
 }
 
@@ -417,7 +417,7 @@ div {
       element section {
          db.section.attlist,
          db.section.info,
-         db.recursive.blocks.or.sections,
+         db.recursive.blocks.or.sections?,
          db.navigation.components*
       }
 }
@@ -447,7 +447,7 @@ div {
       element simplesect {
          db.simplesect.attlist,
          db.simplesect.info,
-         db.all.blocks+
+         db.all.blocks*
       }
 }
 
