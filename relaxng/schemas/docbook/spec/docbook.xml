@@ -10,12 +10,9 @@
 	 xml:lang="en"
 	 status="&standard;">
 <info>
-<releaseinfo role="cvs">
-$Id$
-</releaseinfo>
 
 <!-- product -->        <productname>docbook</productname>
-<!-- productVersion --> <productnumber>5.1b2</productnumber>
+<!-- productVersion --> <productnumber>5.1b5</productnumber>
 <!-- artifactType       spec; what else? :-) -->
 <!-- stage -->          <releaseinfo role="stage">ed</releaseinfo>
 <!-- revision -->       <biblioid class="pubsnumber">01</biblioid>
@@ -55,7 +52,7 @@ $Id$
 </editor>
 </authorgroup>
 
-<pubdate>2010-07-27</pubdate>
+<pubdate>2011-10-24</pubdate>
 
 <bibliomisc role="namespace">http://docbook.org/ns/docbook</bibliomisc>
 
@@ -76,7 +73,7 @@ $Id$
 <year>2001</year><year>2002</year><year>2003</year>
 <year>2004</year><year>2005</year><year>2006</year>
 <year>2007</year><year>2008</year><year>2009</year>
-<year>2010</year>
+<year>2010</year><year>2011</year>
 <holder>The Organization for the Advancement of Structured Information
 Standards [OASIS]. All Rights Reserved. </holder></copyright>
 
@@ -268,9 +265,68 @@ document.</para>
 <section xml:id="s.docbook">
 <title>The DocBook RELAX NG Schema</title>
 
-<para>This release is DocBook V5.1b2.</para>
+<para>This release is DocBook V5.1b5.</para>
 
 <para>Summary of changes in 5.1 TBD.</para>
+
+<para>Changes since 5.1b2:</para>
+
+<itemizedlist>
+<listitem>
+<para>Reworked XLink attributes to support simple/extended links. Previous versions of DocBook V5.x were
+simply broken with respect to XLink.
+</para>
+</listitem>
+<listitem>
+<para>Fixed a number of Schematron patterns to enforce exclusions.
+</para>
+</listitem>
+<listitem>
+<para>Replaced incorrect use of <literal>NMTOKEN+</literal> with <literal>NMTOKENS</literal>.
+</para>
+</listitem>
+<listitem>
+<para>Reworked patterns that define the content of SVG and MathML elements so that the content can
+be XIncluded.
+</para>
+</listitem>
+<listitem>
+<para>Added <tag>link</tag> to the content model of <tag>extendedlink</tag>. The other elements
+<tag>locator</tag> and <tag>arc</tag> <link linkend="s.bic-60">will be removed</link> in DocBook V6.0.</para>
+</listitem>
+</itemizedlist>
+
+<para>Requests for enhancement addressed in 5.1b5:</para>
+
+<itemizedlist>
+<listitem>
+<para>RFE <link xlink:href="http://sf.net/support/tracker.php?aid=3368279">3368279</link>
+Make content optional in components and sections
+</para>
+</listitem>
+<listitem>
+<para>RFE <link xlink:href="http://sf.net/support/tracker.php?aid=3406169">3406169</link>
+Allow multiple <tag>procedure</tag> elements in a <tag>task</tag>
+</para>
+</listitem>
+<listitem>
+<para>RFE <link xlink:href="http://sf.net/support/tracker.php?aid=3390036">3390036</link>
+Allow <tag>tag</tag> elements to nest
+</para>
+</listitem>
+<listitem>
+<para>RFE <link xlink:href="http://sf.net/support/tracker.php?aid=3227210">3227210</link>
+Fix HTML <tag>informaltable</tag> attributes
+</para>
+</listitem>
+<listitem>
+<para>RFE <link xlink:href="http://sf.net/support/tracker.php?aid=3274136">3274136</link>
+Allow <tag>production</tag> to contain <tag>rhs</tag><literal>+</literal>
+</para>
+</listitem>
+</itemizedlist>
+
+<para>Apparently, this document was never revised for 5.1b3 or 5.1b4.</para>
 
 <para>Changes since 5.1b1:</para>
 
