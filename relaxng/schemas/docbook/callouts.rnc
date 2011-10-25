@@ -217,7 +217,7 @@ div {
       db.area.role.attribute?
     & db.common.idreq.attributes
     & db.area.units.attribute
-    & (db.area.linkends.attribute | db.href.attributes)?
+    & (db.area.linkends.attribute | db.xlink.simple.link.attributes)?
     & db.area.label.attribute?
     & db.area.coords.attribute
 
@@ -240,7 +240,7 @@ div {
       db.area.role.attribute?
     & db.common.attributes
     & db.area.units.attribute
-    & (db.area.linkends.attribute | db.href.attributes)?
+    & (db.area.linkends.attribute | db.xlink.simple.link.attributes)?
     & db.area.label.attribute?
     & db.area.coords.attribute
 
@@ -267,7 +267,7 @@ div {
       db.areaset.role.attribute?
     & db.common.idreq.attributes
     & db.area.units.attribute
-    & (db.areaset.linkends.attribute | db.href.attributes)?
+    & (db.areaset.linkends.attribute | db.xlink.simple.link.attributes)?
     & db.areaset.label.attribute?
 
    db.areaset =
