@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:exsl="http://exslt.org/common"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
-                exclude-result-prefixes="exsl ctrl"
-                version="1.0">
+                exclude-result-prefixes="ctrl"
+                version="2.0">
 
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
   <xsl:strip-space elements="*"/>
@@ -17,7 +16,7 @@
 	   use="@name"/>
   <xsl:key name="overrides" match="rng:define[@override]" use="@name"/>
 
-  <xsl:variable name="debug" select="1"/>
+  <xsl:variable name="debug" select="0"/>
 
   <xsl:template match="/">
     <xsl:variable name="expanded">
@@ -25,23 +24,23 @@
     </xsl:variable>
 
     <xsl:variable name="conditional">
-      <xsl:apply-templates select="exsl:node-set($expanded)/*"
+      <xsl:apply-templates select="$expanded/*"
 			   mode="conditional"/>
     </xsl:variable>
 
     <xsl:variable name="overridden">
-      <xsl:apply-templates select="exsl:node-set($conditional)/*"
+      <xsl:apply-templates select="$conditional/*"
 			   mode="override"/>
     </xsl:variable>
 
     <xsl:variable name="combined">
-      <xsl:apply-templates select="exsl:node-set($overridden)/*"
+      <xsl:apply-templates select="$overridden/*"
 			   mode="combine"/>
     </xsl:variable>
 
     <xsl:variable name="withoutunused">
       <xsl:call-template name="removeunused">
-	<xsl:with-param name="doc" select="exsl:node-set($combined)"/>
+	<xsl:with-param name="doc" select="$combined"/>
       </xsl:call-template>
     </xsl:variable>
 
@@ -57,10 +56,11 @@
       <xsl:apply-templates mode="markOverride"/>
     </xsl:variable>
 
-    <xsl:apply-templates select="exsl:node-set($nestedGrammar)/*"
+    <xsl:apply-templates select="$nestedGrammar/*"
 			 mode="override"/>
-
-    <xsl:message>Included <xsl:value-of select="@href"/></xsl:message>
+    <xsl:if test="$debug != 0">
+      <xsl:message>Included <xsl:value-of select="@href"/></xsl:message>
+    </xsl:if>
   </xsl:template>
 
   <!-- This is a total hack. It works around the fact that my RNG flattening
@@ -113,7 +113,9 @@
 
 	<xsl:if test="not(@combine)
 		      or (@combine != 'choice' and @combine != 'interleave')">
-	  <xsl:message>Adding override to <xsl:value-of select="@name"/></xsl:message>
+          <xsl:if test="$debug != 0">
+            <xsl:message>Adding override to <xsl:value-of select="@name"/></xsl:message>
+          </xsl:if>
 	  <xsl:attribute name="override">
 	    <xsl:value-of select="parent::rng:include/@href"/>
 	  </xsl:attribute>
@@ -157,10 +159,12 @@
 	  </xsl:when>
 	  <xsl:when test="$ileaves">
 	    <!-- these are always attributes, right? -->
-	    <xsl:message>
-	      <xsl:text>Interleaving definitions for </xsl:text>
-	      <xsl:value-of select="@name"/>
-	    </xsl:message>
+            <xsl:if test="$debug != 0">
+              <xsl:message>
+                <xsl:text>Interleaving definitions for </xsl:text>
+                <xsl:value-of select="@name"/>
+              </xsl:message>
+            </xsl:if>
 
 	    <xsl:if test="not(rng:interleave) or count(*) &gt; 1">
 	      <xsl:message>
@@ -178,10 +182,12 @@
 	    </xsl:copy>
 	  </xsl:when>
 	  <xsl:when test="$choices">
-	    <xsl:message>
-	      <xsl:text>Combining definitions for </xsl:text>
-	      <xsl:value-of select="@name"/>
-	    </xsl:message>
+            <xsl:if test="$debug != 0">
+              <xsl:message>
+                <xsl:text>Combining definitions for </xsl:text>
+                <xsl:value-of select="@name"/>
+              </xsl:message>
+            </xsl:if>
 
 	    <xsl:copy>
 	      <xsl:copy-of select="@*"/>
@@ -231,9 +237,11 @@
 	<xsl:variable name="choices" select="//rng:start[@combine='choice']"/>
 	<xsl:choose>
 	  <xsl:when test="$choices">
-	    <xsl:message>
-	      <xsl:text>Combining start definitions</xsl:text>
-	    </xsl:message>
+            <xsl:if test="$debug != 0">
+              <xsl:message>
+                <xsl:text>Combining start definitions</xsl:text>
+              </xsl:message>
+            </xsl:if>
 
 	    <xsl:copy>
 	      <xsl:copy-of select="@*"/>
@@ -272,17 +280,21 @@
 
     <xsl:choose>
       <xsl:when test="//rng:define[@name = $pat]">
-	<xsl:message>
-	  <xsl:text>Including conditional pattern=</xsl:text>
-	  <xsl:value-of select="$pat"/>
-	</xsl:message>
+        <xsl:if test="$debug != 0">
+          <xsl:message>
+            <xsl:text>Including conditional pattern=</xsl:text>
+            <xsl:value-of select="$pat"/>
+          </xsl:message>
+        </xsl:if>
 	<xsl:apply-templates mode="conditional"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:message>
-	  <xsl:text>Excluding conditional pattern=</xsl:text>
-	  <xsl:value-of select="$pat"/>
-	</xsl:message>
+        <xsl:if test="$debug != 0">
+          <xsl:message>
+            <xsl:text>Excluding conditional pattern=</xsl:text>
+            <xsl:value-of select="$pat"/>
+          </xsl:message>
+        </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -310,9 +322,11 @@
 	</xsl:copy>
       </xsl:when>
       <xsl:when test="//rng:start[@override]">
-	<xsl:message>
-	  <xsl:text>Suppressing original definition of start</xsl:text>
-	</xsl:message>
+        <xsl:if test="$debug != 0">
+          <xsl:message>
+            <xsl:text>Suppressing original definition of start</xsl:text>
+          </xsl:message>
+        </xsl:if>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:copy>
@@ -333,10 +347,12 @@
 	</xsl:copy>
       </xsl:when>
       <xsl:when test="$over">
-	<xsl:message>
-	  <xsl:text>Suppressing original definition of </xsl:text>
-	  <xsl:value-of select="@name"/>
-	</xsl:message>
+        <xsl:if test="$debug != 0">
+          <xsl:message>
+            <xsl:text>Suppressing original definition of </xsl:text>
+            <xsl:value-of select="@name"/>
+          </xsl:message>
+        </xsl:if>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:copy>
@@ -393,16 +409,18 @@
 
     <xsl:choose>
       <xsl:when test="string-length($unused) &gt; 0">
-	<xsl:message>
-	  <xsl:text>Removing </xsl:text>
-	  <xsl:value-of select="string-length($unused)"/>
-	  <xsl:text> patterns.</xsl:text>
-	</xsl:message>
+        <xsl:if test="$debug != 0">
+          <xsl:message>
+            <xsl:text>Removing </xsl:text>
+            <xsl:value-of select="string-length($unused)"/>
+            <xsl:text> patterns.</xsl:text>
+          </xsl:message>
+        </xsl:if>
 	<xsl:variable name="doc2">
 	  <xsl:apply-templates select="$doc" mode="remove-unused"/>
 	</xsl:variable>
 	<xsl:call-template name="removeunused">
-	  <xsl:with-param name="doc" select="exsl:node-set($doc2)"/>
+	  <xsl:with-param name="doc" select="$doc2"/>
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
@@ -427,7 +445,7 @@
 
   <xsl:template match="rng:define[@name]" mode="remove-unused">
     <xsl:choose>
-      <xsl:when test="key('refs', @name) != 0 and *">
+      <xsl:when test="count(key('refs', @name)) != 0 and *">
 	<xsl:copy>
 	  <xsl:copy-of select="@*"/>
 	  <xsl:apply-templates mode="remove-unused"/>
@@ -442,10 +460,12 @@
   <xsl:template match="rng:ref[@name]" mode="remove-unused">
     <xsl:choose>
       <xsl:when test="key('defs',@name)/rng:notAllowed or count(key('defs',@name)) = 0">
-        <xsl:message>
-          <xsl:text>   Removing ref to notAllowed element: </xsl:text>
-          <xsl:value-of select="@name"/>
-        </xsl:message>
+        <xsl:if test="$debug != 0">
+          <xsl:message>
+            <xsl:text>   Removing ref to notAllowed element: </xsl:text>
+            <xsl:value-of select="@name"/>
+          </xsl:message>
+        </xsl:if>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:copy>
@@ -465,10 +485,12 @@
 	</xsl:copy>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:message>
-          <xsl:text>   Removing empty </xsl:text>
-          <xsl:value-of select="local-name(.)"/>
-        </xsl:message>
+        <xsl:if test="$debug != 0">
+          <xsl:message>
+            <xsl:text>   Removing empty </xsl:text>
+            <xsl:value-of select="local-name(.)"/>
+          </xsl:message>
+        </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

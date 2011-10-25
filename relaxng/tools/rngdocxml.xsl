@@ -12,25 +12,35 @@
 
   <xsl:key name="defs" match="rng:define" use="@name"/>
 
+  <xsl:param name="debug" select="0"/>
+
   <xsl:template match="/">
-    <xsl:message>Add groups</xsl:message>
+    <xsl:if test="$debug != 0">
+      <xsl:message>Add groups</xsl:message>
+    </xsl:if>
     <xsl:variable name="grouped">
       <xsl:apply-templates mode="group"/>
     </xsl:variable>
 
-    <xsl:message>Expand content models</xsl:message>
+    <xsl:if test="$debug != 0">
+      <xsl:message>Expand content models</xsl:message>
+    </xsl:if>
     <xsl:variable name="expanded">
       <xsl:call-template name="expand">
 	<xsl:with-param name="root" select="$grouped"/>
       </xsl:call-template>
     </xsl:variable>
 
-    <xsl:message>Classify element content</xsl:message>
+    <xsl:if test="$debug != 0">
+      <xsl:message>Classify element content</xsl:message>
+    </xsl:if>
     <xsl:variable name="classified">
       <xsl:apply-templates select="$expanded" mode="classify"/>
     </xsl:variable>
 
-    <xsl:message>Flatten nested choices</xsl:message>
+    <xsl:if test="$debug != 0">
+      <xsl:message>Flatten nested choices</xsl:message>
+    </xsl:if>
     <xsl:variable name="flattened">
       <xsl:call-template name="flatten">
 	<xsl:with-param name="root" select="$classified"/>
@@ -91,10 +101,12 @@
       <xsl:apply-templates select="$root" mode="expandTest"/>
     </xsl:variable>
 
-    <xsl:message>
-      <xsl:value-of select="string-length($canExpand)"/>
-      <xsl:text> patterns to expand</xsl:text>
-    </xsl:message>
+    <xsl:if test="$debug != 0">
+      <xsl:message>
+        <xsl:value-of select="string-length($canExpand)"/>
+        <xsl:text> patterns to expand</xsl:text>
+      </xsl:message>
+    </xsl:if>
 
     <xsl:choose>
       <xsl:when test="contains($canExpand, '1')">
@@ -254,10 +266,12 @@
       <xsl:apply-templates select="$root" mode="flattenTest"/>
     </xsl:variable>
 
-    <xsl:message>
-      <xsl:value-of select="$canFlatten"/>
-      <xsl:text> patterns to flatten</xsl:text>
-    </xsl:message>
+    <xsl:if test="$debug != 0">
+      <xsl:message>
+        <xsl:value-of select="$canFlatten"/>
+        <xsl:text> patterns to flatten</xsl:text>
+      </xsl:message>
+    </xsl:if>
 
     <xsl:choose>
       <xsl:when test="$canFlatten &gt; 0">

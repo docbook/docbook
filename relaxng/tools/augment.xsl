@@ -1,32 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:exsl="http://exslt.org/common"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
 		xmlns:s="http://purl.oclc.org/dsdl/schematron"
 		xmlns:db="http://docbook.org/ns/docbook"
-		xmlns:dbx = "http://sourceforge.net/projects/docbook/defguide/schema/extra-markup"
-                exclude-result-prefixes="exsl ctrl"
-                version="1.0">
+		xmlns:dbx="http://sourceforge.net/projects/docbook/defguide/schema/extra-markup"
+                exclude-result-prefixes="ctrl dbx"
+                version="2.0">
 
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
   <xsl:strip-space elements="*"/>
 
   <xsl:key name="defs" match="rng:define" use="@name"/>
 
-  <xsl:variable name="exclusionsNS">
+  <xsl:variable name="exclusions" as="element(exclusions)">
     <exclusions>
       <xsl:apply-templates select="//ctrl:exclude" mode="exclusions"/>
     </exclusions>
   </xsl:variable>
 
-  <xsl:variable name="exclusions" select="exsl:node-set($exclusionsNS)/*"/>
-
-  <xsl:variable name="startNS">
+  <xsl:variable name="start" as="element()*">
     <xsl:apply-templates select="//rng:start" mode="names"/>
   </xsl:variable>
-
-  <xsl:variable name="start" select="exsl:node-set($startNS)/*"/>
 
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -49,14 +44,6 @@
       </xsl:attribute>
 
       <xsl:copy-of select="@*"/>
-
-      <xsl:text>&#10;</xsl:text>
-      <xsl:text>&#10;</xsl:text>
-      <xsl:comment> DocBook V5.0</xsl:comment>
-      <xsl:text>&#10;</xsl:text>
-      <xsl:comment> See http://docbook.org/ns/docbook </xsl:comment>
-      <xsl:text>&#10;</xsl:text>
-
       <xsl:apply-templates/>
     </grammar>
   </xsl:template>
@@ -93,7 +80,7 @@
 		</xsl:message>
 	    -->
 
-	    <s:pattern name="Element exclusion">
+	    <s:pattern name="Element exclusion" xmlns="http://relaxng.org/ns/structure/1.0">
 	      <s:rule context="db:{$name}">
 		<s:assert test="not(.//db:{name(.)})">
 		  <xsl:value-of select="name(.)"/>
@@ -114,7 +101,7 @@
       </xsl:variable>
 
       <xsl:if test="$isStart &gt; 0">
-	<s:pattern name="Root must have version">
+	<s:pattern name="Root must have version" xmlns="http://relaxng.org/ns/structure/1.0">
 	  <s:rule context="/db:{$name}">
 	    <s:assert test="@version">
 	      <xsl:text>If this element is the root element, it must have a version attribute.</xsl:text>
