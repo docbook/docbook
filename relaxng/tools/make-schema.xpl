@@ -8,6 +8,7 @@
 <p:option name="schema" required="true"/>
 <p:option name="release" required="true"/>
 <p:option name="remove-schematron" select="0"/>
+<p:option name="make-rnc" select="'1'"/>
 
 <p:exec command="trang" source-is-xml='false' result-is-xml='false' name="trang">
   <p:input port="source">
@@ -21,7 +22,7 @@
 <p:sink/>
 
 <p:load cx:depends-on="trang">
-  <p:with-option name="href" select="concat('../schemas/build/', $schema, '/', $schema, '.rng')"/>
+  <p:with-option name="href" select="concat(exf:cwd(),'/build/', $schema, '/', $schema, '.rng')"/>
 </p:load>
 
 <p:xslt>
@@ -54,7 +55,7 @@
 </p:xslt>
 
 <p:load>
-  <p:with-option name="href" select="concat('../schemas/', $schema, '/copyright.xml')"/>
+  <p:with-option name="href" select="concat(exf:cwd(), '/', $schema, '/copyright.xml')"/>
 </p:load>
 
 <p:template name="copyright">
@@ -74,18 +75,28 @@
 </p:xslt>
 
 <p:store name="store" method="xml" indent="true">
-  <p:with-option name="href" select="concat('../schemas/', $schema, '.rng')"/>
+  <p:with-option name="href" select="concat(exf:cwd(), '/', $schema, '.rng')"/>
 </p:store>
 
-<p:exec command="trang" source-is-xml='false' result-is-xml='false' cx:depends-on="store">
-  <p:input port="source">
-    <p:empty/>
-  </p:input>
-  <p:with-option name="args" select="concat($schema,'.rng ',$schema,'.rnc')">
-    <p:empty/>
-  </p:with-option>
-</p:exec>
-
-<p:sink/>
+<p:choose>
+  <p:when test="$make-rnc != '0'">
+    <p:exec command="trang" source-is-xml='false' result-is-xml='false' cx:depends-on="store">
+      <p:input port="source">
+        <p:empty/>
+      </p:input>
+      <p:with-option name="args" select="concat($schema,'.rng ',$schema,'.rnc')">
+        <p:empty/>
+      </p:with-option>
+    </p:exec>
+    <p:sink/>
+  </p:when>
+  <p:otherwise>
+    <p:sink>
+      <p:input port="source">
+        <p:empty/>
+      </p:input>
+    </p:sink>
+  </p:otherwise>
+</p:choose>
 
 </p:declare-step>
