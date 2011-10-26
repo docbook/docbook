@@ -249,8 +249,8 @@ div {
 div {
    db.indexterm =
       db.indexterm.singular
-    |db.indexterm.startofrange
-    |db.indexterm.endofrange
+    | db.indexterm.startofrange
+    | db.indexterm.endofrange
 }
 
 # ======================================================================
