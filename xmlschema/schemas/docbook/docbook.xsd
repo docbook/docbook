@@ -7,7 +7,17 @@
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
   <xs:include schemaLocation="tables.xsd"/>
 
-  <!-- FIXME: generate Schematron rules to forbid titles where the title.forbidden is used -->
+  <xs:annotation xmlns:s="http://purl.oclc.org/dsdl/schematron">
+    <xs:appinfo>
+      <s:pattern name="Only one kind of linking per element">
+        <!-- "and" in the context is intentional -->
+        <s:rule context="db:*[@linkend and @xlink:*]">
+          <s:assert test="not(@linkend) or not(@xlink:*)"
+                    >@linkend cannot be combined with XLink.</s:assert>
+        </s:rule>
+      </s:pattern>
+    </xs:appinfo>
+  </xs:annotation>
 
   <xs:attributeGroup name="effectivity.attributes">
     <xs:attribute name="arch"/>
@@ -95,7 +105,7 @@
     <xs:attribute ref="xlink:actuate"/>
   </xs:attributeGroup>
 
-  <!-- FIXME: can't test that linkend or href required -->
+  <!-- Note: Can't test that linkend or href required; use schematron -->
   <xs:attributeGroup name="common.req.linking.attributes">
     <xs:attribute name="linkend" type="xs:IDREF"/>
     <xs:attribute ref="xlink:href"/>
@@ -107,7 +117,6 @@
     <xs:attribute ref="xlink:actuate"/>
   </xs:attributeGroup>
 
-  <!-- FIXME: schematron: fileref or entityref -->
   <xs:attributeGroup name="common.data.attributes">
     <xs:attribute name="format"/>
     <xs:attribute name="fileref" type="xs:anyURI"/>
@@ -279,6 +288,14 @@
       <xs:group ref="db:para.blocks"/>
       <xs:element ref="db:annotation"/>
       <xs:element ref="db:indexterm"/>
+    </xs:choice>
+  </xs:group>
+
+  <xs:group name="all-i.blocks">
+    <xs:choice>
+      <xs:group ref="db:nopara.blocks"/>
+      <xs:group ref="db:para.blocks"/>
+      <xs:element ref="db:annotation"/>
     </xs:choice>
   </xs:group>
 
@@ -971,12 +988,11 @@
     </xs:attribute>
   </xs:attributeGroup>
 
-  <!-- FIXME: schematron: only continuation or startingnumber -->
   <xs:element name="orderedlist">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.only" minOccurs="0"/>
-        <xs:group ref="db:all.blocks"/>
+        <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="db:listitem" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -987,6 +1003,11 @@
       <xs:attributeGroup ref="db:startingnumber.attribute"/>
       <xs:attributeGroup ref="db:inheritnum.attribute"/>
       <xs:attributeGroup ref="db:numeration.attribute"/>
+      <xs:assert test="not(@startingnumber and @continuation)">
+        <xs:annotation>
+          <xs:documentation>List numeration can only be specified with @startingnumber or @continuation, not both</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -1042,7 +1063,6 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: schematron: only allow columns when type!=inline -->
   <xs:element name="simplelist">
     <xs:complexType>
       <xs:sequence>
@@ -1061,6 +1081,11 @@
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="columns" type="xs:integer"/>
+      <xs:assert test="not(@columns) or not(@type) or (@type != 'inline')">
+        <xs:annotation>
+          <xs:documentation>Inline simple lists cannot have @columns</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -1109,7 +1134,6 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: schematron: only pgwide or width -->
   <xs:element name="example">
     <xs:complexType>
       <xs:sequence>
@@ -1124,10 +1148,14 @@
       <xs:attributeGroup ref="db:floatstyle.attribute"/>
       <xs:attributeGroup ref="db:pgwide.attribute"/>
       <xs:attribute name="width" type="xs:nonNegativeInteger"/>
+      <xs:assert test="not(@width and @pgwide)">
+        <xs:annotation>
+          <xs:documentation>Only one of @width or @pgwide may be specified.</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: schematron: only pgwide or width -->
   <xs:element name="informalexample">
     <xs:complexType>
       <xs:sequence>
@@ -1141,6 +1169,11 @@
       <xs:attributeGroup ref="db:floatstyle.attribute"/>
       <xs:attributeGroup ref="db:pgwide.attribute"/>
       <xs:attribute name="width" type="xs:nonNegativeInteger"/>
+      <xs:assert test="not(@width and @pgwide)">
+        <xs:annotation>
+          <xs:documentation>Only one of @width or @pgwide may be specified.</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -1192,14 +1225,12 @@
     <xs:attribute name="language"/>
   </xs:attributeGroup>
 
-  <!-- FIXME: xml:space fixed/default "preserve" -->
-
   <xs:attributeGroup name="verbatim.attributes">
     <xs:attributeGroup ref="db:verbatim.continuation.attribute"/>
     <xs:attributeGroup ref="db:verbatim.linenumbering.attribute"/>
     <xs:attributeGroup ref="db:verbatim.startinglinenumber.attribute"/>
     <xs:attributeGroup ref="db:verbatim.language.attribute"/>
-    <!-- xml:space -->
+    <xs:attribute ref="xml:space"/>
   </xs:attributeGroup>
 
   <xs:element name="literallayout">
@@ -1217,6 +1248,11 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:assert test="not(@xml:space) or @xml:space='preserve'">
+        <xs:annotation>
+          <xs:documentation>In literallayout, @xml:space must be 'preserve'</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -1229,8 +1265,33 @@
     <xs:attribute name="width" type="xs:nonNegativeInteger"/>
   </xs:complexType>
 
-  <xs:element name="screen" type="db:verbatim.monospaced"/>
-  <xs:element name="programlisting" type="db:verbatim.monospaced"/>
+  <xs:element name="screen">
+    <xs:complexType mixed="true">
+      <xs:complexContent>
+        <xs:extension base="db:verbatim.monospaced">
+          <xs:assert test="not(@xml:space) or @xml:space='preserve'">
+            <xs:annotation>
+              <xs:documentation>In screen, @xml:space must be 'preserve'</xs:documentation>
+            </xs:annotation>
+          </xs:assert>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="programlisting">
+    <xs:complexType mixed="true">
+      <xs:complexContent>
+        <xs:extension base="db:verbatim.monospaced">
+          <xs:assert test="not(@xml:space) or @xml:space='preserve'">
+            <xs:annotation>
+              <xs:documentation>In programlisting, @xml:space must be 'preserve'</xs:documentation>
+            </xs:annotation>
+          </xs:assert>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
 
   <xs:element name="lineannotation">
     <xs:complexType mixed="true">
@@ -1491,6 +1552,11 @@
       <xs:attributeGroup ref="db:videodata.scale.attribute"/>
       <xs:attributeGroup ref="db:videodata.depth.attribute"/>
       <xs:attributeGroup ref="db:videodata.contentdepth.attribute"/>
+      <xs:assert test="@fileref or @entityref and not(@fileref and @entityref)">
+        <xs:annotation>
+          <xs:documentation>Only one of @fileref or @entityref may be specified</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -1500,6 +1566,11 @@
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.data.attributes"/>
+      <xs:assert test="@fileref or @entityref and not(@fileref and @entityref)">
+        <xs:annotation>
+          <xs:documentation>Only one of @fileref or @entityref may be specified</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -1549,6 +1620,11 @@
       <xs:attributeGroup ref="db:imagedata.scale.attribute"/>
       <xs:attributeGroup ref="db:imagedata.depth.attribute"/>
       <xs:attributeGroup ref="db:imagedata.contentdepth.attribute"/>
+      <xs:assert test="@fileref or @entityref and not(@fileref and @entityref)">
+        <xs:annotation>
+          <xs:documentation>Only one of @fileref or @entityref may be specified</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -1559,6 +1635,11 @@
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.data.attributes"/>
       <xs:attribute name="encoding"/>
+      <xs:assert test="@fileref or @entityref and not(@fileref and @entityref)">
+        <xs:annotation>
+          <xs:documentation>Only one of @fileref or @entityref may be specified</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -1568,9 +1649,7 @@
         <xs:group ref="db:_info.title.forbidden" minOccurs="0"/>
         <xs:choice>
           <xs:group ref="db:all.inlines" minOccurs="0" maxOccurs="unbounded"/>
-<!-- FIXME: how to avoid dup indexterm?
-          <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
--->
+          <xs:group ref="db:all-i.blocks" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -1579,7 +1658,6 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: schematron: handle other -->
   <xs:attributeGroup name="area.units.attribute">
     <xs:attribute name="units">
       <xs:simpleType>
@@ -1641,10 +1719,15 @@
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
       <xs:attributeGroup ref="db:area.units.attribute"/>
+      <xs:assert test="(not(@units eq 'other') and not(@otherunits))
+                       or (@units='other' and @otherunits)">
+        <xs:annotation>
+          <xs:documentation>The @units/@otherunits attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: schematron: only linkends or href -->
   <xs:element name="area">
     <xs:complexType>
       <xs:sequence>
@@ -1654,13 +1737,23 @@
       <xs:attributeGroup ref="db:common.idreq.attributes"/>
       <xs:attributeGroup ref="db:area.units.attribute"/>
       <xs:attribute name="linkends" type="xs:IDREFS"/>
-      <xs:attribute name="href" type="xs:anyURI"/>
+      <xs:attribute ref="xlink:href"/>
       <xs:attribute name="label"/>
       <xs:attribute name="coords"/>
+      <xs:assert test="(not(@units eq 'other') and not(@otherunits))
+                       or (@units='other' and @otherunits)">
+        <xs:annotation>
+          <xs:documentation>The @units/@otherunits attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
+      <xs:assert test="not(@linkends) or not(@xlink:href)">
+        <xs:annotation>
+          <xs:documentation>Only one of @linkends/@xlink:href may be specified</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: schematron: only linkends or href -->
   <xs:element name="areaset">
     <xs:complexType>
       <xs:sequence>
@@ -1677,6 +1770,12 @@
             <xs:attribute name="href" type="xs:anyURI"/>
             <xs:attribute name="label"/>
             <xs:attribute name="coords"/>
+            <xs:assert test="(not(@units eq 'other') and not(@otherunits))
+                             or (@units='other' and @otherunits)">
+              <xs:annotation>
+                <xs:documentation>The @units/@otherunits attributes must be consistent</xs:documentation>
+              </xs:annotation>
+            </xs:assert>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
@@ -1684,8 +1783,19 @@
       <xs:attributeGroup ref="db:common.idreq.attributes"/>
       <xs:attributeGroup ref="db:area.units.attribute"/>
       <xs:attribute name="linkends" type="xs:IDREFS"/>
-      <xs:attribute name="href" type="xs:anyURI"/>
+      <xs:attribute ref="xlink:href"/>
       <xs:attribute name="label"/>
+      <xs:assert test="(not(@units eq 'other') and not(@otherunits))
+                       or (@units='other' and @otherunits)">
+        <xs:annotation>
+          <xs:documentation>The @units/@otherunits attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
+      <xs:assert test="not(@linkends) or not(@xlink:href)">
+        <xs:annotation>
+          <xs:documentation>Only one of @linkends/@xlink:href may be specified</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -1738,6 +1848,11 @@
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
       <xs:attributeGroup ref="db:verbatim.attributes"/>
+      <xs:assert test="not(@xml:space) or @xml:space='preserve'">
+        <xs:annotation>
+          <xs:documentation>In address, @xml:space must be 'preserve'</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -1783,7 +1898,6 @@
   <xs:element name="shortaffil" type="db:limited.text"/>
   <xs:element name="jobtitle" type="db:limited.text"/>
 
-  <!-- FIXME: schematron: class/otherclass -->
   <xs:element name="orgname">
     <xs:complexType mixed="true">
       <xs:complexContent>
@@ -1800,6 +1914,12 @@
             </xs:simpleType>
           </xs:attribute>
           <xs:attribute name="otherclass" type="xs:NMTOKEN"/>
+          <xs:assert test="(not(@class eq 'other') and not(@otherclass))
+                           or (@class='other' and @otherclass)">
+        <xs:annotation>
+          <xs:documentation>The @class/@otherclass attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -1818,7 +1938,6 @@
 
   <xs:element name="artpagenums" type="db:limited.text"/>
 
-  <!-- FIXME: schematron: _text or just other elements -->
   <xs:element name="personname">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -1832,6 +1951,13 @@
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:assert test="normalize-space(string-join(text(),'')) = ''
+                       or (not(db:honorific) and not(db:firstname) and not(db:surname)
+                           and not(db:lineage) and not(db:othername))">
+        <xs:annotation>
+          <xs:documentation>A personname must be text or honorific/firstname/surname/lineage/othername, not both</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -2030,7 +2156,6 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: schematron: class/otherclass -->
   <xs:attributeGroup name="biblio.class.attribute">
     <xs:attribute name="class">
       <xs:simpleType>
@@ -2054,6 +2179,12 @@
       <xs:complexContent>
         <xs:extension base="db:limited.text">
           <xs:attributeGroup ref="db:biblio.class.attribute"/>
+          <xs:assert test="(not(@class eq 'other') and not(@otherclass))
+                           or (@class='other' and @otherclass)">
+        <xs:annotation>
+          <xs:documentation>The @class/@otherclass attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -2064,6 +2195,12 @@
       <xs:complexContent>
         <xs:extension base="db:limited.text">
           <xs:attributeGroup ref="db:biblio.class.attribute"/>
+          <xs:assert test="(not(@class eq 'other') and not(@otherclass))
+                           or (@class='other' and @otherclass)">
+        <xs:annotation>
+          <xs:documentation>The @class/@otherclass attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -2074,47 +2211,59 @@
       <xs:complexContent>
         <xs:extension base="db:limited.text">
           <xs:attributeGroup ref="db:biblio.class.attribute"/>
+          <xs:assert test="(not(@class eq 'other') and not(@otherclass))
+                           or (@class='other' and @otherclass)">
+        <xs:annotation>
+          <xs:documentation>The @class/@otherclass attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
-
-  <!-- FIXME: schematron: type/othertype -->
-  <xs:attributeGroup name="bibliorelation.type.attribute">
-    <xs:attribute name="type">
-      <xs:simpleType>
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="hasformat"/>
-          <xs:enumeration value="haspart"/>
-          <xs:enumeration value="hasversion"/>
-          <xs:enumeration value="isformatof"/>
-          <xs:enumeration value="ispartof"/>
-          <xs:enumeration value="isreferencedby"/>
-          <xs:enumeration value="isreplacedby"/>
-          <xs:enumeration value="isrequiredby"/>
-          <xs:enumeration value="isversionof"/>
-          <xs:enumeration value="references"/>
-          <xs:enumeration value="replaces"/>
-          <xs:enumeration value="requires"/>
-          <xs:enumeration value="other"/>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:attribute>
-    <xs:attribute name="othertype" type="xs:NMTOKEN"/>
-  </xs:attributeGroup>
 
   <xs:element name="bibliorelation">
     <xs:complexType mixed="true">
       <xs:complexContent>
         <xs:extension base="db:limited.text">
           <xs:attributeGroup ref="db:biblio.class.attribute"/>
-          <xs:attributeGroup ref="db:bibliorelation.type.attribute"/>
+          <xs:attribute name="type">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="hasformat"/>
+                <xs:enumeration value="haspart"/>
+                <xs:enumeration value="hasversion"/>
+                <xs:enumeration value="isformatof"/>
+                <xs:enumeration value="ispartof"/>
+                <xs:enumeration value="isreferencedby"/>
+                <xs:enumeration value="isreplacedby"/>
+                <xs:enumeration value="isrequiredby"/>
+                <xs:enumeration value="isversionof"/>
+                <xs:enumeration value="references"/>
+                <xs:enumeration value="replaces"/>
+                <xs:enumeration value="requires"/>
+                <xs:enumeration value="other"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="othertype" type="xs:NMTOKEN"/>
+          <xs:assert test="(not(@class eq 'other') and not(@otherclass))
+                           or (@class='other' and @otherclass)">
+        <xs:annotation>
+          <xs:documentation>The @class/@otherclass attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
+          <xs:assert test="(not(@type eq 'other') and not(@othertype))
+                           or (@type='other' and @othertype)">
+        <xs:annotation>
+          <xs:documentation>The @type/@othertype attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: schematron: spatial/otherspatial -->
   <xs:attributeGroup name="bibliocoverage.spatial.attribute">
     <xs:attribute name="spatial">
       <xs:simpleType>
@@ -2130,7 +2279,6 @@
     <xs:attribute name="otherspatial" type="xs:NMTOKEN"/>
   </xs:attributeGroup>
 
-  <!-- FIXME: schematron: temporal/othertemporal -->
   <xs:attributeGroup name="bibliocoverage.temporal.attribute">
     <xs:attribute name="temporal">
       <xs:simpleType>
@@ -2150,6 +2298,18 @@
         <xs:extension base="db:limited.text">
           <xs:attributeGroup ref="db:bibliocoverage.spatial.attribute"/>
           <xs:attributeGroup ref="db:bibliocoverage.temporal.attribute"/>
+          <xs:assert test="(not(@spatial eq 'other') and not(@otherspatial))
+                            or (@spatial='other' and @otherspatial)">
+        <xs:annotation>
+          <xs:documentation>The @spatial/@otherspatial attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
+          <xs:assert test="(not(@temporal eq 'other') and not(@othertemporal))
+                            or (@temporal='other' and @othertemporal)">
+        <xs:annotation>
+          <xs:documentation>The @temporal/@othertemporal attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -2157,7 +2317,6 @@
 
   <xs:element name="legalnotice" type="db:block.container"/>
 
-  <!-- FIXME: schematron: class/otherclass -->
   <xs:attributeGroup name="othercredit.class.attribute">
     <xs:attribute name="class">
       <xs:simpleType>
@@ -2181,6 +2340,12 @@
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
       <xs:attributeGroup ref="db:othercredit.class.attribute"/>
+      <xs:assert test="(not(@class eq 'other') and not(@otherclass))
+                       or (@class='other' and @otherclass)">
+        <xs:annotation>
+          <xs:documentation>The @class/@otherclass attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -2716,7 +2881,7 @@
   <xs:complexType name="component.type">
     <xs:sequence>
       <xs:group ref="db:_info.title.req" minOccurs="0"/>
-      <xs:group ref="db:component.contentmodel" maxOccurs="unbounded"/>
+      <xs:group ref="db:component.contentmodel"/>
     </xs:sequence>
     <xs:attribute name="role"/>
     <xs:attributeGroup ref="db:common.attributes"/>
@@ -3112,7 +3277,6 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: schematron: class/otherclass -->
   <xs:element name="refmiscinfo">
     <xs:complexType mixed="true">
       <xs:complexContent>
@@ -3130,6 +3294,12 @@
             </xs:simpleType>
           </xs:attribute>
           <xs:attribute name="otherclass"/>
+          <xs:assert test="(not(@class eq 'other') and not(@otherclass))
+                           or (@class='other' and @otherclass)">
+        <xs:annotation>
+          <xs:documentation>The @class/@otherclass attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -3590,7 +3760,6 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: schematron rules for singular/startofrange/endofrange -->
   <xs:element name="indexterm">
     <xs:complexType>
       <xs:sequence>
@@ -3630,6 +3799,23 @@
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="startref" type="xs:IDREF"/>
+      <xs:assert test="@class='endofrange' or not(@startref)">
+        <xs:annotation>
+          <xs:documentation>Only end-of-range indexterms may have @startref</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
+      <xs:assert test="not(@class='endofrange')
+                       or (@startref and not(@significance) and not(@zone) and not(@pagenum)
+                           and not(@scope) and not(@type))">
+        <xs:annotation>
+          <xs:documentation>End-of-range indexterms must have @startref and must not have @significance, @zone, @pagenum, @scope, or @type</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
+      <xs:assert test="not(@class='endofrange') or not(*)">
+        <xs:annotation>
+          <xs:documentation>End-of-range indexterms must be empty</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -3654,11 +3840,11 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info" minOccurs="0"/>
-        <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:choice>
-          <xs:element ref="db:indexdiv" minOccurs="0" maxOccurs="unbounded"/>
-          <xs:element ref="db:indexentry" minOccurs="0" maxOccurs="unbounded"/>
-          <xs:element ref="db:segmentedlist"/>
+        <!-- Relaxed to avoid ambiguity wrt segmentedlist -->
+        <xs:choice maxOccurs="unbounded">
+          <xs:group ref="db:all.blocks"/>
+          <xs:element ref="db:indexdiv"/>
+          <xs:element ref="db:indexentry"/>
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -3693,10 +3879,10 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
-        <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:choice>
-          <xs:element ref="db:indexentry" maxOccurs="unbounded"/>
-          <xs:element ref="db:segmentedlist"/>
+        <!-- Relaxed to avoid ambiguity wrt segmentedlist -->
+        <xs:choice maxOccurs="unbounded">
+          <xs:group ref="db:all.blocks"/>
+          <xs:element ref="db:indexentry"/>
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -3832,7 +4018,7 @@
   <xs:element name="lhs">
     <xs:complexType mixed="true">
       <xs:attribute name="role"/>
-      <xs:attributeGroup ref="db:common.idreq.attributes"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
     </xs:complexType>
   </xs:element>
@@ -3845,7 +4031,7 @@
         <xs:element ref="db:sbr"/>
       </xs:choice>
       <xs:attribute name="role"/>
-      <xs:attributeGroup ref="db:common.idreq.attributes"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
     </xs:complexType>
   </xs:element>
@@ -3853,7 +4039,7 @@
   <xs:element name="nonterminal">
     <xs:complexType mixed="true">
       <xs:attribute name="role"/>
-      <xs:attributeGroup ref="db:common.idreq.attributes"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
       <xs:attribute name="def" type="xs:anyURI"/>
     </xs:complexType>
@@ -3866,6 +4052,11 @@
           <xs:attribute name="role"/>
           <xs:attributeGroup ref="db:common.attributes"/>
           <xs:attributeGroup ref="db:common.req.linking.attributes"/>
+          <xs:assert test="@linkend or @xlink:href">
+            <xs:annotation>
+              <xs:documentation>A link must be specified with @linkend or @xlink:href</xs:documentation>
+            </xs:annotation>
+          </xs:assert>
         </xs:restriction>
       </xs:complexContent>
     </xs:complexType>
@@ -3878,6 +4069,11 @@
           <xs:attribute name="role"/>
           <xs:attributeGroup ref="db:common.attributes"/>
           <xs:attributeGroup ref="db:common.req.linking.attributes"/>
+          <xs:assert test="@linkend or @xlink:href">
+            <xs:annotation>
+              <xs:documentation>A link must be specified with @linkend or @xlink:href</xs:documentation>
+            </xs:annotation>
+          </xs:assert>
         </xs:restriction>
       </xs:complexContent>
     </xs:complexType>
@@ -4392,7 +4588,6 @@
     </xs:choice>
   </xs:group>
 
-  <!-- FIXME: schematron function/otherfunction -->
   <xs:element name="keycap">
     <xs:complexType mixed="true">
       <xs:complexContent>
@@ -4426,6 +4621,12 @@
             </xs:simpleType>
           </xs:attribute>
           <xs:attribute name="otherfunction"/>
+          <xs:assert test="(not(@function eq 'other') and not(@otherfunction))
+                           or (@function='other' and @otherfunction)">
+        <xs:annotation>
+          <xs:documentation>The @function/@otherfunction attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -4442,7 +4643,6 @@
     </xs:choice>
   </xs:group>
 
-  <!-- FIXME: schematron action/otheraction-->
   <xs:element name="keycombo">
     <xs:complexType>
       <xs:sequence>
@@ -4464,13 +4664,18 @@
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="otheraction"/>
+      <xs:assert test="(not(@action eq 'other') and not(@otheraction))
+                       or (@action='other' and @otheraction)">
+        <xs:annotation>
+          <xs:documentation>The @action/@otheraction attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
   <xs:element name="keysym" type="db:limited.text"/>
   <xs:element name="accel" type="db:limited.text"/>
 
-  <!-- FIXME: schematron action/otheraction-->
   <xs:element name="shortcut">
     <xs:complexType>
       <xs:sequence>
@@ -4492,6 +4697,12 @@
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="otheraction"/>
+      <xs:assert test="(not(@action eq 'other') and not(@otheraction))
+                       or (@action='other' and @otheraction)">
+        <xs:annotation>
+          <xs:documentation>The @action/@otheraction attributes must be consistent</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -4706,7 +4917,19 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="synopsis" type="db:verbatim.monospaced"/>
+  <xs:element name="synopsis">
+    <xs:complexType mixed="true">
+      <xs:complexContent>
+        <xs:extension base="db:verbatim.monospaced">
+          <xs:assert test="not(@xml:space) or @xml:space='preserve'">
+            <xs:annotation>
+              <xs:documentation>In synopsis, @xml:space must be 'preserve'</xs:documentation>
+            </xs:annotation>
+          </xs:assert>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
 
   <xs:element name="funcsynopsis">
     <xs:complexType>
@@ -4724,7 +4947,19 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="funcsynopsisinfo" type="db:verbatim.monospaced"/>
+  <xs:element name="funcsynopsisinfo">
+    <xs:complexType mixed="true">
+      <xs:complexContent>
+        <xs:extension base="db:verbatim.monospaced">
+          <xs:assert test="not(@xml:space) or @xml:space='preserve'">
+            <xs:annotation>
+              <xs:documentation>In funcsynopsisinfo, @xml:space must be 'preserve'</xs:documentation>
+            </xs:annotation>
+          </xs:assert>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
 
   <xs:element name="funcprototype">
     <xs:complexType>
@@ -4831,7 +5066,19 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="classsynopsisinfo" type="db:verbatim.monospaced"/>
+  <xs:element name="classsynopsisinfo">
+    <xs:complexType mixed="true">
+      <xs:complexContent>
+        <xs:extension base="db:verbatim.monospaced">
+          <xs:assert test="not(@xml:space) or @xml:space='preserve'">
+            <xs:annotation>
+              <xs:documentation>In classsynopsisinfo, @xml:space must be 'preserve'</xs:documentation>
+            </xs:annotation>
+          </xs:assert>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
 
   <xs:element name="ooclass">
     <xs:complexType>
@@ -4878,8 +5125,15 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- FIXME: xml:space attribute -->
-  <xs:element name="modifier" type="db:limited.text"/>
+  <xs:element name="modifier">
+    <xs:complexType mixed="true">
+      <xs:complexContent>
+        <xs:extension base="db:limited.text">
+          <xs:attribute ref="xml:space"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
 
   <xs:element name="interfacename" type="db:limited.text"/>
   <xs:element name="exceptionname" type="db:limited.text"/>
@@ -4965,17 +5219,14 @@
   <xs:element name="methodparam">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="db:modifier" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element ref="db:type" minOccurs="0"/>
-        <xs:choice>
-          <xs:sequence>
-            <xs:element ref="db:modifier" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element ref="db:parameter"/>
-            <xs:element ref="db:initializer" minOccurs="0"/>
-          </xs:sequence>
+        <!-- Relaxed to avoid ambiguity wrt db:modifier -->
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="db:modifier"/>
+          <xs:element ref="db:type"/>
+          <xs:element ref="db:parameter"/>
+          <xs:element ref="db:initializer"/>
           <xs:element ref="db:funcparams"/>
         </xs:choice>
-        <xs:element ref="db:modifier" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>

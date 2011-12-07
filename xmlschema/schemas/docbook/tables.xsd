@@ -356,7 +356,7 @@
     <xs:complexType>
       <xs:choice>
         <xs:group ref="db:all.inlines" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:all-i.blocks" minOccurs="0" maxOccurs="unbounded"/>
       </xs:choice>
       <xs:attributeGroup ref="db:html.attrs"/>
       <xs:attributeGroup ref="db:html.tablecell.attributes"/>
@@ -369,7 +369,7 @@
     <xs:complexType mixed="true">
       <xs:choice>
         <xs:group ref="db:all.inlines" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:all-i.blocks" minOccurs="0" maxOccurs="unbounded"/>
       </xs:choice>
       <xs:attributeGroup ref="db:html.attrs"/>
       <xs:attributeGroup ref="db:html.tablecell.attributes"/>
@@ -525,7 +525,7 @@
     <xs:complexType mixed="true">
       <xs:choice>
         <xs:group ref="db:all.inlines" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:all-i.blocks" minOccurs="0" maxOccurs="unbounded"/>
       </xs:choice>
       <xs:attribute name="role"/>
       <xs:attribute name="morerows" type="db:zeroorone.type"/>
