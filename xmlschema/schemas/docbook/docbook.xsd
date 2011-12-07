@@ -5,7 +5,6 @@
            xmlns:db="http://docbook.org/ns/docbook">
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
-  <xs:include schemaLocation="tables.xsd"/>
 
   <xs:annotation xmlns:s="http://purl.oclc.org/dsdl/schematron">
     <xs:appinfo>
@@ -4080,6 +4079,566 @@
   </xs:element>
 
   <xs:element name="constraintdef" type="db:block.type"/>
+
+  <xs:attributeGroup name="html.coreattrs">
+    <xs:attribute name="class"/>
+    <xs:attribute name="style"/>
+    <xs:attribute name="title"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="html.i18n">
+    <xs:attribute name="lang"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="html.events">
+    <xs:attribute name="onclick"/>
+    <xs:attribute name="ondblclick"/>
+    <xs:attribute name="onmousedown"/>
+    <xs:attribute name="onmouseup"/>
+    <xs:attribute name="onmouseover"/>
+    <xs:attribute name="onmousemove"/>
+    <xs:attribute name="onmouseout"/>
+    <xs:attribute name="onkeypress"/>
+    <xs:attribute name="onkeydown"/>
+    <xs:attribute name="onkeyup"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="html.attrs">
+    <xs:attributeGroup ref="db:common.attributes"/>
+    <xs:attributeGroup ref="db:html.coreattrs"/>
+    <xs:attributeGroup ref="db:html.i18n"/>
+    <xs:attributeGroup ref="db:html.events"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="html.table.attributes">
+    <xs:attribute name="summary"/>
+    <xs:attribute name="width"/>
+    <xs:attribute name="border" type="xs:nonNegativeInteger"/>
+    <xs:attribute name="rules">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="none"/>
+          <xs:enumeration value="groups"/>
+          <xs:enumeration value="rows"/>
+          <xs:enumeration value="cols"/>
+          <xs:enumeration value="all"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="cellspacing"/>
+    <xs:attribute name="cellpadding"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="html.tablecell.attributes">
+    <xs:attribute name="abbr"/>
+    <xs:attribute name="axis"/>
+    <xs:attribute name="headers"/>
+    <xs:attribute name="scope">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="row"/>
+          <xs:enumeration value="col"/>
+          <xs:enumeration value="rowgroup"/>
+          <xs:enumeration value="colgroup"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="rowspan" type="xs:nonNegativeInteger"/>
+    <xs:attribute name="colspan" type="xs:nonNegativeInteger"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="merged-html-cals-frame.attribute">
+    <xs:attribute name="frame">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <!-- CALS -->
+          <xs:enumeration value="all"/>
+          <xs:enumeration value="bottom"/>
+          <xs:enumeration value="none"/>
+          <xs:enumeration value="sides"/>
+          <xs:enumeration value="top"/>
+          <xs:enumeration value="topbot"/>
+          <!-- HTML -->
+          <xs:enumeration value="void"/>
+          <xs:enumeration value="above"/>
+          <xs:enumeration value="below"/>
+          <xs:enumeration value="hsides"/>
+          <xs:enumeration value="lhs"/>
+          <xs:enumeration value="rhs"/>
+          <xs:enumeration value="vsides"/>
+          <xs:enumeration value="box"/>
+          <xs:enumeration value="border"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:element name="table">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:sequence> <!-- CALS -->
+            <xs:group ref="db:_info.title.onlyreq" minOccurs="0" maxOccurs="1"/>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element ref="db:alt"/>
+              <xs:group ref="db:indexing.inlines"/>
+              <xs:element ref="db:textobject"/>
+            </xs:choice>
+            <xs:choice>
+              <xs:element ref="db:mediaobject" minOccurs="1" maxOccurs="unbounded"/>
+              <xs:element ref="db:tgroup" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:choice>
+            <xs:element ref="db:caption" minOccurs="0" maxOccurs="1"/>
+          </xs:sequence>
+          <xs:sequence> <!-- HTML -->
+            <xs:element ref="db:caption"/>
+            <xs:choice>
+              <xs:element ref="db:col" minOccurs="0" maxOccurs="unbounded"/>
+              <xs:element ref="db:colgroup" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:choice>
+            <xs:element ref="db:thead" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="db:tfoot" minOccurs="0" maxOccurs="1"/>
+            <xs:choice>
+              <xs:element ref="db:tbody" minOccurs="1" maxOccurs="unbounded"/>
+              <xs:element ref="db:tr" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:choice>
+      </xs:sequence>
+      <!-- common and CALS -->
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:label.attribute"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attributeGroup ref="db:tabstyle.attribute"/>
+      <xs:attributeGroup ref="db:floatstyle.attribute"/>
+      <xs:attributeGroup ref="db:orient.attribute"/>
+      <xs:attributeGroup ref="db:colsep.attribute"/>
+      <xs:attributeGroup ref="db:rowsep.attribute"/>
+      <xs:attributeGroup ref="db:pgwide.attribute"/>
+      <xs:attribute name="shortentry" type="db:zeroorone.type"/>
+      <xs:attribute name="tocentry" type="db:zeroorone.type"/>
+      <xs:attributeGroup ref="db:rowheader.attribute"/>
+
+      <!-- HTML -->
+      <xs:attributeGroup ref="db:html.coreattrs"/>
+      <xs:attributeGroup ref="db:html.i18n"/>
+      <xs:attributeGroup ref="db:html.events"/>
+      <xs:attributeGroup ref="db:html.table.attributes"/>
+
+      <!-- Merged -->
+      <xs:attributeGroup ref="db:merged-html-cals-frame.attribute"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="informaltable">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="db:_info.title.forbidden" minOccurs="0" maxOccurs="1"/>
+        <xs:choice>
+          <xs:sequence> <!-- CALS -->
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element ref="db:alt"/>
+              <xs:group ref="db:indexing.inlines"/>
+              <xs:element ref="db:textobject"/>
+            </xs:choice>
+            <xs:choice>
+              <xs:element ref="db:mediaobject" minOccurs="1" maxOccurs="unbounded"/>
+              <xs:element ref="db:tgroup" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:choice>
+            <xs:element ref="db:caption" minOccurs="0" maxOccurs="1"/>
+          </xs:sequence>
+          <xs:sequence> <!-- HTML -->
+            <xs:choice>
+              <xs:element ref="db:col" minOccurs="0" maxOccurs="unbounded"/>
+              <xs:element ref="db:colgroup" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:choice>
+            <xs:element ref="db:thead" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="db:tfoot" minOccurs="0" maxOccurs="1"/>
+            <xs:choice>
+              <xs:element ref="db:tbody" minOccurs="1" maxOccurs="unbounded"/>
+              <xs:element ref="db:tr" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:choice>
+      </xs:sequence>
+      <!-- Common and CALS -->
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:label.attribute"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attributeGroup ref="db:tabstyle.attribute"/>
+      <xs:attributeGroup ref="db:floatstyle.attribute"/>
+      <xs:attributeGroup ref="db:orient.attribute"/>
+      <xs:attributeGroup ref="db:colsep.attribute"/>
+      <xs:attributeGroup ref="db:rowsep.attribute"/>
+      <xs:attributeGroup ref="db:pgwide.attribute"/>
+      <xs:attribute name="shortentry" type="db:zeroorone.type"/>
+      <xs:attribute name="tocentry" type="db:zeroorone.type"/>
+      <xs:attributeGroup ref="db:rowheader.attribute"/>
+
+      <!-- HTML -->
+      <xs:attributeGroup ref="db:html.coreattrs"/>
+      <xs:attributeGroup ref="db:html.i18n"/>
+      <xs:attributeGroup ref="db:html.events"/>
+      <xs:attributeGroup ref="db:html.table.attributes"/>
+
+      <!-- Merged -->
+      <xs:attributeGroup ref="db:merged-html-cals-frame.attribute"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:attributeGroup name="html.cellhalign">
+    <xs:attribute name="halign">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="left"/>
+          <xs:enumeration value="center"/>
+          <xs:enumeration value="right"/>
+          <xs:enumeration value="justfy"/>
+          <xs:enumeration value="char"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="charoff"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="html.cellvalign">
+    <xs:attribute name="valign">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="bottom"/>
+          <xs:enumeration value="middle"/>
+          <xs:enumeration value="top"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:element name="col">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xs:anyType">
+          <xs:attributeGroup ref="db:html.attrs"/>
+          <xs:attribute name="span" type="xs:nonNegativeInteger"/>
+          <xs:attribute name="width"/>
+          <xs:attributeGroup ref="db:html.cellhalign"/>
+          <xs:attributeGroup ref="db:html.cellvalign"/>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="colgroup">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="db:col"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="db:html.attrs"/>
+      <xs:attribute name="span" type="xs:nonNegativeInteger"/>
+      <xs:attribute name="width"/>
+      <xs:attributeGroup ref="db:html.cellhalign"/>
+      <xs:attributeGroup ref="db:html.cellvalign"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="thead">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence> <!-- CALS -->
+          <xs:element ref="db:colspec" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="db:row" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:sequence> <!-- HTML -->
+          <xs:element ref="db:tr" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:choice>
+      <!-- Common and CALS -->
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attributeGroup ref="db:valign.attribute"/>
+
+      <!-- HTML -->
+      <xs:attributeGroup ref="db:html.coreattrs"/>
+      <xs:attributeGroup ref="db:html.i18n"/>
+      <xs:attributeGroup ref="db:html.events"/>
+      <xs:attributeGroup ref="db:html.cellhalign"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="tfoot">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence> <!-- CALS -->
+          <xs:element ref="db:colspec" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="db:row" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:sequence> <!-- HTML -->
+          <xs:element ref="db:tr" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:choice>
+      <!-- Common and CALS -->
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attributeGroup ref="db:valign.attribute"/>
+
+      <!-- HTML -->
+      <xs:attributeGroup ref="db:html.coreattrs"/>
+      <xs:attributeGroup ref="db:html.i18n"/>
+      <xs:attributeGroup ref="db:html.events"/>
+      <xs:attributeGroup ref="db:html.cellhalign"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="tbody">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence> <!-- CALS -->
+          <xs:element ref="db:row" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:sequence> <!-- HTML -->
+          <xs:element ref="db:tr" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:choice>
+      <!-- Common and CALS -->
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attributeGroup ref="db:valign.attribute"/>
+
+      <!-- HTML -->
+      <xs:attributeGroup ref="db:html.coreattrs"/>
+      <xs:attributeGroup ref="db:html.i18n"/>
+      <xs:attributeGroup ref="db:html.events"/>
+      <xs:attributeGroup ref="db:html.cellhalign"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="tr">
+    <xs:complexType>
+      <xs:choice minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="db:th"/>
+        <xs:element ref="db:td"/>
+      </xs:choice>
+      <xs:attributeGroup ref="db:html.attrs"/>
+      <xs:attributeGroup ref="db:html.cellhalign"/>
+      <xs:attributeGroup ref="db:html.cellvalign"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="th">
+    <xs:complexType>
+      <xs:choice>
+        <xs:group ref="db:all.inlines" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:all-i.blocks" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:choice>
+      <xs:attributeGroup ref="db:html.attrs"/>
+      <xs:attributeGroup ref="db:html.tablecell.attributes"/>
+      <xs:attributeGroup ref="db:html.cellhalign"/>
+      <xs:attributeGroup ref="db:html.cellvalign"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="td">
+    <xs:complexType mixed="true">
+      <xs:choice>
+        <xs:group ref="db:all.inlines" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:all-i.blocks" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:choice>
+      <xs:attributeGroup ref="db:html.attrs"/>
+      <xs:attributeGroup ref="db:html.tablecell.attributes"/>
+      <xs:attributeGroup ref="db:html.cellhalign"/>
+      <xs:attributeGroup ref="db:html.cellvalign"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:attributeGroup name="char.attribute">
+    <xs:attribute name="char"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="charoff.attribute">
+    <xs:attribute name="charoff">
+      <xs:simpleType>
+        <xs:restriction base="xs:nonNegativeInteger">
+          <xs:minExclusive value="0"/>
+          <xs:maxExclusive value="100"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="colsep.attribute">
+    <xs:attribute name="colsep" type="db:zeroorone.type"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="rowsep.attribute">
+    <xs:attribute name="rowsep" type="db:zeroorone.type"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="rowheader.attribute">
+    <xs:attribute name="rowheader">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="firstcol"/>
+          <xs:enumeration value="norowheader"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="align.attribute">
+    <xs:attribute name="align">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="center"/>
+          <xs:enumeration value="char"/>
+          <xs:enumeration value="justify"/>
+          <xs:enumeration value="left"/>
+          <xs:enumeration value="right"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="valign.attribute">
+    <xs:attribute name="valign">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="bottom"/>
+          <xs:enumeration value="middle"/>
+          <xs:enumeration value="top"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="column-spec.attributes">
+    <xs:attribute name="colname"/>
+    <xs:attribute name="namest"/>
+    <xs:attribute name="nameend"/>
+    <xs:attribute name="spanname"/>
+  </xs:attributeGroup>
+
+  <xs:element name="tgroup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="db:colspec" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="db:spanspec" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="db:thead" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="db:tfoot" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="db:tbody" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="role"/>
+      <xs:attribute name="tgroupstyle"/>
+      <xs:attribute name="cols" type="xs:positiveInteger"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attributeGroup ref="db:char.attribute"/>
+      <xs:attributeGroup ref="db:charoff.attribute"/>
+      <xs:attributeGroup ref="db:colsep.attribute"/>
+      <xs:attributeGroup ref="db:rowsep.attribute"/>
+      <xs:attributeGroup ref="db:align.attribute"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="colspec">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xs:anyType">
+          <xs:attribute name="role"/>
+          <xs:attribute name="colnum" type="xs:positiveInteger"/>
+          <xs:attribute name="colwidth"/>
+          <xs:attributeGroup ref="db:common.attributes"/>
+          <xs:attributeGroup ref="db:common.linking.attributes"/>
+          <xs:attributeGroup ref="db:char.attribute"/>
+          <xs:attributeGroup ref="db:charoff.attribute"/>
+          <xs:attributeGroup ref="db:colsep.attribute"/>
+          <xs:attributeGroup ref="db:rowsep.attribute"/>
+          <xs:attributeGroup ref="db:align.attribute"/>
+          <xs:attribute name="colname"/>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="spanspec">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xs:anyType">
+          <xs:attribute name="role"/>
+          <xs:attributeGroup ref="db:common.attributes"/>
+          <xs:attributeGroup ref="db:common.linking.attributes"/>
+          <xs:attribute name="spanname"/>
+          <xs:attribute name="namest"/>
+          <xs:attribute name="nameend"/>
+          <xs:attributeGroup ref="db:char.attribute"/>
+          <xs:attributeGroup ref="db:charoff.attribute"/>
+          <xs:attributeGroup ref="db:colsep.attribute"/>
+          <xs:attributeGroup ref="db:rowsep.attribute"/>
+          <xs:attributeGroup ref="db:align.attribute"/>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="row">
+    <xs:complexType>
+      <xs:choice minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="db:entry"/>
+        <xs:element ref="db:entrytbl"/>
+      </xs:choice>
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attributeGroup ref="db:rowsep.attribute"/>
+      <xs:attributeGroup ref="db:valign.attribute"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="entry">
+    <xs:complexType mixed="true">
+      <xs:choice>
+        <xs:group ref="db:all.inlines" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:all-i.blocks" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:choice>
+      <xs:attribute name="role"/>
+      <xs:attribute name="morerows" type="db:zeroorone.type"/>
+      <xs:attribute name="rotate" type="db:zeroorone.type"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attributeGroup ref="db:valign.attribute"/>
+      <xs:attributeGroup ref="db:char.attribute"/>
+      <xs:attributeGroup ref="db:charoff.attribute"/>
+      <xs:attributeGroup ref="db:colsep.attribute"/>
+      <xs:attributeGroup ref="db:rowsep.attribute"/>
+      <xs:attributeGroup ref="db:column-spec.attributes"/>
+      <xs:attributeGroup ref="db:align.attribute"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="entrytbl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="db:colspec" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="db:spanspec" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="db:thead" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="db:tbody"/>
+      </xs:sequence>
+      <xs:attribute name="role"/>
+      <xs:attribute name="tgroupstyle"/>
+      <xs:attribute name="cols" type="xs:positiveInteger"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attributeGroup ref="db:char.attribute"/>
+      <xs:attributeGroup ref="db:charoff.attribute"/>
+      <xs:attributeGroup ref="db:colsep.attribute"/>
+      <xs:attributeGroup ref="db:rowsep.attribute"/>
+      <xs:attributeGroup ref="db:column-spec.attributes"/>
+      <xs:attributeGroup ref="db:align.attribute"/>
+    </xs:complexType>
+  </xs:element>
 
   <xs:element name="msgset">
     <xs:complexType>
