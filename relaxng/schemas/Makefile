@@ -1,5 +1,5 @@
 REMOVESCH=0
-DBVER="V5.1b5"
+DBVER=V5.1b5
 DBREL="DocBook $(DBVER)"
 XIREL="DocBook XInclude $(DBVER)"
 SDBREL="Simplified DocBook $(DBVER)"
@@ -17,13 +17,17 @@ TOOLSDEP=../tools/make-schema.xpl
 all: schemas
 
 schemas: docbook.rnc assembly.rnc docbookxi.rnc sdocbook.rnc dbforms.rnc dbits.rnc \
-     publishers.rnc slides.rnc slides-full.rnc website.rnc website-full.rnc
+     publishers.rnc slides.rnc slides-full.rnc website.rnc website-full.rnc \
+     docbook.sch docbookxi.sch assembly.sch publishers.sch
 
 doc: defguide.rnd publishers.rnd sdocbook.rnd
 
 clean:
 	rm -rf build
 	rm -f *.rnc *.rng *.sch
+
+%.sch: %.rng
+	saxon $< ../tools/schematron.xsl $@
 
 docbook.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc)
 	mkdir -p build/docbook
