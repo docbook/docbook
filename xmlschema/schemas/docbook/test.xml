@@ -1,0 +1,28 @@
+<chapter xmlns="http://docbook.org/ns/docbook">
+<title>fred</title>
+
+<table>
+  <info><title>Some Table</title></info>
+  <tgroup cols="1">
+    <tbody>
+      <row>
+        <entry>Cell</entry>
+      </row>
+    </tbody>
+  </tgroup>
+</table>
+
+<table>
+  <caption>Some Caption</caption>
+  <tbody>
+    <tr>
+      <td>Cell</td>
+    </tr>
+  </tbody>
+</table>
+
+<para>
+<phrase></phrase>
+</para>
+
+</chapter>
