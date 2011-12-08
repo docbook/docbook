@@ -3839,7 +3839,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info" minOccurs="0"/>
-        <!-- Relaxed to avoid ambiguity wrt segmentedlist -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:group ref="db:all.blocks"/>
           <xs:element ref="db:indexdiv"/>
@@ -3852,6 +3851,25 @@
       <xs:attribute name="label"/>
       <xs:attributeGroup ref="db:status.attribute"/>
       <xs:attribute name="type"/>
+      <xs:assert test="(not(db:indexdiv) and not(db:indexentry))
+                       or (db:indexdiv and not(db:indexentry))
+                       or (db:indexentry and not(db:indexdiv))">
+        <xs:annotation>
+          <xs:documentation>Indexes must contain entries or divisions, not both.</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
+      <xs:assert test="not(db:indexdiv)
+                       or not(db:indexdiv/following-sibling::*[not(self::db:indexdiv)])">
+        <xs:annotation>
+          <xs:documentation>Nothing may follow an indexdiv except another indexdiv.</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
+      <xs:assert test="not(db:indexentry)
+                       or not(db:indexentry/following-sibling::*[not(self::db:indexentry)])">
+        <xs:annotation>
+          <xs:documentation>Nothing may follow an indexentry except another indexentry.</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -3878,7 +3896,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
-        <!-- Relaxed to avoid ambiguity wrt segmentedlist -->
         <xs:choice maxOccurs="unbounded">
           <xs:group ref="db:all.blocks"/>
           <xs:element ref="db:indexentry"/>
@@ -3889,6 +3906,12 @@
       <xs:attributeGroup ref="db:common.linking.attributes"/>
       <xs:attribute name="label"/>
       <xs:attributeGroup ref="db:status.attribute"/>
+      <xs:assert test="not(db:indexentry)
+                       or not(db:indexentry/following-sibling::*[not(self::db:indexentry)])">
+        <xs:annotation>
+          <xs:documentation>Nothing may follow an indexentry except another indexentry.</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
     </xs:complexType>
   </xs:element>
 
@@ -5778,7 +5801,7 @@
   <xs:element name="methodparam">
     <xs:complexType>
       <xs:sequence>
-        <!-- Relaxed to avoid ambiguity wrt db:modifier -->
+        <!-- FIXME: Relaxed to avoid ambiguity wrt db:modifier -->
         <xs:choice maxOccurs="unbounded">
           <xs:element ref="db:modifier"/>
           <xs:element ref="db:type"/>
