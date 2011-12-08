@@ -2978,8 +2978,8 @@
         </xs:choice>
         <xs:choice>
           <xs:sequence>
-            <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:group ref="db:article.components"/>
+            <xs:group ref="db:all.blocks" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:group ref="db:article.components" minOccurs="0"/>
           </xs:sequence>
           <xs:group ref="db:article.components"/>
         </xs:choice>
