@@ -3840,7 +3840,7 @@
       <xs:sequence>
         <xs:group ref="db:_info" minOccurs="0"/>
         <!-- Relaxed to avoid ambiguity wrt segmentedlist -->
-        <xs:choice maxOccurs="unbounded">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:group ref="db:all.blocks"/>
           <xs:element ref="db:indexdiv"/>
           <xs:element ref="db:indexentry"/>
