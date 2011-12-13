@@ -133,13 +133,21 @@
   <xs:group name="ubiq.inlines">
     <xs:choice>
       <xs:element ref="db:phrase"/>
+      <xs:element ref="db:inlinemediaobject"/>
+      <xs:element ref="db:remark"/>
+      <xs:element ref="db:superscript"/>
+      <xs:element ref="db:subscript"/>
+      <xs:group ref="db:link.inlines"/>
+      <xs:element ref="db:alt"/>
+      <xs:element ref="db:annotation"/>
+      <!-- ambig <xs:element ref="db:indexterm"/> -->
     </xs:choice>
   </xs:group>
 
   <xs:group name="_text">
     <xs:sequence>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:group ref="db:_phrase"/>
+        <xs:group ref="db:ubiq.inlines"/>
         <xs:element ref="db:replaceable"/>
       </xs:choice>
     </xs:sequence>
@@ -150,7 +158,7 @@
       <xs:group ref="db:publishing.inlines"/>
       <xs:group ref="db:product.inlines"/>
       <xs:group ref="db:bibliography.inlines"/>
-      <xs:group ref="db:graphic.inlines"/>
+      <!-- ubiq: <xs:group ref="db:graphic.inlines"/> -->
       <xs:group ref="db:indexing.inlines"/>
       <xs:group ref="db:link.inlines"/>
     </xs:choice>
@@ -159,6 +167,13 @@
   <xs:group name="domain.inlines">
     <xs:choice>
       <xs:group ref="db:technical.inlines"/>
+      <xs:group ref="db:math.inlines"/>
+      <xs:group ref="db:markup.inlines"/>
+      <xs:group ref="db:gui.inlines"/>
+      <xs:group ref="db:keyboard.inlines"/>
+      <xs:group ref="db:os.inlines"/>
+      <xs:group ref="db:programming.inlines"/>
+      <xs:group ref="db:error.inlines"/>
     </xs:choice>
   </xs:group>
 
@@ -167,12 +182,23 @@
       <xs:element ref="db:replaceable"/>
       <xs:element ref="db:package"/>
       <xs:element ref="db:parameter"/>
+      <xs:element ref="db:termdef"/>
+      <xs:element ref="db:nonterminal"/>
+      <xs:element ref="db:systemitem"/>
+      <xs:element ref="db:option"/>
+      <xs:element ref="db:optional"/>
+      <xs:element ref="db:property"/>
     </xs:choice>
   </xs:group>
 
   <xs:group name="product.inlines">
     <xs:choice>
       <xs:element ref="db:trademark"/>
+      <xs:element ref="db:productnumber"/>
+      <xs:element ref="db:productname"/>
+      <xs:element ref="db:database"/>
+      <xs:element ref="db:application"/>
+      <xs:element ref="db:hardware"/>
     </xs:choice>
   </xs:group>
 
@@ -203,16 +229,18 @@
       <xs:element ref="db:foreignphrase"/>
       <!-- ubiq: <xs:element ref="db:phrase"/> -->
       <xs:element ref="db:quote"/>
-      <xs:element ref="db:subscript"/>
-      <xs:element ref="db:superscript"/>
-      <xs:element ref="db:wordasword"/>
+      <!-- ubiq: <xs:element ref="db:subscript"/> -->
+      <!-- ubiq: <xs:element ref="db:superscript"/> -->
+      <!-- ubiq: <xs:element ref="db:wordasword"/> -->
+      <xs:group ref="db:glossary.inlines"/>
+      <xs:element ref="db:coref"/> <!-- ??? really !!! -->
     </xs:choice>
   </xs:group>
 
   <xs:group name="programming.inlines">
     <xs:choice>
       <xs:element ref="db:function"/>
-      <xs:element ref="db:parameter"/>
+      <!-- technical.inlines: <xs:element ref="db:parameter"/> -->
       <xs:element ref="db:varname"/>
       <xs:element ref="db:returnvalue"/>
       <xs:element ref="db:type"/>
@@ -234,11 +262,13 @@
     </xs:choice>
   </xs:group>
 
+  <!-- ubiq: <xs:element ref="db:inlinemediaobject"/>
   <xs:group name="graphic.inlines">
     <xs:choice>
       <xs:element ref="db:inlinemediaobject"/>
     </xs:choice>
   </xs:group>
+  -->
 
   <xs:group name="indexing.inlines">
     <xs:choice>
@@ -265,7 +295,7 @@
       <xs:group ref="db:technical.blocks"/>
       <xs:group ref="db:verbatim.blocks"/>
       <xs:element ref="db:bridgehead"/>
-      <xs:element ref="db:remark"/>
+      <!-- ubiq: <xs:element ref="db:remark"/> -->
       <xs:element ref="db:revhistory"/>
       <xs:group ref="db:synopsis.blocks"/>
       <xs:group ref="db:admonition.blocks"/>
@@ -294,7 +324,6 @@
     <xs:choice>
       <xs:group ref="db:nopara.blocks"/>
       <xs:group ref="db:para.blocks"/>
-      <xs:element ref="db:annotation"/>
     </xs:choice>
   </xs:group>
 
@@ -411,6 +440,7 @@
       <xs:element ref="db:edition"/>
       <xs:element ref="db:editor"/>
       <xs:element ref="db:issuenum"/>
+      <xs:element ref="db:keywordset"/>
       <xs:element ref="db:legalnotice"/>
       <xs:element ref="db:mediaobject"/>
       <xs:element ref="db:org"/>
@@ -440,7 +470,20 @@
 
   <xs:group name="bibliographic.elements">
     <xs:choice>
-      <xs:group ref="db:publishing.inlines"/>
+      <xs:group ref="db:info.elements"/>
+
+      <!-- This should be publishing.inlines, but there are ambiguity problems -->
+      <xs:element ref="db:abbrev"/>
+      <xs:element ref="db:acronym"/>
+      <xs:element ref="db:emphasis"/>
+      <xs:element ref="db:footnote"/>
+      <xs:element ref="db:footnoteref"/>
+      <xs:element ref="db:foreignphrase"/>
+      <xs:element ref="db:quote"/>
+      <xs:element ref="db:subscript"/>
+      <xs:element ref="db:superscript"/>
+      <xs:element ref="db:wordasword"/>
+
       <xs:element ref="db:citerefentry"/>
       <xs:element ref="db:citetitle"/>
       <xs:element ref="db:citebiblioid"/>
@@ -486,7 +529,7 @@
 
   <xs:element name="titleabbrev">
     <xs:complexType mixed="true">
-      <xs:group ref="db:all.inlines"/>
+      <xs:group ref="db:all.inlines" minOccurs="0"/>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
@@ -495,7 +538,7 @@
 
   <xs:element name="subtitle">
     <xs:complexType mixed="true">
-      <xs:group ref="db:all.inlines"/>
+      <xs:group ref="db:all.inlines" minOccurs="0"/>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
@@ -589,6 +632,11 @@
 
   <xs:group name="_info">
     <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="3">
+        <xs:element ref="db:title"/>
+        <xs:element ref="db:titleabbrev"/>
+        <xs:element ref="db:subtitle"/>
+      </xs:choice>
       <xs:element name="info" minOccurs="0">
         <xs:complexType>
           <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -796,9 +844,9 @@
   <xs:element name="blockquote">
     <xs:complexType>
       <xs:sequence>
-      <xs:group ref="db:_info.title.only" minOccurs="0"/>
-      <xs:element ref="db:attribution"/>
-      <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
+        <xs:group ref="db:_info.title.only" minOccurs="0"/>
+        <xs:element ref="db:attribution" minOccurs="0"/>
+        <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -936,7 +984,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.only" minOccurs="0"/>
-        <xs:group ref="db:all.blocks"/>
+        <xs:group ref="db:all.blocks" minOccurs="0"/>
         <xs:element ref="db:listitem" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -1338,6 +1386,7 @@
         <xs:restriction base="xs:anyType">
           <xs:attribute name="role"/>
           <xs:attributeGroup ref="db:common.attributes"/>
+          <xs:attribute name="linkend" type="xs:IDREF"/>
           <xs:attributeGroup ref="db:coref.label.attribute"/>
         </xs:restriction>
       </xs:complexContent>
@@ -1676,7 +1725,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.only" minOccurs="0"/>
-        <xs:group ref="db:all.blocks"/>
+        <xs:group ref="db:all.blocks" minOccurs="0"/>
         <xs:element ref="db:callout" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -1877,8 +1926,8 @@
   <xs:element name="affiliation">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="db:shortaffil"/>
-        <xs:element ref="db:jobtitle"/>
+        <xs:element ref="db:shortaffil" minOccurs="0"/>
+        <xs:element ref="db:jobtitle" minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice>
           <xs:element ref="db:org" minOccurs="0"/>
           <xs:sequence>
@@ -2493,8 +2542,6 @@
     <xs:complexType mixed="true">
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="db:_text"/>
-        <xs:element ref="db:superscript"/>
-        <xs:element ref="db:subscript"/>
         <xs:element ref="db:trademark"/>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -2507,8 +2554,6 @@
     <xs:complexType mixed="true">
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="db:_text"/>
-        <xs:element ref="db:superscript"/>
-        <xs:element ref="db:subscript"/>
         <xs:element ref="db:trademark"/>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -3629,8 +3674,70 @@
   <xs:element name="bibliomset">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:group ref="db:bibliographic.elements"/>
         <xs:group ref="db:_text"/>
+
+        <!-- This should be db:bibliographic.elements, but there's an ambiguity
+             problem with annotation in db:_text and db:info.elements -->
+
+        <xs:element ref="db:abstract"/>
+        <xs:element ref="db:address"/>
+        <xs:element ref="db:artpagenums"/>
+        <xs:element ref="db:author"/>
+        <xs:element ref="db:authorgroup"/>
+        <xs:element ref="db:authorinitials"/>
+        <xs:element ref="db:bibliocoverage"/>
+        <xs:element ref="db:biblioid"/>
+        <xs:element ref="db:bibliosource"/>
+        <xs:element ref="db:collab"/>
+        <xs:element ref="db:confgroup"/>
+        <xs:element ref="db:contractsponsor"/>
+        <xs:element ref="db:contractnum"/>
+        <xs:element ref="db:copyright"/>
+        <xs:element ref="db:cover"/>
+        <xs:element ref="db:date"/>
+        <xs:element ref="db:edition"/>
+        <xs:element ref="db:editor"/>
+        <xs:element ref="db:issuenum"/>
+        <xs:element ref="db:keywordset"/>
+        <xs:element ref="db:legalnotice"/>
+        <xs:element ref="db:mediaobject"/>
+        <xs:element ref="db:org"/>
+        <xs:element ref="db:orgname"/>
+        <xs:element ref="db:othercredit"/>
+        <xs:element ref="db:pagenums"/>
+        <xs:element ref="db:printhistory"/>
+        <xs:element ref="db:pubdate"/>
+        <xs:element ref="db:publisher"/>
+        <xs:element ref="db:publishername"/>
+        <xs:element ref="db:releaseinfo"/>
+        <xs:element ref="db:revhistory"/>
+        <xs:element ref="db:seriesvolnums"/>
+        <xs:element ref="db:subjectset"/>
+        <xs:element ref="db:volumenum"/>
+        <xs:element ref="db:extendedlink"/>
+        <xs:element ref="db:bibliomisc"/>
+        <xs:element ref="db:bibliomset"/>
+        <xs:element ref="db:bibliorelation"/>
+        <xs:element ref="db:biblioset"/>
+        <xs:element ref="db:itermset"/>
+        <xs:element ref="db:productname"/>
+        <xs:element ref="db:productnumber"/>
+        <xs:element ref="db:abbrev"/>
+        <xs:element ref="db:acronym"/>
+        <xs:element ref="db:emphasis"/>
+        <xs:element ref="db:footnote"/>
+        <xs:element ref="db:footnoteref"/>
+        <xs:element ref="db:foreignphrase"/>
+        <xs:element ref="db:quote"/>
+        <xs:element ref="db:citerefentry"/>
+        <xs:element ref="db:citetitle"/>
+        <xs:element ref="db:citebiblioid"/>
+        <xs:element ref="db:person"/>
+        <xs:element ref="db:personblurb"/>
+        <xs:element ref="db:personname"/>
+        <xs:element ref="db:subtitle"/>
+        <xs:element ref="db:title"/>
+        <xs:element ref="db:titleabbrev"/>
       </xs:choice>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -4835,7 +4942,7 @@
   <xs:element name="question">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="db:label"/>
+        <xs:element ref="db:label" minOccurs="0"/>
         <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -4847,7 +4954,7 @@
   <xs:element name="answer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="db:label"/>
+        <xs:element ref="db:label" minOccurs="0"/>
         <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -5123,8 +5230,6 @@
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:group ref="db:_text"/>
       <xs:element ref="db:accel"/>
-      <xs:element ref="db:superscript"/>
-      <xs:element ref="db:subscript"/>
     </xs:choice>
     <xs:attribute name="role"/>
     <xs:attributeGroup ref="db:common.attributes"/>
@@ -5345,7 +5450,7 @@
     <xs:complexType mixed="true">
       <xs:complexContent>
         <xs:extension base="db:limited.text">
-          <xs:attribute name="function">
+          <xs:attribute name="class">
             <xs:simpleType>
               <xs:restriction base="xs:token">
                 <xs:enumeration value="devicefile"/>
