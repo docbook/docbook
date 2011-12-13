@@ -3,7 +3,7 @@
                 xmlns:cx="http://xmlcalabash.com/ns/extensions"
                 xmlns:exf="http://exproc.org/standard/functions"
                 exclude-inline-prefixes="cx exf"
-                name="main">
+                name="main" type="cx:validate">
 <p:input port="source" primary="true"/>
 <p:input port="schema"/>
 <p:input port="schematron" sequence="true"/>
