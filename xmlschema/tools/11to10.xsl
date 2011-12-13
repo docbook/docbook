@@ -60,7 +60,8 @@
 <xsl:template match="xs:assert" mode="extractsch">
   <xsl:variable name="elname" select="(ancestor::xs:element)[1]/@name"/>
 
-  <s:pattern name="Assertion on {$elname}">
+  <s:pattern>
+    <s:title>Assertion on <xsl:value-of select="$elname"/></s:title>
     <s:rule context="db:{$elname}">
       <s:assert test="{@test}">
         <xsl:value-of select="xs:annotation/xs:documentation"/>
