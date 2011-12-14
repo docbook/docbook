@@ -27,6 +27,13 @@
 <!-- These tests are not valid DocBook markup, so we exclude them -->
 <p:delete match="c:file[@name='calloutlist.003.xml']"/>
 
+<!-- This test relies on xml:id being recognized on non-DocBook elements -->
+<p:delete match="c:file[@name='xref.002.xml']"/>
+
+<!-- These tests are not valid DocBook 5.0 markup, so we exclude them -->
+<p:delete match="c:file[@name='inlines.001.xml']"/>
+<p:delete match="c:file[@name='xlink.001.xml']"/>
+
 <p:make-absolute-uris match="c:file/@name"/>
 
 <p:for-each name="loop">
