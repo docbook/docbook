@@ -61,8 +61,6 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="parameter" type="db:notAllowed" abstract="true"/>
-
   <xs:group name="info.elements">
     <xs:choice>
       <xs:element ref="db:abstract"/>
