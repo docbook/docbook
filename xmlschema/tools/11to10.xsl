@@ -11,10 +11,12 @@
 
 <xsl:strip-space elements="*"/>
 
+<xsl:param name="sch-file" select="'docbook-xsd.sch'"/>
+
 <xsl:template match="/">
   <xsl:apply-templates/>
 
-  <xsl:result-document href="docbook-xsd.sch">
+  <xsl:result-document href="{$sch-file}">
     <xsl:apply-templates select="/" mode="extractsch"/>
   </xsl:result-document>
 </xsl:template>
@@ -22,6 +24,18 @@
 <xsl:template match="element()">
   <xsl:copy>
     <xsl:apply-templates select="@*,node()"/>
+  </xsl:copy>
+</xsl:template>
+
+<!-- In XSD 1.0, ##other wildcards create a UPA problem with the explicit
+     DublinCore elements, so we remove the explicit DublinCore elements
+     and change skip to lax. -->
+<xsl:template match="xs:group[@ref='db:dublincore.elements']"/>
+<xsl:template match="xs:any[@namespace='##other' and processContents='skip']">
+  <xsl:copy>
+    <xsl:copy-of select="@*"/>
+    <xsl:attribute name="processContents" select="'lax'"/>
+    <xsl:apply-templates select="node()"/>
   </xsl:copy>
 </xsl:template>
 
