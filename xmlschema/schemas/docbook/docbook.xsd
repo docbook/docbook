@@ -160,7 +160,7 @@
       <xs:group ref="db:bibliography.inlines"/>
       <!-- ubiq: <xs:group ref="db:graphic.inlines"/> -->
       <xs:group ref="db:indexing.inlines"/>
-      <xs:group ref="db:link.inlines"/>
+      <!-- ubiq: <xs:group ref="db:link.inlines"/> -->
     </xs:choice>
   </xs:group>
 
