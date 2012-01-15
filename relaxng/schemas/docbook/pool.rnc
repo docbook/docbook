@@ -568,6 +568,18 @@ db.scale.attribute =
    ]
    attribute scale { xsd:positiveInteger }
 
+db.classid.attribute =
+   [
+      db:refpurpose [ "Specifies a classid for a media object player" ]
+   ]
+   attribute classid { text }
+
+db.autoplay.attribute =
+   [
+      db:refpurpose [ "Specifies the autoplay setting for a media object player" ]
+   ]
+   attribute autoplay { text }
+
 # ======================================================================
 
 db.halign.enumeration =
@@ -2310,7 +2322,8 @@ div {
       element videoobject {
          db.videoobject.attlist,
          db.videoobject.info,
-         db.videodata
+         db.videodata,
+         db.multimediaparam*
       }
 }
 
@@ -2335,7 +2348,8 @@ div {
       element audioobject {
          db.audioobject.attlist,
          db.audioobject.info,
-         db.audiodata
+         db.audiodata,
+         db.multimediaparam*
       }
 }
 
@@ -2410,6 +2424,9 @@ div {
       ]
       attribute align { db.videodata.align.enumeration }
 
+   db.videodata.autoplay.attribute = db.autoplay.attribute
+   db.videodata.classid.attribute = db.classid.attribute
+
    db.videodata.valign.enumeration = db.valign.enumeration
    db.videodata.valign.attribute =
       [
@@ -2444,6 +2461,8 @@ div {
     & db.videodata.scale.attribute?
     & db.videodata.depth.attribute?
     & db.videodata.contentdepth.attribute?
+    & db.videodata.autoplay.attribute?
+    & db.videodata.classid.attribute?
 
    db.videodata.info = db._info.title.forbidden
 
@@ -2463,10 +2482,53 @@ div {
 
    db.audiodata.role.attribute = attribute role { text }
 
+   db.audiodata.align.enumeration = db.halign.enumeration
+   db.audiodata.align.attribute =
+      [
+         db:refpurpose [ "Specifies the (horizontal) alignment of the video data" ]
+      ]
+      attribute align { db.audiodata.align.enumeration }
+
+   db.audiodata.autoplay.attribute = db.autoplay.attribute
+   db.audiodata.classid.attribute = db.classid.attribute
+
+   db.audiodata.contentwidth.attribute = db.contentwidth.attribute
+   db.audiodata.contentdepth.attribute = db.contentdepth.attribute
+
+   db.audiodata.depth.attribute = db.depth.attribute
+
+   db.audiodata.scale.attribute = db.scale.attribute
+
+   db.audiodata.scalefit.enumeration = db.scalefit.enumeration
+   db.audiodata.scalefit.attribute =
+      [
+         db:refpurpose [ "Determines if anamorphic scaling is forbidden" ]
+      ]
+      attribute scalefit { db.audiodata.scalefit.enumeration }
+
+   db.audiodata.valign.enumeration = db.valign.enumeration
+   db.audiodata.valign.attribute =
+      [
+         db:refpurpose [ "Specifies the vertical alignment of the video data" ]
+      ]
+      attribute valign { db.audiodata.valign.enumeration }
+
+   db.audiodata.width.attribute = db.width.attribute
+
    db.audiodata.attlist =
       db.audiodata.role.attribute?
     & db.common.attributes
     & db.common.data.attributes
+    & db.audiodata.align.attribute?
+    & db.audiodata.autoplay.attribute?
+    & db.audiodata.classid.attribute?
+    & db.audiodata.contentdepth.attribute?
+    & db.audiodata.contentwidth.attribute?
+    & db.audiodata.depth.attribute?
+    & db.audiodata.scale.attribute?
+    & db.audiodata.scalefit.attribute?
+    & db.audiodata.valign.attribute?
+    & db.audiodata.width.attribute?
 
    db.audiodata.info = db._info.title.forbidden
 
@@ -2566,6 +2628,48 @@ div {
       element textdata {
          db.textdata.attlist,
          db.textdata.info
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "multimediaparam" ]
+   db:refpurpose [ "Application specific parameters for a media player" ]
+]
+div {
+
+   db.multimediaparam.role.attribute = attribute role { text }
+
+   db.multimediaparam.name.attribute =
+      [
+         db:refpurpose [ "Specifies the name of the parameter" ]
+      ]
+      attribute name { text }
+
+   db.multimediaparam.value.attribute =
+      [
+         db:refpurpose [ "Specifies the value of the parameter" ]
+      ]
+      attribute value { text }
+
+   db.multimediaparam.valuetype.attribute =
+      [
+         db:refpurpose [ "Specifies the type of the value of the parameter" ]
+      ]
+      attribute valuetype { text }
+
+   db.multimediaparam.attlist =
+      db.multimediaparam.role.attribute?
+    & db.common.attributes
+    & db.multimediaparam.name.attribute
+    & db.multimediaparam.value.attribute
+    & db.multimediaparam.valuetype.attribute?
+
+   db.multimediaparam =
+      element multimediaparam {
+         db.multimediaparam.attlist,
+         empty
       }
 }
 
