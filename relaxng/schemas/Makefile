@@ -26,6 +26,11 @@ clean:
 	rm -rf build
 	rm -f *.rnc *.rng *.sch
 
+docbook.sch: docbook.rng
+docbookxi.sch: docbookxi.rng
+assembly.sch: assembly.rng
+publishers.sch: publishers.rng
+
 %.sch: %.rng
 	saxon $< ../tools/schematron.xsl $@
 
