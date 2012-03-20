@@ -117,20 +117,11 @@ div {
     & db.resource.grammar.attribute?
     & db.common.attributes
 
-   db.resource = db.file.resource | db.container.resource
-
-   db.file.resource =
+   db.resource =
       element resource {
          db.resource.attlist,
          db.resource.fileref.attribute,
          db.description*
-      }
-
-   # FIXME: contents should be any valid DocBook content model fragment
-   db.container.resource =
-      element resource {
-         db.resource.attlist,
-         (text | db.description | db._any.docbook)*
       }
 }
 
@@ -150,6 +141,12 @@ div {
       ]
       attribute type { xsd:NMTOKEN }
 
+   db.structure.resourceref.attribute =
+      [
+         db:refpurpose [ "Indicates a single resource from which to construct this structure" ]
+      ]
+      attribute resourceref { xsd:IDREF }
+
    db.structure.defaultformat.attribute =
       [
          db:refpurpose [ "Identifies the default format of the structure" ]
@@ -165,11 +162,12 @@ div {
    db.structure.attlist =
       db.structure.role.attribute?
     & db.structure.type.attribute?
+    & db.structure.resourceref.attribute?
     & db.structure.renderas.attribute?
     & db.structure.defaultformat.attribute?
     & db.common.attributes
 
-   db.structure.info = db._info.title.req
+   db.structure.info = db.info
 
    db.structure =
       [
@@ -187,11 +185,9 @@ div {
       element structure {
          db.structure.attlist,
          (db.output* & db.filterin? & db.filterout? & db.structure.info),
-         db.override?,
+         db.merge?,
          db.revhistory?,
-         db.navigation.components*,
-         db.module+,
-         db.navigation.components*
+         db.module+
       }
 }
 
@@ -273,20 +269,27 @@ div {
 # ======================================================================
 
 [
-   db:refname [ "override" ]
+   db:refname [ "merge" ]
    db:refpurpose [ "A wrapper for information that a module overrides in the resource it includes" ]
 ]
 div {
 
-   db.override.role.attribute = attribute role { text }
+   db.merge.role.attribute = attribute role { text }
 
-   db.override.attlist =
-      db.override.role.attribute?
+   db.merge.resourceref.attribute =
+      [
+         db:refpurpose [ "Indicates a single resource from which to read merged info" ]
+      ]
+      attribute resourceref { xsd:IDREF }
+
+   db.merge.attlist =
+      db.merge.role.attribute?
+    & db.merge.resourceref.attribute?
     & db.common.attributes
 
-   db.override =
-      element override {
-         db.override.attlist,
+   db.merge =
+      element merge {
+         db.merge.attlist,
          (db._title & db.info.elements*)
       }
 }
@@ -340,7 +343,7 @@ div {
       ]
       attribute renderas { xsd:QName }
 
-   db.resource.module.attlist =
+   db.module.attlist =
       db.module.role.attribute?
     & db.module.chunk.attribute?
     & db.module.resourceref.attribute?
@@ -349,11 +352,9 @@ div {
     & db.module.renderas.attribute?
     & db.common.attributes
 
-   db.module.info = db._info
+   db.module.info = db.info
 
-   db.module = db.resource.module | db.container.module
-
-   db.resource.module =
+   db.module =
       [
          s:pattern [
             name = "Specification of renderas"
@@ -367,41 +368,11 @@ div {
          ]
       ]
       element module {
-         db.resource.module.attlist,
+         db.module.attlist,
          ((db.output | db.filterin | db.filterout)*,
             db.module.info,
-            db.override?,
-            db.navigation.components*,
-            db.module*,
-            db.navigation.components*)
-      }
-
-   db.container.module.attlist =
-      db.module.role.attribute?
-    & db.module.chunk.attribute?
-    & db.module.omittitles.attribute?
-    & db.module.contentonly.attribute?
-    & db.module.renderas.attribute?
-    & db.common.attributes
-
-
-   db.container.module =
-      [
-         s:pattern [
-            name = "Specification of renderas"
-            s:rule [
-               context = "db:module"
-               s:assert [
-                  test = "@renderas and db:output/@renderas"
-                  "The renderas attribute can be specified on either the structure or output, but not both."
-               ]
-            ]
-         ]
-      ]
-      element module {
-         db.container.module.attlist,
-         ((db.output | db.filterin | db.filterout)*,
-            db._any.docbook)
+            db.merge?,
+            db.module*)
       }
 }
 
