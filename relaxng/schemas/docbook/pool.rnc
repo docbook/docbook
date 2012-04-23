@@ -2064,7 +2064,7 @@ div {
    db.informalexample.role.attribute = attribute role { text }
 
    db.informalexample.width.attribute = db.width.characters.attribute
-
+   db.informalexample.pgwide.attribute = db.pgwide.attribute
    db.informalexample.floatstyle.attribute = db.floatstyle.attribute
 
    db.informalexample.attlist =
@@ -2072,7 +2072,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
     & db.informalexample.floatstyle.attribute?
-    & db.informalexample.width.attribute?
+    & (db.informalexample.width.attribute | db.informalexample.pgwide.attribute)?
 
    db.informalexample.info = db._info.title.forbidden
 

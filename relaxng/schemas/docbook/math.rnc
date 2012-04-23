@@ -93,6 +93,8 @@ div {
       db.informalequation.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
+    & db.pgwide.attribute?
+    & db.floatstyle.attribute?
 
    db.informalequation.info = db._info.title.forbidden
 
