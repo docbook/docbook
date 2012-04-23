@@ -167,7 +167,7 @@ div {
     & db.structure.defaultformat.attribute?
     & db.common.attributes
 
-   db.structure.info = db.info
+   db.structure.info = db.info?
 
    db.structure =
       [
@@ -352,7 +352,7 @@ div {
     & db.module.renderas.attribute?
     & db.common.attributes
 
-   db.module.info = db.info
+   db.module.info = db.info?
 
    db.module =
       [
