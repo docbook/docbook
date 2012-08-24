@@ -62,7 +62,7 @@ db.xlink.locator.type.attribute =
          s:rule [
             context = "*[@xlink:type='locator']"
             s:assert [
-               test = "not(parent::*[@xlink:type='extended'])"
+               test = "parent::*[@xlink:type='extended']"
                "An XLink locator type element must occur as the direct child of an XLink extended type element."
             ]
          ]
@@ -100,7 +100,7 @@ db.xlink.resource.type.attribute =
          s:rule [
             context = "*[@xlink:type='resource']"
             s:assert [
-               test = "not(parent::*[@xlink:type='extended'])"
+               test = "parent::*[@xlink:type='extended']"
                "An XLink resource type element must occur as the direct child of an XLink extended type element."
             ]
          ]
@@ -119,7 +119,7 @@ db.xlink.title.type.attribute =
          s:rule [
             context = "*[@xlink:type='title']"
             s:assert [
-               test = "not(parent::*[@xlink:type='extended']) and not(parent::*[@xlink:type='locator']) and not(parent::*[@xlink:type='arc'])"
+               test = "parent::*[@xlink:type='extended'] or parent::*[@xlink:type='locator'] or parent::*[@xlink:type='arc']"
                "An XLink title type element must occur as the direct child of an XLink extended, locator, or arc type element."
             ]
          ]
