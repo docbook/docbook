@@ -3908,8 +3908,6 @@ div {
       "copyeditor"
     | ## A graphic designer
       "graphicdesigner"
-    | ## Some other contributor
-      "other"
     | ## A production editor
       "productioneditor"
     | ## A technical editor
