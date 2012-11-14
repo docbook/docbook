@@ -147,7 +147,7 @@ db.rowheader.attribute =
    attribute rowheader {
       ## Indicates that entries in the first column of the table are functionally row headers (analogous to the way that a thead provides column headers).
       "firstcol"
-      ## Indicates that row headers are identified by use of the headers attribute on entries in the table.
+    | ## Indicates that row headers are identified by use of the headers attribute on entries in the table.
       "headers"
     | ## Indicates that entries in the first column have no special significance with respect to column headers.
       "norowheader" }
@@ -483,7 +483,7 @@ div {
          "row"
        | ## Applies to the column
          "col"
-         ## Applies to the row group
+       |  ## Applies to the row group
          "rowgroup"
        | ## Applies to the column group
          "colgroup"
@@ -493,7 +493,7 @@ div {
       [
          db:refpurpose [ "Specifies the entry or entries which serve as headers for this element." ]
       ]
-      attribute headers { xs:IDREFS }
+      attribute headers { xsd:IDREFS }
 
    db.entry.attlist =
       db.entry.role.attribute?
