@@ -471,6 +471,17 @@ div {
          "1"
       }
 
+   db.entry.scope.attribute =
+      [
+         db:refpurpose [ "Specifies the scope of a header." ]
+      ]
+      attribute scope {
+         ## Applies to the row
+         "row"
+       | ## Applies to the column
+         "col"
+      }
+
    db.entry.attlist =
       db.entry.role.attribute?
     & db.common.attributes
@@ -484,6 +495,7 @@ div {
     & db.rowsep.attribute?
     & db.entry.rotate.attribute?
     & db.align.attribute?
+    & db.entry.scope.attribute?
 
    db.entry = element entry {
       db.entry.attlist,
