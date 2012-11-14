@@ -39,7 +39,6 @@ db.nopara.blocks |= db.admonition.blocks
 
 # ======================================================================
 
-ctrl:exclude [ from="db.formal.blocks" exclude="db.admonition.blocks" ]
 ctrl:exclude [ from="db.admonition.blocks" exclude="db.admonition.blocks" ]
 ctrl:exclude [ from="db.footnote" exclude="db.admonition.blocks" ]
 ctrl:exclude [ from="db.caption" exclude="db.admonition.blocks" ]
