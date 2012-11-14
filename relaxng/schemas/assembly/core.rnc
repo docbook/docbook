@@ -104,11 +104,11 @@ div {
 
    db.resource.role.attribute = attribute role { text }
 
-   db.resource.fileref.attribute =
+   db.resource.href.attribute =
       [
          db:refpurpose [ "Indentifies the location of the data by URI" ]
       ]
-      attribute fileref { xsd:anyURI }
+      attribute href { xsd:anyURI }
 
    db.resource.grammar.attribute = db.grammar.attribute
 
@@ -120,7 +120,7 @@ div {
    db.resource =
       element resource {
          db.resource.attlist,
-         db.resource.fileref.attribute,
+         db.resource.href.attribute,
          db.description*
       }
 }
@@ -560,11 +560,11 @@ div {
 
    db.transform.grammar.attribute = db.grammar.attribute
 
-   db.transform.fileref.attribute =
+   db.transform.href.attribute =
       [
          db:refpurpose [ "Indentifies the location of the data by URI" ]
       ]
-      attribute fileref { xsd:anyURI }
+      attribute href { xsd:anyURI }
 
    db.transform.name.attribute =
       [
@@ -575,7 +575,7 @@ div {
    db.transform.attlist =
       db.transform.role.attribute?
     & (db.transform.grammar.attribute | db.transform.name.attribute)
-    & db.transform.fileref.attribute
+    & db.transform.href.attribute
     & db.common.attributes
 
    db.transform =
