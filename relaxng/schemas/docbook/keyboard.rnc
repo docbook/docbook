@@ -60,6 +60,8 @@ div {
    db.keycap.function.enumeration =
       ## The "Alt" key
       "alt"
+    | ## The "Alt Graph" key
+      "altgr"
     | ## The "Backspace" key
       "backspace"
     | ## The "Command" key
@@ -72,7 +74,7 @@ div {
       "down"
     | ## The "End" key
       "end"
-    | ## The "Enter" or "Return" key
+    | ## The "Enter" key
       "enter"
     | ## The "Escape" key
       "escape"
@@ -92,6 +94,8 @@ div {
       "pageup"
     | ## The right arrow
       "right"
+    | ## The "Return" key
+      "return"
     | ## The "Shift" key
       "shift"
     | ## The spacebar
