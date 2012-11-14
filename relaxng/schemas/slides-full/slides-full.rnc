@@ -17,6 +17,7 @@ default namespace = "http://docbook.org/ns/docbook"
 include "../docbookxi/docbookxi.rnc" {
    start = sl.slides
    db.all.blocks |= sl.speakernotes
+   db.info.elements |= sl._any.html
 }
 
 include "../slides/foils.rnc"
