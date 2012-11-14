@@ -216,12 +216,6 @@ div {
       ]
       attribute chunk { db.module.chunk.enumeration }
 
-   db.output.format.attribute =
-      [
-         db:refpurpose [ "Identifies the format of the module or structure" ]
-      ]
-      attribute format { xsd:NMTOKENS }
-
    db.output.file.attribute =
       [
          db:refpurpose [ "Specifies the output file for this module or structure" ]
@@ -252,7 +246,6 @@ div {
       db.output.role.attribute?
     & db.common.attributes
     & db.output.chunk.attribute?
-    & db.output.format.attribute?
     & db.output.file.attribute?
     & db.output.renderas.attribute?
     & db.output.grammar.attribute?
