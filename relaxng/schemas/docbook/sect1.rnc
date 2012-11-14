@@ -64,6 +64,7 @@ div {
       element sect1 {
          db.sect1.attlist,
          db.sect1.info,
+         db.navigation.components,
          ((db.all.blocks+, db.sect1.sections?)
           | db.sect1.sections)?,
          db.navigation.components*
@@ -97,6 +98,7 @@ div {
       element sect2 {
          db.sect2.attlist,
          db.sect2.info,
+         db.navigation.components*,
          ((db.all.blocks+, db.sect2.sections?)
           | db.sect2.sections)?,
          db.navigation.components*
@@ -130,6 +132,7 @@ div {
       element sect3 {
          db.sect3.attlist,
          db.sect3.info,
+         db.navigation.components*,
          ((db.all.blocks+, db.sect3.sections?)
           | db.sect3.sections)?,
          db.navigation.components*
@@ -163,6 +166,7 @@ div {
       element sect4 {
          db.sect4.attlist,
          db.sect4.info,
+         db.navigation.components*,
          ((db.all.blocks+, db.sect4.sections?)
           | db.sect4.sections)?,
          db.navigation.components*
@@ -196,6 +200,7 @@ div {
       element sect5 {
          db.sect5.attlist,
          db.sect5.info,
+         db.navigation.components*,
          ((db.all.blocks+, db.sect5.sections?)
           | db.sect5.sections)?,
          db.navigation.components*
