@@ -173,6 +173,12 @@ db.wordsize.attribute =
   ]
   attribute wordsize    { text }
 
+db.outputformat.attribute =
+  [
+    db:refpurpose [ "Indicates the output format (for example, print or epub) to which the element applies" ]
+  ]
+  attribute outputformat  { text }
+
 db.effectivity.attributes =
    db.arch.attribute?
  & db.audience.attribute?
@@ -184,6 +190,7 @@ db.effectivity.attributes =
  & db.userlevel.attribute?
  & db.vendor.attribute?
  & db.wordsize.attribute?
+ & db.outputformat.attribute?
 
 # ======================================================================
 
