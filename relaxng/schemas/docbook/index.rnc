@@ -119,11 +119,17 @@ div {
 # ======================================================================
 
 db.indexterm.contentmodel =
- (db.primary,
-  (db.secondary,
-   ((db.tertiary, (db.see | db.seealso+)?)?
-   | db.see | db.seealso+)?)?)?,
- (db.see | db.seealso+)
+   (db.primary,
+      (db.secondary,
+         (
+            (db.tertiary,
+               (db.see | db.seealso+)?
+            )?
+          | (db.see | db.seealso+)?
+         )?
+      )?
+   )?,
+   (db.see | db.seealso+)?
 
 # ======================================================================
 
