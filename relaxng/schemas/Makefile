@@ -1,5 +1,5 @@
 REMOVESCH=0
-DBVER=V5.1b7
+DBVER=V5.1b8
 DBREL="DocBook $(DBVER)"
 XIREL="DocBook XInclude $(DBVER)"
 SDBREL="Simplified DocBook $(DBVER)"
@@ -18,7 +18,7 @@ all: schemas
 
 schemas: docbook.rnc assembly.rnc docbookxi.rnc sdocbook.rnc dbforms.rnc dbits.rnc \
      publishers.rnc slides.rnc slides-full.rnc website.rnc website-full.rnc \
-     docbook.sch docbookxi.sch assembly.sch publishers.sch
+     docbook.sch docbookxi.sch assembly.sch publishers.sch dbits.sch
 
 doc: defguide.rnd publishers.rnd sdocbook.rnd
 
@@ -30,6 +30,7 @@ docbook.sch: docbook.rng
 docbookxi.sch: docbookxi.rng
 assembly.sch: assembly.rng
 publishers.sch: publishers.rng
+dbits.sch: dbits.rng
 
 %.sch: %.rng
 	saxon $< ../tools/schematron.xsl $@
