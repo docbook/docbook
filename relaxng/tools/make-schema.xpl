@@ -54,11 +54,14 @@
   <p:log href="/tmp/r.xml" port="result"/>
 </p:xslt>
 
-<p:load>
+<p:load name="copyright-template">
   <p:with-option name="href" select="concat(exf:cwd(), '/', $schema, '/copyright.xml')"/>
 </p:load>
 
 <p:template name="copyright">
+  <p:input port="template">
+    <p:pipe step="copyright-template" port="result"/>
+  </p:input>
   <p:with-param name="release" select="$release"/>
 </p:template>
 
