@@ -1,0 +1,197 @@
+## Version of ITS
+its-version.type = 
+  xsd:string { pattern = "[0-9]+\.[0-9]+" }
+
+## The query language to be used for processing the rules
+its-queryLanguage.type =  "xpath" | "css" | text 
+
+its-absolute-selector.type = 
+  ## Absolute selector
+  string
+
+its-relative-selector.type = 
+  ## Relative selector
+  string
+
+its-xpath-expression.type = string
+
+its-confidence.type = xsd:double { minInclusive = "0" maxInclusive = "1" }
+
+## The Translate data category information to be attached to the current node
+its-translate.type = 
+    ## The nodes need to be translated
+    "yes"
+    | 
+    ## The nodes must not be translated
+    "no"
+
+its-locNote.type = string
+
+## The type of localization note
+its-locNoteType.type =
+    ## Localization note is an alert
+    "alert"
+    | 
+    ## Localization note is a description
+    "description"
+
+its-locNoteRef.type = xsd:anyURI
+
+its-termInfoRef.type = xsd:anyURI
+
+## Indicates a term locally
+its-term.type =
+    ## The value 'yes' means that this is a term
+    "yes"
+    | 
+    ## The value 'no' means that this is not a term
+    "no"
+
+its-termConfidence.type = its-confidence.type
+
+## The text direction for the context
+its-dir.type = 
+    ## Left-to-right text
+    "ltr"
+    | 
+    ## Right-to-left text
+    "rtl"
+    | 
+    ## Left-to-right override
+    "lro"
+    | 
+    ## Right-to-left override
+    "rlo"
+
+## States whether current context is regarded as "within text"
+its-withinText.type =
+    ## The element and its content are part of the flow of its parent element
+    "yes"
+    | 
+    ## The element splits the text flow of its parent element and its content is an independent text flow
+    "no"
+    | 
+    ## The element is part of the flow of its parent element, its content is an independent flow
+    "nested"
+
+## A comma separated list of mappings between values in the content
+## and workflow specific values. The values may contain spaces; in
+## that case they MUST be delimited by quotation marks.
+its-domainMapping.type = string
+
+its-taConfidence.type = its-confidence.type
+
+its-taClassPointer.type = its-relative-selector.type
+
+its-taClassRefPointer.type = its-relative-selector.type
+
+its-taClassRef.type = xsd:anyURI
+
+its-taIdentRef.type = xsd:anyURI
+
+its-taIdent.type = string
+
+its-taSource.type = string
+
+its-taIdentPointer.type = its-relative-selector.type
+
+its-taIdentRefPointer.type = its-relative-selector.type
+
+its-taSourcePointer.type = its-relative-selector.type
+
+its-localeFilterList.type = string
+
+its-localeFilterType.type = "include" | "exclude"
+
+its-provenanceRecordsRef.type = xsd:anyURI
+
+its-person.type = string
+
+its-personRef.type = xsd:anyURI
+
+its-org.type = string
+
+its-orgRef.type = xsd:anyURI
+
+its-tool.type = string
+
+its-toolRef.type = xsd:anyURI
+
+its-revPerson.type = string
+
+its-revPersonRef.type = xsd:anyURI
+
+its-revOrg.type = string
+
+its-revOrgRef.type = xsd:anyURI
+
+its-revTool.type = string
+
+its-revToolRef.type = xsd:anyURI
+
+its-provRef.type = list { xsd:anyURI+ }
+
+its-externalResourceRefPointer.type = its-relative-selector.type
+
+its-targetPointer.type = its-relative-selector.type
+
+its-idValue.type = string
+
+its-space.type = "default" | "preserve"
+
+its-locQualityIssuesRef.type = xsd:anyURI
+
+its-locQualityIssuesRefPointer.type = its-relative-selector.type
+
+its-locQualityIssueType.type = "terminology" | "mistranslation" |
+  "omission" | "untranslated" | "addition" | "duplication" |
+  "inconsistency" | "grammar" | "legal" | "register" |
+  "locale-specific-content" | "locale-violation" | "style" |
+  "characters" | "misspelling" | "typographical" | "formatting" |
+  "inconsistent-entities" | "numbers" | "markup" | "pattern-problem" |
+  "whitespace" | "internationalization" | "length" | "non-conformance" | "uncategorized" |
+  "other"
+
+its-locQualityIssueTypePointer.type = its-relative-selector.type
+
+its-locQualityIssueComment.type = string
+
+its-locQualityIssueCommentPointer.type = its-relative-selector.type
+
+its-locQualityIssueSeverity.type =  xsd:double { minInclusive = "0" maxInclusive = "100" } 
+
+its-locQualityIssueSeverityPointer.type = its-relative-selector.type
+
+its-locQualityIssueProfileRef.type = xsd:anyURI
+
+its-locQualityIssueProfileRefPointer.type = its-relative-selector.type
+
+its-locQualityIssueEnabled.type = "yes" | "no"
+
+its-locQualityRatingScore.type = xsd:double { minInclusive = "0" maxInclusive = "100" } 
+
+its-locQualityRatingVote.type = xsd:integer
+
+its-locQualityRatingScoreThreshold.type = xsd:double { minInclusive = "0" maxInclusive = "100" }
+
+its-locQualityRatingVoteThreshold.type = xsd:integer
+
+its-locQualityRatingProfileRef.type = xsd:anyURI
+
+its-mtConfidence.type = its-confidence.type
+
+its-allowedCharacters.type = string
+
+its-allowedCharactersPointer.type = its-relative-selector.type
+
+its-storageSize.type = xsd:nonNegativeInteger
+
+its-storageSizePointer.type = its-relative-selector.type
+
+its-storageEncoding.type = string
+
+its-storageEncodingPointer.type = its-relative-selector.type
+
+its-lineBreakType.type = "cr" | "lr" | "crlf" | "nel"
+
+its-annotatorsRef.type = string
