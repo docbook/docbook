@@ -1,24 +1,65 @@
-# This schema integrates ITS markup (http://www.w3.org/TR/its/) 
+# This schema integrates ITS 2.0 markup (http://www.w3.org/TR/its20/) 
 # into DocBook schema (http://docbook.org)
 #
 # This schema conforms to Conformance Type 1 defined in
-# http://www.w3.org/TR/its/#conformance-product-schema
+# http://www.w3.org/TR/its20/#conformance-product-schema
 # 
 # Schema adds the following ITS elements into DocBook schema: 
 #  * rules
-#  * ruby
+#  * provenanceRecords
+#  * locQualityIssues
 #
 # Schema adds the following local ITS attributes into DocBook schema:
-#  * translate
-#  * locNote
-#  * locNoteType
-#  * locNoteRef
-#  * term
-#  * termInfoRef
+# * translate
+# * locNote
+# * locNoteRef
+# * locNoteType
+# * term
+# * termInfoRef
+# * termConfidence
+# * withinText
+# * taConfidence
+# * taClassRef
+# * taSource
+# * taIdent
+# * taIdentRef
+# * localeFilterList
+# * localeFilterType
+# * person
+# * personRef
+# * org
+# * orgRef
+# * tool
+# * toolRef
+# * revPerson
+# * revPersonRef
+# * revOrg
+# * revOrgRef
+# * revTool
+# * revToolRef
+# * provRef
+# * provenanceRecordsRef
+# * locQualityIssuesRef
+# * locQualityIssueType
+# * locQualityIssueComment
+# * locQualityIssueSeverity
+# * locQualityIssueProfileRef
+# * locQualityIssueEnabled
+# * locQualityRatingScore
+# * locQualityRatingScoreThreshold
+# * locQualityRatingVote
+# * locQualityRatingVoteThreshold
+# * locQualityRatingProfileRef
+# * mtConfidence
+# * allowedCharacters
+# * storageSize
+# * storageEncoding
+# * lineBreakType
+# * annotatorsRef
 #
-# $Id$
+# $Id: dbits.rnc 9767 2013-05-08 08:51:27Z kosek $
 #
-# Copyright 2007 Jirka Kosek (jirka@kosek.cz)
+# Copyright 2013 Jirka Kosek (jirka@kosek.cz)
 #
 # Permission to use, copy, modify and distribute this schema for any
 # purpose and without fee is hereby granted in perpetuity, provided
@@ -45,20 +86,14 @@ include "../docbook/docbook.rnc"
 }
 
 # Include base ITS schema
-include "its.rnc"
-
-# Define pattern for local ITS attributes
-db.its.attributes = 
-   its-att.translate.attributes?
-   & its-att.locNote.attributes?
-   & its-att.term.attributes?
-   & its-att.version.attributes?
+include "its20.rnc"
+{
+   # Disable ITS directionality
+   its-attribute.dir = empty
+}
 
 # Add local ITS attributes to all DocBook elements
-db.common.base.attributes &= db.its.attributes
+db.common.base.attributes &= its-local.attributes
 
 # Allow its:rules inside info element
-db.info.extension |= its-rules
-
-# Allow Ruby markup almost everywhere
-db.ubiq.inlines |= its-ruby
+db.info.extension |= its-rules | its-standoff
