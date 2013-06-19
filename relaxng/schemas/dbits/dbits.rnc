@@ -90,10 +90,13 @@ include "its20.rnc"
 {
    # Disable ITS directionality
    its-attribute.dir = empty
+   
+   # Keep extensibility but prevent conflicting ID type problem
+   its-foreign-element = element * - its:* { (its-foreign-no-xml-id-attribute* | text | its-foreign-element)* } 
 }
 
 # Add local ITS attributes to all DocBook elements
-db.common.base.attributes &= its-local.attributes
+db.common.base.attributes &= its-local.attributes & its-attribute.version?
 
 # Allow its:rules inside info element
 db.info.extension |= its-rules | its-standoff

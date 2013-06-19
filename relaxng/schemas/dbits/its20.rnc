@@ -169,6 +169,7 @@ its-foreign-no-xml-id-attribute = attribute * - (local:* | xml:id) { text }
 its-foreign-no-xlink-attribute = attribute * - (local:* | xlink:*) { text }
 
 its-any-attribute = attribute * { text }
+
 its-any-element = element * { (its-any-attribute* | text | its-any-element)* }
 
 its-foreign-element = element * - its:* { (its-any-attribute* | text | its-foreign-element)* } 
