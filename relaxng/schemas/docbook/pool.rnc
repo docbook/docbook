@@ -1207,7 +1207,8 @@ div {
          db.procedure.attlist,
          db.procedure.info,
          db.all.blocks*,
-         db.step+
+         db.step+,
+         db.result?
       }
 }
 
@@ -1234,8 +1235,12 @@ div {
    db.step = element step {
       db.step.attlist,
       db.step.info,
-      ((db.all.blocks+, (((db.substeps|db.stepalternatives), db.all.blocks*))?)
-       | ((db.substeps|db.stepalternatives), db.all.blocks*))
+      (
+         (db.all.blocks+,
+            (((db.substeps|db.stepalternatives), db.all.blocks*))?,
+            db.result?
+         )
+       | ((db.substeps|db.stepalternatives), db.all.blocks*, db.result?))
    }
 }
 
@@ -1285,6 +1290,28 @@ div {
       element substeps {
          db.substeps.attlist,
          db.step+
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "result" ]
+   db:refpurpose [ "A wrapper for identifying the results of a procedure or step" ]
+]
+div {
+
+   db.result.role.attribute = attribute role { text }
+
+   db.result.attlist =
+      db.result.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.result =
+      element result {
+         db.result.attlist,
+         db.all.blocks+
       }
 }
 
