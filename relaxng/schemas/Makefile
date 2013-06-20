@@ -9,6 +9,8 @@ ITSREL="DocBook ITS $(DBVER)"
 PUBREL="DocBook Publishers $(DBVER)-1"
 SLIREL="DocBook Slides $(DBVER)-1"
 WEBREL="DocBook Website $(DBVER)-1"
+RDFREL="DocBook RDFa Lite $(DBVER)-1"
+SAXON=saxon -opts saxon-9he
 
 TOOLSDEP=../tools/make-schema.xpl
 
@@ -18,7 +20,7 @@ all: schemas
 
 schemas: docbook.rnc assembly.rnc docbookxi.rnc sdocbook.rnc dbforms.rnc dbits.rnc \
      publishers.rnc slides.rnc slides-full.rnc website.rnc website-full.rnc \
-     docbook.sch docbookxi.sch assembly.sch publishers.sch dbits.sch
+     docbook.sch docbookxi.sch assembly.sch publishers.sch dbits.sch dbrdfalite.rnc
 
 doc: defguide.rnd publishers.rnd sdocbook.rnd
 
@@ -33,7 +35,7 @@ publishers.sch: publishers.rng
 dbits.sch: dbits.rng
 
 %.sch: %.rng
-	saxon $< ../tools/schematron.xsl $@
+	$(SAXON) $< ../tools/schematron.xsl $@
 
 docbook.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc)
 	mkdir -p build/docbook
@@ -42,7 +44,7 @@ docbook.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc)
 assembly.rnc: docbook.rnc $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard assembly/*.rnc)
 	mkdir -p build/assembly
 	mkdir -p build/docbook
-	saxon docbook.rng ../tools/all-patterns.xsl build/docbook/any.docbook.rng
+	$(SAXON) docbook.rng ../tools/all-patterns.xsl build/docbook/any.docbook.rng
 	trang build/docbook/any.docbook.rng build/docbook/any.docbook.rnc
 	calabash ../tools/make-schema.xpl schema=assembly release=$(ASMREL) remove-schematron=$(REMOVESCH)
 
@@ -93,3 +95,7 @@ website.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard website/*.rnc)
 website-full.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard website/*.rnc) $(wildcard website-full/*.rnc)
 	mkdir -p build/website-full
 	calabash ../tools/make-schema.xpl schema=website-full release=$(SLIREL) remove-schematron=$(REMOVESCH)
+
+dbrdfalite.rnc: $(TOOLSDEP) $(wildcard dbrdfalite/*.rnc)
+	mkdir -p build/dbrdfalite
+	calabash ../tools/make-schema.xpl schema=dbrdfalite release=$(RDFREL) remove-schematron=$(REMOVESCH)
