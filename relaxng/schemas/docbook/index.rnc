@@ -336,8 +336,11 @@ div {
 
    db.see.role.attribute = attribute role { text }
 
+   db.see.class.attribute = attribute class { "normal" | "under" }
+
    db.see.attlist =
       db.see.role.attribute?
+    & db.see.class.attribute?
     & db.common.attributes
     & db.common.linking.attributes
 
@@ -358,8 +361,11 @@ div {
 
    db.seealso.role.attribute = attribute role { text }
 
+   db.seealso.class.attribute = attribute class { "normal" | "under" }
+
    db.seealso.attlist =
       db.seealso.role.attribute?
+    & db.seealso.class.attribute?
     & db.common.attributes
     & db.common.linking.attributes
 
