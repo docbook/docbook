@@ -14,7 +14,7 @@
 # Organization for the Advancement of Structured Information
 # Standards (OASIS).
 #
-# Release: $Id$
+# Release: $Id: db4-upgrade.xsl 8905 2010-09-12 11:47:07Z bobstayton $
 #
 # Permission to use, copy, modify and distribute this stylesheet
 # and its accompanying documentation for any purpose and without fee
@@ -31,7 +31,11 @@
 # ======================================================================
 -->
 
-<xsl:variable name="version" select="'1.0'"/>
+<xsl:param name="db5.version" select="'5.0'"/> <!-- DocBook version for the output 5.0 and 5.1 only current values -->
+<xsl:param name="db5.version.string" select="$db5.version"/> <!-- Set this if you want a local version number -->
+<xsl:param name="keep.numbered.sections" select="'0'"/> <!-- Set to 1 to keep numbered sections, default changes to recursive -->
+
+<xsl:variable name="version" select="'1.1'"/> <!-- version of this transform -->
 
 <xsl:output method="xml" encoding="utf-8" indent="no" omit-xml-declaration="yes"/>
 
@@ -62,170 +66,141 @@
   <xsl:apply-templates select="exsl:node-set($converted)/*" mode="addNS"/>
 </xsl:template>
 
-<xsl:template match="bookinfo|chapterinfo|articleinfo|artheader|appendixinfo
-		     |blockinfo
-                     |bibliographyinfo|glossaryinfo|indexinfo|setinfo
-		     |setindexinfo
-                     |sect1info|sect2info|sect3info|sect4info|sect5info
-                     |sectioninfo
-                     |refsect1info|refsect2info|refsect3info|refsectioninfo
-		     |referenceinfo|partinfo"
+<!-- Convert numbered sections into recursive sections, unless
+     $keep.numbered.sections is set to '1'  -->
+<xsl:template match="sect1|sect2|sect3|sect4|sect5|section"
               priority="200">
-  <info>
-    <xsl:call-template name="copy.attributes"/>
-
-    <!-- titles can be inside or outside or both. fix that -->
+  <xsl:choose>
+    <xsl:when test="$keep.numbered.sections = '1'">
+      <xsl:element name="{local-name(.)}">
+        <xsl:call-template name="copy.attributes"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:otherwise>
+      <section>
+        <xsl:call-template name="copy.attributes"/>
+        <xsl:apply-templates/>
+      </section>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+<!-- This is the template for the elements (book, article, set) that allow
+     title, subtitle, and titleabbrev before (or in) info, but not after.
+     If title, subtitle, or titleabbrev exist both inside and outside the
+     info block, everything is moved inside. Otherwise things are left as is. -->
+<xsl:template match="bookinfo|articleinfo|artheader|setinfo" priority="200">
+  <xsl:variable name="title.inside.info">
     <xsl:choose>
-      <xsl:when test="title and following-sibling::title">
-        <xsl:if test="title != following-sibling::title">
-          <xsl:call-template name="emit-message">
-            <xsl:with-param name="message">
-              <xsl:text>Check </xsl:text>
-              <xsl:value-of select="name(..)"/>
-              <xsl:text> title.</xsl:text>
-            </xsl:with-param>
-          </xsl:call-template>
+      <xsl:when test="./title or ./subtitle or ./titleabbrev">
+        <xsl:text>1</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>0</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:variable name="title.outside.info">
+    <xsl:choose>
+      <xsl:when test="preceding-sibling::title or preceding-sibling::subtitle or preceding-sibling::titleabbrev">
+        <xsl:text>1</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>0</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <info>
+    <xsl:if test="$title.inside.info = '1' and $title.outside.info = '1'">
+      <xsl:call-template name="emit-message">
+        <xsl:with-param name="message">
+          <xsl:text>Found title|subtitle|titleabbrev both inside and outside </xsl:text><xsl:value-of select="local-name(.)"/>
+          <xsl:text>. Moving all inside info element.</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
+      <xsl:if test="preceding-sibling::title and not(./title)">
+        <xsl:apply-templates select="preceding-sibling::title" mode="copy"/>
+      </xsl:if>
+      <xsl:if test="preceding-sibling::subtitle and not(./subtitle)">
+        <xsl:apply-templates select="preceding-sibling::subtitle" mode="copy"/>
+      </xsl:if>
+      <xsl:if test="preceding-sibling::titleabbrev and not(./titleabbrev)">
+        <xsl:apply-templates select="preceding-sibling::titleabbrev" mode="copy"/>
+      </xsl:if>
+    </xsl:if>
+    <xsl:apply-templates/>
+  </info>
+</xsl:template>
+<!-- This is the template for the elements (all except book, article, set) that
+     allow title, subtitle, and titleabbrev after (or in) info, but not before.
+     If an info element exists, and there is a title, subtitle, or titleabbrev
+     after the info element, then the element is moved inside the info block.
+     However, if a duplicate element exists inside the info element, that element
+     is kept, and the one outside is dropped.-->
+<xsl:template match="appendixinfo|blockinfo|bibliographyinfo|glossaryinfo
+                     |indexinfo|setindexinfo|chapterinfo
+                     |sect1info|sect2info|sect3info|sect4info|sect5info|sectioninfo
+                     |refsect1info|refsect2info|refsect3info|refsectioninfo
+                     |referenceinfo|partinfo
+                     |objectinfo|prefaceinfo|refsynopsisdivinfo
+                     |screeninfo|sidebarinfo"
+              priority="200">
+  <xsl:variable name="title.inside.info">
+    <xsl:choose>
+      <xsl:when test="./title or ./subtitle or ./titleabbrev">
+        <xsl:text>1</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>0</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+    <!-- place title/subtitle/titleabbrev inside if any of them are already inside.
+         otherwise place them before. -->
+    <xsl:choose>
+      <xsl:when test="$title.inside.info = '0'">
+        <xsl:call-template name="emit-message">
+          <xsl:with-param name="message">
+            <xsl:text>Keeping one or more title elements before </xsl:text><xsl:value-of select="local-name(.)"/>
+          </xsl:with-param>
+        </xsl:call-template>
+
+        <xsl:if test="following-sibling::title and not(./title)">
+          <xsl:apply-templates select="following-sibling::title" mode="copy"/>
+         </xsl:if>
+        <xsl:if test="following-sibling::subtitle and not(./subtitle)">
+          <xsl:apply-templates select="following-sibling::subtitle" mode="copy"/>
         </xsl:if>
-        <xsl:apply-templates select="title" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="title">
-        <xsl:apply-templates select="title" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="following-sibling::title">
-        <xsl:apply-templates select="following-sibling::title" mode="copy"/>
+        <xsl:if test="following-sibling::titleabbrev and not(./titleabbrev)">
+          <xsl:apply-templates select="following-sibling::titleabbrev" mode="copy"/>
+        </xsl:if>
+         <info>
+          <xsl:call-template name="copy.attributes"/>
+          <xsl:apply-templates/>
+        </info>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="emit-message">
           <xsl:with-param name="message">
-            <xsl:text>Check </xsl:text>
-            <xsl:value-of select="name(..)"/>
-            <xsl:text>: no title.</xsl:text>
+            <xsl:text>Moving one or more title elements into </xsl:text><xsl:value-of select="local-name(.)"/>
           </xsl:with-param>
         </xsl:call-template>
+        <info>
+          <xsl:call-template name="copy.attributes"/>
+          <xsl:if test="following-sibling::title and not(./title)">
+            <xsl:apply-templates select="following-sibling::title" mode="copy"/>
+          </xsl:if>
+          <xsl:if test="following-sibling::subtitle and not(./subtitle)">
+            <xsl:apply-templates select="following-sibling::subtitle" mode="copy"/>
+          </xsl:if>
+          <xsl:if test="following-sibling::titleabbrev and not(./titleabbrev)">
+            <xsl:apply-templates select="following-sibling::titleabbrev" mode="copy"/>
+          </xsl:if>
+          <xsl:apply-templates/>
+        </info>
       </xsl:otherwise>
     </xsl:choose>
-
-    <xsl:choose>
-      <xsl:when test="titleabbrev and following-sibling::titleabbrev">
-        <xsl:if test="titleabbrev != following-sibling::titleabbrev">
-          <xsl:call-template name="emit-message">
-            <xsl:with-param name="message">
-              <xsl:text>Check </xsl:text>
-              <xsl:value-of select="name(..)"/>
-              <xsl:text> titleabbrev.</xsl:text>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:if>
-        <xsl:apply-templates select="titleabbrev" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="titleabbrev">
-        <xsl:apply-templates select="titleabbrev" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="following-sibling::titleabbrev">
-        <xsl:apply-templates select="following-sibling::titleabbrev" mode="copy"/>
-      </xsl:when>
-    </xsl:choose>
-
-    <xsl:choose>
-      <xsl:when test="subtitle and following-sibling::subtitle">
-        <xsl:if test="subtitle != following-sibling::subtitle">
-          <xsl:call-template name="emit-message">
-            <xsl:with-param name="message">
-              <xsl:text>Check </xsl:text>
-              <xsl:value-of select="name(..)"/>
-              <xsl:text> subtitle.</xsl:text>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:if>
-        <xsl:apply-templates select="subtitle" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="subtitle">
-        <xsl:apply-templates select="subtitle" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="following-sibling::subtitle">
-        <xsl:apply-templates select="following-sibling::subtitle" mode="copy"/>
-      </xsl:when>
-    </xsl:choose>
-
-    <xsl:apply-templates/>
-  </info>
-</xsl:template>
-
-<xsl:template match="objectinfo|prefaceinfo|refsynopsisdivinfo
-		     |screeninfo|sidebarinfo"
-	      priority="200">
-  <info>
-    <xsl:call-template name="copy.attributes"/>
-
-    <!-- titles can be inside or outside or both. fix that -->
-    <xsl:choose>
-      <xsl:when test="title and following-sibling::title">
-        <xsl:if test="title != following-sibling::title">
-          <xsl:call-template name="emit-message">
-            <xsl:with-param name="message">
-              <xsl:text>Check </xsl:text>
-              <xsl:value-of select="name(..)"/>
-              <xsl:text> title.</xsl:text>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:if>
-        <xsl:apply-templates select="title" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="title">
-        <xsl:apply-templates select="title" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="following-sibling::title">
-        <xsl:apply-templates select="following-sibling::title" mode="copy"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<!-- it's ok if there's no title on these -->
-      </xsl:otherwise>
-    </xsl:choose>
-
-    <xsl:choose>
-      <xsl:when test="titleabbrev and following-sibling::titleabbrev">
-        <xsl:if test="titleabbrev != following-sibling::titleabbrev">
-          <xsl:call-template name="emit-message">
-          <xsl:with-param name="message">
-            <xsl:text>Check </xsl:text>
-            <xsl:value-of select="name(..)"/>
-            <xsl:text> titleabbrev.</xsl:text>
-          </xsl:with-param>
-        </xsl:call-template>
-        </xsl:if>
-        <xsl:apply-templates select="titleabbrev" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="titleabbrev">
-        <xsl:apply-templates select="titleabbrev" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="following-sibling::titleabbrev">
-        <xsl:apply-templates select="following-sibling::titleabbrev" mode="copy"/>
-      </xsl:when>
-    </xsl:choose>
-
-    <xsl:choose>
-      <xsl:when test="subtitle and following-sibling::subtitle">
-        <xsl:if test="subtitle != following-sibling::subtitle">
-          <xsl:call-template name="emit-message">
-            <xsl:with-param name="message">
-              <xsl:text>Check </xsl:text>
-              <xsl:value-of select="name(..)"/>
-              <xsl:text> subtitle.</xsl:text>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:if>
-        <xsl:apply-templates select="subtitle" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="subtitle">
-        <xsl:apply-templates select="subtitle" mode="copy"/>
-      </xsl:when>
-      <xsl:when test="following-sibling::subtitle">
-        <xsl:apply-templates select="following-sibling::subtitle" mode="copy"/>
-      </xsl:when>
-    </xsl:choose>
-
-    <xsl:apply-templates/>
-  </info>
 </xsl:template>
 
 <xsl:template match="refentryinfo"
@@ -233,7 +208,6 @@
   <info>
     <xsl:call-template name="copy.attributes"/>
 
-    <!-- titles can be inside or outside or both. fix that -->
     <xsl:if test="title">
       <xsl:call-template name="emit-message">
         <xsl:with-param name="message">
@@ -321,7 +295,7 @@
 </xsl:template>
 
 <xsl:template match="address|programlisting|screen|funcsynopsisinfo
-                     |classsynopsisinfo|literallayout" priority="200">
+                     |classsynopsisinfo" priority="200">
   <xsl:copy>
     <xsl:call-template name="copy.attributes">
       <xsl:with-param name="suppress" select="'format'"/>
@@ -330,82 +304,33 @@
   </xsl:copy>
 </xsl:template>
 
-<xsl:template match="productname[@class]" priority="200">
-  <xsl:call-template name="emit-message">
-    <xsl:with-param name="message">
-      <xsl:text>Dropping class attribute from productname</xsl:text>
-    </xsl:with-param>
-  </xsl:call-template>
+<!-- Suppress attributes with default values (i.e., added implicitly by DTD) -->
+<xsl:template match="productname" priority="200">
   <xsl:copy>
     <xsl:call-template name="copy.attributes">
-      <xsl:with-param name="suppress" select="'class'"/>
+      <xsl:with-param name="suppress.default" select="'class=trade'"/>
     </xsl:call-template>
     <xsl:apply-templates/>
   </xsl:copy>
 </xsl:template>
 
-<xsl:template match="dedication|preface|chapter|appendix|part|partintro
-                     |article|bibliography|glossary|glossdiv|index
-		     |reference[not(referenceinfo)]
-                     |book" priority="200">
-  <xsl:choose>
-    <xsl:when test="not(dedicationinfo|prefaceinfo|chapterinfo
-		        |appendixinfo|partinfo
-                        |articleinfo|artheader|bibliographyinfo
-			|glossaryinfo|indexinfo
-                        |bookinfo)">
-      <xsl:copy>
-        <xsl:call-template name="copy.attributes"/>
-        <xsl:if test="title|subtitle|titleabbrev">
-          <info>
-            <xsl:apply-templates select="title" mode="copy"/>
-            <xsl:apply-templates select="titleabbrev" mode="copy"/>
-            <xsl:apply-templates select="subtitle" mode="copy"/>
-            <xsl:apply-templates select="abstract" mode="copy"/>
-          </info>
-        </xsl:if>
-        <xsl:apply-templates/>
-      </xsl:copy>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:copy>
-        <xsl:call-template name="copy.attributes"/>
-        <xsl:apply-templates/>
-      </xsl:copy>
-    </xsl:otherwise>
-  </xsl:choose>
+<xsl:template match="orderedlist" priority="200">
+  <xsl:copy>
+    <xsl:call-template name="copy.attributes">
+      <xsl:with-param name="suppress.default" select="'inheritnum=ignore continuation=restarts'"/>
+    </xsl:call-template>
+    <xsl:apply-templates/>
+  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="formalpara|figure|table[tgroup]|example|blockquote
-                     |caution|important|note|warning|tip
-                     |bibliodiv|glossarydiv|indexdiv
-		     |orderedlist|itemizedlist|variablelist|procedure|step
-		     |task|tasksummary|taskprerequisites|taskrelated
-		     |sidebar"
-	      priority="200">
-  <xsl:choose>
-    <xsl:when test="blockinfo">
-      <xsl:copy>
-        <xsl:call-template name="copy.attributes"/>
-        <xsl:apply-templates/>
-      </xsl:copy>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:copy>
-        <xsl:call-template name="copy.attributes"/>
-
-	<xsl:if test="title|titleabbrev|subtitle">
-	  <info>
-	    <xsl:apply-templates select="title" mode="copy"/>
-	    <xsl:apply-templates select="titleabbrev" mode="copy"/>
-	    <xsl:apply-templates select="subtitle" mode="copy"/>
-	  </info>
-	</xsl:if>
-
-        <xsl:apply-templates/>
-      </xsl:copy>
-    </xsl:otherwise>
-  </xsl:choose>
+<xsl:template match="literallayout" priority="200">
+  <xsl:copy>
+    <xsl:call-template name="copy.attributes">
+      <xsl:with-param name="suppress" select="'format'"/><!-- Dropped entirely in DB5 -->
+      <xsl:with-param name="suppress.default" select="'class=normal'"/>
+    </xsl:call-template>
+    <xsl:apply-templates/>
+  </xsl:copy>
 </xsl:template>
 
 <xsl:template match="equation" priority="200">
@@ -421,71 +346,13 @@
         <xsl:apply-templates/>
       </informalequation>
     </xsl:when>
-    <xsl:when test="blockinfo">
-      <xsl:copy>
-        <xsl:call-template name="copy.attributes"/>
-        <xsl:apply-templates/>
-      </xsl:copy>
-    </xsl:when>
     <xsl:otherwise>
       <xsl:copy>
         <xsl:call-template name="copy.attributes"/>
-        <info>
-          <xsl:apply-templates select="title" mode="copy"/>
-          <xsl:apply-templates select="titleabbrev" mode="copy"/>
-          <xsl:apply-templates select="subtitle" mode="copy"/>
-        </info>
         <xsl:apply-templates/>
       </xsl:copy>
     </xsl:otherwise>
   </xsl:choose>
-</xsl:template>
-
-<xsl:template match="sect1|sect2|sect3|sect4|sect5|section"
-	      priority="200">
-  <section>
-    <xsl:call-template name="copy.attributes"/>
-
-    <xsl:if test="not(sect1info|sect2info|sect3info|sect4info|sect5info|sectioninfo)">
-      <info>
-        <xsl:apply-templates select="title" mode="copy"/>
-        <xsl:apply-templates select="titleabbrev" mode="copy"/>
-        <xsl:apply-templates select="subtitle" mode="copy"/>
-        <xsl:apply-templates select="abstract" mode="copy"/>
-      </info>
-    </xsl:if>
-    <xsl:apply-templates/>
-  </section>
-</xsl:template>
-
-<xsl:template match="simplesect"
-	      priority="200">
-  <simplesect>
-    <xsl:call-template name="copy.attributes"/>
-    <info>
-      <xsl:apply-templates select="title" mode="copy"/>
-      <xsl:apply-templates select="titleabbrev" mode="copy"/>
-      <xsl:apply-templates select="subtitle" mode="copy"/>
-      <xsl:apply-templates select="abstract" mode="copy"/>
-    </info>
-    <xsl:apply-templates/>
-  </simplesect>
-</xsl:template>
-
-<xsl:template match="refsect1|refsect2|refsect3|refsection" priority="200">
-  <refsection>
-    <xsl:call-template name="copy.attributes"/>
-
-    <xsl:if test="not(refsect1info|refsect2info|refsect3info|refsectioninfo)">
-      <info>
-        <xsl:apply-templates select="title" mode="copy"/>
-        <xsl:apply-templates select="titleabbrev" mode="copy"/>
-        <xsl:apply-templates select="subtitle" mode="copy"/>
-        <xsl:apply-templates select="abstract" mode="copy"/>
-      </info>
-    </xsl:if>
-    <xsl:apply-templates/>
-  </refsection>
 </xsl:template>
 
 <xsl:template match="imagedata|videodata|audiodata|textdata" priority="200">
@@ -678,11 +545,18 @@
   </mediaobject>
 </xsl:template>
 
-<xsl:template match="remark" priority="200">
-  <!-- get rid of any embedded markup -->
+<xsl:template match="remark">
+  <!-- get rid of any embedded markup if the version is 5.0. If it's > 5.0, leave markup in. -->
   <remark>
     <xsl:copy-of select="@*"/>
-    <xsl:value-of select="."/>
+    <xsl:choose>
+      <xsl:when test="$db5.version>5.0">
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
   </remark>
 </xsl:template>
 
@@ -1088,15 +962,100 @@
 </xsl:template>
 
 <xsl:template match="title|subtitle|titleabbrev" priority="300">
-  <!-- nop -->
-</xsl:template>
+  <xsl:variable name="local.name" select="local-name(.)"/>
+  <xsl:variable name="parent.name" select="local-name(..)"/>
 
-<xsl:template match="abstract" priority="300">
+  <!-- First three tests drop element if parent ZZZ already has
+       ZZZinfo/title (or subtitle, or titleabbrev). -->
   <xsl:choose>
-    <xsl:when test="not(contains(name(parent::*),'info'))">
+    <xsl:when test="../*[local-name(.) = concat($parent.name, 'info')]/*[local-name(.) = $local.name]">
       <xsl:call-template name="emit-message">
         <xsl:with-param name="message">
-          <xsl:text>Check abstract; moved into info correctly?</xsl:text>
+          <xsl:text>Check </xsl:text>
+          <xsl:value-of select="$parent.name"/>
+          <xsl:text> title.</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <!-- Before 4.0, <articleinfo> was known as <artheader> -->
+    <xsl:when test="$parent.name = 'article' and ../artheader/*[local-name(.) = $local.name]">
+      <xsl:call-template name="emit-message">
+        <xsl:with-param name="message">
+          <xsl:text>Check </xsl:text>
+          <xsl:value-of select="$parent.name"/>
+          <xsl:text> title.</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+   <xsl:when test="../blockinfo/*[local-name(.) = $local.name]">
+      <xsl:call-template name="emit-message">
+        <xsl:with-param name="message">
+          <xsl:text>Check </xsl:text>
+          <xsl:value-of select="$parent.name"/>
+          <xsl:text> title.</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <!-- always drop title, subtitle, and titleabbrev from refentryinfo -->
+    <xsl:when test="$parent.name = 'refentryinfo'">
+      <xsl:call-template name="emit-message">
+        <xsl:with-param name="message">
+          <xsl:text>Removing title in refentryinfo.</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>      
+    </xsl:when>
+    <!-- Also drop title, subtitle, and titleabbrev when they appear after info.
+         The title is picked up and moved either into or before the info element
+         in the templates that handle info elements. -->
+    <xsl:when test="preceding-sibling::*[local-name(.) = concat($parent.name, 'info')]">
+      <xsl:call-template name="emit-message">
+        <xsl:with-param name="message">
+          <xsl:text>Removing </xsl:text><xsl:value-of select="$local.name"/>
+          <xsl:text> after </xsl:text><xsl:value-of select="$parent.name"/><xsl:text>info. Moved before or inside info.</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template> 
+    </xsl:when>
+    <!-- this covers block elements that use blockinfo-->
+    <xsl:when test="preceding-sibling::blockinfo">
+      <xsl:call-template name="emit-message">
+        <xsl:with-param name="message">
+          <xsl:text>Removing </xsl:text><xsl:value-of select="$local.name"/>
+          <xsl:text> after blockinfo. Moved before or inside info.</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <!-- The next clause removes title, subtitle, or titleabbrev if it was
+         moved inside the info block. Only happens when one or more of these
+         elements occurs both inside and outside the info element. -->
+    <xsl:when test="following-sibling::bookinfo[title|subtitle|titleabbrev] or
+                    following-sibling::articleinfo[title|subtitle|titleabbrev] or
+                    following-sibling::artheader[title|subtitle|titleabbrev] or
+                    following-sibling::setinfo[title|subtitle|titleabbrev]">
+      <xsl:call-template name="emit-message">
+        <xsl:with-param name="message">
+          <xsl:text>Removing </xsl:text><xsl:value-of select="$local.name"/>
+          <xsl:text>. Has been moved inside info.</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy>
+        <xsl:call-template name="copy.attributes"/>
+        <xsl:apply-templates/>
+      </xsl:copy>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<!-- Allow abstract inside valid biblio* elements, and inside info elements, otherwise drop -->
+<xsl:template match="abstract" priority="300">
+  <xsl:choose>
+    <xsl:when test="not(contains(name(parent::*),'info'))
+                    and not(parent::biblioentry) and not(parent::bibliomixed)
+                    and not(parent::bibliomset)  and not(parent::biblioset)">
+      <xsl:call-template name="emit-message">
+        <xsl:with-param name="message">
+          <xsl:text>CHECK abstract: removed from output (invalid location in 5.0).</xsl:text>
         </xsl:with-param>
       </xsl:call-template>
     </xsl:when>
@@ -1156,6 +1115,76 @@
     <xsl:call-template name="copy.attributes"/>
     <xsl:apply-templates/>
   </varname>
+</xsl:template>
+<!-- ====================================================================== -->
+<!-- glossterm and term have broader content models in 4.x than 5.0.
+     Warn when an unsupported element is found under glossterm.
+     Because the synopsis elements can contain things that phrase cannot,
+     leave them as is and warn.
+     For other elements, change them into phrase recursively and lose attributes.
+-->
+<xsl:template match="glossterm|term">
+  <xsl:element name="{local-name(.)}">
+    <xsl:call-template name="copy.attributes"/>
+    <xsl:apply-templates mode="clean-terms"/>
+  </xsl:element>
+</xsl:template>
+
+<!-- The synopsis elements have child elements that don't work inside phrase, plus
+     they have attributes that shouldn't be lost. So, leave as is, but warn. -->
+<xsl:template match="classsynopsis|cmdsynopsis|constructorsynopsis
+                     |destructorsynopsis|fieldsynopsis|methodsynopsis|synopsis" mode="clean-terms">
+  <xsl:call-template name="emit-message">
+    <xsl:with-param name="message">
+      <xsl:text>CHECK OUTPUT: Found </xsl:text><xsl:value-of select="local-name(.)"/>
+      <xsl:text> inside </xsl:text><xsl:value-of select="local-name(..)"/>
+    </xsl:with-param>
+  </xsl:call-template>
+  <xsl:element name="{local-name(.)}">
+    <xsl:call-template name="copy.attributes"/>
+    <xsl:apply-templates/>
+  </xsl:element>
+</xsl:template>
+
+<!-- The following elements probably can be safely turned into phrase recursively -->
+<xsl:template match="authorinitials|corpcredit|interface|medialabel|othercredit|revhistory" mode="clean-terms">
+  <xsl:call-template name="emit-message">
+    <xsl:with-param name="message">
+      <xsl:text>Replacing </xsl:text><xsl:value-of select="local-name(.)"/>
+      <xsl:text> inside </xsl:text><xsl:value-of select="local-name(..)"/>
+      <xsl:text> with phrase.</xsl:text>
+    </xsl:with-param>
+  </xsl:call-template>
+  <phrase remap="{local-name(.)}">
+    <!-- Don't copy attributes -->
+    <xsl:apply-templates mode="make-phrase"/>
+  </phrase>
+</xsl:template>
+
+<!-- affiliation can appear in a much smaller number of elements in 5.0. But, it contains
+     elements that cannot appear in a phrase. So, replace all child elements, recursively,
+     with <phrase remap="element name"...  Don't keep attributes, which won't work on phrase. -->
+
+<xsl:template match="affiliation[not(parent::author) and not(parent::collab) and not(parent::editor) and not(parent::org) and not(parent::othercredit) and not(parent::person)]">
+    <xsl:call-template name="emit-message">
+    <xsl:with-param name="message">
+      <xsl:text>CHECK OUTPUT: Converting </xsl:text><xsl:value-of select="local-name(.)"/>
+      <xsl:text> to phrase in </xsl:text><xsl:value-of select="local-name(..)"/>
+    </xsl:with-param>
+  </xsl:call-template>
+  <phrase remap="{local-name(.)}">
+    <!-- Don't copy attributes -->
+    <xsl:apply-templates mode="make-phrase"/>
+  </phrase>
+</xsl:template>
+
+<!-- This template recursively changes an element with remap="name of element".
+     Does this recursively through children. -->
+<xsl:template match="*" mode="make-phrase">
+  <phrase remap="{local-name(.)}">
+    <!-- Don't copy attributes -->
+    <xsl:apply-templates mode="make-phrase"/>
+  </phrase>
 </xsl:template>
 
 <!-- ====================================================================== -->
@@ -1237,8 +1266,20 @@
 <xsl:template name="copy.attributes">
   <xsl:param name="src" select="."/>
   <xsl:param name="suppress" select="''"/>
+  <xsl:param name="suppress.default" select="''"/>
 
   <xsl:for-each select="$src/@*">
+    <xsl:variable name="suppressed.value">
+      <xsl:choose>
+	<xsl:when test="not(contains($suppress.default, concat(local-name(.),'=')))">
+	  <xsl:text>this-value-never-matches</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="substring-before(substring-after(concat($suppress.default,' '), concat(local-name(.),'=')),' ')"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
     <xsl:choose>
       <xsl:when test="local-name(.) = 'moreinfo'">
         <xsl:call-template name="emit-message">
@@ -1259,6 +1300,7 @@
         </xsl:attribute>
       </xsl:when>
       <xsl:when test="$suppress = local-name(.)"/>
+      <xsl:when test=". = $suppressed.value"/>
       <xsl:when test="local-name(.) = 'float'">
 	<xsl:choose>
 	  <xsl:when test=". = '1'">
@@ -1365,8 +1407,8 @@
     <xsl:when test="namespace-uri(.) = ''">
       <xsl:element name="{local-name(.)}"
 		   namespace="http://docbook.org/ns/docbook">
-	<xsl:if test="not(parent::*)">
-	  <xsl:attribute name="version">5.0</xsl:attribute>
+	<xsl:if test="not(ancestor::*[namespace-uri(.)=''])">
+	  <xsl:attribute name="version"><xsl:value-of select="$db5.version.string"/></xsl:attribute>
 	</xsl:if>
 	<xsl:copy-of select="@*"/>
 	<xsl:apply-templates mode="addNS"/>
@@ -1374,8 +1416,9 @@
     </xsl:when>
     <xsl:otherwise>
       <xsl:copy>
-	<xsl:if test="not(parent::*)">
-	  <xsl:attribute name="version">5.0</xsl:attribute>
+      <xsl:if test="namespace-uri(.) = 'http://docbook.org/ns/docbook' and
+	      not(ancestor::*[namespace-uri(.)='http://docbook.org/ns/docbook'])">
+	  <xsl:attribute name="version"><xsl:value-of select="$db5.version.string"/></xsl:attribute>
 	</xsl:if>
 	<xsl:copy-of select="@*"/>
 	<xsl:apply-templates mode="addNS"/>
