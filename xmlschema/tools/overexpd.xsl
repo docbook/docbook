@@ -5,7 +5,7 @@
                 version="2.0">
 
   <!-- This stylesheet is derived from the version in the XSD 1.1 spec -->
-  
+
   <xsl:variable name="overrideElement" as="element(xs:override)"
                 select="/xs:schema/xs:override"/>
 
@@ -86,11 +86,12 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:function name="f:componentName" as="xs:QName">
+  <!-- Replaced per comment 2 on https://www.w3.org/Bugs/Public/show_bug.cgi?id=20784 -->
+  <xsl:function name="f:componentName" as="xs:QName?">
     <xsl:param name="component" as="element()"/>
-    <xsl:sequence select="
-      QName($component/ancestor::xs:schema/@targetNamespace,
-            $component/@name)"/>
+    <xsl:sequence select="if ($component/@name)
+                          then QName($component/ancestor::xs:schema/@targetNamespace, $component/@name)
+                          else ()"/>
   </xsl:function>
 
 </xsl:stylesheet>

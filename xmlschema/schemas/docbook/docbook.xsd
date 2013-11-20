@@ -6,8 +6,6 @@
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
 
-  <!-- This causes the XSD 1.1 override.xsl stylesheet to fall over, *sigh*
-       See https://www.w3.org/Bugs/Public/show_bug.cgi?id=20784
   <xs:annotation xmlns:s="http://purl.oclc.org/dsdl/schematron">
     <xs:documentation>"and" in the rule is intentional</xs:documentation>
     <xs:appinfo>
@@ -19,7 +17,6 @@
       </s:pattern>
     </xs:appinfo>
   </xs:annotation>
-  -->
 
   <xs:attributeGroup name="effectivity.attributes">
     <xs:attribute name="arch"/>
