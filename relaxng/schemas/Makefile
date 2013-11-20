@@ -1,5 +1,5 @@
 REMOVESCH=0
-DBVER=V5.1b8
+DBVER=V5.1CR1
 DBREL="DocBook $(DBVER)"
 XIREL="DocBook XInclude $(DBVER)"
 SDBREL="Simplified DocBook $(DBVER)"
