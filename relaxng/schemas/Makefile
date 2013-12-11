@@ -1,5 +1,5 @@
 REMOVESCH=0
-DBVER=V5.1CR1
+DBVER=V5.1CR2
 DBREL="DocBook $(DBVER)"
 XIREL="DocBook XInclude $(DBVER)"
 SDBREL="Simplified DocBook $(DBVER)"
@@ -15,7 +15,7 @@ TOOLSDEP=../tools/make-schema.xpl
 
 .PHONY: clean
 
-all: schemas
+all: schemas doc
 
 schemas: docbook.rnc assembly.rnc docbookxi.rnc sdocbook.rnc dbforms.rnc dbits.rnc \
      publishers.rnc slides.rnc slides-full.rnc website.rnc website-full.rnc \
