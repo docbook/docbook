@@ -2394,8 +2394,7 @@ div {
       element videoobject {
          db.videoobject.attlist,
          db.videoobject.info,
-         db.videodata,
-         db.multimediaparam*
+         db.videodata+
       }
 }
 
@@ -2420,14 +2419,13 @@ div {
       element audioobject {
          db.audioobject.attlist,
          db.audioobject.info,
-         db.audiodata,
-         db.multimediaparam*
+         db.audiodata+
       }
 }
 
 # ======================================================================
 
-db.imageobject.content = db.imagedata
+db.imageobject.content = db.imagedata+
 
 # ======================================================================
 
@@ -2540,7 +2538,8 @@ div {
 
    db.videodata = element videodata {
       db.videodata.attlist,
-      db.videodata.info
+      db.videodata.info,
+      db.multimediaparam*
    }
 }
 
@@ -2607,7 +2606,8 @@ div {
    db.audiodata =
       element audiodata {
          db.audiodata.attlist,
-         db.audiodata.info
+         db.audiodata.info,
+         db.multimediaparam*
       }
 }
 
