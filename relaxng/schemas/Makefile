@@ -9,7 +9,6 @@ ITSREL="DocBook ITS $(DBVER)"
 PUBREL="DocBook Publishers $(DBVER)-1"
 SLIREL="DocBook Slides $(DBVER)-1"
 WEBREL="DocBook Website $(DBVER)-1"
-RDFREL="DocBook RDFa Lite $(DBVER)-1"
 SAXON=saxon -opts saxon-9he
 
 TOOLSDEP=../tools/make-schema.xpl
@@ -20,7 +19,7 @@ all: schemas
 
 schemas: docbook.rnc assembly.rnc docbookxi.rnc sdocbook.rnc dbforms.rnc dbits.rnc \
      publishers.rnc slides.rnc slides-full.rnc website.rnc website-full.rnc \
-     docbook.sch docbookxi.sch assembly.sch publishers.sch dbits.sch dbrdfalite.rnc
+     docbook.sch docbookxi.sch assembly.sch publishers.sch dbits.sch
 
 doc: defguide.rnd publishers.rnd sdocbook.rnd
 
@@ -95,7 +94,3 @@ website.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard website/*.rnc)
 website-full.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard website/*.rnc) $(wildcard website-full/*.rnc)
 	mkdir -p build/website-full
 	calabash ../tools/make-schema.xpl schema=website-full release=$(SLIREL) remove-schematron=$(REMOVESCH)
-
-dbrdfalite.rnc: $(TOOLSDEP) $(wildcard dbrdfalite/*.rnc)
-	mkdir -p build/dbrdfalite
-	calabash ../tools/make-schema.xpl schema=dbrdfalite release=$(RDFREL) remove-schematron=$(REMOVESCH)

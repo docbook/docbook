@@ -381,6 +381,43 @@ db.dir.attribute =
    ]
    attribute dir { db.dir.enumeration }
 
+db.rdfalite.vocab =
+   [
+      db:refpurpose [ "The RDFa Lite vocab" ]
+   ]
+   attribute vocab { xsd:anyURI }
+
+db.rdfalite.typeof =
+   [
+      db:refpurpose [ "The RDFa Lite typeof" ]
+   ]
+   attribute typeof { text }
+
+db.rdfalite.property =
+   [
+      db:refpurpose [ "The RDFa Lite property" ]
+   ]
+   attribute property { text }
+
+db.rdfalite.resource =
+   [
+      db:refpurpose [ "The RDFa Lite resource" ]
+   ]
+   attribute resource { text }
+
+db.rdfalite.prefix =
+   [
+      db:refpurpose [ "The RDFa Lite prefix" ]
+   ]
+   attribute prefix { text }
+
+db.rdfalite.attributes =
+   db.rdfalite.vocab?
+ & db.rdfalite.typeof?
+ & db.rdfalite.property?
+ & db.rdfalite.resource?
+ & db.rdfalite.prefix?
+
 db.common.base.attributes =
    db.version.attribute?
  & db.xml.lang.attribute?
@@ -390,6 +427,7 @@ db.common.base.attributes =
  & db.revisionflag.attribute?
  & db.dir.attribute?
  & db.effectivity.attributes
+ & db.rdfalite.attributes
 
 db.common.attributes =
    db.xml.id.attribute?
