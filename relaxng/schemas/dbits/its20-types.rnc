@@ -192,6 +192,6 @@ its-storageEncoding.type = string
 
 its-storageEncodingPointer.type = its-relative-selector.type
 
-its-lineBreakType.type = "cr" | "lr" | "crlf" | "nel"
+its-lineBreakType.type = "cr" | "lf" | "crlf"
 
 its-annotatorsRef.type = string
