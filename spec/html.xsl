@@ -1,174 +1,167 @@
 <?xml version="1.0"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+		xmlns:db="http://docbook.org/ns/docbook"
+		xmlns:t="http://docbook.org/xslt/ns/template"
+	        xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns="http://www.w3.org/1999/xhtml"
+                exclude-result-prefixes="db t xlink"
+                version="2.0">
 
-<xsl:import href="/projects/oasis/spectools/stylesheets/oasis-docbook-html.xsl"/>
+<xsl:import href="/projects/docbook/xslt20/xslt/base/html/docbook.xsl"/>
 
-<xsl:variable name="tcProduct" select="//articleinfo/productname[1]"/>
-<xsl:variable name="tcProductVersion" select="//articleinfo/productnumber[1]"/>
-<xsl:variable name="tcArtifactType" select="'spec'"/>
-<xsl:variable name="tcStage"
-	      select="//articleinfo/releaseinfo[@role='stage'][1]"/>
-<xsl:variable name="tcRevision" select="//articleinfo/pubsnumber[1]"/>
-<xsl:variable name="tcLanguage" select="/@lang"/>
-<xsl:variable name="tcForm" select="'xml'"/>
-
-<xsl:variable name="odnRoot">
-  <xsl:value-of select="$tcProduct"/>
-  <xsl:text>-</xsl:text>
-  <xsl:value-of select="$tcProductVersion"/>
-  <xsl:text>-</xsl:text>
-  <xsl:value-of select="$tcArtifactType"/>
-  <xsl:if test="$tcStage != 'os'">
-    <xsl:text>-</xsl:text>
-    <xsl:value-of select="$tcStage"/>
-  </xsl:if>
-  <xsl:if test="$tcRevision != ''">
-    <xsl:text>-</xsl:text>
-    <xsl:value-of select="$tcRevision"/>
-  </xsl:if>
-  <xsl:if test="$tcLanguage != 'en' and $tcLanguage != ''">
-    <xsl:text>-</xsl:text>
-    <xsl:value-of select="$tcLanguage"/>
-  </xsl:if>
-</xsl:variable>
-
-<xsl:param name="css.path"
-           select="'http://www.oasis-open.org/spectools/css/'"/>
-
-<xsl:param name="css.stylesheet">
-  <xsl:choose>
-    <xsl:when test="$tcStage = 'wd'">oasis-wd.css</xsl:when>
-    <xsl:when test="$tcStage = 'cd'">oasis-cd.css</xsl:when>
-    <xsl:when test="$tcStage = 'pr'">oasis-pr.css</xsl:when>
-    <xsl:when test="$tcStage = 'cs'">oasis-cs.css</xsl:when>
-    <xsl:when test="$tcStage = 'os'">oasis-cs.css</xsl:when> <!-- sic -->
-    <xsl:otherwise>
-      <xsl:message>
-        <xsl:text>Unrecognized stage: '</xsl:text>
-	<xsl:value-of select="$tcStage"/>
-        <xsl:text>'; styling as Working Draft.</xsl:text>
-      </xsl:message>
-      <xsl:text>oasis-wd.css</xsl:text>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:param>
-
-<xsl:template name="user.head.content">
+<xsl:template name="t:css">
   <xsl:param name="node" select="."/>
-
-  <meta name="tcProduct" content="{$tcProduct}"/>
-  <meta name="tcProductVersion" content="{$tcProductVersion}"/>
-  <meta name="tcArtifactType" content="{$tcArtifactType}"/>
-  <xsl:if test="$tcStage != ''">
-    <meta name="tcStage" content="{$tcStage}"/>
-  </xsl:if>
-  <xsl:if test="$tcRevision != ''">
-    <meta name="tcRevision" content="{$tcRevision}"/>
-  </xsl:if>
-  <meta name="tcLanguage" content="{$tcLanguage}"/>
-  <meta name="tcForm" content="html"/>
-
-  <style type="text/css">
-    span.paranum { color: #7F7F7F;
-                   font-style: italic;
-                   font-family: monospace;
-                 }
-    span.filename { font-weight: bold; }		 
-  </style>
+  <link rel="stylesheet" href="http://docs.oasis-open.org/templates/DocBook/spec-0.5/css/oasis-spec.css" type="text/css" />
 </xsl:template>
 
-<xsl:template name="article.titlepage">
+<!-- ====================================================================== -->
+
+<xsl:template match="db:article">
+  <article>
+    <xsl:apply-templates/>
+    <xsl:if test="not(parent::db:article)">
+      <xsl:call-template name="t:process-footnotes"/>
+    </xsl:if>
+  </article>
+</xsl:template>
+
+<xsl:template match="db:article/db:info">
   <div class="titlepage">
-    <p class="logo">
-      <a href="http://www.oasis-open.org/">
-	<img src="http://www.oasis-open.org/spectools/images/oasis.gif"
-	     alt="OASIS" border="0" />
-      </a>
-    </p>
+    <div>
+      <p class="logo"><a href="http://www.oasis-open.org/"><img src="http://docs.oasis-open.org/templates/DocBook/spec-0.5/OASISLogo.jpg" alt="OASIS" border="0" /></a></p>
+      <div>
+        <h1 class="title">
+          <xsl:apply-templates select="db:title/node()"/>
+        </h1>
+      </div>
 
-    <xsl:apply-templates select="//articleinfo/title"
-			 mode="titlepage.mode"/>
+      <div>
+        <h2>Technical Committee Editorial Draft Candidate Release 2 (CR2)</h2>
+        <h2>
+          <xsl:apply-templates select="db:pubdate"/>
+        </h2>
+      </div>
 
-    <h2>
-      <xsl:choose>
-	<xsl:when test="$tcStage = 'wd'">Working Draft</xsl:when>
-	<xsl:when test="$tcStage = 'cd'">Committee Draft</xsl:when>
-	<xsl:when test="$tcStage = 'pr'">Public Review Draft</xsl:when>
-	<xsl:when test="$tcStage = 'cs'">Committee Specification</xsl:when>
-	<xsl:when test="$tcStage = 'os'">OASIS Standard</xsl:when>
-	<xsl:otherwise>
-	  <xsl:message>
-	    <xsl:text>Unrecognized stage: '</xsl:text>
-	    <xsl:value-of select="$tcStage"/>
-	    <xsl:text>'; labeling as Working Draft.</xsl:text>
-	  </xsl:message>
-	  <xsl:text>Working Draft</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-      <xsl:text>,&#160;</xsl:text>
-      <xsl:call-template name="datetime.format">
-	<xsl:with-param name="date" select="//articleinfo/pubdate[1]"/>
-	<xsl:with-param name="format" select="'d B Y'"/>
-      </xsl:call-template>
-    </h2>
+      <div>
+        <dl>
+          <dt><span class="loc-heading">Specification URIs:</span></dt>
+        </dl>
+        <dl>
+          <dt><span class="loc-heading">This Version:</span></dt>
+          <dd>…</dd>
+        </dl>
+        <dl>
+          <dt><span class="loc-heading">Previous Version:</span></dt>
+          <dd>None</dd>
+        </dl>
+        <dl>
+          <dt><span class="loc-heading">Latest Version:</span></dt>
+          <dd>…</dd>
+        </dl>
+      </div>
+      <div>
+        <dl>
+          <dt><span class="loc-heading">Technical Committee:</span></dt>
+          <dd>
+            <a href="{db:org/db:orgdiv/@xlink:href}">
+              <xsl:value-of select="db:org/db:orgdiv"/>
+            </a>
+          </dd>
+        </dl>
+      </div>
+      <div>
+        <dl>
+          <dt><span class="contrib-heading">Chairs:</span></dt>
+          <dd>
+            <xsl:apply-templates select="db:othercredit[@otherclass='chair']"/>
+          </dd>
+        </dl>
+        <dl>
+          <dt><span class="editor-heading">Editor:</span></dt>
+          <dd>
+            <xsl:apply-templates select="db:authorgroup/db:editor"/>
+          </dd>
+        </dl>
+      </div>
+<!--
+      <div>
+        <dl>
+          <dt><span class="status-heading">Related Work:</span></dt>
+          <dd>
+            <p>This specification replaces or supersedes:</p>
+            <div class="itemizedlist">
+              <ul type="disc" compact="compact">
+                <li>
+                  <p>{specification replaced by this standard}</p>
+                </li>
+                <li>
+                  <p>{specification replaced by this standard}</p>
+                </li>
+              </ul>
+            </div>
+            <p>This specification is related to:</p>
+            <div class="itemizedlist">
+              <ul type="disc" compact="compact">
+                <li>
+                  <p>{related specifications}</p>
+                </li>
+                <li>
+                  <p>{related specifications}</p>
+                </li>
+              </ul>
+            </div>
+          </dd>
+        </dl>
+      </div>
+-->
+      <div>
+        <dl>
+          <dt><span class="status-heading">Declared XML Namespaces:</span></dt>
+          <dd>
+            <p><a href="http://docbook.org/ns/docbook" target="_top">http://docbook.org/ns/docbook</a></p>
+          </dd>
+        </dl>
+      </div>
+      <div>
+        <dl>
+          <dt><span class="abstract-heading">Abstract:</span></dt>
+          <dd>
+            <xsl:apply-templates select="db:abstract/node()"/>
+          </dd>
+        </dl>
+      </div>
+      <div>
+        <dl>
+          <dt><span class="status-heading">Status:</span></dt>
+          <dd>
+<p>This document was last revised or approved by the DocBook
+Technical Committee on the above date. The level of approval is also
+listed above. Check the current location noted above for possible
+later revisions of this document. This document is updated
+periodically on no particular schedule.</p>
 
-    <dl>
-      <dt><span class="docid-heading">Document identifier:</span></dt>
-      <dd>
-	<p>
-	  <xsl:value-of select="$odnRoot"/>
-	  <xsl:text> (</xsl:text>
-	  <a href="{$odnRoot}.xml">.xml</a>
-	  <xsl:text>, </xsl:text>
-	  <a href="{$odnRoot}.html">.html</a>
-	  <xsl:text>, </xsl:text>
-	  <a href="{$odnRoot}.pdf">.pdf</a>
-	  <xsl:text>)</xsl:text>
-	</p>
-      </dd>
+<p>Technical Committee members should send comments on this
+specification to the Technical Committee's email list. Others should
+send comments to the Technical Committee by using the "Send A Comment"
+button on the Technical Committee's web page at <a
+href="http://www.oasis-open.org/committees/docbook"
+target="_top">http://www.oasis-open.org/committees/docbook</a>.</p>
 
-      <dt><span class="loc-heading">Location:</span></dt>
-      <dd>
-	<p>
-	  <a href="{//articleinfo/releaseinfo[@role='location']}">
-	    <xsl:value-of select="//articleinfo/releaseinfo[@role='location']"/>
-	  </a>
-	</p>
-      </dd>
+<p>For information on whether any patents have been disclosed that may
+be essential to implementing this specification, and any offers of
+patent licensing terms, please refer to the Intellectual Property
+Rights section of the Technical Committee web page (<a
+href="http://www.oasis-open.org/committees/docbook/ipr.php"
+target="_top">http://www.oasis-open.org/committees/docbook/ipr.php</a>).</p>
 
-      <dt>
-	<span class="editor-heading">
-	  <xsl:text>Editor</xsl:text>
-	  <xsl:if test="count(//articleinfo//editor) &gt; 1">
-	    <xsl:text>s</xsl:text>
-	  </xsl:if>
-	  <xsl:text>:</xsl:text>
-	</span>
-      </dt>
-      <dd>
-	<xsl:for-each select="//articleinfo//editor">
-	  <p>
-	    <xsl:apply-templates select="." mode="titlepage.mode"/>
-	  </p>
-	</xsl:for-each>
-      </dd>
-
-      <dt><span class="abstract-heading">Abstract:</span></dt>
-      <dd>
-	<xsl:apply-templates select="//articleinfo/abstract[1]/*"/>
-      </dd>
-
-      <dt><span class="status-heading">Status:</span></dt>
-      <dd>
-	<xsl:apply-templates
-	    select="//articleinfo/legalnotice[@role='status']/*"/>
-      </dd>
-    </dl>
-
-    <xsl:apply-templates select="//articleinfo/copyright" mode="titlepage.mode"/>
+<p>The non-normative errata page for this specification is located at
+<a href="http://www.oasis-open.org/committees/docbook"
+target="_top">http://www.oasis-open.org/committees/docbook</a>.</p>
+          </dd>
+        </dl>
+      </div>
+    </div>
   </div>
-  <hr />
 </xsl:template>
 
 </xsl:stylesheet>
