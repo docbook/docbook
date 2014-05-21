@@ -64,7 +64,7 @@ div {
       element sect1 {
          db.sect1.attlist,
          db.sect1.info,
-         db.navigation.components,
+         db.navigation.components*,
          ((db.all.blocks+, db.sect1.sections?)
           | db.sect1.sections)?,
          db.navigation.components*
