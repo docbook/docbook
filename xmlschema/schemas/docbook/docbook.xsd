@@ -3,8 +3,10 @@
            targetNamespace="http://docbook.org/ns/docbook"
            xmlns:xlink="http://www.w3.org/1999/xlink"
            xmlns:db="http://docbook.org/ns/docbook">
-  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink"
+             schemaLocation="xlink.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+             schemaLocation="xml.xsd"/>
 
   <xs:annotation xmlns:s="http://purl.oclc.org/dsdl/schematron">
     <xs:documentation>"and" in the rule is intentional</xs:documentation>
@@ -29,6 +31,15 @@
     <xs:attribute name="userlevel"/>
     <xs:attribute name="vendor"/>
     <xs:attribute name="wordsize"/>
+    <xs:attribute name="outputformat"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="rdfalite.attributes">
+    <xs:attribute name="vocab" type="xs:anyURI"/>
+    <xs:attribute name="typeof"/>
+    <xs:attribute name="property"/>
+    <xs:attribute name="resource"/>
+    <xs:attribute name="prefix"/>
   </xs:attributeGroup>
 
   <xs:attributeGroup name="common.attributes">
@@ -59,6 +70,7 @@
       </xs:simpleType>
     </xs:attribute>
     <xs:attributeGroup ref="db:effectivity.attributes"/>
+    <xs:attributeGroup ref="db:rdfalite.attributes"/>
     <xs:attribute name="annotations"/>
   </xs:attributeGroup>
 
@@ -90,6 +102,7 @@
       </xs:simpleType>
     </xs:attribute>
     <xs:attributeGroup ref="db:effectivity.attributes"/>
+    <xs:attributeGroup ref="db:rdfalite.attributes"/>
     <xs:attribute name="annotations"/>
   </xs:attributeGroup>
 
@@ -132,14 +145,27 @@
 
   <xs:group name="ubiq.inlines">
     <xs:choice>
-      <xs:element ref="db:phrase"/>
-      <xs:element ref="db:inlinemediaobject"/>
-      <xs:element ref="db:remark"/>
-      <xs:element ref="db:superscript"/>
-      <xs:element ref="db:subscript"/>
-      <xs:group ref="db:link.inlines"/>
+      <xs:element ref="db:abbrev"/>
+      <xs:element ref="db:acronym"/>
       <xs:element ref="db:alt"/>
       <xs:element ref="db:annotation"/>
+      <xs:element ref="db:coref"/>
+      <xs:element ref="db:date"/>
+      <xs:element ref="db:emphasis"/>
+      <xs:element ref="db:firstterm"/>
+      <xs:element ref="db:footnote"/>
+      <xs:element ref="db:footnoteref"/>
+      <xs:element ref="db:foreignphrase"/>
+      <xs:element ref="db:glossterm"/>
+      <xs:element ref="db:inlinemediaobject"/>
+      <xs:element ref="db:phrase"/>
+      <xs:element ref="db:quote"/>
+      <xs:element ref="db:remark"/>
+      <xs:element ref="db:subscript"/>
+      <xs:element ref="db:superscript"/>
+      <xs:element ref="db:trademark"/>
+      <xs:element ref="db:wordasword"/>
+      <xs:group ref="db:link.inlines"/>
       <!-- ambig <xs:element ref="db:indexterm"/> -->
     </xs:choice>
   </xs:group>
@@ -193,7 +219,7 @@
 
   <xs:group name="product.inlines">
     <xs:choice>
-      <xs:element ref="db:trademark"/>
+      <!-- ubiq: <xs:element ref="db:trademark"/> -->
       <xs:element ref="db:productnumber"/>
       <xs:element ref="db:productname"/>
       <xs:element ref="db:database"/>
@@ -220,20 +246,20 @@
 
   <xs:group name="publishing.inlines">
     <xs:choice>
-      <xs:element ref="db:abbrev"/>
-      <xs:element ref="db:acronym"/>
-      <xs:element ref="db:date"/>
-      <xs:element ref="db:emphasis"/>
-      <xs:element ref="db:footnote"/>
-      <xs:element ref="db:footnoteref"/>
-      <xs:element ref="db:foreignphrase"/>
+      <!-- ubiq: <xs:element ref="db:abbrev"/> -->
+      <!-- ubiq: <xs:element ref="db:acronym"/> -->
+      <!-- ubiq: <xs:element ref="db:date"/> -->
+      <!-- ubiq: <xs:element ref="db:emphasis"/> -->
+      <!-- ubiq: <xs:element ref="db:footnote"/> -->
+      <!-- ubiq: <xs:element ref="db:footnoteref"/> -->
+      <!-- ubiq: <xs:element ref="db:foreignphrase"/> -->
       <!-- ubiq: <xs:element ref="db:phrase"/> -->
-      <xs:element ref="db:quote"/>
+      <!-- ubiq: <xs:element ref="db:quote"/> -->
       <!-- ubiq: <xs:element ref="db:subscript"/> -->
       <!-- ubiq: <xs:element ref="db:superscript"/> -->
-      <xs:element ref="db:wordasword"/>
+      <!-- ubiq: <xs:element ref="db:wordasword"/> -->
       <xs:group ref="db:glossary.inlines"/>
-      <xs:element ref="db:coref"/> <!-- ??? really !!! -->
+      <!-- ubiq: <xs:element ref="db:coref"/> --> <!-- ??? really !!! -->
     </xs:choice>
   </xs:group>
 
@@ -474,16 +500,16 @@
       <xs:group ref="db:info.elements"/>
 
       <!-- This should be publishing.inlines, but there are ambiguity problems -->
-      <xs:element ref="db:abbrev"/>
-      <xs:element ref="db:acronym"/>
-      <xs:element ref="db:emphasis"/>
-      <xs:element ref="db:footnote"/>
-      <xs:element ref="db:footnoteref"/>
-      <xs:element ref="db:foreignphrase"/>
-      <xs:element ref="db:quote"/>
+      <!-- ubiq: <xs:element ref="db:abbrev"/> -->
+      <!-- ubiq: <xs:element ref="db:acronym"/> -->
+      <!-- ubiq: <xs:element ref="db:emphasis"/> -->
+      <!-- ubiq: <xs:element ref="db:footnote"/> -->
+      <!-- ubiq: <xs:element ref="db:footnoteref"/> -->
+      <!-- ubiq: <xs:element ref="db:foreignphrase"/> -->
+      <!-- ubiq: <xs:element ref="db:quote"/> -->
       <xs:element ref="db:subscript"/>
       <xs:element ref="db:superscript"/>
-      <xs:element ref="db:wordasword"/>
+      <!-- ubiq: <xs:element ref="db:wordasword"/> -->
 
       <xs:element ref="db:citerefentry"/>
       <xs:element ref="db:citetitle"/>
@@ -760,6 +786,7 @@
         <xs:group ref="db:_info.title.only" minOccurs="0"/>
         <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="db:step" maxOccurs="unbounded"/>
+        <xs:element ref="db:result" minOccurs="0" maxOccurs="1"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -779,6 +806,7 @@
           </xs:choice>
           <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
+        <xs:element ref="db:result" minOccurs="0" maxOccurs="1"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -812,6 +840,17 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="result">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="db:all.blocks"/>
+      </xs:sequence>
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+    </xs:complexType>
+  </xs:element>
+
   <xs:complexType name="block.container">
     <xs:sequence>
       <xs:group ref="db:_info.title.only" minOccurs="0"/>
@@ -832,7 +871,19 @@
     <xs:attributeGroup ref="db:common.linking.attributes"/>
   </xs:complexType>
 
-  <xs:element name="sidebar" type="db:block.container"/>
+  <xs:element name="sidebar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="db:_info" minOccurs="0"/>
+        <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attributeGroup ref="db:floatstyle.attribute"/>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="abstract" type="db:para.container"/>
   <xs:element name="personblurb" type="db:para.container"/>
 
@@ -1267,12 +1318,16 @@
     <xs:attribute name="language"/>
   </xs:attributeGroup>
 
-  <xs:attributeGroup name="verbatim.attributes">
+  <xs:attributeGroup name="verbatim.common.attributes">
     <xs:attributeGroup ref="db:verbatim.continuation.attribute"/>
     <xs:attributeGroup ref="db:verbatim.linenumbering.attribute"/>
     <xs:attributeGroup ref="db:verbatim.startinglinenumber.attribute"/>
-    <xs:attributeGroup ref="db:verbatim.language.attribute"/>
     <xs:attribute ref="xml:space"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="verbatim.attributes">
+    <xs:attributeGroup ref="db:verbatim.common.attributes"/>
+    <xs:attributeGroup ref="db:verbatim.language.attribute"/>
   </xs:attributeGroup>
 
   <xs:element name="literallayout">
@@ -1473,7 +1528,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.forbidden" minOccurs="0"/>
-        <xs:element ref="db:videodata"/>
+        <xs:element ref="db:videodata" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -1485,7 +1540,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.forbidden" minOccurs="0"/>
-        <xs:element ref="db:audiodata"/>
+        <xs:element ref="db:audiodata" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -1498,7 +1553,7 @@
       <xs:sequence>
         <xs:group ref="db:_info.title.forbidden" minOccurs="0"/>
         <xs:choice>
-          <xs:element ref="db:imagedata"/>
+          <xs:element ref="db:imagedata" maxOccurs="unbounded"/>
           <xs:any namespace="http://www.w3.org/1998/Math/MathML" processContents="lax"/>
           <xs:any namespace="http://www.w3.org/2000/svg" processContents="lax"/>
         </xs:choice>
@@ -1531,6 +1586,14 @@
 
   <xs:attributeGroup name="videodata.valign.attribute">
     <xs:attributeGroup ref="db:valign.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="videodata.autoplay.attribute">
+    <xs:attributeGroup ref="db:autoplay.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="videodata.classid.attribute">
+    <xs:attributeGroup ref="db:classid.attribute"/>
   </xs:attributeGroup>
 
   <xs:attributeGroup name="width.attribute">
@@ -1577,6 +1640,14 @@
     <xs:attribute name="scale" type="xs:positiveInteger"/>
   </xs:attributeGroup>
 
+  <xs:attributeGroup name="classid.attribute">
+    <xs:attribute name="classid"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="autoplay.attribute">
+    <xs:attribute name="autoplay"/>
+  </xs:attributeGroup>
+
   <xs:attributeGroup name="videodata.scale.attribute">
     <xs:attributeGroup ref="db:scale.attribute"/>
   </xs:attributeGroup>
@@ -1589,6 +1660,8 @@
       <xs:attributeGroup ref="db:common.data.attributes"/>
       <xs:attributeGroup ref="db:videodata.align.attribute"/>
       <xs:attributeGroup ref="db:videodata.valign.attribute"/>
+      <xs:attributeGroup ref="db:videodata.autoplay.attribute"/>
+      <xs:attributeGroup ref="db:videodata.classid.attribute"/>
       <xs:attributeGroup ref="db:videodata.width.attribute"/>
       <xs:attributeGroup ref="db:videodata.contentwidth.attribute"/>
       <xs:attributeGroup ref="db:videodata.scalefit.attribute"/>
@@ -1603,12 +1676,62 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:attributeGroup name="audiodata.align.attribute">
+    <xs:attributeGroup ref="db:align.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="audiodata.autoplay.attribute">
+    <xs:attributeGroup ref="db:autoplay.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="audiodata.classid.attribute">
+    <xs:attributeGroup ref="db:classid.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="audiodata.contentwidth.attribute">
+    <xs:attributeGroup ref="db:contentwidth.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="audiodata.contentdepth.attribute">
+    <xs:attributeGroup ref="db:contentdepth.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="audiodata.depth.attribute">
+    <xs:attributeGroup ref="db:depth.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="audiodata.scale.attribute">
+    <xs:attributeGroup ref="db:scale.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="audiodata.scalefit.attribute">
+    <xs:attributeGroup ref="db:scalefit.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="audiodata.valign.attribute">
+    <xs:attributeGroup ref="db:valign.attribute"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="audiodata.width.attribute">
+    <xs:attributeGroup ref="db:width.attribute"/>
+  </xs:attributeGroup>
+
   <xs:element name="audiodata">
     <xs:complexType>
       <xs:group ref="db:_info.title.forbidden" minOccurs="0"/>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.data.attributes"/>
+      <xs:attributeGroup ref="db:audiodata.align.attribute"/>
+      <xs:attributeGroup ref="db:audiodata.autoplay.attribute"/>
+      <xs:attributeGroup ref="db:audiodata.classid.attribute"/>
+      <xs:attributeGroup ref="db:audiodata.contentwidth.attribute"/>
+      <xs:attributeGroup ref="db:audiodata.contentdepth.attribute"/>
+      <xs:attributeGroup ref="db:audiodata.depth.attribute"/>
+      <xs:attributeGroup ref="db:audiodata.scale.attribute"/>
+      <xs:attributeGroup ref="db:audiodata.scalefit.attribute"/>
+      <xs:attributeGroup ref="db:audiodata.valign.attribute"/>
+      <xs:attributeGroup ref="db:audiodata.width.attribute"/>
       <xs:assert test="@fileref or @entityref and not(@fileref and @entityref)">
         <xs:annotation>
           <xs:documentation>Only one of @fileref or @entityref may be specified</xs:documentation>
@@ -1688,6 +1811,32 @@
           <xs:documentation>Only one of @fileref or @entityref may be specified</xs:documentation>
         </xs:annotation>
       </xs:assert>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:attributeGroup name="multimediaparam.name.attribute">
+    <xs:attribute name="name"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="multimediaparam.value.attribute">
+    <xs:attribute name="value"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="multimediaparam.valuetype.attribute">
+    <xs:attribute name="valuetype"/>
+  </xs:attributeGroup>
+
+  <xs:element name="multimediaparam">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xs:anyType">
+          <xs:attribute name="role"/>
+          <xs:attributeGroup ref="db:common.attributes"/>
+          <xs:attribute name="name"/>
+          <xs:attribute name="value"/>
+          <xs:attribute name="valuetype"/>
+        </xs:restriction>
+      </xs:complexContent>
     </xs:complexType>
   </xs:element>
 
@@ -1786,6 +1935,12 @@
       <xs:attributeGroup ref="db:area.units.attribute"/>
       <xs:attribute name="linkends" type="xs:IDREFS"/>
       <xs:attribute ref="xlink:href"/>
+      <xs:attribute ref="xlink:type"/>
+      <xs:attribute ref="xlink:role"/>
+      <xs:attribute ref="xlink:arcrole"/>
+      <xs:attribute ref="xlink:title"/>
+      <xs:attribute ref="xlink:show"/>
+      <xs:attribute ref="xlink:actuate"/>
       <xs:attribute name="label"/>
       <xs:attribute name="coords"/>
       <xs:assert test="(not(@units eq 'other') and not(@otherunits))
@@ -1816,6 +1971,12 @@
             <xs:attributeGroup ref="db:area.units.attribute"/>
             <xs:attribute name="linkends" type="xs:IDREFS"/>
             <xs:attribute name="href" type="xs:anyURI"/>
+            <xs:attribute ref="xlink:type"/>
+            <xs:attribute ref="xlink:role"/>
+            <xs:attribute ref="xlink:arcrole"/>
+            <xs:attribute ref="xlink:title"/>
+            <xs:attribute ref="xlink:show"/>
+            <xs:attribute ref="xlink:actuate"/>
             <xs:attribute name="label"/>
             <xs:attribute name="coords"/>
             <xs:assert test="(not(@units eq 'other') and not(@otherunits))
@@ -1832,6 +1993,12 @@
       <xs:attributeGroup ref="db:area.units.attribute"/>
       <xs:attribute name="linkends" type="xs:IDREFS"/>
       <xs:attribute ref="xlink:href"/>
+      <xs:attribute ref="xlink:type"/>
+      <xs:attribute ref="xlink:role"/>
+      <xs:attribute ref="xlink:arcrole"/>
+      <xs:attribute ref="xlink:title"/>
+      <xs:attribute ref="xlink:show"/>
+      <xs:attribute ref="xlink:actuate"/>
       <xs:attribute name="label"/>
       <xs:assert test="(not(@units eq 'other') and not(@otherunits))
                        or (@units='other' and @otherunits)">
@@ -1880,6 +2047,7 @@
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="db:ubiq.inlines"/>
         <xs:element ref="db:personname"/>
+        <xs:element ref="db:orgname"/>
         <xs:element ref="db:pob"/>
         <xs:element ref="db:street"/>
         <xs:element ref="db:city"/>
@@ -1992,6 +2160,7 @@
         <xs:group ref="db:_text"/>
         <xs:element ref="db:honorific"/>
         <xs:element ref="db:firstname"/>
+        <xs:element ref="db:givenname"/>
         <xs:element ref="db:surname"/>
         <xs:element ref="db:lineage"/>
         <xs:element ref="db:othername"/>
@@ -2212,6 +2381,7 @@
           <xs:enumeration value="isbn"/>
           <xs:enumeration value="isrn"/>
           <xs:enumeration value="issn"/>
+          <xs:enumeration value="istc"/>
           <xs:enumeration value="libraryofcongress"/>
           <xs:enumeration value="pubsnumber"/>
           <xs:enumeration value="uri"/>
@@ -2375,6 +2545,14 @@
           <xs:enumeration value="technicaleditor"/>
           <xs:enumeration value="translator"/>
           <xs:enumeration value="other"/>
+          <xs:enumeration value="conversion"/>
+          <xs:enumeration value="coverdesigner"/>
+          <xs:enumeration value="illustrator"/>
+          <xs:enumeration value="indexer"/>
+          <xs:enumeration value="interiordesigner"/>
+          <xs:enumeration value="proofreader"/>
+          <xs:enumeration value="reviewer"/>
+          <xs:enumeration value="typesetter"/>
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>
@@ -2398,9 +2576,10 @@
   </xs:element>
 
   <xs:element name="pagenums" type="db:limited.text"/>
-  <xs:element name="contrib" type="db:limited.text"/>
+  <xs:element name="contrib" type="db:inline.type"/>
   <xs:element name="honorific" type="db:limited.text"/>
   <xs:element name="firstname" type="db:limited.text"/>
+  <xs:element name="givenname" type="db:limited.text"/>
   <xs:element name="surname" type="db:limited.text"/>
   <xs:element name="lineage" type="db:limited.text"/>
   <xs:element name="othername" type="db:limited.text"/>
@@ -2543,7 +2722,7 @@
     <xs:complexType mixed="true">
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="db:_text"/>
-        <xs:element ref="db:trademark"/>
+        <!-- ubiq: <xs:element ref="db:trademark"/> -->
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -2555,7 +2734,7 @@
     <xs:complexType mixed="true">
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="db:_text"/>
-        <xs:element ref="db:trademark"/>
+        <!-- ubiq: <xs:element ref="db:trademark"/> -->
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -2620,22 +2799,6 @@
   </xs:element>
 
   <xs:element name="emphasis" type="db:inline.type"/>
-
-  <xs:group name="_emphasis">
-    <xs:sequence>
-      <xs:element name="emphasis">
-        <xs:complexType mixed="true">
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:group ref="db:_text"/>
-            <xs:group ref="db:_emphasis"/>
-          </xs:sequence>
-          <xs:attribute name="role"/>
-          <xs:attributeGroup ref="db:common.attributes"/>
-          <xs:attributeGroup ref="db:common.linking.attributes"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
 
   <xs:element name="foreignphrase">
     <xs:complexType mixed="true">
@@ -2770,13 +2933,10 @@
 
   <xs:group name="toplevel.sections">
     <xs:choice>
-      <xs:choice>
-        <xs:sequence>
-          <xs:element ref="db:section" maxOccurs="unbounded"/>
-          <xs:element ref="db:simplesect" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-        <xs:element ref="db:simplesect" maxOccurs="unbounded"/>
-      </xs:choice>
+      <xs:sequence>
+        <xs:element ref="db:section" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="db:simplesect" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
       <xs:sequence>
         <xs:element ref="db:sect1" maxOccurs="unbounded"/>
         <xs:element ref="db:simplesect" minOccurs="0" maxOccurs="unbounded"/>
@@ -2797,13 +2957,10 @@
 
   <xs:group name="recursive.sections">
     <xs:choice>
-      <xs:choice>
-        <xs:sequence>
-          <xs:element ref="db:section" maxOccurs="unbounded"/>
-          <xs:element ref="db:simplesect" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-        <xs:element ref="db:simplesect" maxOccurs="unbounded"/>
-      </xs:choice>
+      <xs:sequence>
+        <xs:element ref="db:section" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="db:simplesect" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
       <xs:element ref="db:refentry" maxOccurs="unbounded"/>
     </xs:choice>
   </xs:group>
@@ -2870,6 +3027,7 @@
     <xs:choice>
       <xs:element ref="db:set"/>
       <xs:element ref="db:book"/>
+      <xs:element ref="db:article"/>
     </xs:choice>
   </xs:group>
 
@@ -2893,10 +3051,13 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info" minOccurs="0"/>
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:group ref="db:navigation.components"/>
-          <xs:group ref="db:components"/>
-          <xs:group ref="db:divisions"/>
+        <xs:choice>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="db:navigation.components"/>
+            <xs:group ref="db:components"/>
+            <xs:group ref="db:divisions"/>
+          </xs:choice>
+          <xs:element ref="db:topic" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -2921,12 +3082,31 @@
 
   <xs:element name="dedication" type="db:block.component.type"/>
   <xs:element name="acknowledgements" type="db:block.component.type"/>
-  <xs:element name="colophon" type="db:block.component.type"/>
+
+  <xs:element name="colophon">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="db:_info" minOccurs="0"/>
+        <xs:choice>
+          <xs:sequence>
+            <xs:group ref="db:all.blocks" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element ref="db:simplesect" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <xs:element ref="db:simplesect" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attribute name="label"/>
+      <xs:attributeGroup ref="db:status.attribute"/>
+    </xs:complexType>
+  </xs:element>
 
   <xs:complexType name="component.type">
     <xs:sequence>
       <xs:group ref="db:_info.title.req" minOccurs="0"/>
-      <xs:group ref="db:component.contentmodel"/>
+      <xs:group ref="db:component.contentmodel" minOccurs="0"/>
     </xs:sequence>
     <xs:attribute name="role"/>
     <xs:attributeGroup ref="db:common.attributes"/>
@@ -2935,8 +3115,40 @@
     <xs:attributeGroup ref="db:status.attribute"/>
   </xs:complexType>
 
-  <xs:element name="appendix" type="db:component.type"/>
-  <xs:element name="chapter" type="db:component.type"/>
+  <xs:element name="appendix">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="db:_info.title.req" minOccurs="0"/>
+        <xs:choice minOccurs="0">
+          <xs:group ref="db:component.contentmodel"/>
+          <xs:element ref="db:topic" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attribute name="label"/>
+      <xs:attributeGroup ref="db:status.attribute"/>
+   </xs:complexType>
+  </xs:element>
+
+  <xs:element name="chapter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="db:_info.title.req" minOccurs="0"/>
+        <xs:choice minOccurs="0">
+          <xs:group ref="db:component.contentmodel"/>
+          <xs:element ref="db:topic" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attribute name="label"/>
+      <xs:attributeGroup ref="db:status.attribute"/>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="preface" type="db:component.type"/>
 
   <xs:group name="part.components">
@@ -2953,7 +3165,10 @@
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
         <xs:element ref="db:partintro" minOccurs="0"/>
-        <xs:group ref="db:part.components" maxOccurs="unbounded"/>
+        <xs:choice minOccurs="0">
+          <xs:group ref="db:part.components" maxOccurs="unbounded"/>
+          <xs:element ref="db:topic" maxOccurs="unbounded"/>
+        </xs:choice>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -2967,7 +3182,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info" minOccurs="0"/>
-        <xs:group ref="db:toplevel.blocks.or.sections"/>
+        <xs:group ref="db:toplevel.blocks.or.sections" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -2981,8 +3196,10 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
-        <xs:group ref="db:recursive.blocks.or.sections"/>
-        <xs:group ref="db:navigation.components" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:group ref="db:recursive.blocks.or.sections"/>
+          <xs:group ref="db:navigation.components"/>
+        </xs:choice>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -3012,16 +3229,24 @@
     </xs:choice>
   </xs:group>
 
+  <xs:group name="article.navigation.components">
+    <xs:choice>
+      <xs:element ref="db:glossary"/>
+      <xs:element ref="db:bibliography"/>
+      <xs:element ref="db:index"/>
+      <xs:element ref="db:toc"/>
+      <xs:element ref="db:acknowledgements"/>
+      <xs:element ref="db:dedication"/>
+      <xs:element ref="db:appendix"/>
+      <xs:element ref="db:colophon"/>
+    </xs:choice>
+  </xs:group>
+
   <xs:element name="article">
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:group ref="db:navigation.components"/>
-          <xs:element ref="db:appendix"/>
-          <xs:element ref="db:acknowledgements"/>
-          <xs:element ref="db:colophon"/>
-        </xs:choice>
+        <xs:group ref="db:article.navigation.components" minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice>
           <xs:sequence>
             <xs:group ref="db:all.blocks" minOccurs="1" maxOccurs="unbounded"/>
@@ -3029,12 +3254,7 @@
           </xs:sequence>
           <xs:group ref="db:article.components"/>
         </xs:choice>
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:group ref="db:navigation.components"/>
-          <xs:element ref="db:appendix"/>
-          <xs:element ref="db:acknowledgements"/>
-          <xs:element ref="db:colophon"/>
-        </xs:choice>
+        <xs:group ref="db:article.navigation.components" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -3071,6 +3291,7 @@
       <xs:choice maxOccurs="unbounded">
         <xs:element ref="db:locator"/>
         <xs:element ref="db:arc"/>
+        <xs:element ref="db:link"/>
       </xs:choice>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -3116,6 +3337,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
+        <xs:group ref="db:navigation.components"
+                  minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice>
           <xs:sequence>
             <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
@@ -3123,7 +3346,8 @@
           </xs:sequence>
           <xs:group ref="db:sect1.sections"/>
         </xs:choice>
-        <xs:group ref="db:navigation.components" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:navigation.components"
+                  minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -3147,6 +3371,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
+        <xs:group ref="db:navigation.components"
+                  minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice>
           <xs:sequence>
             <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
@@ -3154,7 +3380,8 @@
           </xs:sequence>
           <xs:group ref="db:sect2.sections"/>
         </xs:choice>
-        <xs:group ref="db:navigation.components" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:navigation.components"
+                  minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -3178,6 +3405,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
+        <xs:group ref="db:navigation.components"
+                  minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice>
           <xs:sequence>
             <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
@@ -3185,7 +3414,8 @@
           </xs:sequence>
           <xs:group ref="db:sect3.sections"/>
         </xs:choice>
-        <xs:group ref="db:navigation.components" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:navigation.components"
+                  minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -3209,6 +3439,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
+        <xs:group ref="db:navigation.components"
+                  minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice>
           <xs:sequence>
             <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
@@ -3216,7 +3448,8 @@
           </xs:sequence>
           <xs:group ref="db:sect4.sections"/>
         </xs:choice>
-        <xs:group ref="db:navigation.components" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:navigation.components"
+                  minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -3236,6 +3469,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
+        <xs:group ref="db:navigation.components"
+                  minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice>
           <xs:sequence>
             <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
@@ -3243,7 +3478,8 @@
           </xs:sequence>
           <xs:group ref="db:sect5.sections"/>
         </xs:choice>
-        <xs:group ref="db:navigation.components" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:group ref="db:navigation.components"
+                  minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -3278,7 +3514,7 @@
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
         <xs:element ref="db:partintro" minOccurs="0"/>
-        <xs:group ref="db:reference.components" maxOccurs="unbounded"/>
+        <xs:group ref="db:reference.components" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -3484,8 +3720,8 @@
 
   <xs:group name="glossary.inlines">
     <xs:choice>
-      <xs:element ref="db:firstterm"/>
-      <xs:element ref="db:glossterm"/>
+      <!-- ubiq: <xs:element ref="db:firstterm"/> -->
+      <!-- ubiq: <xs:element ref="db:glossterm"/> -->
     </xs:choice>
   </xs:group>
 
@@ -3652,9 +3888,15 @@
 
   <xs:element name="bibliomixed">
     <xs:complexType mixed="true">
-      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="db:bibliographic.elements"/>
-      </xs:sequence>
+        <xs:element ref="db:honorific"/>
+        <xs:element ref="db:firstname"/>
+        <xs:element ref="db:givenname"/>
+        <xs:element ref="db:surname"/>
+        <xs:element ref="db:lineage"/>
+        <xs:element ref="db:othername"/>
+      </xs:choice>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
@@ -3696,7 +3938,7 @@
         <xs:element ref="db:contractnum"/>
         <xs:element ref="db:copyright"/>
         <xs:element ref="db:cover"/>
-        <xs:element ref="db:date"/>
+        <!-- ubiq: <xs:element ref="db:date"/> -->
         <xs:element ref="db:edition"/>
         <xs:element ref="db:editor"/>
         <xs:element ref="db:issuenum"/>
@@ -3724,13 +3966,13 @@
         <xs:element ref="db:itermset"/>
         <xs:element ref="db:productname"/>
         <xs:element ref="db:productnumber"/>
-        <xs:element ref="db:abbrev"/>
-        <xs:element ref="db:acronym"/>
-        <xs:element ref="db:emphasis"/>
-        <xs:element ref="db:footnote"/>
-        <xs:element ref="db:footnoteref"/>
-        <xs:element ref="db:foreignphrase"/>
-        <xs:element ref="db:quote"/>
+        <!-- ubiq: <xs:element ref="db:abbrev"/> -->
+        <!-- ubiq: <xs:element ref="db:acronym"/> -->
+        <!-- ubiq: <xs:element ref="db:emphasis"/> -->
+        <!-- ubiq: <xs:element ref="db:footnote"/> -->
+        <!-- ubiq: <xs:element ref="db:footnoteref"/> -->
+        <!-- ubiq: <xs:element ref="db:foreignphrase"/> -->
+        <!-- ubiq: <xs:element ref="db:quote"/> -->
         <xs:element ref="db:citerefentry"/>
         <xs:element ref="db:citetitle"/>
         <xs:element ref="db:citebiblioid"/>
@@ -3740,6 +3982,13 @@
         <xs:element ref="db:subtitle"/>
         <xs:element ref="db:title"/>
         <xs:element ref="db:titleabbrev"/>
+
+        <xs:element ref="db:honorific"/>
+        <xs:element ref="db:firstname"/>
+        <xs:element ref="db:givenname"/>
+        <xs:element ref="db:surname"/>
+        <xs:element ref="db:lineage"/>
+        <xs:element ref="db:othername"/>
       </xs:choice>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -3943,8 +4192,25 @@
   <xs:element name="secondary" type="db:indexterm.parts.type"/>
   <xs:element name="tertiary" type="db:indexterm.parts.type"/>
 
-  <xs:element name="see" type="db:inline.type"/>
-  <xs:element name="seealso" type="db:inline.type"/>
+  <xs:complexType name="see.seealso.inline.type" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:group ref="db:all.inlines"/>
+    </xs:choice>
+    <xs:attribute name="role"/>
+    <xs:attribute name="class">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="normal"/>
+          <xs:enumeration value="under"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attributeGroup ref="db:common.attributes"/>
+    <xs:attributeGroup ref="db:common.linking.attributes"/>
+  </xs:complexType>
+
+  <xs:element name="see" type="db:see.seealso.inline.type"/>
+  <xs:element name="seealso" type="db:see.seealso.inline.type"/>
 
   <xs:element name="index">
     <xs:complexType>
@@ -4106,7 +4372,7 @@
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
         <xs:element ref="db:tasksummary" minOccurs="0"/>
         <xs:element ref="db:taskprerequisites" minOccurs="0"/>
-        <xs:element ref="db:procedure"/>
+        <xs:element ref="db:procedure" maxOccurs="unbounded"/>
         <xs:element ref="db:example" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="db:taskrelated" minOccurs="0"/>
       </xs:sequence>
@@ -4139,7 +4405,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="db:lhs"/>
-        <xs:element ref="db:rhs"/>
+        <xs:element ref="db:rhs" maxOccurs="unbounded"/>
         <xs:element ref="db:constraint" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
@@ -4616,6 +4882,7 @@
       <xs:simpleType>
         <xs:restriction base="xs:token">
           <xs:enumeration value="firstcol"/>
+          <xs:enumeration value="headers"/>
           <xs:enumeration value="norowheader"/>
         </xs:restriction>
       </xs:simpleType>
@@ -4691,6 +4958,7 @@
           <xs:attributeGroup ref="db:colsep.attribute"/>
           <xs:attributeGroup ref="db:rowsep.attribute"/>
           <xs:attributeGroup ref="db:align.attribute"/>
+          <xs:attributeGroup ref="db:rowheader.attribute"/>
           <xs:attribute name="colname"/>
         </xs:restriction>
       </xs:complexContent>
@@ -4740,6 +5008,16 @@
       <xs:attribute name="role"/>
       <xs:attribute name="morerows" type="xs:nonNegativeInteger"/>
       <xs:attribute name="rotate" type="db:zeroorone.type"/>
+      <xs:attribute name="scope">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="row"/>
+            <xs:enumeration value="col"/>
+            <xs:enumeration value="rowgroup"/>
+            <xs:enumeration value="colgroup"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attributeGroup ref="db:common.attributes"/>
       <xs:attributeGroup ref="db:common.linking.attributes"/>
       <xs:attributeGroup ref="db:valign.attribute"/>
@@ -4749,6 +5027,7 @@
       <xs:attributeGroup ref="db:rowsep.attribute"/>
       <xs:attributeGroup ref="db:column-spec.attributes"/>
       <xs:attributeGroup ref="db:align.attribute"/>
+      <xs:attribute name="headers" type="xs:IDREFS"/>
     </xs:complexType>
   </xs:element>
 
@@ -5044,7 +5323,6 @@
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="db:ubiq.inlines"/>
-        <xs:group ref="db:_emphasis"/>
       </xs:choice>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
@@ -5070,32 +5348,35 @@
 
   <xs:element name="tag">
     <xs:complexType mixed="true">
-      <xs:complexContent>
-        <xs:extension base="db:limited.text">
-          <xs:attribute name="class">
-            <xs:simpleType>
-              <xs:restriction base="xs:token">
-                <xs:enumeration value="attribute"/>
-                <xs:enumeration value="attvalue"/>
-                <xs:enumeration value="element"/>
-                <xs:enumeration value="emptytag"/>
-                <xs:enumeration value="endtag"/>
-                <xs:enumeration value="genentity"/>
-                <xs:enumeration value="localname"/>
-                <xs:enumeration value="namespace"/>
-                <xs:enumeration value="numcharref"/>
-                <xs:enumeration value="paramentity"/>
-                <xs:enumeration value="pi"/>
-                <xs:enumeration value="prefix"/>
-                <xs:enumeration value="comment"/>
-                <xs:enumeration value="starttag"/>
-                <xs:enumeration value="xmlpi"/>
-              </xs:restriction>
-            </xs:simpleType>
-          </xs:attribute>
-          <xs:attribute name="namespace" type="xs:anyURI"/>
-        </xs:extension>
-      </xs:complexContent>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="db:_text"/>
+        <xs:element ref="db:tag"/>
+      </xs:choice>
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attribute name="class">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="attribute"/>
+            <xs:enumeration value="attvalue"/>
+            <xs:enumeration value="element"/>
+            <xs:enumeration value="emptytag"/>
+            <xs:enumeration value="endtag"/>
+            <xs:enumeration value="genentity"/>
+            <xs:enumeration value="localname"/>
+            <xs:enumeration value="namespace"/>
+            <xs:enumeration value="numcharref"/>
+            <xs:enumeration value="paramentity"/>
+            <xs:enumeration value="pi"/>
+            <xs:enumeration value="prefix"/>
+            <xs:enumeration value="comment"/>
+            <xs:enumeration value="starttag"/>
+            <xs:enumeration value="xmlpi"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="namespace" type="xs:anyURI"/>
     </xs:complexType>
   </xs:element>
 
@@ -5287,6 +5568,7 @@
             <xs:simpleType>
               <xs:restriction base="xs:token">
                 <xs:enumeration value="alt"/>
+                <xs:enumeration value="altgr"/>
                 <xs:enumeration value="backspace"/>
                 <xs:enumeration value="command"/>
                 <xs:enumeration value="control"/>
@@ -5303,6 +5585,7 @@
                 <xs:enumeration value="pagedown"/>
                 <xs:enumeration value="pageup"/>
                 <xs:enumeration value="right"/>
+                <xs:enumeration value="return"/>
                 <xs:enumeration value="shift"/>
                 <xs:enumeration value="space"/>
                 <xs:enumeration value="tab"/>
@@ -5652,6 +5935,17 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:complexType name="group.paramdef">
+    <xs:choice minOccurs="1" maxOccurs="unbounded">
+      <xs:element ref="db:paramdef"/>
+      <xs:element name="group" type="db:group.paramdef"/>
+    </xs:choice>
+    <xs:attribute name="role"/>
+    <xs:attributeGroup ref="db:common.attributes"/>
+    <xs:attributeGroup ref="db:common.linking.attributes"/>
+    <xs:attributeGroup ref="db:choice.attribute"/>
+  </xs:complexType>
+
   <xs:element name="funcprototype">
     <xs:complexType>
       <xs:sequence>
@@ -5661,7 +5955,10 @@
           <xs:element ref="db:void"/>
           <xs:element ref="db:varargs"/>
           <xs:sequence>
-            <xs:element ref="db:paramdef" maxOccurs="unbounded"/>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element ref="db:paramdef"/>
+              <xs:element name="group" type="db:group.paramdef"/>
+            </xs:choice>
             <xs:element ref="db:varargs" minOccurs="0"/>
           </xs:sequence>
         </xs:choice>
@@ -5844,7 +6141,29 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="initializer" type="db:limited.text"/>
+  <xs:element name="initializer">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="db:_text"/>
+        <xs:element ref="db:mathphrase"/>
+        <xs:group ref="db:markup.inlines"/>
+      </xs:choice>
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+   </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="group.methodparam">
+    <xs:choice minOccurs="1" maxOccurs="unbounded">
+      <xs:element ref="db:methodparam"/>
+      <xs:element name="group" type="db:group.methodparam"/>
+    </xs:choice>
+    <xs:attribute name="role"/>
+    <xs:attributeGroup ref="db:common.attributes"/>
+    <xs:attributeGroup ref="db:common.linking.attributes"/>
+    <xs:attributeGroup ref="db:choice.attribute"/>
+  </xs:complexType>
 
   <xs:element name="constructorsynopsis">
     <xs:complexType>
@@ -5852,7 +6171,10 @@
         <xs:element ref="db:modifier" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="db:methodname" minOccurs="0"/>
         <xs:choice>
-          <xs:element ref="db:methodparam" maxOccurs="unbounded"/>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element ref="db:methodparam"/>
+            <xs:element name="group" type="db:group.methodparam"/>
+          </xs:choice>
           <xs:element ref="db:void" minOccurs="0"/>
         </xs:choice>
         <xs:element ref="db:exceptionname" minOccurs="0" maxOccurs="unbounded"/>
@@ -5870,7 +6192,10 @@
         <xs:element ref="db:modifier" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element ref="db:methodname" minOccurs="0"/>
         <xs:choice>
-          <xs:element ref="db:methodparam" maxOccurs="unbounded"/>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element ref="db:methodparam"/>
+            <xs:element name="group" type="db:group.methodparam"/>
+          </xs:choice>
           <xs:element ref="db:void" minOccurs="0"/>
         </xs:choice>
         <xs:element ref="db:exceptionname" minOccurs="0" maxOccurs="unbounded"/>
@@ -5892,7 +6217,10 @@
         </xs:choice>
         <xs:element ref="db:methodname"/>
         <xs:choice>
-          <xs:element ref="db:methodparam" maxOccurs="unbounded"/>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element ref="db:methodparam"/>
+            <xs:element name="group" type="db:group.methodparam"/>
+          </xs:choice>
           <xs:element ref="db:void" minOccurs="0"/>
         </xs:choice>
         <xs:element ref="db:exceptionname" minOccurs="0" maxOccurs="unbounded"/>
@@ -5994,9 +6322,11 @@
             <xs:enumeration value="netmask"/>
             <xs:enumeration value="newsgroup"/>
             <xs:enumeration value="osname"/>
+            <xs:enumeration value="other"/>
             <xs:enumeration value="process"/>
             <xs:enumeration value="protocol"/>
             <xs:enumeration value="resource"/>
+            <xs:enumeration value="securitycontext"/>
             <xs:enumeration value="server"/>
             <xs:enumeration value="service"/>
             <xs:enumeration value="systemname"/>
@@ -6004,11 +6334,26 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attribute name="otherclass"/>
     </xs:complexType>
   </xs:element>
 
   <xs:element name="option" type="db:limited.text"/>
   <xs:element name="optional" type="db:limited.text"/>
   <xs:element name="property" type="db:limited.text"/>
+
+  <xs:element name="topic">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="db:_info.title.req" minOccurs="0"/>
+        <xs:group ref="db:component.contentmodel"/>
+      </xs:sequence>
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="db:common.attributes"/>
+      <xs:attributeGroup ref="db:common.linking.attributes"/>
+      <xs:attribute name="label"/>
+      <xs:attributeGroup ref="db:status.attribute"/>
+    </xs:complexType>
+  </xs:element>
 
 </xs:schema>
