@@ -29,21 +29,18 @@
   <p:input port="stylesheet">
     <p:document href="include.xsl"/>
   </p:input>
-  <p:log href="/tmp/i.xml" port="result"/>
 </p:xslt>
 
 <p:xslt>
   <p:input port="stylesheet">
     <p:document href="augment.xsl"/>
   </p:input>
-  <p:log href="/tmp/a.xml" port="result"/>
 </p:xslt>
 
 <p:xslt>
   <p:input port="stylesheet">
     <p:document href="cleanup.xsl"/>
   </p:input>
-  <p:log href="/tmp/c.xml" port="result"/>
 </p:xslt>
 
 <p:xslt name="schema">
@@ -51,7 +48,6 @@
     <p:document href="removedoc.xsl"/>
   </p:input>
   <p:with-param name="remove-schematron" select="$remove-schematron"/>
-  <p:log href="/tmp/r.xml" port="result"/>
 </p:xslt>
 
 <p:load name="copyright-template">
