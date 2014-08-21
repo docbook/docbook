@@ -238,6 +238,22 @@ div {
     & db.indexterm.endofrange.startref.attribute
 
    db.indexterm.endofrange =
+      [
+         s:pattern [
+            s:title [ "Indexterm 'startref' type constraint" ]
+            s:rule [
+               context = "db:indexterm[@startref]"
+               s:assert [
+                  test = "local-name(//*[@xml:id=current()/@startref]) = 'indexterm' and namespace-uri(//*[@xml:id=current()/@startref]) = 'http://docbook.org/ns/docbook'"
+                  "@startref on indexterm must point to an indexterm."
+               ]
+               s:assert [
+                  test = "//*[@xml:id=current()/@startref]/@class='startofrange'"
+                  "@startref on indexterm must point to a startofrange indexterm."
+               ]
+            ]
+         ]
+      ]
       element indexterm {
          db.indexterm.endofrange.attlist,
          empty
