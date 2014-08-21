@@ -13,7 +13,6 @@ FAIL=$(notdir $(patsubst %.xml,%.fail,$(wildcard fail/*.xml)))
 TARGETS=$(PASS) $(FAIL)
 
 all: $(TARGETS)
-	echo $(TARGETS)
 
 clean:
 	rm -f $(TARGETS)

@@ -14,12 +14,12 @@ all: $(TARGETS)
 clean:
 	rm -f $(TARGETS)
 
-%.pass: %.xml ../../docbook.rng ../../docbook.sch
+%.pass: %.xml ../../assembly.rng ../../assembly.sch
 	@echo -n "Validate $< "
 	@$(CALABASH) -isource=$< -oresult=$@ ../../../tools/validate-pass.xpl schema=../../assembly
 	@cat $@
 
-%.fail: %.xml ../../docbook.rng ../../docbook.sch
+%.fail: %.xml ../../assembly.rng ../../assembly.sch
 	@echo -n "Validate $< "
 	@$(CALABASH) -isource=$< -oresult=$@ ../../../tools/validate-fail.xpl schema=../../assembly
 	@cat $@

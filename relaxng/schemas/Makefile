@@ -28,18 +28,12 @@ schemas: docbook.rnc assembly.rnc docbookxi.rnc sdocbook.rnc dbforms.rnc dbits.r
 
 doc: defguide.rnd publishers.rnd sdocbook.rnd
 
-docbook.sch: docbook.rng
-docbookxi.sch: docbookxi.rng
-assembly.sch: assembly.rng
-publishers.sch: publishers.rng
-dbits.sch: dbits.rng
-
-%.sch: %.rng
-	$(SAXON) -s:$< -xsl:../tools/schematron.xsl -o:$@
-
 docbook.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc)
 	mkdir -p build/docbook
 	$(CALABASH) $(MKSCHEMA) schema=docbook release=$(DBREL) remove-schematron=$(REMOVESCH)
+
+docbook.sch: docbook.rng
+	$(SAXON) -s:$< -xsl:../tools/schematron.xsl -o:$@
 	$(MAKE) -C docbook/test
 
 assembly.rnc: docbook.rnc $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard assembly/*.rnc)
@@ -48,11 +42,17 @@ assembly.rnc: docbook.rnc $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard assem
 	$(SAXON) -s:docbook.rng -xsl:../tools/all-patterns.xsl -o:build/docbook/any.docbook.rng
 	$(TRANG) build/docbook/any.docbook.rng build/docbook/any.docbook.rnc
 	$(CALABASH) $(MKSCHEMA) schema=assembly release=$(ASMREL) remove-schematron=$(REMOVESCH)
+
+assembly.sch: assembly.rng
+	$(SAXON) -s:$< -xsl:../tools/schematron.xsl -o:$@
 	$(MAKE) -C assembly/test
 
 docbookxi.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard docbookxi/*.rnc)
 	mkdir -p build/docbookxi
 	$(CALABASH) $(MKSCHEMA) schema=docbookxi release=$(XIREL) remove-schematron=$(REMOVESCH)
+
+docbookxi.sch: docbookxi.rng
+	$(SAXON) -s:$< -xsl:../tools/schematron.xsl -o:$@
 
 defguide.rnd: docbook.rnc assembly.rnc
 	mkdir -p build/defguide
@@ -74,9 +74,15 @@ dbits.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard dbits/*.rnc)
 	mkdir -p build/dbits
 	$(CALABASH) $(MKSCHEMA) schema=dbits release=$(ITSREL) remove-schematron=$(REMOVESCH)
 
+dbits.sch: dbits.rng
+	$(SAXON) -s:$< -xsl:../tools/schematron.xsl -o:$@
+
 publishers.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard publishers/*.rnc)
 	mkdir -p build/publishers
 	$(CALABASH) $(MKSCHEMA) schema=publishers release=$(PUBREL) remove-schematron=$(REMOVESCH)
+
+publishers.sch: publishers.rng
+	$(SAXON) -s:$< -xsl:../tools/schematron.xsl -o:$@
 	$(MAKE) -C publishers/test
 
 publishers.rnd: publishers.rnc
