@@ -1,0 +1,40 @@
+<assembly xmlns="http://docbook.org/ns/docbook">
+  <resources xml:base="some/path">
+    <description>Resources for help system.</description>
+    <resource xml:id="overview" href="overview.xml">
+      <description>Overview of help system.</description>
+    </resource>
+    <resource xml:id="task.build.doc" href="task/build.xml">
+      <description>Describe how to build a document.</description>
+    </resource>
+    <resource xml:id="pckg.intro" href="task/intro.xml">
+      <description>Introduction to the packaging tasks.</description>
+    </resource>
+    <resource xml:id="task.package.book.pub" href="task/book.xml">
+      <description>Describe how to package a document for publication.</description>
+    </resource>
+    <resource xml:id="task.package.help" href="task/pkg.xml">
+      <description>Describe how to package a help system for submission to product
+        build.</description>
+    </resource>
+    <resource xml:id="task.package.l10n" href="task/l10n.xml">
+      <description>Describe how to package source files for localization.</description>
+    </resource>
+    <resource xml:id="screen.overview" href="screen/overview.xml">
+      <description>Introductory text for screens and menus section.</description>
+    </resource>
+    <resource xml:id="screen.build.doc" href="screen/build.xml">
+      <description>Displayed when question mark icon on document build screen is
+        clicked.</description>
+    </resource>
+    <resource xml:id="screen.package" href="screen/package.xml">
+      <description>Displayed when question mark icon on packaging screen is clicked.</description>
+    </resource>
+    <resource xml:id="glossary" href="glossary.xml">
+      <description>Glossary for help system.</description>
+    </resource>
+    <resource xml:id="help.on.help" href="help-on-help.xml">
+      <description>How to use the help system.</description>
+    </resource>
+  </resources>
+</assembly>

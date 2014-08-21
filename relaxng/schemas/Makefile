@@ -20,8 +20,6 @@ SAXON=java -cp $(CLASSPATH) -jar ../../lib/saxon9he.jar
 CALABASH=java -cp $(CLASSPATH) com.xmlcalabash.drivers.Main
 TRANG=java -cp $(CLASSPATH) com.thaiopensource.relaxng.translate.Driver
 
-.PHONY: clean
-
 all: schemas doc
 
 schemas: docbook.rnc assembly.rnc docbookxi.rnc sdocbook.rnc dbforms.rnc dbits.rnc \
@@ -29,10 +27,6 @@ schemas: docbook.rnc assembly.rnc docbookxi.rnc sdocbook.rnc dbforms.rnc dbits.r
      docbook.sch docbookxi.sch assembly.sch publishers.sch dbits.sch
 
 doc: defguide.rnd publishers.rnd sdocbook.rnd
-
-clean:
-	rm -rf build
-	rm -f *.rnc *.rng *.sch
 
 docbook.sch: docbook.rng
 docbookxi.sch: docbookxi.rng
@@ -46,6 +40,7 @@ dbits.sch: dbits.rng
 docbook.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc)
 	mkdir -p build/docbook
 	$(CALABASH) $(MKSCHEMA) schema=docbook release=$(DBREL) remove-schematron=$(REMOVESCH)
+	$(MAKE) -C docbook/test
 
 assembly.rnc: docbook.rnc $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard assembly/*.rnc)
 	mkdir -p build/assembly
@@ -53,6 +48,7 @@ assembly.rnc: docbook.rnc $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard assem
 	$(SAXON) -s:docbook.rng -xsl:../tools/all-patterns.xsl -o:build/docbook/any.docbook.rng
 	$(TRANG) build/docbook/any.docbook.rng build/docbook/any.docbook.rnc
 	$(CALABASH) $(MKSCHEMA) schema=assembly release=$(ASMREL) remove-schematron=$(REMOVESCH)
+	$(MAKE) -C assembly/test
 
 docbookxi.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard docbookxi/*.rnc)
 	mkdir -p build/docbookxi
@@ -81,6 +77,7 @@ dbits.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard dbits/*.rnc)
 publishers.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard publishers/*.rnc)
 	mkdir -p build/publishers
 	$(CALABASH) $(MKSCHEMA) schema=publishers release=$(PUBREL) remove-schematron=$(REMOVESCH)
+	$(MAKE) -C publishers/test
 
 publishers.rnd: publishers.rnc
 	mkdir -p build/publishers
@@ -101,3 +98,10 @@ website.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard website/*.rnc)
 website-full.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard website/*.rnc) $(wildcard website-full/*.rnc)
 	mkdir -p build/website-full
 	$(CALABASH) $(MKSCHEMA) schema=website-full release=$(SLIREL) remove-schematron=$(REMOVESCH)
+
+clean:
+	rm -rf build
+	rm -f *.rnc *.rng *.sch
+	$(MAKE) -C docbook/test clean
+	$(MAKE) -C assembly/test clean
+	$(MAKE) -C publishers/test clean

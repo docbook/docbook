@@ -1,0 +1,12 @@
+<book xmlns="http://docbook.org/ns/docbook">
+<info>
+<title>Book title</title>
+</info>
+<chapter>
+<info>
+<title>Chapter title</title>
+</info>
+<para>Content.</para>
+</chapter>
+</book>
+
