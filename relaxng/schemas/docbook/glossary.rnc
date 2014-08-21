@@ -166,7 +166,7 @@ div {
    db.glosssee =
       [
          s:pattern [
-            name = "Glosssary 'see' type constraint"
+            s:title [ "Glosssary 'see' type constraint" ]
             s:rule [
                context = "db:glosssee[@otherterm]"
                s:assert [
@@ -206,7 +206,7 @@ div {
    db.glossseealso =
       [
          s:pattern [
-            name = "Glossary 'seealso' type constraint"
+            s:title [ "Glossary 'seealso' type constraint" ]
             s:rule [
                context = "db:glossseealso[@otherterm]"
                s:assert [
@@ -241,7 +241,7 @@ div {
    db.firstterm =
       [
          s:pattern [
-            name = "Glossary 'firstterm' type constraint"
+            s:title [ "Glossary 'firstterm' type constraint" ]
             s:rule [
                context = "db:firstterm[@linkend]"
                s:assert [
@@ -276,7 +276,7 @@ div {
    db._firstterm =
       [
          s:pattern [
-            name = "Glossary 'firstterm' type constraint"
+            s:title [ "Glossary 'firstterm' type constraint" ]
             s:rule [
                context = "db:firstterm[@linkend]"
                s:assert [
@@ -311,7 +311,7 @@ div {
    db.glossterm =
       [
          s:pattern [
-            name = "Glossary 'glossterm' type constraint"
+            s:title [ "Glossary 'glossterm' type constraint" ]
             s:rule [
                context = "db:glossterm[@linkend]"
                s:assert [
@@ -346,7 +346,7 @@ div {
    db._glossterm =
       [
          s:pattern [
-            name = "Glossary 'glossterm' type constraint"
+            s:title [ "Glossary 'glossterm' type constraint" ]
             s:rule [
                context = "db:glossterm[@linkend]"
                s:assert [
@@ -444,7 +444,7 @@ div {
    db.termdef =
       [
          s:pattern [
-            name = "Glossary term definition constraint"
+            s:title [ "Glossary term definition constraint" ]
             s:rule [
                context = "db:termdef"
                s:assert [

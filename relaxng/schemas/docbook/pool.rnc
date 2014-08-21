@@ -1909,7 +1909,7 @@ div {
    db.seglistitem =
       [
          s:pattern [
-            name = "Cardinality of segments and titles"
+            s:title [ "Cardinality of segments and titles" ]
             s:rule [
                context = "db:seglistitem"
                s:assert [
@@ -5174,7 +5174,7 @@ div {
    db.footnoteref =
       [
          s:pattern [
-            name = "Footnote reference type constraint"
+            s:title [ "Footnote reference type constraint" ]
             s:rule [
                context = "db:footnoteref"
                s:assert [

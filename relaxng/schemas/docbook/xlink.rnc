@@ -39,7 +39,7 @@ db.xlink.extended.type.attribute =
    [
       db:refpurpose [ "Identifies the XLink extended link type" ]
       s:pattern [
-         name = "XLink extended placement"
+         s:title [ "XLink extended placement" ]
          s:rule [
             context = "*[@xlink:type='extended']"
             s:assert [
@@ -58,7 +58,7 @@ db.xlink.locator.type.attribute =
    [
       db:refpurpose [ "Identifies the XLink locator link type" ]
       s:pattern [
-         name = "XLink locator placement"
+         s:title [ "XLink locator placement" ]
          s:rule [
             context = "*[@xlink:type='locator']"
             s:assert [
@@ -77,7 +77,7 @@ db.xlink.arc.type.attribute =
    [
       db:refpurpose [ "Identifies the XLink arc link type" ]
       s:pattern [
-         name = "XLink arc placement"
+         s:title [ "XLink arc placement" ]
          s:rule [
             context = "*[@xlink:type='arc']"
             s:assert [
@@ -96,7 +96,7 @@ db.xlink.resource.type.attribute =
    [
       db:refpurpose [ "Identifies the XLink resource link type" ]
       s:pattern [
-         name = "XLink resource placement"
+         s:title [ "XLink resource placement" ]
          s:rule [
             context = "*[@xlink:type='resource']"
             s:assert [
@@ -115,7 +115,7 @@ db.xlink.title.type.attribute =
    [
       db:refpurpose [ "Identifies the XLink title link type" ]
       s:pattern [
-         name = "XLink title placement"
+         s:title [ "XLink title placement" ]
          s:rule [
             context = "*[@xlink:type='title']"
             s:assert [

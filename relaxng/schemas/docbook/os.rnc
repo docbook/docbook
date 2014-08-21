@@ -430,7 +430,7 @@ div {
    db.synopfragmentref =
       [
          s:pattern [
-            name = "Synopsis fragment type constraint"
+            s:title [ "Synopsis fragment type constraint" ]
             s:rule [
                context = "db:synopfragmentref"
                s:assert [

@@ -80,7 +80,8 @@
 		</xsl:message>
 	    -->
 
-	    <s:pattern name="Element exclusion" xmlns="http://relaxng.org/ns/structure/1.0">
+	    <s:pattern xmlns="http://relaxng.org/ns/structure/1.0">
+              <s:title>Element exclusion</s:title>
 	      <s:rule context="db:{$name}">
 		<s:assert test="not(.//db:{name(.)})">
 		  <xsl:value-of select="name(.)"/>
@@ -101,7 +102,8 @@
       </xsl:variable>
 
       <xsl:if test="$isStart &gt; 0">
-	<s:pattern name="Root must have version" xmlns="http://relaxng.org/ns/structure/1.0">
+	<s:pattern xmlns="http://relaxng.org/ns/structure/1.0">
+          <title>Root must have version</title>
 	  <s:rule context="/db:{$name}">
 	    <s:assert test="@version">
 	      <xsl:text>If this element is the root element, it must have a version attribute.</xsl:text>
