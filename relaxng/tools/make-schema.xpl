@@ -10,11 +10,15 @@
 <p:option name="remove-schematron" select="0"/>
 <p:option name="make-rnc" select="'1'"/>
 
-<p:exec command="trang" source-is-xml='false' result-is-xml='false' name="trang">
+<!--
+TRANG=java -cp $(CLASSPATH) com.thaiopensource.relaxng.translate.Driver
+-->
+
+<p:exec command="java" source-is-xml='false' result-is-xml='false' name="trang">
   <p:input port="source">
     <p:empty/>
   </p:input>
-  <p:with-option name="args" select="concat($schema,'/',$schema,'.rnc build/',$schema,'/',$schema,'.rng')">
+  <p:with-option name="args" select="concat('-jar ../../lib/trang-2009-11-11.jar ', $schema,'/',$schema,'.rnc build/',$schema,'/',$schema,'.rng')">
     <p:empty/>
   </p:with-option>
 </p:exec>
@@ -79,11 +83,11 @@
 
 <p:choose>
   <p:when test="$make-rnc != '0'">
-    <p:exec command="trang" source-is-xml='false' result-is-xml='false' cx:depends-on="store">
+    <p:exec command="java" source-is-xml='false' result-is-xml='false' cx:depends-on="store">
       <p:input port="source">
         <p:empty/>
       </p:input>
-      <p:with-option name="args" select="concat($schema,'.rng ',$schema,'.rnc')">
+      <p:with-option name="args" select="concat('-jar ../../lib/trang-2009-11-11.jar ', $schema,'.rng ',$schema,'.rnc')">
         <p:empty/>
       </p:with-option>
     </p:exec>
