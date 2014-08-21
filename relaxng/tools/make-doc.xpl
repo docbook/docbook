@@ -7,11 +7,11 @@
 <p:input port="parameters" kind="parameter"/>
 <p:option name="schema" required="true"/>
 
-<p:exec command="trang" source-is-xml='false' result-is-xml='false' name="trang">
+<p:exec command="java" source-is-xml='false' result-is-xml='false' name="trang">
   <p:input port="source">
     <p:empty/>
   </p:input>
-  <p:with-option name="args" select="concat($schema,'/',$schema,'.rnc build/',$schema,'/',$schema,'.rng')">
+  <p:with-option name="args" select="concat('-jar ../../lib/trang-2009-11-11.jar ', $schema,'/',$schema,'.rnc build/',$schema,'/',$schema,'.rng')">
     <p:empty/>
   </p:with-option>
 </p:exec>
