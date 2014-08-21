@@ -18,6 +18,7 @@ space := $(empty) $(empty)
 CLASSPATH=$(subst  $(space),:,$(wildcard ../../lib/*.jar))
 SAXON=java -cp $(CLASSPATH) -jar ../../lib/saxon9he.jar
 CALABASH=java -cp $(CLASSPATH) com.xmlcalabash.drivers.Main
+TRANG=java -cp $(CLASSPATH) com.thaiopensource.relaxng.translate.Driver
 
 .PHONY: clean
 
@@ -50,7 +51,7 @@ assembly.rnc: docbook.rnc $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard assem
 	mkdir -p build/assembly
 	mkdir -p build/docbook
 	$(SAXON) docbook.rng ../tools/all-patterns.xsl build/docbook/any.docbook.rng
-	trang build/docbook/any.docbook.rng build/docbook/any.docbook.rnc
+	$(TRANG) build/docbook/any.docbook.rng build/docbook/any.docbook.rnc
 	$(CALABASH) ../tools/make-schema.xpl schema=assembly release=$(ASMREL) remove-schematron=$(REMOVESCH)
 
 docbookxi.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard docbookxi/*.rnc)
