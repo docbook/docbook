@@ -9,9 +9,15 @@ ITSREL="DocBook ITS $(DBVER)"
 PUBREL="DocBook Publishers $(DBVER)-1"
 SLIREL="DocBook Slides $(DBVER)-1"
 WEBREL="DocBook Website $(DBVER)-1"
-SAXON=saxon -opts saxon-9he
 
 TOOLSDEP=../tools/make-schema.xpl
+
+empty :=
+space := $(empty) $(empty)
+
+CLASSPATH=$(subst  $(space),:,$(wildcard ../../lib/*.jar))
+SAXON=java -cp $(CLASSPATH) -jar ../lib/saxon9he.jar
+CALABASH=java -cp $(CLASSPATH) com.xmlcalabash.drivers.Main
 
 .PHONY: clean
 
@@ -34,63 +40,63 @@ publishers.sch: publishers.rng
 dbits.sch: dbits.rng
 
 %.sch: %.rng
-	$(SAXON) $< ../tools/schematron.xsl $@
+	$(SAXON) -s:$< -xsl:../tools/schematron.xsl -o:$@
 
 docbook.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc)
 	mkdir -p build/docbook
-	calabash ../tools/make-schema.xpl schema=docbook release=$(DBREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=docbook release=$(DBREL) remove-schematron=$(REMOVESCH)
 
 assembly.rnc: docbook.rnc $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard assembly/*.rnc)
 	mkdir -p build/assembly
 	mkdir -p build/docbook
 	$(SAXON) docbook.rng ../tools/all-patterns.xsl build/docbook/any.docbook.rng
 	trang build/docbook/any.docbook.rng build/docbook/any.docbook.rnc
-	calabash ../tools/make-schema.xpl schema=assembly release=$(ASMREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=assembly release=$(ASMREL) remove-schematron=$(REMOVESCH)
 
 docbookxi.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard docbookxi/*.rnc)
 	mkdir -p build/docbookxi
-	calabash ../tools/make-schema.xpl schema=docbookxi release=$(XIREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=docbookxi release=$(XIREL) remove-schematron=$(REMOVESCH)
 
 defguide.rnd: docbook.rnc assembly.rnc
 	mkdir -p build/defguide
-	calabash ../tools/make-doc.xpl schema=defguide
+	$(CALABASH) ../tools/make-doc.xpl schema=defguide
 
 sdocbook.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard sdocbook/*.rnc)
 	mkdir -p build/sdocbook
-	calabash ../tools/make-schema.xpl schema=sdocbook release=$(SDBREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=sdocbook release=$(SDBREL) remove-schematron=$(REMOVESCH)
 
 sdocbook.rnd: sdocbook.rnc
 	mkdir -p build/sdocbook
-	calabash ../tools/make-doc.xpl schema=sdocbook
+	$(CALABASH) ../tools/make-doc.xpl schema=sdocbook
 
 dbforms.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard dbforms/*.rnc)
 	mkdir -p build/dbforms
-	calabash ../tools/make-schema.xpl schema=dbforms release=$(FORMREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=dbforms release=$(FORMREL) remove-schematron=$(REMOVESCH)
 
 dbits.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard dbits/*.rnc)
 	mkdir -p build/dbits
-	calabash ../tools/make-schema.xpl schema=dbits release=$(ITSREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=dbits release=$(ITSREL) remove-schematron=$(REMOVESCH)
 
 publishers.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard publishers/*.rnc)
 	mkdir -p build/publishers
-	calabash ../tools/make-schema.xpl schema=publishers release=$(PUBREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=publishers release=$(PUBREL) remove-schematron=$(REMOVESCH)
 
 publishers.rnd: publishers.rnc
 	mkdir -p build/publishers
-	calabash ../tools/make-doc.xpl schema=publishers
+	$(CALABASH) ../tools/make-doc.xpl schema=publishers
 
 slides.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard slides/*.rnc)
 	mkdir -p build/slides
-	calabash ../tools/make-schema.xpl schema=slides release=$(SLIREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=slides release=$(SLIREL) remove-schematron=$(REMOVESCH)
 
 slides-full.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard slides/*.rnc) $(wildcard slides-full/*.rnc)
 	mkdir -p build/slides-full
-	calabash ../tools/make-schema.xpl schema=slides-full release=$(SLIREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=slides-full release=$(SLIREL) remove-schematron=$(REMOVESCH)
 
 website.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard website/*.rnc)
 	mkdir -p build/website
-	calabash ../tools/make-schema.xpl schema=website release=$(SLIREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=website release=$(SLIREL) remove-schematron=$(REMOVESCH)
 
 website-full.rnc: $(TOOLSDEP) $(wildcard docbook/*.rnc) $(wildcard website/*.rnc) $(wildcard website-full/*.rnc)
 	mkdir -p build/website-full
-	calabash ../tools/make-schema.xpl schema=website-full release=$(SLIREL) remove-schematron=$(REMOVESCH)
+	$(CALABASH) ../tools/make-schema.xpl schema=website-full release=$(SLIREL) remove-schematron=$(REMOVESCH)
