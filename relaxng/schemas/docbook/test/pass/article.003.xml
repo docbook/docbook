@@ -1,0 +1,76 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xml:id="article">
+<info>
+<title>Unit Test: article.003.xml</title>
+<authorgroup>
+<author>
+  <personname><firstname>Norman</firstname><surname>Walsh</surname></personname>
+  <email>ndw@nwalsh.com</email>
+</author>
+<author>
+  <personname><firstname>Jane</firstname><surname>Doe</surname></personname>
+</author>
+</authorgroup>
+<abstract>
+<para>This is the abstract.</para>
+<para>It has several paras.</para>
+<para>It has several paras.</para>
+</abstract>
+</info>
+
+<para>Some preambulatory paragraph.</para>
+
+<section>
+<title>Section One</title>
+
+<para>Some other paragraph.</para>
+
+<section>
+<title>Section One.Two</title>
+
+<para>Some other paragraph.</para>
+
+</section>
+
+<section>
+<title>Section One.Three</title>
+
+<para>Some other paragraph.</para>
+
+</section>
+</section>
+
+<section>
+<title>Section Two</title>
+
+<para>Some other paragraph.</para>
+
+</section>
+
+<appendix>
+<title>Appendix One</title>
+
+<para>Some other paragraph.</para>
+
+<section>
+<title>Section One</title>
+
+<para>Some other paragraph.</para>
+
+<section>
+<title>Section One.Two</title>
+
+<para>Some other paragraph.</para>
+
+</section>
+
+<section>
+<title>Section One.Three</title>
+
+<para>Some other paragraph.</para>
+
+</section>
+</section>
+</appendix>
+
+</article>

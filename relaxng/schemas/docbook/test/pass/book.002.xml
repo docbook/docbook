@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE book [
+<!ENTITY blah "<para>Blah blah blah blah. Blah blah blah blah. Blah blah blah blah.
+Blah blah blah blah blah blah blah blah. Blah blah blah blah.
+Blah. Blah blah blah blah. Blah blah. Blah blah blah blah.
+</para>">
+]>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: book.002</title>
+<releaseinfo role="CVS">$Id: book.002.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<author>
+  <personname><firstname>Norman</firstname><surname>Walsh</surname></personname>
+  <email>ndw@nwalsh.com</email>
+</author>
+</info>
+
+<article><title>First Article</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</article>
+
+<article><title>Second Article</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</article>
+
+<article><title>Third Article</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</article>
+
+</book>

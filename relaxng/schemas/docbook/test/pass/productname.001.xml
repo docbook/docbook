@@ -1,0 +1,24 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing <tag>productname</tag>.</para>
+
+   <itemizedlist>
+      <listitem>
+         <para><productname>productname</productname></para>
+      </listitem>
+      <listitem>
+         <para><productname class="copyright">copyright productname</productname></para>
+      </listitem>
+      <listitem>
+         <para><productname class="registered">registered productname</productname></para>
+      </listitem>
+      <listitem>
+         <para><productname class="service">service productname</productname></para>
+      </listitem>
+      <listitem>
+         <para><productname class="trade">trade productname</productname></para>
+      </listitem>
+   </itemizedlist>
+
+</article>

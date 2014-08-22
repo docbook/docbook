@@ -1,0 +1,66 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing <tag>database</tag>.</para>
+
+   <itemizedlist>
+      <listitem>
+         <para><database>database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="altkey">altkey database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="constraint">constraint database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="datatype">datatype database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="field">field database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="foreignkey">foreignkey database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="group">group database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="index">index database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="key1">key1 database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="key2">key2 database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="name">name database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="primarykey">primarykey database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="procedure">procedure database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="record">record database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="rule">rule database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="secondarykey">secondarykey database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="table">table database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="user">user database</database></para>
+      </listitem>
+      <listitem>
+         <para><database class="view">view database</database></para>
+      </listitem>
+   </itemizedlist>
+
+</article>

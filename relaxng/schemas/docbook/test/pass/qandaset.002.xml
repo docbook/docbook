@@ -1,0 +1,22 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<qandaset>
+    <?dbhtml toc="0"?>
+         <qandaentry xml:id="qa1">
+           <question xml:id="q1">
+             <para>Blah blah blah.</para>
+           </question>
+	  <answer xml:id="a1">
+	    <example>
+	      <title><filename>file.name</filename></title>
+	      <programlisting>// Hello, World</programlisting>
+	    </example>
+	    <example>
+	      <title><filename>file2.name</filename></title>
+	      <programlisting>// Goodbye, World</programlisting>
+	    </example>
+	  </answer>
+         </qandaentry>
+       </qandaset>
+</article>

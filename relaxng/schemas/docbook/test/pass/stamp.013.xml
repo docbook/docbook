@@ -1,0 +1,93 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>The stamp image has a natural size of 200x128 pixels.</para>
+
+<mediaobject>
+  <imageobject>
+    <imagedata
+      fileref="../graphics/stamp.png"/>
+  </imageobject>
+</mediaobject>
+
+<para>The stamp image: width=7.12cm; depth=7.12cm; scale=125; align=center</para>
+
+<mediaobject>
+  <imageobject>
+    <?dbhtml background-color="blue"?>
+    <imagedata
+      width="7.12cm"
+      depth="7.12cm"
+      scale="125"
+      align="center"
+      fileref="../graphics/stamp.png"/>
+  </imageobject>
+  <textobject><phrase>The DocBook Stamp</phrase></textobject>
+</mediaobject>
+
+<para>The stamp image: width=512; depth=512; contentwidth=50%; contentdepth=30%; align=center</para>
+
+<mediaobject>
+  <imageobject>
+    <?dbhtml background-color="blue"?>
+    <imagedata
+      width="512"
+      depth="512"
+      contentwidth="50%"
+      contentdepth="30%"
+      align="center"
+      fileref="../graphics/stamp.png"/>
+  </imageobject>
+  <textobject><phrase>The DocBook Stamp</phrase></textobject>
+</mediaobject>
+
+<para>The stamp image: width=512; depth=400; contentwidth=500; contentdepth=300; align=left valign=top</para>
+
+<mediaobject>
+  <imageobject>
+    <?dbhtml background-color="blue"?>
+    <imagedata
+      width="512"
+      depth="400"
+      contentwidth="500"
+      contentdepth="300"
+      align="left"
+      valign="top"
+      fileref="../graphics/stamp.png"/>
+  </imageobject>
+  <textobject><phrase>The DocBook Stamp</phrase></textobject>
+</mediaobject>
+
+<para>The stamp image: depth=400; contentwidth=500; contentdepth=300; align=left valign=top</para>
+
+<mediaobject>
+  <imageobject>
+    <?dbhtml background-color="blue"?>
+    <imagedata
+      depth="400"
+      contentwidth="500"
+      contentdepth="300"
+      align="left"
+      valign="top"
+      fileref="../graphics/stamp.png"/>
+  </imageobject>
+  <textobject><phrase>The DocBook Stamp</phrase></textobject>
+</mediaobject>
+
+<para>The stamp image: contentwidth=500; contentdepth=300; align=left valign=top</para>
+
+<mediaobject>
+  <imageobject>
+    <?dbhtml background-color="blue"?>
+    <imagedata
+      contentwidth="500"
+      contentdepth="300"
+      align="left"
+      valign="top"
+      fileref="../graphics/stamp.png"/>
+  </imageobject>
+  <textobject><phrase>The DocBook Stamp</phrase></textobject>
+</mediaobject>
+
+
+</article>

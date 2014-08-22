@@ -1,0 +1,64 @@
+<part xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <title>Unit Test: part.001</title>
+    <releaseinfo role="CVS">$Id: part.001.xml 8020 2008-05-30 16:28:36Z abdelazer $</releaseinfo>
+  </info>
+  <chapter>
+    <title>Chapter</title>
+    <para>Some test data
+    <indexterm>
+      <primary>First Part</primary>
+    </indexterm></para>
+    <sect1>
+      <title>A sect1 in a chapter</title>
+      <para>With a little text.</para>
+    </sect1>
+  </chapter>
+
+  <bibliography>
+    <info>
+      <author>
+        <personname><firstname>Norman</firstname><surname>Walsh</surname></personname>
+        <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
+      </author>
+    </info>
+
+    <bibliodiv>
+      <title>Entries using biblioentry</title>
+
+      <biblioentry>
+	<abbrev>AhoSethiUllman96</abbrev>
+	<authorgroup>
+	  <author>
+            <personname>
+              <firstname>Alfred V.</firstname><surname>Aho</surname>
+            </personname>
+          </author>
+	  <author>
+            <personname>
+              <firstname>Ravi</firstname><surname>Sethi</surname>
+            </personname>
+          </author>
+	  <author>
+            <personname>
+              <firstname>Jeffrey D.</firstname><surname>Ullman</surname>
+            </personname>
+          </author>
+	</authorgroup>
+	<title>Compilers, Principles, Techniques, and Tools</title>
+	<publisher>
+	  <publishername>Addison-Wesley Publishing Company</publishername>
+	</publisher>
+	<copyright><year>1996</year>
+	<holder>Bell Telephone Laboratories, Inc.</holder></copyright>
+	<biblioid class="isbn">0-201-10088-6</biblioid>
+	<editor>
+          <personname>
+            <firstname>James T.</firstname><surname>DeWolf</surname>
+          </personname>
+        </editor>
+      </biblioentry>
+    </bibliodiv>
+  </bibliography>
+  <index/>
+</part>

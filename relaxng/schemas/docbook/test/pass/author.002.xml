@@ -1,0 +1,51 @@
+<book xmlns="http://docbook.org/ns/docbook" version="5.0"
+      xml:id="book">
+<info>
+<title>Unit Test: author.002</title>
+</info>
+
+<chapter>
+<title>Chapter Title</title>
+
+<simplelist>
+<member>
+<author xml:id="a1" role="first-last">
+  <personname>
+    <honorific>Mr</honorific>
+    <firstname>FirstFirstlast</firstname>
+    <othername>Middlename</othername>
+    <surname>Surname</surname>
+    <lineage>Jr</lineage>
+  </personname>
+</author>
+</member>
+<member xml:id="m2">
+<author role="last-first">
+  <personname>
+    <honorific>Mr</honorific>
+    <firstname>FirstLastfirst</firstname>
+    <othername>Middlename</othername>
+    <surname>Surname</surname>
+    <lineage>Jr</lineage>
+  </personname>
+</author>
+</member>
+<member>
+<author role="family-given">
+  <personname>
+    <honorific>Mr</honorific>
+    <firstname>FirstFamilygiven</firstname>
+    <othername>Middlename</othername>
+    <surname>Surname</surname>
+    <lineage>Jr</lineage>
+  </personname>
+</author>
+</member>
+</simplelist>
+
+<para>See <link linkend="a1">first author</link> or
+<link linkend="m2">second member</link>.</para>
+
+</chapter>
+
+</book>

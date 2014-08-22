@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Unit Test: indexterm.003</title>
+
+<chapter><title>First Chapter</title>
+
+<para>An indexterm starts
+here.<indexterm class="startofrange" xml:id="start">
+<primary>Start</primary></indexterm></para>
+
+</chapter>
+
+<chapter><title>Second Chapter</title>
+
+<para>The term ends
+here.<indexterm class="endofrange" startref="start"/>
+</para>
+
+</chapter>
+
+<index xml:id="idx"/>
+
+</book>

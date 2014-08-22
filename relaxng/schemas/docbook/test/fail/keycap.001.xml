@@ -1,0 +1,81 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+  xml:lang="en">
+<title>Article wrapper</title>
+
+<para>Testing <tag>keycap</tag>.</para>
+
+   <itemizedlist>
+     <listitem>
+       <para><keycap>K</keycap></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="keycap-with-function" function="alt">ALT</keycap></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="alt" function="alt"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="backspace" function="backspace"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="command" function="command"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="control" function="control"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="delete" function="delete"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="down" function="down"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="end" function="end"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="enter" function="enter"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="escape" function="escape"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="home" function="home"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="insert" function="insert"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="left" function="left"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="meta" function="meta"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="option" function="option"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="other" function="other"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="pagedown" function="pagedown"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="pageup" function="pageup"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="right" function="right"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="shift" function="shift"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="space" function="space"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="tab" function="tab"/></para>
+     </listitem>
+     <listitem>
+       <para><keycap xml:id="up" function="up"/></para>
+     </listitem>
+   </itemizedlist>
+</article>

@@ -1,0 +1,17 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<variablelist termlength="30">
+<title>VariableList With Long Terms</title>
+<varlistentry><term>Term1 is very long</term>
+<listitem><para>Definition of Term1</para></listitem>
+</varlistentry>
+<varlistentry><term>Term2 is even longer than term1</term>
+<listitem><para>Definition of Term2</para></listitem>
+</varlistentry>
+<varlistentry><term>Term3a</term><term>Term3b is also long</term><term>Term3c</term>
+<listitem><para>Definition of Term3a,b,c</para></listitem>
+</varlistentry>
+</variablelist>
+
+</article>

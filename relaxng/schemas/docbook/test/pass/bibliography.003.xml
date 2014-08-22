@@ -1,0 +1,42 @@
+<bibliography xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: bibliography.003</title>
+</info>
+
+<para>This unit test is for the <parameter>bibliography.collection</parameter>
+parameter.</para>
+
+<biblioentry>
+  <abbrev>AhoSethiUllman96</abbrev>
+  <authorgroup>
+    <author><personname><firstname>Alfred V.</firstname><surname>Aho</surname></personname></author>
+    <author><personname><firstname>Ravi</firstname><surname>Sethi</surname></personname></author>
+    <author><personname><firstname>Jeffrey D.</firstname><surname>Ullman</surname></personname></author>
+  </authorgroup>
+  <title>Compilers, Principles, Techniques, and Tools</title>
+  <publisher>
+    <publishername>Addison-Wesley Publishing Company</publishername>
+  </publisher>
+  <copyright><year>1996</year>
+             <holder>Bell Telephone Laboratories, Inc.</holder></copyright>
+  <biblioid class="isbn">0-201-10088-6</biblioid>
+  <editor><personname><firstname>James T.</firstname><surname>DeWolf</surname></personname></editor>
+</biblioentry>
+
+<bibliomixed xml:id="Walsh96-3">
+  <bibliomset relation="article">
+    <personname><surname>Walsh</surname></personname>, <personname><firstname>Norman</firstname></personname>.
+    <title role="article">Introduction to Cascading Style Sheets</title>.
+  </bibliomset>
+  <bibliomset relation="journal">
+    <title>The World Wide Web Journal</title>.
+    <volumenum>2</volumenum>(<issuenum>1</issuenum>).
+    <publishername>O'Reilly &amp; Associates, Inc.</publishername> and
+    <orgname>The World Wide Web Consortium</orgname>.
+    <pubdate>Winter, 1996</pubdate></bibliomset>.
+</bibliomixed>
+
+<bibliomixed xml:id="xml11"/>
+<bibliomixed xml:id="bib.docbook43"/>
+
+</bibliography>

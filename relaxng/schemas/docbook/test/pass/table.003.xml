@@ -1,0 +1,75 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Just a normal paragraph with a footnote<footnote><para>This is the
+footnote.</para></footnote>.</para>
+
+<para>CALS:</para>
+
+<table frame="all">
+<title>Server machine minimum required
+software<footnote><para>Table title footnote test.</para></footnote></title>
+<indexterm>
+<primary>System requirements</primary>
+<secondary>Software</secondary>
+</indexterm>
+<tgroup cols="1">
+<colspec colname="col1" colnum="1" colwidth="2.50in"/>
+<thead valign="top">
+<row>
+<entry>Foo<footnote><para>Table cell footnote test.</para></footnote></entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>foo</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+<para>HTML:</para>
+
+<table border="1">
+<caption>Server machine minimum required
+software<footnote><para>Table caption footnote test.</para></footnote></caption>
+<colgroup>
+<col width="2.50in"/>
+</colgroup>
+<thead valign="top">
+<tr>
+<td>Foo<footnote><para>Table cell footnote test.</para></footnote></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>foo</td>
+</tr>
+</tbody>
+</table>
+
+<para>CALS again:</para>
+
+<table frame="all">
+<title>Server machine minimum required
+software<footnote><para>Table title footnote test.</para></footnote></title>
+<indexterm>
+<primary>System requirements</primary>
+<secondary>Software</secondary>
+</indexterm>
+<tgroup cols="1">
+<colspec colname="col1" colnum="1" colwidth="2.50in"/>
+<thead valign="top">
+<row>
+<entry>Foo<footnote><para>Table cell footnote test.</para></footnote></entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>foo</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+</article>

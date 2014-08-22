@@ -1,0 +1,33 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+  <title>Unit Test: qandaset.005</title>
+  <subtitle>Autolabeling test </subtitle>
+  <author>
+    <personname>
+      <firstname>Harald</firstname>
+      <surname>J&#246;rg</surname>
+    </personname>
+    <email>smith@sideshowbarker.net</email>
+  </author>
+</info>
+
+  <section label="foo">
+    <title>A section labelled 'foo'</title>
+    <para>Without a surrounding section, I seem to be unable to get a
+    qandaset processed. Let's ignore that for the moment.
+    </para>
+    <qandaset defaultlabel="number">
+      <qandadiv>
+        <title>Qandadiv One</title>
+        <qandaentry xml:id="q1">
+          <question>
+            <para>Why is this question foo.foo.1.1?</para>
+          </question>
+          <answer>
+            <para>Probably a bug in common/labels.xsl.</para>
+          </answer>
+        </qandaentry>
+      </qandadiv>
+    </qandaset>
+  </section>
+</article>

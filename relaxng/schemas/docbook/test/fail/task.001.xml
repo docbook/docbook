@@ -1,0 +1,81 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<task>
+<tasksummary>
+<para>This task doesn’t accomplish anything.</para>
+</tasksummary>
+<taskprerequisites>
+<para>Do something else first.</para>
+</taskprerequisites>
+<procedure>
+<step><para>Do This</para></step>
+<step><para>Do That</para></step>
+<step><para>Do one of these things:</para>
+<stepalternatives>
+<step><para>Do A</para></step>
+<step><para>Do B</para></step>
+<step><para>Do C</para></step>
+</stepalternatives>
+</step>
+<step><para>Do the other thing</para></step>
+</procedure>
+<taskrelated>
+<para>See some more interesting task after you’ve done this one.</para>
+</taskrelated>
+</task>
+
+<task>
+<title>A Task</title>
+<tasksummary>
+<para>This task doesn’t accomplish anything.</para>
+</tasksummary>
+<taskprerequisites>
+<para>Do something else first.</para>
+</taskprerequisites>
+<procedure>
+<step><para>Do This</para></step>
+<step><para>Do That</para></step>
+<step><para>Do one of these things:</para>
+<stepalternatives>
+<step><para>Do A</para></step>
+<step><para>Do B</para></step>
+<step><para>Do C</para></step>
+</stepalternatives>
+</step>
+<step><para>Do the other thing</para></step>
+</procedure>
+<taskrelated>
+<para>See some more interesting task after you’ve done this one.</para>
+</taskrelated>
+</task>
+
+<task>
+<title>A Task</title>
+<tasksummary>
+<para>This task doesn’t accomplish anything.</para>
+</tasksummary>
+<taskprerequisites>
+<title>Prerequisites</title>
+<para>Do something else first.</para>
+</taskprerequisites>
+<procedure>
+<title>Procedure</title>
+<step><para>Do This</para></step>
+<step><para>Do That</para></step>
+<step><para>Do one of these things:</para>
+<stepalternatives>
+<step><para>Do A</para></step>
+<step><para>Do B</para></step>
+<step><para>Do C</para></step>
+</stepalternatives>
+</step>
+<step><para>Do the other thing</para></step>
+</procedure>
+<taskrelated>
+<title>Related</title>
+<para>See some more interesting task after you’ve done this one.</para>
+</taskrelated>
+</task>
+
+</article>

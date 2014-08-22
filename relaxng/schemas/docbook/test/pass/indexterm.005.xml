@@ -1,0 +1,23 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: indexterm.005</title>
+<author>
+  <personname><firstname>Adam</firstname><surname>Di Carlo</surname></personname>
+  <email>adam@onshored.com</email>
+</author>
+</info>
+
+  <section xml:id="sec1">
+    <title>Bizarre Indexterm Test</title>
+    <para>
+      This is first test paragraph.
+      <programlisting>#include &lt;stdio.h&gt;
+      </programlisting>
+      <indexterm>
+        <primary>&lt;stdio.h&gt;</primary>
+      </indexterm>
+    </para>
+  </section>
+
+  <index/>
+</article>

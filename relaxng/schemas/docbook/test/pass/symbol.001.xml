@@ -1,0 +1,15 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing <tag>symbol</tag>.</para>
+
+   <itemizedlist>
+      <listitem>
+         <para><symbol>symbol</symbol></para>
+      </listitem>
+      <listitem>
+         <para><symbol class="limit">limit symbol</symbol></para>
+      </listitem>
+   </itemizedlist>
+
+</article>

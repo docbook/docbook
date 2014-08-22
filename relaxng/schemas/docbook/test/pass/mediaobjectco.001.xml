@@ -1,0 +1,42 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+  <mediaobject>
+    <imageobjectco>
+      <?dbhtml mapid="duckmap"?>
+      <areaspec>
+        <area xml:id="a1" units="calspair" coords="0,5000 5000,10000" linkends="va1"/>
+        <area xml:id="a2" units="calspair" coords="5000,5000 10000,10000" linkends="va2"/>
+        <area xml:id="a3" units="calspair" coords="0,0 5000,5000" linkends="va3"/>
+        <area xml:id="a4" units="calspair" coords="5000,0 10000,5000" linkends="va4"/>
+      </areaspec>
+      <imageobject>
+        <imagedata
+          fileref="../graphics/duck.png">
+          <info>
+            <othercredit>
+              <orgname>O'Reilly &amp; Associates/Dover Archives</orgname>
+            </othercredit>
+          </info>
+        </imagedata>
+      </imageobject>
+    </imageobjectco>
+    <textobject><phrase>alt text</phrase></textobject>
+  </mediaobject>
+
+  <calloutlist>
+    <callout arearefs="a1" xml:id="va1">
+      <para>Upper left corner</para>
+    </callout>
+    <callout arearefs="a2" xml:id="va2">
+      <para>Upper right corner</para>
+    </callout>
+    <callout arearefs="a3" xml:id="va3">
+      <para>Lower left corner</para>
+    </callout>
+    <callout arearefs="a4" xml:id="va4">
+      <para>Lower right corner</para>
+    </callout>
+  </calloutlist>
+
+</article>

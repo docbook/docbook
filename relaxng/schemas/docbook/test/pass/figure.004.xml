@@ -1,0 +1,26 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<figure xml:id="figduck">
+  <title>The Duck</title>
+  <mediaobject>
+    <imageobject>
+      <imagedata
+        align="center"
+        fileref="../graphics/duck.png">
+        <info>
+          <othercredit>
+            <orgname>O'Reilly &amp; Associates/Dover Archives</orgname>
+          </othercredit>
+        </info>
+      </imagedata>
+    </imageobject>
+    <textobject><phrase>The DocBook: TDG Duck</phrase></textobject>
+    <textobject><para>A woodcut from the Dover Archives, this wood
+duck is used as the “animal” for <citetitle>DocBook: The Definitive
+Guide</citetitle>.</para>
+    </textobject>
+  </mediaobject>
+</figure>
+
+</article>

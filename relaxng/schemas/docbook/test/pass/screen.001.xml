@@ -1,0 +1,9 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<screen>(let <co xml:id="dl1"/>loopvar <co xml:id="dl2"/>((count 1))
+  <co xml:id="dl3"/>(if (> count 10)
+    <co xml:id="dl4"/>#t
+    (<co xml:id="dl5"/>loopvar <co xml:id="dl6"/>(+ count 1))))</screen>
+
+</article>

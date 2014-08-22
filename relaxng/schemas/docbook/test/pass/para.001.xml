@@ -1,0 +1,10 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Ordinary paragraph.</para>
+
+<para role="myrole">Paragraph with “myrole” role.</para>
+
+<para xml:id="p3">Paragraph with xml:id=p3</para>
+
+</article>

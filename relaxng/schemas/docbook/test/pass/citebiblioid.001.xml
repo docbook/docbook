@@ -1,0 +1,36 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing <tag>citebiblioid</tag>.</para>
+
+<itemizedlist>
+   <listitem>
+      <para><citebiblioid>citebiblioid</citebiblioid></para>
+   </listitem>
+   <listitem>
+      <para><citebiblioid class="doi">doi citebiblioid</citebiblioid></para>
+   </listitem>
+   <listitem>
+      <para><citebiblioid class="isbn">isbn citebiblioid</citebiblioid></para>
+   </listitem>
+   <listitem>
+      <para><citebiblioid class="isrn">isrn citebiblioid</citebiblioid></para>
+   </listitem>
+   <listitem>
+      <para><citebiblioid class="issn">issn citebiblioid</citebiblioid></para>
+   </listitem>
+   <listitem>
+      <para><citebiblioid class="libraryofcongress">libraryofcongress citebiblioid</citebiblioid></para>
+   </listitem>
+   <listitem>
+      <para><citebiblioid class="pubsnumber">pubsnumber citebiblioid</citebiblioid></para>
+   </listitem>
+   <listitem>
+      <para><citebiblioid class="uri">uri citebiblioid</citebiblioid></para>
+   </listitem>
+   <listitem>
+      <para><citebiblioid class="other" otherclass="otherclass">otherclass citebiblioid</citebiblioid></para>
+   </listitem>
+</itemizedlist>
+
+</article>

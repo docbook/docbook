@@ -1,0 +1,51 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+  <title>Article wrapper</title>
+<!--
+  <css:rules xmlns:css="https://github.com/docbook/css-rules">
+    <css:table-class name="green">
+      <css:property name="background-color" value="green"/>
+    </css:table-class>
+    <css:table-class name="red">
+      <css:property name="background-color" value="red"/>
+    </css:table-class>
+  </css:rules>
+-->
+</info>
+
+<para>This is a test of colgroup/col in HTML tables.</para>
+
+<para>CALS:</para>
+
+<informaltable border="1" width="100%">
+<colgroup>
+  <col style="background-color: green; text-align: right;" class="green" valign="bottom"/>
+</colgroup>
+<colgroup span="2" style="background-color: red" class="red" align="center" width="25%"/>
+<tr>
+<td>a1</td>
+<td rowspan="2" colspan="2">b1-c2</td>
+<td>d1</td>
+</tr>
+<tr>
+<td rowspan="3">a2-a4</td>
+<td>d2</td>
+</tr>
+<tr>
+<td align="center">b3</td>
+<td>c3</td>
+<td>d3</td>
+</tr>
+<tr>
+<td>b4</td>
+<td colspan="2">c4-d4</td>
+</tr>
+<tr>
+<td>a5</td>
+<td>b5</td>
+<td> </td>
+<td style="font-family: 'Trebuchet MS',Trebuchet,sans-serif; font-weight: bold; font-style: italic">d5</td>
+</tr>
+</informaltable>
+
+</article>

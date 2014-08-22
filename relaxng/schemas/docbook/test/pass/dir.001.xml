@@ -1,0 +1,9 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para dir="ltr">This is a paragraph written in English, a left-to-right
+language. It contains a phrase <phrase dir="rtl">putatively written
+in a right-to-left language</phrase>, though in fact the phrase is
+in English too.</para>
+
+</article>

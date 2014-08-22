@@ -1,0 +1,37 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<procedure>
+<para>Do the following:</para>
+<step>
+  <para>Step one</para>
+  <stepalternatives>
+    <step>
+      <para>Branch 1</para>
+      <substeps>
+        <step>
+          <para>a. </para>
+        </step>
+        <step>
+          <para>b. </para>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Branch 2</para>
+      <substeps>
+        <step>
+          <para>a. </para>
+        </step>
+        <step>
+          <para>b. </para>
+        </step>
+      </substeps>
+    </step>
+  </stepalternatives>
+</step>
+<step>
+  <para>Step two</para>
+</step>
+</procedure>
+</article>

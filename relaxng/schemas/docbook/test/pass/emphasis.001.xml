@@ -1,0 +1,17 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This is <emphasis>emphasis</emphasis>.</para>
+
+<para>Should these variants, with role, be supported?</para>
+
+<para>This is <emphasis role="bold">bold emphasis</emphasis>.</para>
+
+<para>This is <emphasis role="strikethrough">strikethrough emphasis</emphasis>.</para>
+
+<para>This is <emphasis role="underline">underline emphasis</emphasis>.</para>
+
+<para>This is <emphasis>nested <emphasis>emphasis</emphasis> inside
+emphasis</emphasis>.</para>
+
+</article>

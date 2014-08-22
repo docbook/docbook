@@ -1,0 +1,14 @@
+<chapter xmlns="http://docbook.org/ns/docbook">
+<info>
+  <title>Chapter Title</title>
+  <abstract>
+    <para>This is my abstract.</para>
+  </abstract>
+  <keywordset>
+    <keyword>word1</keyword>
+    <keyword>word2</keyword>
+    <keyword>word3</keyword>
+  </keywordset>
+</info>
+<para>Some text.</para>
+</chapter>

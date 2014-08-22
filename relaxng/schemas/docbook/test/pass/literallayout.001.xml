@@ -1,0 +1,13 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Note that line numbers (if present) don't look correct unless CSS
+is successfully loaded (which it isn't from file: URIs).</para>
+
+<literallayout>LiteralLayout: This is a test
+  Only a test.
+Had this been a real emegency,
+  We would have fled in terror
+And you would not have been informed.</literallayout>
+
+</article>

@@ -1,0 +1,27 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+ <para>This paragraph contains a footnote<footnote>
+<para>This is a footnote.</para></footnote>.</para>
+
+ <sect1><title>First Section</title>
+  <para>A paragraph.</para>
+ <para>This paragraph contains a footnote<footnote>
+<para>This is another footnote.</para></footnote>.</para>
+ </sect1>
+
+ <sect1>
+  <title>Section Title<footnote>
+      <para>Boring, I know, but it just tests the fact that a footnote
+can occur in a title.</para></footnote></title>
+  <para>A paragraph.</para>
+
+ <sect2>
+  <title>Subsection Title</title>
+ <para>This paragraph contains a footnote<footnote>
+<para>This is yet another footnote.</para></footnote>.</para>
+  </sect2>
+
+  </sect1>
+
+</article>

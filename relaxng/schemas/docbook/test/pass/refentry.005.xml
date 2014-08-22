@@ -1,0 +1,44 @@
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0"
+          xml:id="lessminimal">
+<info>
+  <author>
+    <personname><firstname>Norman</firstname><surname>Walsh</surname></personname>
+    <email>ndw@nwalsh.com</email>
+  </author>
+</info>
+
+<refmeta>
+<refentrytitle>Also Minimal Title</refentrytitle>
+<manvolnum>3</manvolnum>
+</refmeta>
+<refnamediv>
+<refname>Also Minimal</refname>
+<refpurpose>Another test of a minimal RefEntry</refpurpose>
+</refnamediv>
+
+<refsection>
+<title>Description</title>
+<para>This is a minimal RefEntry.</para>
+
+<refsection>
+<title>Subsection</title>
+<para>This is a minimal RefEntry.</para>
+
+<refsection>
+<title>Sub-subsection</title>
+<para>This is a minimal RefEntry.</para>
+</refsection>
+</refsection>
+</refsection>
+
+<refsection>
+<title>More Description</title>
+<para>This is a not-so minimal RefEntry.</para>
+</refsection>
+
+<refsection>
+<title>Even More Description</title>
+<para>This is an even less minimal RefEntry.</para>
+</refsection>
+
+</refentry>

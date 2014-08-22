@@ -1,0 +1,21 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<informalfigure xml:id="figduck">
+  <mediaobject>
+    <imageobject>
+      <imagedata
+        align="center"
+        fileref="../graphics/duck-small.png"
+        format="PNG">
+        <info>
+          <othercredit>
+            <orgname>O'Reilly &amp; Associates/Dover Archives</orgname>
+          </othercredit>
+        </info>
+      </imagedata>
+    </imageobject>
+  </mediaobject>
+</informalfigure>
+
+</article>

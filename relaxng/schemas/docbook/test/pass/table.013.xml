@@ -1,0 +1,46 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Test for entrytbl, bug #677564.</para>
+
+<para>CALS:</para>
+
+<informaltable frame="none">
+  <tgroup cols="3">
+    <tbody>
+      <row>
+        <entry>one</entry>
+        <entrytbl cols="1" colsep="0" rowsep="0">
+          <tbody>
+            <row>
+              <entry>Du texte dans une cellule.</entry>
+            </row>
+          </tbody>
+        </entrytbl>
+        <entry>three</entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+
+<para>HTML:</para>
+
+<informaltable>
+  <tbody>
+    <tr>
+      <td>one</td>
+      <td>
+        <informaltable>
+          <tbody>
+            <tr>
+              <td>Du texte dans une cellule.</td>
+            </tr>
+          </tbody>
+        </informaltable>
+      </td>
+      <td>three</td>
+    </tr>
+  </tbody>
+</informaltable>
+
+</article>

@@ -1,0 +1,18 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: itemizedlist.001</title>
+<author>
+  <personname><firstname>Adam</firstname> <surname>Di Carlo</surname></personname>
+  <affiliation><address><email>adam@onshored.com</email></address></affiliation>
+</author>
+</info>
+
+<itemizedlist>
+<listitem><para>This is the first one.</para></listitem>
+<listitem><para>
+        This second item should be flush left with first one (trim
+        whitespace).</para>
+</listitem>
+</itemizedlist>
+
+</article>

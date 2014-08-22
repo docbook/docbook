@@ -1,0 +1,36 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<programlisting linenumbering="unnumbered">@rem = '--*-Perl-*--
+@echo off
+perl.exe %_batchname %$
+goto endofperl
+@rem ';
+
+# Compress mail...
+
+require 'n:/home/nwalsh/lib/cygnus.pl';
+require 'timelocal.pl';
+use Cwd;
+
+select (STDERR); $| = 1;
+select (STDOUT); $| = 1;
+
+@DIRS = ("/home/nwalsh/Mail");
+while (@DIRS) {
+    $dir = shift @DIRS;
+    opendir (DIR, $dir);
+    while ($fname = readdir(DIR)) {
+        $file = "$dir/$fname";
+        next if ! -d $file;
+        next if $fname =~ /^\.\.?$/;
+
+        print "$file\n";
+        push (@DIRS, $file);
+        &amp;compress ($file);
+    }
+}
+
+exit;</programlisting>
+
+</article>

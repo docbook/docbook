@@ -1,0 +1,184 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Test of DocBook inlines.</para>
+
+<itemizedlist>
+   <listitem>
+      <para><jobtitle xml:id="jobtitle">jobtitle</jobtitle></para>
+   </listitem>
+   <listitem>
+      <para><date xml:id="date">2009-11-26</date></para>
+   </listitem>
+   <listitem>
+      <para><package xml:id="package">package</package></para>
+   </listitem>
+   <listitem>
+      <para><email xml:id="email">email@example.com</email></para>
+   </listitem>
+   <listitem>
+      <para><abbrev xml:id="abbrev">abbrev</abbrev></para>
+   </listitem>
+   <listitem>
+      <para><acronym xml:id="acronym">acronym</acronym></para>
+   </listitem>
+   <listitem>
+      <para><citation xml:id="citation">citation</citation></para>
+   </listitem>
+   <listitem>
+      <para><citetitle xml:id="citetitle">citetitle</citetitle></para>
+   </listitem>
+   <listitem>
+      <para><emphasis xml:id="emphasis">emphasis</emphasis></para>
+   </listitem>
+   <listitem>
+      <para><foreignphrase xml:id="foreignphrase">foreignphrase</foreignphrase></para>
+   </listitem>
+   <listitem>
+      <para><phrase xml:id="phrase">phrase</phrase></para>
+   </listitem>
+   <listitem>
+      <para>X<subscript>subscript</subscript></para>
+   </listitem>
+   <listitem>
+      <para>X<superscript>superscript</superscript></para>
+   </listitem>
+   <listitem>
+      <para><wordasword xml:id="wordasword">wordasword</wordasword></para>
+   </listitem>
+   <listitem>
+      <para><firstterm xml:id="firstterm">firstterm</firstterm></para>
+   </listitem>
+   <listitem>
+      <para><glossterm xml:id="glossterm">glossterm</glossterm></para>
+   </listitem>
+   <listitem>
+      <para><markup xml:id="markup">markup</markup></para>
+   </listitem>
+   <listitem>
+      <para><token xml:id="token">token</token></para>
+   </listitem>
+   <listitem>
+      <para><literal xml:id="literal">literal</literal></para>
+   </listitem>
+   <listitem>
+      <para><code xml:id="code">code</code></para>
+   </listitem>
+   <listitem>
+      <para><productnumber xml:id="productnumber">productnumber</productnumber></para>
+   </listitem>
+   <listitem>
+      <para><hardware xml:id="hardware">hardware</hardware></para>
+   </listitem>
+   <listitem>
+      <para><guibutton xml:id="guibutton">guibutton</guibutton></para>
+   </listitem>
+   <listitem>
+      <para><guiicon xml:id="guiicon">guiicon</guiicon></para>
+   </listitem>
+   <listitem>
+      <para><guilabel xml:id="guilabel">guilabel</guilabel></para>
+   </listitem>
+   <listitem>
+      <para><guimenu xml:id="guimenu">guimenu</guimenu></para>
+   </listitem>
+   <listitem>
+      <para><guimenuitem xml:id="guimenuitem">guimenuitem</guimenuitem></para>
+   </listitem>
+   <listitem>
+      <para><guisubmenu xml:id="guisubmenu">guisubmenu</guisubmenu></para>
+   </listitem>
+   <listitem>
+      <para><mousebutton xml:id="mousebutton">mousebutton</mousebutton></para>
+   </listitem>
+   <listitem>
+      <para><keycode xml:id="keycode">keycode</keycode></para>
+   </listitem>
+   <listitem>
+      <para><keysym xml:id="keysym">keysym</keysym></para>
+   </listitem>
+   <listitem>
+      <para><accel xml:id="accel">accel</accel></para>
+   </listitem>
+   <listitem>
+      <para><prompt xml:id="prompt">prompt</prompt></para>
+   </listitem>
+   <listitem>
+      <para><envar xml:id="envar">envar</envar></para>
+   </listitem>
+   <listitem>
+      <para><command xml:id="command">command</command></para>
+   </listitem>
+   <listitem>
+      <para><computeroutput xml:id="computeroutput">computeroutput</computeroutput></para>
+   </listitem>
+   <listitem>
+      <para><userinput xml:id="userinput">userinput</userinput></para>
+   </listitem>
+   <listitem>
+      <para><function xml:id="function">function</function></para>
+   </listitem>
+   <listitem>
+      <para><modifier xml:id="modifier">modifier</modifier></para>
+   </listitem>
+   <listitem>
+      <para><interfacename xml:id="interfacename">interfacename</interfacename></para>
+   </listitem>
+   <listitem>
+      <para><exceptionname xml:id="exceptionname">exceptionname</exceptionname></para>
+   </listitem>
+   <listitem>
+      <para><initializer xml:id="initializer">initializer</initializer></para>
+   </listitem>
+   <listitem>
+      <para><methodname xml:id="methodname">methodname</methodname></para>
+   </listitem>
+   <listitem>
+      <para><varname xml:id="varname">varname</varname></para>
+   </listitem>
+   <listitem>
+      <para><returnvalue xml:id="returnvalue">returnvalue</returnvalue></para>
+   </listitem>
+   <listitem>
+      <para><type xml:id="type">type</type></para>
+   </listitem>
+   <listitem>
+      <para><classname xml:id="classname">classname</classname></para>
+   </listitem>
+   <listitem>
+      <para><errorcode xml:id="errorcode">errorcode</errorcode></para>
+   </listitem>
+   <listitem>
+      <para><errorname xml:id="errorname">errorname</errorname></para>
+   </listitem>
+   <listitem>
+      <para><errortext xml:id="errortext">errortext</errortext></para>
+   </listitem>
+   <listitem>
+      <para><errortype xml:id="errortype">errortype</errortype></para>
+   </listitem>
+   <listitem>
+      <para><option xml:id="option">option</option></para>
+   </listitem>
+   <listitem>
+      <para><optional xml:id="optional">optional</optional></para>
+   </listitem>
+   <listitem>
+      <para><property xml:id="property">property</property></para>
+   </listitem>
+   <listitem>
+      <para><person xml:id="person-fn"><personname><firstname>Norman</firstname>
+      <surname>Walsh</surname></personname></person></para>
+   </listitem>
+   <listitem>
+      <para><person xml:id="person-gn"><personname><givenname>Norman</givenname>
+      <surname>Walsh</surname></personname></person></para>
+   </listitem>
+   <listitem>
+     <para>My name is <personname xml:id="jqpublic"><firstname>John</firstname
+     ><othername>Q.</othername><surname>Public</surname
+     ></personname>.  Please don't squish my name all together.</para>
+   </listitem>
+</itemizedlist>
+
+</article>

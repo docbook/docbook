@@ -1,0 +1,89 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+  <title>Unit Test: section.005</title>
+  <subtitle>Deeply nested sections with subtitles</subtitle>
+  <author>
+    <personname><firstname>Michael</firstname><surname>Smith</surname></personname>
+    <email>smith@sideshowbarker.net</email>
+  </author>
+</info>
+
+  <para>See <xref linkend="c2s1s1s2"/>.</para>
+
+  <section xml:id="c2s1">
+    <title>Section 1</title>
+    <subtitle>Subtitle</subtitle>
+    <para>blah.</para>
+    <section xml:id="c2s1s1">
+      <title>Section 1.1</title>
+      <subtitle>Subtitle</subtitle>
+      <para>blah.</para>
+      <section xml:id="c2s1s1s1">
+	<title>Section 1.1.1</title>
+	<subtitle>Subtitle</subtitle>
+	<para>blah.</para>
+	<section xml:id="c2s1s1s1s1">
+	  <title>Section 1.1.1.1</title>
+	  <subtitle>Subtitle</subtitle>
+	  <para>blah.</para>
+	  <section xml:id="c2s1s1s1s1s1">
+	    <title>Section 1.1.1.1.1</title>
+	    <subtitle>Subtitle</subtitle>
+	    <para>blah.</para>
+	  </section>
+	  <section xml:id="c2s1s1s1s1s2">
+	    <title>Section 1.1.1.1.2</title>
+	    <subtitle>Subtitle</subtitle>
+	    <para>blah.</para>
+	    <section xml:id="c2s1s1s1s1s2s1">
+	      <title>Section 1.1.1.1.2.1</title>
+	      <subtitle>Subtitle</subtitle>
+	      <para>blah.</para>
+	    </section>
+	  </section>
+	  <section xml:id="c2s1s1s1s1s3">
+	    <title>Section 1.1.1.1.3</title>
+	    <subtitle>Subtitle</subtitle>
+	    <para>blah.</para>
+	    <simplesect xml:id="c2s1s1s1s1s3s1">
+	      <title>Section 1.1.1.1.3.1</title>
+	      <subtitle>Subtitle</subtitle>
+	      <para>blah.</para>
+	    </simplesect>
+	  </section>
+	</section>
+	<section xml:id="c2s1s1s1s2">
+	  <title>Section 1.1.1.2</title>
+	  <subtitle>Subtitle</subtitle>
+	  <para>blah.</para>
+	</section>
+	<section xml:id="c2s1s1s1s3">
+	  <title>Section 1.1.1.3</title>
+	  <subtitle>Subtitle</subtitle>
+	  <para>blah.</para>
+	</section>
+      </section>
+      <section xml:id="c2s1s1s2">
+	<title>Section 1.1.2</title>
+	<subtitle>Subtitle</subtitle>
+	<para>blah.</para>
+      </section>
+      <section xml:id="c2s1s1s3">
+	<title>Section 1.1.3</title>
+	<subtitle>Subtitle</subtitle>
+	<para>blah.</para>
+      </section>
+    </section>
+    <section xml:id="c2s1s2">
+      <title>Section 1.2</title>
+      <subtitle>Subtitle</subtitle>
+      <para>blah.</para>
+    </section>
+    <section xml:id="c2s1s3">
+      <title>Section 1.3</title>
+      <subtitle>Subtitle</subtitle>
+      <para>blah.</para>
+    </section>
+  </section>
+
+</article>

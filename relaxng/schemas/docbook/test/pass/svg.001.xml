@@ -1,0 +1,51 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This article contains two SVG diagrams.</para>
+
+<mediaobject>
+  <imageobject>
+    <imagedata width="600" depth="250"
+      align="center"
+      format="SVG"
+      fileref="../graphics/svg-001.svg"/>
+  </imageobject>
+  <imageobject>
+    <imagedata width="600" depth="250"
+      align="center"
+      fileref="../graphics/svg-001-fallback.png"/>
+  </imageobject>
+  <textobject><phrase>Example SVG polygons</phrase></textobject>
+  <caption><para>Polygons (with fallback)</para></caption>
+</mediaobject>
+
+<mediaobject>
+  <imageobject>
+    <imagedata width="600" depth="250"
+      align="center"
+      format="SVG"
+      fileref="../graphics/svg-001.svg"/>
+  </imageobject>
+  <textobject><phrase>Example SVG polygons</phrase></textobject>
+  <caption><para>Polygons (without fallback)</para></caption>
+</mediaobject>
+
+<mediaobject>
+  <imageobject>
+    <imagedata width="600" depth="250"><svg:svg xmlns:svg="http://www.w3.org/2000/svg">
+  <svg:g transform="scale(0.5)">
+    <svg:polygon style="fill:red; stroke:blue; stroke-width:10"
+                 points="350, 75 379,161 469,161 397,215
+                         423,301 350,250 277,301 303,215
+                         231,161 321,161" />
+    <svg:polygon style="fill:lime; stroke:blue; stroke-width:10"
+                 points="850,75  958,137.5 958,262.5
+                         850,325 742,262.6 742,137.5"/>
+  </svg:g>
+</svg:svg></imagedata>
+  </imageobject>
+  <textobject><phrase>Example SVG polygons</phrase></textobject>
+  <caption><para>Polygons (inline)</para></caption>
+</mediaobject>
+
+</article>

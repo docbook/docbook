@@ -1,0 +1,69 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: informaltable.017</title>
+<author>
+  <personname><firstname>Adam</firstname> <surname>Di Carlo</surname></personname>
+  <affiliation><address><email>adam@onshored.com</email></address></affiliation>
+</author>
+</info>
+
+<para>Row valign test.</para>
+
+  <informaltable frame="all" xml:id="informaltable">
+    <tgroup cols="2">
+      <tbody>
+        <row valign="top">
+          <entry>
+            <para>Para one.</para>
+            <para>Para two.</para>
+          </entry>
+          <entry>Top align me.</entry>
+        </row>
+        <row valign="middle">
+          <entry>
+            <para>Para one.</para>
+            <para>Para two.</para>
+          </entry>
+          <entry>Middle align me.</entry>
+        </row>
+        <row valign="bottom">
+          <entry>
+            <para>Para one.</para>
+            <para>Para two.</para>
+          </entry>
+          <entry>Bottom align me.</entry>
+        </row>
+      </tbody>
+    </tgroup>
+  </informaltable>
+
+  <para>This one should look the same, we use valign setting on the tbody.</para>
+
+  <informaltable frame="all">
+    <tgroup cols="2">
+      <tbody valign="top">
+        <row>
+          <entry>
+            <para>Para one.</para>
+            <para>Para two.</para>
+          </entry>
+          <entry>Top align me.</entry>
+        </row>
+        <row valign="middle">
+          <entry>
+            <para>Para one.</para>
+            <para>Para two.</para>
+          </entry>
+          <entry>Middle align me.</entry>
+        </row>
+        <row valign="bottom">
+          <entry>
+            <para>Para one.</para>
+            <para>Para two.</para>
+          </entry>
+          <entry>Bottom align me.</entry>
+        </row>
+      </tbody>
+    </tgroup>
+  </informaltable>
+</article>

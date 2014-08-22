@@ -1,0 +1,22 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: remark.001</title>
+<releaseinfo role="CVS">$Id: remark.001.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<author>
+  <personname><firstname>Adam</firstname><surname>Di Carlo</surname></personname>
+  <affiliation><address><email>adam@onshored.com</email></address></affiliation>
+</author>
+</info>
+
+<para>
+  Para before the remark.
+</para>
+<remark>
+  Remark outside of a paragraph.  May require $show.comments to be
+  turned on.
+</remark>
+<para>
+  Para after the remark.
+</para>
+
+</article>

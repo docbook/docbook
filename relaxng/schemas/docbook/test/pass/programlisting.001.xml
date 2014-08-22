@@ -1,0 +1,12 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<programlisting>ProgramListing: This is a test
+  Only a test.
+Had this been a real emegency,
+  We would have fled in terror
+And you would not have been informed.
+
+Foo &lt;Bar&gt;</programlisting>
+
+</article>

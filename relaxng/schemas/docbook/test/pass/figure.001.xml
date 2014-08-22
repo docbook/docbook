@@ -1,0 +1,59 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<figure xml:id="figduck">
+  <title>The Duck</title>
+  <mediaobject>
+    <imageobject>
+      <imagedata
+        align="center"
+        fileref="../graphics/duck-small.eps"
+        format="EPS">
+        <info>
+          <othercredit>
+            <orgname>O'Reilly &amp; Associates/Dover Archives</orgname>
+          </othercredit>
+        </info>
+      </imagedata>
+    </imageobject>
+    <imageobject>
+      <imagedata
+        align="center"
+        fileref="../graphics/duck-small.png"
+        format="PNG">
+        <info>
+          <othercredit>
+            <orgname>O'Reilly &amp; Associates/Dover Archives</orgname>
+          </othercredit>
+        </info>
+      </imagedata>
+    </imageobject>
+    <imageobject>
+      <imagedata
+        align="center"
+        fileref="../graphics/duck-small.gif"
+        format="GIF">
+        <info>
+          <othercredit>
+            <orgname>O'Reilly &amp; Associates/Dover Archives</orgname>
+          </othercredit>
+        </info>
+      </imagedata>
+    </imageobject>
+    <imageobject>
+      <imagedata
+        align="center"
+        fileref="../graphics/duck-small.bmp"
+        format="BMP">
+        <info>
+          <othercredit>
+            <orgname>O'Reilly &amp; Associates/Dover Archives</orgname>
+          </othercredit>
+        </info>
+      </imagedata>
+    </imageobject>
+    <textobject><phrase>The DocBook: TDG Duck</phrase></textobject>
+  </mediaobject>
+</figure>
+
+</article>

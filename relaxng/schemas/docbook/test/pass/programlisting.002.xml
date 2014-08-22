@@ -1,0 +1,10 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<programlisting><inlinemediaobject>
+<imageobject>
+<imagedata format="linespecific" fileref="programlisting.002.xml"/>
+</imageobject>
+</inlinemediaobject></programlisting>
+
+</article>

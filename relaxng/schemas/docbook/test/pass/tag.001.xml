@@ -1,0 +1,24 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>There are several classes of “tag”:</para>
+
+<itemizedlist>
+<listitem><para><tag class="attribute">attribute</tag></para></listitem>
+<listitem><para><tag class="attvalue">attvalue</tag></para></listitem>
+<listitem><para><tag class="element">element</tag></para></listitem>
+<listitem><para><tag class="emptytag">emptytag</tag></para></listitem>
+<listitem><para><tag class="endtag">endtag</tag></para></listitem>
+<listitem><para><tag class="genentity">genentity</tag></para></listitem>
+<listitem><para><tag class="localname">localname</tag></para></listitem>
+<listitem><para><tag class="namespace">namespace</tag></para></listitem>
+<listitem><para><tag class="numcharref">numcharref</tag></para></listitem>
+<listitem><para><tag class="paramentity">paramentity</tag></para></listitem>
+<listitem><para><tag class="pi">pi</tag></para></listitem>
+<listitem><para><tag class="prefix">prefix</tag></para></listitem>
+<listitem><para><tag class="comment">comment</tag></para></listitem>
+<listitem><para><tag class="starttag">starttag</tag></para></listitem>
+<listitem><para><tag class="xmlpi">xmlpi</tag></para></listitem>
+</itemizedlist>
+
+</article>

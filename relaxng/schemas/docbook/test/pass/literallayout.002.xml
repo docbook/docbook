@@ -1,0 +1,13 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>Article wrapper</title>
+
+<literallayout><link xlink:href="http://docbook.org/tdg/en/html/literallayout.html">LiteralLayout</link>: This is a test
+    This is a test with <emphasis>    embedded
+  markup</emphasis>; but still
+  Only a test.
+Had this been a real emegency,
+  We would have fled in terror
+And you would not have been informed.</literallayout>
+
+</article>

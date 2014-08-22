@@ -1,0 +1,72 @@
+<bibliography xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: bibliography.001</title>
+</info>
+
+<biblioentry>
+  <abbrev>AhoSethiUllman96</abbrev>
+  <authorgroup>
+    <author><personname><firstname>Alfred V.</firstname><surname>Aho</surname></personname></author>
+    <author><personname><firstname>Ravi</firstname><surname>Sethi</surname></personname></author>
+    <author><personname><firstname>Jeffrey D.</firstname><surname>Ullman</surname></personname></author>
+  </authorgroup>
+  <title>Compilers, Principles, Techniques, and Tools</title>
+  <publisher>
+    <publishername>Addison-Wesley Publishing Company</publishername>
+  </publisher>
+  <copyright><year>1996</year>
+             <holder>Bell Telephone Laboratories, Inc.</holder></copyright>
+  <biblioid class="isbn">0-201-10088-6</biblioid>
+  <editor><personname><firstname>James T.</firstname><surname>DeWolf</surname></personname></editor>
+</biblioentry>
+
+<biblioentry>
+  <abbrev>AhoSethiUllman96</abbrev>
+  <authorgroup>
+    <author><personname><firstname>Alfred V.</firstname><surname>Aho</surname></personname></author>
+    <author><personname><firstname>Ravi</firstname><surname>Sethi</surname></personname></author>
+    <author><personname><firstname>Jeffrey D.</firstname><surname>Ullman</surname></personname></author>
+  </authorgroup>
+  <citetitle>Compilers, Principles, Techniques, and Tools</citetitle>
+  <publisher>
+    <publishername>Addison-Wesley Publishing Company</publishername>
+  </publisher>
+  <copyright><year>1996</year>
+             <holder>Bell Telephone Laboratories, Inc.</holder></copyright>
+  <biblioid class="isbn">0-201-10088-6</biblioid>
+  <editor><personname><firstname>James T.</firstname><surname>DeWolf</surname></personname></editor>
+</biblioentry>
+
+<biblioentry xml:id="Walsh97">
+  <abbrev>Walsh97</abbrev>
+  <biblioset relation="article">
+    <title>A Guide to XML</title>
+    <author><personname><surname>Walsh</surname><firstname>Norman</firstname></personname></author>
+    <pubdate>1997</pubdate>
+    <copyright><year>1997</year><holder>ArborText, Inc.</holder></copyright>
+    <pagenums>97-108</pagenums>
+  </biblioset>
+  <biblioset relation="journal">
+    <title>XML: Principles, Tools, and Techniques</title>
+    <publisher>
+      <publishername>O'Reilly &amp; Associates, Inc.</publishername>
+    </publisher>
+    <biblioid class="issn">1085-2301</biblioid>
+    <editor><personname><firstname>Dan</firstname><surname>Connolly</surname></personname></editor>
+  </biblioset>
+</biblioentry>
+
+<bibliomixed xml:id="Walsh96">
+  <bibliomset relation="article">
+    <personname><surname>Walsh</surname></personname>, <personname><firstname>Norman</firstname></personname>.
+    <title role="article">Introduction to Cascading Style Sheets</title>.
+  </bibliomset>
+  <bibliomset relation="journal">
+    <title>The World Wide Web Journal</title>.
+    <volumenum>2</volumenum>(<issuenum>1</issuenum>).
+    <publishername>O'Reilly &amp; Associates, Inc.</publishername> and
+    <orgname>The World Wide Web Consortium</orgname>.
+    <pubdate>Winter, 1996</pubdate></bibliomset>.
+</bibliomixed>
+
+</bibliography>

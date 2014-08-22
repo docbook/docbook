@@ -1,0 +1,59 @@
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<chapter>
+<title>Equations</title>
+
+<para>blah blah blah.</para>
+
+<equation><title>First Equation</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../graphics/emc2.png"/>
+</imageobject>
+<textobject>
+<phrase>e=mc^2</phrase>
+</textobject>
+</mediaobject>
+</equation>
+
+<para>blah blah blah.</para>
+
+<equation><!-- equation with no title: don't do this; use informalequation -->
+<mediaobject>
+<imageobject>
+<imagedata fileref="../graphics/emc2.png"/>
+</imageobject>
+<textobject>
+<phrase>e=mc^2</phrase>
+</textobject>
+</mediaobject>
+</equation>
+
+<para>blah blah blah.</para>
+
+<equation xml:id="eq2"><title>Second Equation</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../graphics/emc2.png"/>
+</imageobject>
+<textobject>
+<phrase>e=mc^2</phrase>
+</textobject>
+</mediaobject>
+</equation>
+
+<figure xml:id="fig1"><title>A Figure</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../graphics/emc2.png"/>
+</imageobject>
+<textobject>
+<phrase>e=mc^2</phrase>
+</textobject>
+</mediaobject>
+</figure>
+
+</chapter>
+
+</book>

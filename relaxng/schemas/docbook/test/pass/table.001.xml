@@ -1,0 +1,60 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>CALS:</para>
+
+<table frame="all">
+<title>TFoot Test</title>
+<tgroup cols="2">
+<tfoot>
+<row>
+<entry>Foot Left</entry>
+<entry>Foot Right</entry>
+</row>
+</tfoot>
+<tbody>
+<row>
+<entry>Body Left</entry>
+<entry>Body Right</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+<para>HTML:</para>
+
+<table border="1">
+<caption>TFoot Test</caption>
+<tfoot>
+<tr>
+<td>Foot Left</td>
+<td>Foot Right</td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td>Body Left</td>
+<td>Body Right</td>
+</tr>
+</tbody>
+</table>
+
+<table frame="all">
+<title>Table number test</title>
+<tgroup cols="2">
+<tfoot>
+<row>
+<entry>This</entry>
+<entry>should</entry>
+</row>
+</tfoot>
+<tbody>
+<row>
+<entry>be</entry>
+<entry>Table 2</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+</article>

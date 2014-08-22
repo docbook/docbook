@@ -1,0 +1,12 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This article tests <tag>lineannotation</tag>.</para>
+
+<screen>This is a
+screen                  <lineannotation>annotation 1</lineannotation>
+with several
+lines that have no      <lineannotation>annotation 2</lineannotation>
+particular meaning</screen>
+
+</article>

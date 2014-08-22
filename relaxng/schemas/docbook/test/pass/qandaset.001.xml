@@ -1,0 +1,36 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>What about <xref linkend="Two"/>?</para>
+
+  <qandaset defaultlabel='number'>
+    <?dbhtml table-summary="summary"?>
+    <qandaentry xml:id="qa1">
+      <question xml:id="q1"><para>Question one.</para></question>
+      <answer xml:id="a1">
+	<para>Answer one.
+See <xref linkend="faq-Two"/></para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry xml:id="Two">
+      <question xml:id="faq-Two"><para>Question two.</para></question>
+      <answer xml:id="faa-Two">
+	<para>Answer two.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry xml:id="Twoc">
+      <question xml:id="faq-Twoc"><para>Question two.</para></question>
+      <answer xml:id="faa-Twoc">
+	<orderedlist>
+	  <listitem><para>testing a list</para></listitem>
+	  <listitem><para>testing a list</para></listitem>
+	  <listitem><para>testing a list</para></listitem>
+	</orderedlist>
+      </answer>
+    </qandaentry>
+
+  </qandaset>
+
+</article>

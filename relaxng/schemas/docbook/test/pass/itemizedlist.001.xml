@@ -1,0 +1,44 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing page breaking, variablelist nested in itemizedlist</para>
+
+<itemizedlist><title>YE OLDE ITEMIZEDLIST</title>
+<listitem><para>Item 1</para></listitem>
+<listitem><para>Item 2</para></listitem>
+<listitem><para>Item 3</para>
+<variablelist termlength="3pc">
+<varlistentry>
+<term>A</term><listitem><para>xxxxx</para></listitem></varlistentry>
+<varlistentry>
+<term>B</term><listitem><para>xxxxx</para></listitem></varlistentry>
+</variablelist>
+</listitem>
+<listitem><para>Item 4</para></listitem>
+<listitem><para>Item 5</para></listitem>
+<listitem><para>Item 6</para></listitem>
+<listitem><para>Item 7</para></listitem>
+<listitem><para>another (trying to cause a page break)</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem><para>another</para></listitem>
+<listitem xml:id="problem"><variablelist>
+<varlistentry>
+<term>C</term><listitem><para>xxxxx</para></listitem></varlistentry>
+<varlistentry>
+<term>D</term><listitem><para>xxxxx</para></listitem></varlistentry>
+</variablelist>
+</listitem>
+</itemizedlist>
+
+</article>

@@ -1,0 +1,75 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Table style test.</para>
+
+<para>CALS:</para>
+
+<informaltable frame="all">
+<tgroup cols="3">
+<colspec colname="c2" colnum="2" colsep="1"/>
+<colspec colname="c3" colnum="3"/>
+<tbody>
+<row>
+<entry>a foo</entry>
+<entry><?dbhtml bgcolor="red"?><?dbfo bgcolor="red"?>a bar</entry>
+<entry>a baz</entry>
+</row>
+<row rowsep="1">
+<entry>b foo</entry>
+<entry namest="c3">b baz</entry>
+</row>
+<row>
+<entry>c foo</entry>
+<entry>c foo</entry>
+<entry>c baz</entry>
+</row>
+</tbody>
+</tgroup>
+<tgroup cols="2">
+<tbody>
+<row>
+<entry>a bar</entry>
+<entry>a baz</entry>
+</row>
+<row>
+<entry>c foo</entry>
+<entry>c foo</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para>HTML:</para>
+
+<informaltable border="1">
+<tbody>
+<tr>
+<td>a foo</td>
+<td style="background-color: red">a bar</td>
+<td>a baz</td>
+</tr>
+<tr>
+<td>b foo</td>
+<td>&#160;</td>
+<td>b baz</td>
+</tr>
+<tr>
+<td>c foo</td>
+<td>c foo</td>
+<td>c baz</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td>a bar</td>
+<td>a baz</td>
+</tr>
+<tr>
+<td>c foo</td>
+<td>c foo</td>
+</tr>
+</tbody>
+</informaltable>
+
+</article>

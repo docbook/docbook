@@ -1,0 +1,19 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This article tests <phrase xml:id="here">annotations</phrase>.
+Annotations can point in either direction. This paragraph contains an
+annotation target.</para>
+
+<annotation annotates="here"><para>This annotation annotates the word
+“annotations” in the preceding paragraph.</para>
+</annotation>
+
+<annotation xml:id="there"><para>This annotation annotates the second
+paragraph of this article.</para>
+</annotation>
+
+<para annotations="there">This paragraph asserts that it is annotated
+by the annotation “there”.</para>
+
+</article>

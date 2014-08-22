@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0"
+      xml:id="book">
+<title>Unit Test: book.004</title>
+
+<chapter xml:id="chap1">
+<info>
+<title>First <filename>Filename</filename> Chapter</title>
+<abstract><para>bla in the first chapter</para>
+</abstract>
+</info>
+
+<para>blah with <filename>filename</filename>.</para>
+
+</chapter>
+
+<chapter xml:id="chap2">
+<title>My Product<emphasis><superscript>plus</superscript></emphasis> description</title>
+
+<para>blah.</para>
+
+</chapter>
+</book>

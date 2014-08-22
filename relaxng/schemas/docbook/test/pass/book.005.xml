@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0"
+      xml:id="book">
+<info>
+<title>Unit Test: book.005</title>
+</info>
+
+<dedication><title>Dedication</title>
+<para>Some Dedication</para>
+</dedication>
+
+<preface><title>Preface</title>
+<para>Some Preface</para>
+</preface>
+
+<part><title>First Part</title>
+<partintro>
+<para>Some Part Intro</para>
+</partintro>
+
+<chapter><title>First Chapter</title>
+<para>Some Chapter</para>
+</chapter>
+
+<chapter><title>Second Chapter</title>
+<para>Some Chapter</para>
+</chapter>
+</part>
+
+<part><title>Second Part</title>
+<partintro>
+<para>Some Part Intro</para>
+</partintro>
+
+<chapter><title>Third Chapter</title>
+<para>Some Chapter</para>
+</chapter>
+
+<chapter><title>Fourth Chapter</title>
+<para>Some Chapter</para>
+</chapter>
+</part>
+
+<appendix><title>Appendix</title>
+<para>Some Appendix</para>
+</appendix>
+</book>

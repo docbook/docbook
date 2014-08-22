@@ -1,0 +1,27 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xml:id="article" status="draft">
+<info>
+<title>Unit Test: article.002.xml</title>
+<authorgroup>
+<author>
+  <personname><firstname>Norman</firstname><surname>Walsh</surname></personname>
+  <email>ndw@nwalsh.com</email>
+</author>
+<author>
+  <personname><firstname>Jane</firstname><surname>Doe</surname></personname>
+</author>
+</authorgroup>
+<abstract>
+<para>This is the abstract.</para>
+<para>It has several paras.</para>
+<para>It has several paras.</para>
+</abstract>
+</info>
+
+<para>This is an article tests.</para>
+
+<acknowledgements>
+<para>I'd like to thank all the tests that came before me.</para>
+</acknowledgements>
+
+</article>

@@ -1,0 +1,9 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This is a test of the <tag class='attribute'>wordsize</tag>
+effectivity attribute.
+Here's a 64 bit symbol: <symbol wordsize="64">width_8</symbol>.
+Here's a 32 bit symbol: <symbol wordsize="32">width_4</symbol>.</para>
+
+</article>

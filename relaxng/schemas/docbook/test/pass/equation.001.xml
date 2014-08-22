@@ -1,0 +1,32 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<equation><title>First Equation</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../graphics/emc2.png"/>
+</imageobject>
+<textobject>
+<phrase>E=mc^2</phrase>
+</textobject>
+</mediaobject>
+</equation>
+
+<para>An informal equation:</para>
+
+<informalequation>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../graphics/emc2.png"/>
+</imageobject>
+<textobject>
+<phrase>E=mc^2</phrase>
+</textobject>
+</mediaobject>
+</informalequation>
+
+<para>And an inline one: <inlineequation>
+<mathphrase>E=mc<superscript>2</superscript></mathphrase></inlineequation>.
+</para>
+
+</article>

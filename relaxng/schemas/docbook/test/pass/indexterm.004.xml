@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: indexterm.004</title>
+<author>
+  <personname><firstname>Adam</firstname><surname>Di Carlo</surname></personname>
+  <email>adam@onshored.com</email>
+</author>
+</info>
+
+  <section xml:id="sec1">
+    <title>First Section</title>
+    <para>
+      This is first test paragraph.
+      <indexterm>
+        <primary>foo</primary>
+        <seealso>bar</seealso>
+      </indexterm>
+      <indexterm>
+        <primary>bar</primary>
+      </indexterm>
+      <indexterm>
+        <primary>baz</primary>
+      </indexterm>
+    </para>
+  </section>
+
+  <section xml:id="sec2">
+    <title>Second Section</title>
+    <para>
+      This is second test paragraph.  We're testing identical
+      <tag>indexterm</tag>s with two different
+      <tag>seealso</tag>s.
+
+      <indexterm>
+        <primary>foo</primary>
+        <seealso>baz</seealso>
+      </indexterm>
+    </para>
+  </section>
+
+  <index/>
+</article>

@@ -1,0 +1,29 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<orderedlist>
+  <listitem><para>Level 1</para>
+    <orderedlist>
+    <listitem><para>Level 2</para>
+      <orderedlist>
+      <listitem xml:id="someOLI"><para>Level 3</para>
+        <orderedlist>
+        <listitem><para>Level 4</para>
+          <orderedlist>
+          <listitem><para>Level 5</para>
+            <orderedlist>
+            <listitem override="13"><para>Level 6, override=13</para>
+            </listitem>
+            </orderedlist>
+          </listitem>
+          </orderedlist>
+        </listitem>
+        </orderedlist>
+    </listitem>
+    </orderedlist>
+  </listitem>
+  </orderedlist>
+</listitem>
+</orderedlist>
+
+</article>

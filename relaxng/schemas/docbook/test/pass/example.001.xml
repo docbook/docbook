@@ -1,0 +1,10 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<example><title>An Example</title>
+<programlisting>
+This is a programlisting in an example.
+</programlisting>
+</example>
+
+</article>

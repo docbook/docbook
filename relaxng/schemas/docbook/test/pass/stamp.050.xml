@@ -1,0 +1,49 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>The stamp image has a natural size of 200x128 pixels and can be referenced 
+by various more or less silly URLs.</para>
+
+<mediaobject>
+  <imageobject>
+    <imagedata
+      fileref="./../graphics/stamp.png"/>
+  </imageobject>
+</mediaobject>
+
+<mediaobject>
+  <imageobject>
+    <imagedata
+      fileref="../../xspec/graphics/stamp.png"/>
+  </imageobject>
+</mediaobject>
+  
+<mediaobject>
+  <imageobject>
+    <imagedata
+      fileref="../../../tests/xspec/graphics/stamp.png"/>
+  </imageobject>
+</mediaobject>
+
+<mediaobject>
+  <imageobject>
+    <imagedata
+      fileref="../../../tests/xspec/dummy/../graphics/stamp.png"/>
+  </imageobject>
+</mediaobject>
+  
+<mediaobject>
+  <imageobject>
+    <imagedata
+      fileref="../../../tests/xspec/./graphics/stamp.png"/>
+  </imageobject>
+</mediaobject>
+
+<mediaobject>
+  <imageobject>
+    <imagedata
+      fileref="../graphics/emc2.png"/>
+  </imageobject>
+</mediaobject>
+  
+</article>

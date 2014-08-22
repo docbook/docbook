@@ -1,0 +1,43 @@
+<book xmlns="http://docbook.org/ns/docbook" version="5.0"
+      xml:id="book">
+<info>
+<title>Unit Test: author.001</title>
+<authorgroup>
+<author><orgname>SomeCorp</orgname></author>
+<author role="first-last">
+  <personname>
+    <honorific>Mr</honorific>
+    <firstname>FirstFirstlast</firstname>
+    <othername>Middlename</othername>
+    <surname>Surname</surname>
+    <lineage>Jr</lineage>
+  </personname>
+</author>
+<author role="last-first">
+  <personname>
+    <honorific>Mr</honorific>
+    <firstname>FirstLastfirst</firstname>
+    <othername>Middlename</othername>
+    <surname>Surname</surname>
+    <lineage>Jr</lineage>
+  </personname>
+</author>
+<author role="family-given">
+  <personname>
+    <honorific>Mr</honorific>
+    <firstname>FirstFamilygiven</firstname>
+    <othername>Middlename</othername>
+    <surname>Surname</surname>
+    <lineage>Jr</lineage>
+  </personname>
+</author>
+</authorgroup>
+</info>
+
+<chapter>
+<title>Chapter Title</title>
+
+<para>Content statisfies a book.</para>
+</chapter>
+
+</book>

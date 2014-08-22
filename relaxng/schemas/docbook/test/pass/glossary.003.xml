@@ -1,0 +1,29 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This is a test. Xref to fifo: <xref linkend="fifo"/>.</para>
+
+<glossary>
+<glossentry><glossterm>test1</glossterm>
+<glossdef><para>First definition</para></glossdef>
+</glossentry>
+
+<glossentry><glossterm>test2</glossterm>
+<glossdef><para>First definition</para></glossdef>
+<glossdef><para>Second definition</para></glossdef>
+</glossentry>
+
+<glossentry><glossterm>first thing</glossterm>
+<acronym>FT</acronym>
+<abbrev>fthing</abbrev>
+<glossdef><para>Alphabetically first entry</para></glossdef>
+</glossentry>
+
+<glossentry xml:id="fifo"><glossterm>First-in First-out</glossterm>
+<acronym>FIFO</acronym>
+<glossdef><para>Alphabetically second entry</para></glossdef>
+</glossentry>
+
+</glossary>
+
+</article>

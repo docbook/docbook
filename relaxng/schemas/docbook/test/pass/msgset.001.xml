@@ -1,0 +1,72 @@
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="chapter">
+<info>
+<title>Unit Test: msgset.001.xml</title>
+</info>
+
+<msgset>
+<simplemsgentry msglevel="user" msgorig="parser">
+  <msgtext>
+    <para>XML document structures must start and end within the same
+    entity.</para>
+  </msgtext>
+  <msgexplan>
+    <para>In XML, the end tag for an element must occur in the same
+entity as the start tag. You cannot include an external parsed entity
+that contains unbalanced tags, even if the result, after the content
+is included would be balanced.</para>
+  </msgexplan>
+</simplemsgentry>
+</msgset>
+
+<msgset>
+<title>Title of msgset</title>
+<simplemsgentry msglevel="user" msgorig="parser">
+  <msgtext>
+    <para>XML document structures must start and end within the same
+    entity.</para>
+  </msgtext>
+  <msgexplan>
+    <para>In XML, the end tag for an element must occur in the same
+entity as the start tag. You cannot include an external parsed entity
+that contains unbalanced tags, even if the result, after the content
+is included would be balanced.</para>
+  </msgexplan>
+</simplemsgentry>
+</msgset>
+
+<msgset>
+<title>Title of msgset with msgentry</title>
+<msgentry>
+  <msg>
+    <msgmain>
+      <msgtext>
+        <para>XML document structures must start and end within the same entity.
+        </para>
+      </msgtext>
+    </msgmain>
+    <msgrel>
+      <msgtext>
+        <para>Document is not well-formed.</para>
+      </msgtext>
+    </msgrel>
+    <msgrel>
+      <msgtext>
+        <para>Subordinate message.</para>
+      </msgtext>
+    </msgrel>
+  </msg>
+  <msginfo>
+    <msgaud>audience</msgaud>
+    <msglevel>user</msglevel>
+    <msgorig>parser</msgorig>
+  </msginfo>
+  <msgexplan>
+    <para>In XML, the end tag for an element must occur in the same
+entity as the start tag. You cannot include an external parsed entity
+that contains unbalanced tags, even if the result, after the content
+is included would be balanced.</para>
+  </msgexplan>
+</msgentry>
+</msgset>
+
+</chapter>

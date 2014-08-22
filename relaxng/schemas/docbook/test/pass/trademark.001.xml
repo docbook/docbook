@@ -1,0 +1,24 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing <tag>trademark</tag>.</para>
+
+   <itemizedlist>
+      <listitem>
+         <para><trademark>trademark</trademark></para>
+      </listitem>
+      <listitem>
+         <para><trademark class="copyright">copyright trademark</trademark></para>
+      </listitem>
+      <listitem>
+         <para><trademark class="registered">registered trademark</trademark></para>
+      </listitem>
+      <listitem>
+         <para><trademark class="service">service trademark</trademark></para>
+      </listitem>
+      <listitem>
+         <para><trademark class="trade">trade trademark</trademark></para>
+      </listitem>
+   </itemizedlist>
+
+</article>

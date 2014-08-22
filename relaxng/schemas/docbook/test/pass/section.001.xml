@@ -1,0 +1,46 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>See <xref linkend="c2s1s1s2"/>.</para>
+
+    <section xml:id="c2s1"><title>Section 1</title>
+      <para>blah.</para>
+      <section xml:id="c2s1s1"><title>Section 1.1</title>
+	<para>blah.</para>
+	<section xml:id="c2s1s1s1"><title>Section 1.1.1</title>
+	  <para>blah.</para>
+	  <section xml:id="c2s1s1s1s1"><title>Section 1.1.1.1</title>
+	    <para>blah.</para>
+	    <section xml:id="c2s1s1s1s1s1"><title>Section 1.1.1.1.1</title>
+	      <para>blah.</para>
+	    </section>
+	    <section xml:id="c2s1s1s1s1s2"><title>Section 1.1.1.1.2</title>
+	      <para>blah.</para>
+	    </section>
+	    <section xml:id="c2s1s1s1s1s3"><title>Section 1.1.1.1.3</title>
+	      <para>blah.</para>
+	    </section>
+	  </section>
+	  <section xml:id="c2s1s1s1s2"><title>Section 1.1.1.2</title>
+	    <para>blah.</para>
+	  </section>
+	  <section xml:id="c2s1s1s1s3"><title>Section 1.1.1.3</title>
+	    <para>blah.</para>
+	  </section>
+	</section>
+	<section xml:id="c2s1s1s2"><title>Section 1.1.2</title>
+	  <para>blah.</para>
+	</section>
+	<section xml:id="c2s1s1s3"><title>Section 1.1.3</title>
+	  <para>blah.</para>
+	</section>
+      </section>
+      <section xml:id="c2s1s2"><title>Section 1.2</title>
+	<para>blah.</para>
+      </section>
+      <section xml:id="c2s1s3"><title>Section 1.3</title>
+	<para>blah.</para>
+      </section>
+    </section>
+
+</article>

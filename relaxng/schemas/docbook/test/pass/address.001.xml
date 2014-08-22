@@ -1,0 +1,26 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>An address:</para>
+
+<address><personname>Santa Clause</personname>
+<street>1 Main Street</street>
+<city>North Pole</city>, <state>AK</state>  <postcode>12345</postcode>
+<country>US</country></address>
+
+<para>Other address fields:</para>
+
+<address>Information:
+<phone>+1-914-555-1212</phone>
+<fax>+1-213-555-1212</fax>
+<email>no-one@example.com</email>
+<uri>http://www.example.com/</uri></address>
+
+<para>With a PO Box:</para>
+
+<address><otheraddr role="whynotorgname">Some Company</otheraddr>
+<pob>P.O. Box 123</pob>
+<city>Anytown</city>, <state>XX</state>  <postcode>12345</postcode>
+</address>
+
+</article>

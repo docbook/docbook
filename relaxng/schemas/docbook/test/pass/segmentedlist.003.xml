@@ -1,0 +1,14 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Segmented list with embedded PI:</para>
+
+<segmentedlist>
+<segtitle>Label 1</segtitle>
+<segtitle>Label 2</segtitle>
+<seglistitem><?Pub Dtl?><seg>Content 1</seg>
+<seg>Content 2</seg>
+</seglistitem>
+</segmentedlist>
+
+</article>

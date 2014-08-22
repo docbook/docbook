@@ -1,0 +1,34 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<screen>+........+........+........+........+
+|   A    |        |        |    F   |
++........+........+........+........+
+|        |   B    |                 |
++........+........+        D        +
+|   C    |        |                 |
++........+........+........+........+</screen>
+
+<informaltable frame="all">
+<tgroup cols="4" align="center">
+<colspec colname="c1a" colnum="1"/>
+<colspec colname="c2a" colnum="2"/>
+<colspec colname="c3a" colnum="3"/>
+<colspec colname="c4a" colnum="4"/>
+<tbody>
+<row>
+  <entry>A</entry>
+  <entry colname="c4a">F</entry>
+</row>
+<row>
+  <entry colname="c2a">B</entry>
+  <entry namest="c3a" nameend="c4a" morerows="1">D</entry>
+</row>
+<row>
+  <entry>C</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</article>

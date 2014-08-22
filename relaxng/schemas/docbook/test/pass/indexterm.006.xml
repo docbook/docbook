@@ -1,0 +1,41 @@
+<book xmlns="http://docbook.org/ns/docbook"
+      xml:lang="cs">
+  <info><title>Pokusná kniha s rejstříkem</title></info>
+  <chapter>
+    <info><title>A Chapter</title></info>
+    <para><quote>Quoted text</quote></para>
+    <para>B</para>
+    <indexterm>
+      <primary>chalupa</primary>
+    </indexterm>
+
+    <indexterm>
+      <primary>čekanka</primary>
+    </indexterm>
+
+    <indexterm>
+      <primary>cena</primary>
+    </indexterm>
+
+    <indexterm>
+      <primary>čočka</primary>
+    </indexterm>
+
+    <indexterm>
+      <primary>dálnopis</primary>
+    </indexterm>
+
+    <indexterm>
+      <primary>traktor</primary>
+    </indexterm>
+
+    <indexterm>
+      <primary>ťululum</primary>
+    </indexterm>
+
+    <indexterm>
+      <primary>tyfus</primary>
+    </indexterm>
+  </chapter>
+  <index/>
+</book>

@@ -1,0 +1,29 @@
+<set xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: set.001</title>
+<releaseinfo role="CVS">$Id: set.001.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<author>
+  <personname><firstname>Norman</firstname><surname>Walsh</surname></personname>
+  <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
+</author>
+</info>
+
+<book><title>First Book</title>
+<chapter><title>Chapter</title>
+<para>Some test data</para>
+</chapter>
+</book>
+
+<book><title>Second Book</title>
+<chapter><title>Chapter</title>
+<para>Some test data</para>
+</chapter>
+</book>
+
+<book><title>Third Book</title>
+<chapter><title>Chapter</title>
+<para>Some test data</para>
+</chapter>
+</book>
+
+</set>

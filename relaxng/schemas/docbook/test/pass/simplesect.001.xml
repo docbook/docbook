@@ -1,0 +1,35 @@
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Chapter wrapper</title>
+
+<para>This test case is for simplesect.</para>
+
+<section>
+<title>A Section Title</title>
+
+<para>Some content <acronym>here</acronym>.</para>
+
+<simplesect>
+<title>First Simplesect</title>
+<para>Some content</para>
+</simplesect>
+</section>
+
+<section>
+<title>Another Section Title</title>
+
+<para>Some content</para>
+
+<section>
+<title>A Subsection Title</title>
+
+<para>Some content</para>
+
+<simplesect>
+<title>Second Simplesect</title>
+<subtitle>Subtitle</subtitle>
+<para>Some content</para>
+</simplesect>
+</section>
+</section>
+
+</chapter>

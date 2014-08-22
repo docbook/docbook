@@ -1,0 +1,25 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>The stamp image has a natural size of 200x128 pixels.</para>
+
+<mediaobject>
+  <imageobject>
+    <imagedata
+      fileref="../graphics/stamp.png"/>
+  </imageobject>
+</mediaobject>
+
+
+<para>The stamp image.</para>
+
+<mediaobject>
+  <imageobject>
+    <?dbhtml background-color="blue"?>
+    <imagedata
+      fileref="../graphics/stamp.png"/>
+  </imageobject>
+  <textobject><phrase>The DocBook Stamp</phrase></textobject>
+</mediaobject>
+
+</article>

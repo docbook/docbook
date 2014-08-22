@@ -1,0 +1,52 @@
+<bibliography xmlns="http://docbook.org/ns/docbook" version="5.0"
+              xmlns:xlink="http://www.w3.org/1999/xlink">
+<info>
+<title>Unit Test: bibliography.004</title>
+</info>
+
+ <bibliodiv><title>Normative References</title>
+
+ <biblioentry xml:id="xml">
+   <abbrev>XML 1.0</abbrev>
+   <editor>
+     <personname>
+       <firstname>Tim</firstname>
+       <surname>Bray</surname>
+     </personname>
+   </editor>
+   <title>Extensible Markup Language (XML) 1.0</title>
+   <edition>2nd ed</edition>
+   <releaseinfo>W3C Recommendation</releaseinfo>
+   <date>6 October 2000</date>
+   <copyright>
+     <year>2000</year>
+     <holder>World Wide Web Consortium</holder>
+   </copyright>
+   <biblioid class="uri">
+     <link xlink:href="http://www.w3.org/TR/2000/REC-xml-20001006/"/>
+   </biblioid>
+ </biblioentry>
+
+</bibliodiv>
+
+<bibliodiv><title>Articles</title>
+
+ <biblioentry xml:id="flynn-xml-faq">
+   <abbrev>Fl01</abbrev>
+   <author>
+     <personname>
+       <firstname>Peter</firstname>
+       <surname>Flynn</surname>
+     </personname>
+   </author>
+   <title>The XML FAQ</title>
+   <edition>2.1</edition>
+   <date>1 January 2002</date>
+   <biblioid class="uri">
+     <link xlink:href="http://www.ucc.ie/xml/faq.html"/>
+   </biblioid>
+ </biblioentry>
+
+</bibliodiv>
+
+</bibliography>

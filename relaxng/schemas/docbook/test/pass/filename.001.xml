@@ -1,0 +1,33 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing <tag>filename</tag>.</para>
+
+   <itemizedlist>
+      <listitem>
+         <para><filename>filename</filename></para>
+      </listitem>
+      <listitem>
+         <para><filename class="devicefile">devicefile filename</filename></para>
+      </listitem>
+      <listitem>
+         <para><filename class="directory">directory filename</filename></para>
+      </listitem>
+      <listitem>
+         <para><filename class="extension">extension filename</filename></para>
+      </listitem>
+      <listitem>
+         <para><filename class="headerfile">headerfile filename</filename></para>
+      </listitem>
+      <listitem>
+         <para><filename class="libraryfile">libraryfile filename</filename></para>
+      </listitem>
+      <listitem>
+         <para><filename class="partition">partition filename</filename></para>
+      </listitem>
+      <listitem>
+         <para><filename class="symlink">symlink filename</filename></para>
+      </listitem>
+   </itemizedlist>
+
+</article>

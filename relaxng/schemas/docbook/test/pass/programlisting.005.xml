@@ -1,0 +1,27 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+  <title>Unit Test: programlisting.005</title>
+  <subtitle>A programlisting within a table</subtitle>
+  <author>
+    <personname><firstname>Michael</firstname><surname>Smith</surname></personname>
+    <email>smith@sideshowbarker.net</email>
+  </author>
+</info>
+
+  <!-- test case from Sam Steingold -->
+  <table>
+    <title>Lisp function</title>
+    <tgroup cols="1">
+      <tbody>
+	<row>
+	  <entry><programlisting language="lisp">(defun cycle-length (n &amp; (len 1) (top 0))
+  (cond ((= n 1) (values len top))
+        ((evenp n) (cycle-length (ash n -1) (1+ len) (max top n)))
+        (t (let ((next (1+ (* 3 n))))
+             (cycle-length next (1+ len) (max top next))))))</programlisting>
+	  </entry>
+	</row>
+      </tbody>
+    </tgroup>
+  </table>
+</article>

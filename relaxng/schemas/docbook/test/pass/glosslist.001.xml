@@ -1,0 +1,23 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<glosslist>
+<glossentry>
+<glossterm>Some Term</glossterm>
+<glossdef>
+<para>Some definition.</para>
+</glossdef>
+</glossentry>
+</glosslist>
+
+<glosslist>
+<title>Glossary List Title</title>
+<glossentry>
+<glossterm>Some Other Term</glossterm>
+<glossdef>
+<para>Some other definition.</para>
+</glossdef>
+</glossentry>
+</glosslist>
+
+</article>

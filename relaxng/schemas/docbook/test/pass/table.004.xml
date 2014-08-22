@@ -1,0 +1,50 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+  <title>Article wrapper</title>
+  <css:rules xmlns:css="https://github.com/docbook/css-rules">
+    <css:table-class name="rowsep">
+      <css:property name="border-bottom-style" value="solid"/>
+      <css:property name="border-bottom-width" value="0.4pt"/>
+      <css:property name="border-bottom-color" value="black"/>
+    </css:table-class>
+  </css:rules>
+</info>
+
+<para>CALS:</para>
+
+<informaltable frame="none">
+<tgroup cols="2" rowsep="0" colsep="0">
+<colspec colname="col2" colnum="2" rowsep="1"/>
+<tbody>
+<row>
+<entry>foo</entry>
+</row>
+<row>
+<entry>foo</entry><entry>bar</entry>
+</row>
+<row>
+<entry>foo</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para>HTML:</para>
+
+<informaltable border="0">
+<col/>
+<col class="rowsep"/>
+<tbody>
+<tr>
+<td>foo</td><td class="rowsep">FIXME: should inherit</td>
+</tr>
+<tr>
+<td>foo</td><td class="rowsep">bar</td>
+</tr>
+<tr>
+<td>foo</td>
+</tr>
+</tbody>
+</informaltable>
+
+</article>

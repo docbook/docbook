@@ -1,0 +1,38 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This file tests block quotes:</para>
+
+<blockquote xml:id="q1">
+<para>If you understand: things are as they are. If you do not understand:
+things are as they are.</para>
+</blockquote>
+
+<blockquote xml:id="q2">
+<attribution>H. W. Longfellow</attribution>
+<para>If we could read the secret history
+of our enemies, we should find in in each one's life sorrow and
+suffering enough to disarm all hostility.</para>
+</blockquote>
+
+<blockquote xml:id="q3">
+<attribution>H. W. Longfellow</attribution>
+<simpara>If we could read the secret history
+of our enemies, we should find in in each one's life sorrow and
+suffering enough to disarm all hostility. (simpara)</simpara>
+</blockquote>
+
+<para xml:id="qp">The following block quotation occurs inside a paragraph.
+
+<blockquote xml:id="q4">
+<para>Knowledge, sense, honesty, learning, good behavior are the chief
+things towards making a man's fortune, next to interest and opportunity.</para>
+</blockquote>
+
+This line of text occurs after the quote, but inside the same para.</para>
+
+<blockquote xml:id="q5"><title>With A Title</title>
+<para>This block quote has a title.</para>
+</blockquote>
+
+</article>

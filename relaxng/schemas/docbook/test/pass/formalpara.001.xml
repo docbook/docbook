@@ -1,0 +1,7 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+<formalpara xml:id="fpara">
+<title>Test title</title>
+<para>Some para</para>
+</formalpara>
+</article>

@@ -1,0 +1,15 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing <tag>constant</tag>.</para>
+
+   <itemizedlist>
+      <listitem>
+         <para><constant>constant</constant></para>
+      </listitem>
+      <listitem>
+         <para><constant class="limit">limit constant</constant></para>
+      </listitem>
+   </itemizedlist>
+
+</article>

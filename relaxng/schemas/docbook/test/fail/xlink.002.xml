@@ -1,0 +1,48 @@
+<article xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.1">
+<info>
+<title>Extended XLink</title>
+<extendedlink xlink:type="extended">
+  <locator xlink:type="locator" xlink:href="http://www.w3.org/TR/XQuery" xlink:label="target"
+           xlink:title="XQuery specification"/>
+  <locator xlink:type="locator" xlink:href="http://www.w3.org/XML/Query/" xlink:label="target"
+           xlink:title="XQuery WG"/>
+  <locator xlink:type="locator" xlink:href="http://en.wikipedia.org/wiki/XQuery" xlink:label="target"
+           xlink:title="XQuery on Wikipedia"/>
+  <locator xlink:type="locator" xlink:href="#xquery" xlink:label="source"/>
+  <arc xlink:type="arc" xlink:from="source" xlink:to="target"/>
+</extendedlink>
+
+<extendedlink xlink:type="extended">
+  <locator xlink:type="locator" xlink:href="http://www.marklogic.com/" xlink:label="t"
+           xlink:title="MarkLogic"/>
+  <locator xlink:type="locator" xlink:href="http://en.wikipedia.org/wiki/MarkLogic" xlink:label="t"
+           xlink:title="MarkLogic at Wikipedia"/>
+  <!-- Those xlink:href values are legal URIs -->
+  <locator xlink:type="locator" xlink:href="xpath(//db:orgname[. = 'MarkLogic'])"
+           xlink:label="source"/>
+  <locator xlink:type="locator" xlink:href="xpath(//db:orgname[. = 'MLS'])"
+           xlink:label="source"/>
+  <arc xlink:type="arc" xlink:from="source" xlink:to="t"/>
+</extendedlink>
+</info>
+
+<para>What about
+<phrase xlink:type="extended">
+  <link xlink:type="locator" xlink:href="http://docbook.org/" xlink:label="target"
+        xlink:title="DocBook.org"/>
+  <link xlink:type="locator" xlink:href="http://en.wikipedia.org/wiki/DocBook" xlink:label="target"
+          xlink:title="DocBook on Wikipedia"/>
+  <citetitle xlink:type="resource" xlink:label="source">DocBook</citetitle>
+  <link xlink:type="arc" xlink:from="source" xlink:to="target"/>
+</phrase>
+and
+<citetitle xml:id="xquery">XQuery</citetitle>?
+</para>
+
+<para>And would <orgname>MarkLogic</orgname> work?</para>
+<para>And would <orgname>MLS</orgname> work?</para>
+<para>And would <orgname>nwalsh.com</orgname> work?</para>
+
+</article>

@@ -1,0 +1,84 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This paragraph contains a footnote<footnote>
+<para>This is a footnote.</para></footnote>.</para>
+
+<table><title>A table</title>
+<tgroup cols="3">
+<tbody>
+<row>
+  <entry>A Cell</entry>
+  <entry>A Cell<footnote><para>First footnote.</para></footnote></entry>
+  <entry>A Cell</entry>
+</row>
+<row>
+  <entry>A Cell<footnote><simpara>Second footnote.</simpara></footnote></entry>
+  <entry>A Cell</entry>
+  <entry>A Cell</entry>
+</row>
+<row>
+  <entry>A Cell</entry>
+  <entry>A Cell</entry>
+  <entry>A Cell<footnote><address>100 Any Street
+East Yahoo, XX</address></footnote></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+<para>This paragraph contains a footnote<footnote>
+<para>This is a footnote.</para></footnote>.</para>
+
+<table><title>A table</title>
+<tgroup cols="3">
+<tbody>
+<row>
+  <entry>A Cell</entry>
+  <entry>A Cell<footnote><para>First footnote.</para></footnote></entry>
+  <entry>A Cell</entry>
+</row>
+<row>
+  <entry>A Cell<footnote><simpara>Second footnote.</simpara></footnote></entry>
+  <entry>A Cell</entry>
+  <entry>A Cell</entry>
+</row>
+<row>
+  <entry>A Cell</entry>
+  <entry>A Cell</entry>
+  <entry>A Cell<footnote><address>100 Any Street
+East Yahoo, XX</address></footnote></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+<para>This paragraph contains a footnote<footnote>
+<para>This is a footnote.</para></footnote>.</para>
+
+<table border="1">
+<caption>An HTML Table</caption>
+<tbody>
+<tr>
+  <td>A Cell</td>
+  <td>A Cell<footnote><para>First footnote.</para></footnote></td>
+  <td>A Cell</td>
+</tr>
+<tr>
+  <td>A Cell<footnote><simpara>Second footnote.</simpara></footnote></td>
+  <td>A Cell</td>
+  <td>A Cell</td>
+</tr>
+<tr>
+  <td>A Cell</td>
+  <td>A Cell</td>
+  <td>A Cell<footnote><address>100 Any Street
+East Yahoo, XX</address></footnote></td>
+</tr>
+</tbody>
+</table>
+
+<para>This paragraph contains a footnote<footnote>
+<para>This is a footnote.</para></footnote>.</para>
+
+</article>

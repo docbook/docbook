@@ -1,0 +1,12 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<epigraph><attribution>H. W. Longfellow</attribution>
+<para>If we could read the secret history
+of our enemies, we should find in in each one's life sorrow and
+suffering enough to disarm all hostility.</para>
+</epigraph>
+
+<para>This is an epigraph test.</para>
+
+</article>

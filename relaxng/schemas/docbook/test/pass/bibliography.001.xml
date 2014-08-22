@@ -1,0 +1,118 @@
+<bibliography xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: bibliography.001</title>
+</info>
+
+<biblioentry>
+<abbrev>Abbrev</abbrev>
+<title>A Really Full BiblioEntry</title>
+<subtitle>Subtitle</subtitle>
+<abstract><para>
+Abstract, abstract, abstract. Abstract, abstract, abstract.
+Abstract, abstract, abstract. Abstract, abstract, abstract.
+Abstract, abstract, abstract. Abstract, abstract, abstract.
+Abstract, abstract, abstract. Abstract, abstract, abstract.
+Abstract, abstract, abstract. Abstract, abstract, abstract.
+Abstract, abstract, abstract. Abstract, abstract, abstract.
+</para></abstract>
+<address>Any Street
+Anywhere, XX 99999
+USA</address>
+<artpagenums>ArtPageNums</artpagenums>
+<author>
+  <personname>
+    <firstname>AuthorFirstname</firstname><surname>AuthorSurname</surname>
+  </personname>
+<personblurb>
+<para>
+AuthorBlurb, authorblurb, authorblurb. AuthorBlurb, authorblurb, authorblurb.
+AuthorBlurb, authorblurb, authorblurb. AuthorBlurb, authorblurb, authorblurb.
+AuthorBlurb, authorblurb, authorblurb. AuthorBlurb, authorblurb, authorblurb.
+AuthorBlurb, authorblurb, authorblurb. AuthorBlurb, authorblurb, authorblurb.
+AuthorBlurb, authorblurb, authorblurb. AuthorBlurb, authorblurb, authorblurb.
+</para>
+</personblurb>
+<affiliation>
+<shortaffil>shortaffil</shortaffil>
+<jobtitle>jobtitle</jobtitle>
+<orgname>orgname</orgname>
+<orgdiv>orgdiv</orgdiv>
+<address>Any Street
+Anywhere, XX 99999
+USA</address>
+</affiliation>
+</author>
+<!--<authorgroup>AuthorGroup</authorgroup>-->
+<authorinitials>AuthorInitials</authorinitials>
+<collab><personname>The names of some collaborators</personname>
+<affiliation>
+<shortaffil>shortaffil</shortaffil>
+<jobtitle>jobtitle</jobtitle>
+<orgname>orgname</orgname>
+<orgdiv>orgdiv</orgdiv>
+<address>Any Street
+Anywhere, XX 99999
+USA</address>
+</affiliation></collab>
+<confgroup>
+<confdates>confdates</confdates>
+<conftitle>conftitle</conftitle>
+<confnum>confnum</confnum>
+<address>Any Street
+Anywhere, XX 99999
+USA</address>
+<confsponsor>confsponsor</confsponsor>
+</confgroup>
+<contractnum>ContractNum</contractnum>
+<contractsponsor>ContractSponsor</contractsponsor>
+<copyright><year>1998</year><holder>Copyright holder</holder></copyright>
+<author><orgname>CorpAuthor</orgname></author>
+<date>Date</date>
+<edition>Edition</edition>
+<editor><personname><firstname>EditorFirstName</firstname><surname>EditorSurname</surname></personname></editor>
+<personname><firstname>FirstName</firstname>
+<honorific>Honorific</honorific></personname>
+<biblioid class="isbn">ISBN</biblioid>
+<biblioid class="issn">ISSN</biblioid>
+<issuenum>IssueNum</issuenum>
+<orgname>OrgName</orgname>
+<othercredit><personname><firstname>OCFirstName</firstname><surname>OCSurname</surname></personname></othercredit>
+<pagenums>PageNums</pagenums>
+<printhistory>
+<para>
+PrintHistory, printhistory, printhistory. PrintHistory, printhistory.
+PrintHistory, printhistory, printhistory. PrintHistory, printhistory.
+PrintHistory, printhistory, printhistory. PrintHistory, printhistory.
+PrintHistory, printhistory, printhistory. PrintHistory, printhistory.
+</para></printhistory>
+<productname>ProductName</productname>
+<productnumber>ProductNumber</productnumber>
+<pubdate>PubDate</pubdate>
+<publisher><publishername>PubPublisherName</publishername>
+<address><street>Any Street</street>
+<city>Anywhere</city>, <state>XX</state> <postcode>99999</postcode>
+<country>USA</country></address>
+</publisher>
+<publishername>PublisherName</publishername>
+<biblioid class="pubsnumber">PubsNumber</biblioid>
+<releaseinfo>ReleaseInfo</releaseinfo>
+<revhistory>
+<revision>
+<revnumber>1.0</revnumber><date>20 Nov 1998</date>
+  <authorinitials>ndw</authorinitials>
+  <revremark>Some remark about the revision</revremark></revision>
+<revision>
+<revnumber>0.9</revnumber><date>19 Nov 1998</date>
+  <authorinitials>ndw</authorinitials>
+  <revremark>Some remark about the revision</revremark></revision>
+<revision>
+<revnumber>0.4</revnumber><date>18 Nov 1998</date>
+  <authorinitials>ndw</authorinitials>
+  <revremark>Some remark about the revision</revremark></revision>
+</revhistory>
+<seriesvolnums>SeriesVolNums</seriesvolnums>
+<titleabbrev>TitleAbbrev</titleabbrev>
+<volumenum>VolumeNum</volumenum>
+</biblioentry>
+
+</bibliography>

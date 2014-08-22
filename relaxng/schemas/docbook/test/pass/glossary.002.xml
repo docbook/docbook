@@ -1,0 +1,12 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This test tests the <parameter>glossary.collection</parameter> machinery.</para>
+
+<para>Referencing <firstterm>gloss-1</firstterm>.</para>
+
+<glossary role="auto">
+<remark>make sure <glossterm>gloss-2</glossterm> is referenced</remark>
+</glossary>
+
+</article>

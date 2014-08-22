@@ -1,0 +1,36 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: itemizedlist.006</title>
+<author>
+  <personname><firstname>Adam</firstname> <surname>Di Carlo</surname></personname>
+  <affiliation><address><email>adam@onshored.com</email></address></affiliation>
+</author>
+</info>
+
+  <para>Itemized list mark styles.</para>
+
+  <itemizedlist mark="bullet">
+    <title>Bullet marks</title>
+    <listitem>
+      <para>One</para>
+    </listitem>
+    <listitem>
+      <para>Type</para>
+    </listitem>
+  </itemizedlist>
+
+  <itemizedlist mark="box">
+    <title>Box marks</title>
+    <listitem>
+      <para>One</para>
+    </listitem>
+    <listitem>
+      <para>Type</para>
+    </listitem>
+  </itemizedlist>
+
+  <para>
+    Are there more?  Check CSS spec.  DSSSL styling requires CSS for
+    this; is there a way to do it w/o CSS?
+  </para>
+</article>

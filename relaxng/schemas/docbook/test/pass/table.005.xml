@@ -1,0 +1,26 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This is a “portrait” paragraph.</para>
+
+<table frame="none" orient="land">
+<title>This is a “landscape” table</title>
+<tgroup cols="2">
+<colspec colname="col2" colnum="2" rowsep="1"/>
+<tbody>
+<row>
+<entry>foo</entry>
+</row>
+<row>
+<entry>foo</entry><entry>bar</entry>
+</row>
+<row>
+<entry>foo</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+<para>This is a “portrait” paragraph.</para>
+
+</article>

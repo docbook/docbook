@@ -1,0 +1,15 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing <tag>uri</tag>.</para>
+
+   <itemizedlist>
+      <listitem>
+         <para><uri>uri</uri></para>
+      </listitem>
+      <listitem>
+         <para><uri type="sometype">uri type=sometype</uri></para>
+      </listitem>
+   </itemizedlist>
+
+</article>

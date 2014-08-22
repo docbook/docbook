@@ -1,0 +1,27 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: co.001</title>
+<author>
+  <personname><firstname>John</firstname><surname>Himpel</surname></personname>
+  <affiliation><address><email>jwhimpel@users.sourceforge.net</email></address>
+  </affiliation>
+</author>
+</info>
+
+<para>Callouts inside <tag>userinput</tag> elements.</para>
+
+<screen><prompt>$</prompt><userinput>cp a b<co xml:id='cp-co'
+linkends='cp'/></userinput>
+<prompt>$</prompt><userinput>mv a b<co xml:id='mv-co'
+linkends='mv'/></userinput></screen>
+
+<calloutlist>
+<callout arearefs='cp-co' xml:id='cp'>
+<para>This is a copy.</para>
+</callout>
+<callout arearefs='mv-co' xml:id='mv'>
+<para>This is a move.</para>
+</callout>
+</calloutlist>
+
+</article>

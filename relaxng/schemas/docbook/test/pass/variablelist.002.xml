@@ -1,0 +1,18 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<variablelist>
+<title>VariableList Title</title>
+<varlistentry><term>Term1</term>
+<listitem><para>Definition of Term1</para></listitem>
+</varlistentry>
+<varlistentry><term>Term2</term>
+<listitem><para>Definition of Term2</para></listitem>
+</varlistentry>
+<varlistentry xml:id="someVLI">
+<term>Term3a</term><term>Term3b</term><term>Term3c</term>
+<listitem><para>Definition of Term3a,b,c</para></listitem>
+</varlistentry>
+</variablelist>
+
+</article>

@@ -1,0 +1,11 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+    <section xml:id="c2s1"><title>This is a Section Title.</title>
+      <para>blah.</para>
+      <section xml:id="c2s1s1"><title>This is a Really Long Section Title That's Almost Certainly Bound to Wrap Around on the Page</title>
+	<para>blah.</para>
+      </section>
+    </section>
+
+</article>

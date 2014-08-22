@@ -1,0 +1,21 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing <tag>parameter</tag>.</para>
+
+   <itemizedlist>
+      <listitem>
+         <para><parameter>parameter</parameter></para>
+      </listitem>
+      <listitem>
+         <para><parameter class="command">command parameter</parameter></para>
+      </listitem>
+      <listitem>
+         <para><parameter class="function">function parameter</parameter></para>
+      </listitem>
+      <listitem>
+         <para><parameter class="option">option parameter</parameter></para>
+      </listitem>
+   </itemizedlist>
+
+</article>

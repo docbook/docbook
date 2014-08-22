@@ -1,0 +1,230 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<table frame="all">
+<title>Multi-page CALS Table with THead and TFoot</title>
+<tgroup cols="2">
+<thead>
+<row>
+<entry>Head Left</entry>
+<entry>Head Right</entry>
+</row>
+</thead>
+<tfoot>
+<row>
+<entry>Foot Left</entry>
+<entry>Foot Right</entry>
+</row>
+</tfoot>
+<tbody>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+<row><entry>Body Left</entry><entry>Body Right</entry></row>
+</tbody>
+</tgroup>
+</table>
+
+<table border="1">
+<caption>Multi-page HTML Table with THead and TFoot</caption>
+<thead>
+<tr>
+<td>Head Left</td>
+<td>Head Right</td>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td>Foot Left</td>
+<td>Foot Right</td>
+</tr>
+</tfoot>
+<tbody>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+<tr><td>Body Left</td><td>Body Right</td></tr>
+</tbody>
+</table>
+
+</article>

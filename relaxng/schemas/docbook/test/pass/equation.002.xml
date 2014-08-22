@@ -1,0 +1,28 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<equation xml:id="eq2"><title>Second Equation</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../graphics/emc2.png"/>
+</imageobject>
+<textobject>
+<phrase>e=mc^2</phrase>
+</textobject>
+</mediaobject>
+</equation>
+
+<para>An informal equation:</para>
+
+<informalequation xml:id="eq3">
+<mediaobject>
+<imageobject>
+<imagedata fileref="../graphics/emc2.png"/>
+</imageobject>
+<textobject>
+<phrase>e=mc^2</phrase>
+</textobject>
+</mediaobject>
+</informalequation>
+
+</article>

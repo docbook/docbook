@@ -1,0 +1,31 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>There are several classes of “<tag>systemitem</tag>”:</para>
+
+<simplelist columns="1">
+<member><systemitem>systemitem</systemitem></member>
+<member><systemitem class="daemon" xml:id="daemon">daemon systemitem</systemitem></member>
+<member><systemitem class="domainname" xml:id="domainname">domainname systemitem</systemitem></member>
+<member><systemitem class="etheraddress" xml:id="etheraddress">etheraddress systemitem</systemitem></member>
+<member><systemitem class="event" xml:id="event">event systemitem</systemitem></member>
+<member><systemitem class="eventhandler" xml:id="eventhandler">eventhandler systemitem</systemitem></member>
+<member><systemitem class="filesystem" xml:id="filesystem">filesystem systemitem</systemitem></member>
+<member><systemitem class="fqdomainname" xml:id="fqdomainname">fqdomainname systemitem</systemitem></member>
+<member><systemitem class="groupname" xml:id="groupname">groupname systemitem</systemitem></member>
+<member><systemitem class="ipaddress" xml:id="ipaddress">ipaddress systemitem</systemitem></member>
+<member><systemitem class="library" xml:id="library">library systemitem</systemitem></member>
+<member><systemitem class="macro" xml:id="macro">macro systemitem</systemitem></member>
+<member><systemitem class="netmask" xml:id="netmask">netmask systemitem</systemitem></member>
+<member><systemitem class="newsgroup" xml:id="newsgroup">newsgroup systemitem</systemitem></member>
+<member><systemitem class="osname" xml:id="osname">osname systemitem</systemitem></member>
+<member><systemitem class="process" xml:id="process">process systemitem</systemitem></member>
+<member><systemitem class="protocol" xml:id="protocol">protocol systemitem</systemitem></member>
+<member><systemitem class="resource" xml:id="resource">resource systemitem</systemitem></member>
+<member><systemitem class="server" xml:id="server">server systemitem</systemitem></member>
+<member><systemitem class="service" xml:id="service">service systemitem</systemitem></member>
+<member><systemitem class="systemname" xml:id="systemname">systemname systemitem</systemitem></member>
+<member><systemitem class="username" xml:id="username">username systemitem</systemitem></member>
+</simplelist>
+
+</article>

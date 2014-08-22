@@ -1,0 +1,18 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Testing <tag>application</tag>.</para>
+
+   <itemizedlist>
+      <listitem>
+         <para><application>application</application></para>
+      </listitem>
+      <listitem>
+         <para><application class="hardware">hardware application</application></para>
+      </listitem>
+      <listitem>
+         <para><application class="software">software application</application></para>
+      </listitem>
+   </itemizedlist>
+
+</article>

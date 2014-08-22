@@ -1,0 +1,16 @@
+<book xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="5.0">
+<info>
+<title>Unit Test: link.002</title>
+</info>
+
+<chapter>
+<title>Foo <link xlink:href="http://example.com/">URL</link></title>
+
+<para>This chapter tests a <tag>link</tag> in a
+<tag>title</tag>.
+</para>
+
+</chapter>
+</book>

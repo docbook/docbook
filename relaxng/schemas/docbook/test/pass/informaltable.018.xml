@@ -1,0 +1,32 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: informaltable.018</title>
+<author>
+  <personname><firstname>Adam</firstname> <surname>Di Carlo</surname></personname>
+  <affiliation><address><email>adam@onshored.com</email></address></affiliation>
+</author>
+</info>
+
+<para>Table entry whitespace trim test. Both entries should left align
+the same.
+</para>
+
+<informaltable frame="all" xml:id="informaltable">
+    <tgroup cols="1">
+      <tbody>
+        <row>
+          <entry>
+            <para>Entry contents one.</para>
+          </entry>
+        </row>
+        <row>
+          <entry>
+            <para>
+              Entry contents two.
+            </para>
+          </entry>
+        </row>
+      </tbody>
+    </tgroup>
+  </informaltable>
+</article>

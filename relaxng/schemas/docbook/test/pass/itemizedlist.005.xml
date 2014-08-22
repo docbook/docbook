@@ -1,0 +1,24 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: itemizedlist.005</title>
+<author>
+  <personname><firstname>Adam</firstname> <surname>Di Carlo</surname></personname>
+  <affiliation><address><email>adam@onshored.com</email></address></affiliation>
+</author>
+</info>
+
+<para>Here we're testing an <tag class="element">itemizedlist</tag>
+with a title nested within another one.
+
+    <itemizedlist>
+      <listitem>
+        <itemizedlist>
+          <title>Nested Itemized List Title</title>
+          <listitem>
+            <para>Itemized list entry</para>             
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </itemizedlist>
+</para>
+</article>

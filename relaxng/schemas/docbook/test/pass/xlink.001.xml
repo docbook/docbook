@@ -1,0 +1,18 @@
+<article xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.1">
+<info>
+<title>Inline extended XLink</title>
+</info>
+
+<para>What about
+<phrase xlink:type="extended">
+  <link xlink:type="locator" xlink:href="http://docbook.org/" xlink:label="target"
+        xlink:title="DocBook.org"/>
+  <link xlink:type="locator" xlink:href="http://en.wikipedia.org/wiki/DocBook" xlink:label="target"
+          xlink:title="DocBook on Wikipedia"/>
+  <citetitle xlink:type="resource" xlink:label="source">DocBook</citetitle>
+  <link xlink:type="arc" xlink:from="source" xlink:to="target"/>
+</phrase>?
+</para>
+</article>

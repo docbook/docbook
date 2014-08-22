@@ -1,0 +1,26 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: blockinfo.001</title>
+<releaseinfo role="CVS">$Id: blockinfo.001.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<author>
+  <personname><firstname>Adam</firstname><surname>Di Carlo</surname></personname>
+  <affiliation><address><email>adam@onshored.com</email></address></affiliation>
+</author>
+</info>
+
+<example>
+    <info>
+      <title>Example Title</title>
+      <author>
+        <personname>
+          <firstname>Adam</firstname>
+          <surname>Di Carlo</surname>
+        </personname>
+      </author>
+      <date>14 Dec, 2002</date>
+    </info>
+    <para>
+Example of an example.  Info (author, date) exists but is not
+displayed, right?</para>
+  </example>
+</article>

@@ -1,0 +1,89 @@
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: bookinfo.001</title>
+<releaseinfo role="CVS">$Id: bookinfo.001.xml 4056 2004-11-23
+13:28:50Z nwalsh $</releaseinfo>
+
+<abstract>
+<para>Some abstract. Some abstract. Some abstract. Some abstract.
+Some abstract. Some abstract. Some abstract. Some abstract.
+Some abstract. Some abstract. Some abstract. Some abstract.
+Some abstract. Some abstract. Some abstract. Some abstract.
+Some abstract. Some abstract. Some abstract. Some abstract.
+Some abstract. Some abstract. Some abstract. Some abstract.
+</para>
+<para>Some abstract. Some abstract. Some abstract. Some abstract.
+Some abstract. Some abstract. Some abstract. Some abstract.
+</para>
+</abstract>
+
+<authorgroup xml:id="authors">
+<author xml:id="j.doe">
+<personname>
+<firstname>John</firstname>
+<surname>Doe</surname>
+</personname>
+</author>
+<author>
+<personname>
+<firstname>Jane</firstname>
+<surname>Doe</surname>
+</personname>
+<contrib>Some contribution</contrib>
+</author>
+<author>
+<personname>
+<firstname>A.</firstname>
+<surname>Nonymous</surname>
+</personname>
+</author>
+<author>
+<personname>
+<firstname>Janice</firstname>
+<surname>Doe</surname>
+</personname>
+</author>
+</authorgroup>
+
+<keywordset>
+<keyword>keyword1</keyword>
+<keyword>keyword2</keyword>
+</keywordset>
+
+<pubdate>18 January 2002</pubdate>
+
+<revhistory>
+<revision>
+<revnumber>2.0</revnumber>
+<date>18 Jan 2002</date>
+<authorinitials>ndw</authorinitials>
+<revremark>Some remark about the revision</revremark>
+</revision>
+<revision>
+<revnumber>1.0</revnumber>
+<date>20 Nov 1998</date>
+<authorinitials>ndw</authorinitials>
+<revremark>Some remark about the revision</revremark>
+</revision>
+<revision>
+<revnumber>0.9</revnumber>
+<date>19 Nov 1998</date>
+<authorinitials>ndw</authorinitials>
+<revremark>Some remark about the revision</revremark>
+</revision>
+<revision>
+<revnumber>0.4</revnumber>
+<date>18 Nov 1998</date>
+<authorinitials>ndw</authorinitials>
+<revremark>Some remark about the revision</revremark>
+</revision>
+</revhistory>
+</info>
+
+<preface><title>Preface</title>
+
+<para>This book is really just a bookinfo test.</para>
+
+</preface>
+
+</book>

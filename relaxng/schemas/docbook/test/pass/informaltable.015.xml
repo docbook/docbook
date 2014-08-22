@@ -1,0 +1,29 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Three column table, but entries only in one column. Last column
+should expand to fill entire horizontal space.</para>
+
+<informaltable xml:id="informaltable" pgwide="1">
+  <tgroup cols="3" colsep="1" rowsep="1" align="left">
+      <colspec colname="cat" colwidth="2in"/>
+      <colspec colname="issue" colwidth="2in"/>
+      <colspec colname="response" colwidth="4in"/>
+      <thead>
+        <row>
+          <entry>Category</entry>
+          <entry>System Considerations, Issues</entry>
+          <entry>Notes</entry>
+        </row>
+      </thead>
+      <tbody>
+        <row>
+          <entry>General Company Information</entry>
+        </row>
+        <row>
+          <entry>Company Financials</entry>
+        </row>
+      </tbody>
+    </tgroup>
+  </informaltable>
+</article>

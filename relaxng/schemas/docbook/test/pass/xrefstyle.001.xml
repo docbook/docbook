@@ -1,0 +1,16 @@
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="chapter">
+<info>
+<title>Unit Test: xrefstyle.001.xml</title>
+<releaseinfo role="CVS">$Id: xrefstyle.001.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<author>
+  <personname><firstname>Norman</firstname><surname>Walsh</surname></personname>
+  <affiliation><address><email>ndw@nwalsh.com</email></address></affiliation>
+</author>
+</info>
+
+<para>This is a test of xref styles.</para>
+
+<para>Short self-reference: <xref linkend="chapter"/>.</para>
+<para>Long self-reference: <xref role="title" linkend="chapter"/>.</para>
+
+</chapter>

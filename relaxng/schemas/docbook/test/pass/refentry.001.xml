@@ -1,0 +1,16 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<refentry xml:id="minimal">
+<refnamediv>
+<refname>Minimal</refname>
+<refpurpose>Test of a minimal RefEntry</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Description</title>
+<para>This is a minimal RefEntry.</para>
+</refsect1>
+</refentry>
+
+</article>

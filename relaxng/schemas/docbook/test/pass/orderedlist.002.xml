@@ -1,0 +1,29 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<orderedlist numeration="loweralpha">
+  <listitem><para>Level 1, numeration="loweralpha"</para>
+    <orderedlist>
+    <listitem><para>Level 2</para>
+      <orderedlist>
+      <listitem><para>Level 3</para>
+        <orderedlist>
+        <listitem><para>Level 4</para>
+          <orderedlist>
+          <listitem><para>Level 5</para>
+            <orderedlist>
+            <listitem><para>Level 6</para>
+            </listitem>
+            </orderedlist>
+          </listitem>
+          </orderedlist>
+        </listitem>
+        </orderedlist>
+    </listitem>
+    </orderedlist>
+  </listitem>
+  </orderedlist>
+</listitem>
+</orderedlist>
+
+</article>

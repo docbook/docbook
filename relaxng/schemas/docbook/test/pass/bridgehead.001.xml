@@ -1,0 +1,34 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>A test paragraph.</para>
+
+<para>This test para encourages you to see <xref linkend="bh"/>.</para>
+
+<sect1>
+  <title>sect1 title</title>
+  <subtitle>sect1 subtitle</subtitle>
+
+  <para>This is a test paragraph.</para>
+
+  <bridgehead xml:id="bh" renderas="sect1">This is a sect1 bridgehead</bridgehead>
+
+  <para>This is a test paragraph.</para>
+
+  <sect2>
+    <title>first sect2 title</title>
+    <para>Please read <xref linkend="sec-xrefMe"/></para>
+
+    <bridgehead>This is an implied sect3 bridgehead</bridgehead>
+
+    <para>This is a test paragraph.</para>
+
+  </sect2>
+
+  <sect2 xml:id="sec-xrefMe">
+    <title>second sect2 title</title>
+    <para>This is a test paragraph.</para>
+  </sect2>
+</sect1>
+
+</article>

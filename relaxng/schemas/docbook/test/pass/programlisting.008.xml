@@ -1,0 +1,40 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This test checks that the line numbering control PIs are handled
+correctly.</para>
+
+<programlisting
+><?dbhtml linenumbering.everyNth="5" linenumbering.width="4" linenumbering.padchar="_" linenumbering.separator="> "
+?><?dbfo linenumbering.everyNth="5" linenumbering.width="4" linenumbering.padchar="_" linenumbering.separator="> "
+?>Line one
+Line two
+Line three
+Line four
+Line five
+Line six
+Line seven
+Line eight
+Line nine
+Line ten
+Line eleven
+Line twelve
+Line thirteen
+Line fourteen
+Line fifteen
+Line sixteen</programlisting>
+
+<programlisting
+><?dbhtml linenumbering.everyNth="1" linenumbering.minlines="10"
+?><?dbfo linenumbering.everyNth="1" linenumbering.minlines="10"
+?>Line one
+Line two
+Line three
+Line four
+Line five
+Line six
+Line seven
+Line eight
+Line nine</programlisting>
+
+</article>

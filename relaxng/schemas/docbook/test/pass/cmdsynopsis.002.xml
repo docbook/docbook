@@ -1,0 +1,46 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+<title>Unit Test: cmdsynopsis.002</title>
+<author>
+  <personname><firstname>Adam</firstname><surname>Di Carlo</surname></personname>
+  <email>adam@onshored.com</email>
+</author>
+</info>
+
+  <para>
+    Lets refer to <xref linkend="foo"/>.
+  </para>
+  <refentry xml:id="foo">
+    <refnamediv>
+      <refname>testing</refname>
+      <refpurpose>
+        Testing more cmdsynopsis stuff, esp. permutations of grouped
+        arguments.
+      </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+      <cmdsynopsis>
+        <command>foo</command>
+
+        <!-- optional -->
+        <group choice="opt">
+          <arg>-foo</arg>
+          <arg>-bar</arg>
+        </group>
+
+        <!-- repeating optional -->
+        <group choice="opt" rep="repeat">
+          <arg>-re</arg>
+          <arg>-peat</arg>
+        </group>
+      </cmdsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1>
+      <title>Description</title>
+      <para>This is a dummy description.</para>
+    </refsect1>
+  </refentry>
+
+</article>

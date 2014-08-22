@@ -1,0 +1,43 @@
+<book xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <title>Unit Test: index.002</title>
+    <subtitle>Index in Part within Book</subtitle>
+    <author>
+      <personname><firstname>Michael</firstname><surname>Smith</surname></personname>
+      <email>smith@sideshowbarker.net</email>
+    </author>
+  </info>
+
+  <part><title>First Part</title>
+  <chapter><title>Chapter</title>
+  <para>Some test data
+  <indexterm>
+    <primary>First Part</primary>
+  </indexterm></para>
+  </chapter>
+  <index/>
+  </part>
+
+  <part><title>Second Part</title>
+  <chapter><title>Chapter</title>
+  <para>Some test data
+  <indexterm>
+    <primary>Second Part</primary>
+  </indexterm></para>
+  </chapter>
+  <index/>
+  </part>
+
+  <part><title>Third Part</title>
+  <chapter><title>Chapter</title>
+  <para>Some test data
+  <indexterm>
+    <primary>Third Part</primary>
+  </indexterm></para>
+  </chapter>
+  <index/>
+  </part>
+
+  <index/>
+
+</book>

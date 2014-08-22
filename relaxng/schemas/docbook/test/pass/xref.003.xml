@@ -1,0 +1,76 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xml:id="article">
+<info>
+<title>Unit Test: xref.003.xml</title>
+<titleabbrev>Unit 03</titleabbrev>
+<releaseinfo role="CVS">$Id: xref.003.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<author>
+  <personname><firstname>Adam</firstname><surname>Di Carlo</surname></personname>
+  <affiliation><address><email>adam@onshored.com</email></address></affiliation>
+</author>
+</info>
+
+  <section xml:id="xreftests">
+    <title>Xref test: titleabbrev</title>
+    <para>
+      We're testing that xref uses the <tag>titleabbrev</tag>
+      element where appropriate.
+    </para>
+    <para>
+      Article: <xref linkend="article"/>.
+    </para>
+    <para>
+      Section: <xref linkend="section"/>.
+    </para>
+    <para>
+      Figure: <xref linkend="figure"/>.
+    </para>
+    <para>
+      Example: <xref linkend="example"/>.
+    </para>
+    <para>
+      Table: <xref linkend="table"/>.
+    </para>
+    <!-- what about:
+    procedure, qandadiv, glossary, index, variablelist, etc. 
+    -->
+  </section>
+
+  <section xml:id="section">
+    <title>Cross-reference targets</title>
+    <titleabbrev>Cross-ref targets</titleabbrev>
+
+    <para>
+      Targets for cross-reference tests.
+    </para>
+
+    <figure xml:id="figure">
+      <title>Long Title for Figure</title>
+      <titleabbrev>Short Fig Title</titleabbrev>
+      <mediaobject>
+        <textobject>
+          <para>Bit of text</para>
+        </textobject>
+      </mediaobject>
+    </figure>
+
+    <example xml:id="example">
+      <title>Long Title for Example</title>
+      <titleabbrev>Short Examp Title</titleabbrev>
+      <para>Substance of example</para>
+    </example>
+
+    <table xml:id="table">
+      <title>Long Title for Table</title>
+      <titleabbrev>Short Table Title</titleabbrev>
+      <tgroup cols="1">
+        <tbody>
+          <row>
+            <entry>table cell</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+  </section>
+</article>

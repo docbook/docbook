@@ -1,0 +1,81 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This test attempts to demonstrate the three hard cases:
+horizontal spans, vertical spans, and missing entries.</para>
+
+<para>CALS:</para>
+
+<informaltable frame="all">
+<tgroup cols="4">
+<colspec colname="b" colnum="2"/>
+<colspec colname="c" colnum="3"/>
+<colspec colname="d"/>
+<spanspec spanname="cd" namest="c" nameend="d"/>
+<tbody>
+  <row>
+    <entry>a1</entry>
+    <entry morerows="1" namest="b" nameend="c">b1-c2</entry>
+    <entry>d1</entry>
+  </row>
+  <row>
+    <entry morerows="2">a2-a4</entry>
+    <!-- b2, c2 spans from above -->
+    <entry>d2</entry>
+  </row>
+  <row>
+    <!-- a3 spans from above -->
+    <entry>b3</entry>
+    <entry>c3</entry>
+    <entry>d3</entry>
+  </row>
+  <row>
+    <!-- a4 spans from above -->
+    <entry>b4</entry>
+    <entry spanname="cd">c4-d4</entry>
+  </row>
+  <row>
+    <entry>a5</entry>
+    <entry>b5</entry>
+    <!-- c4 is missing -->
+    <entry colname="d">d5</entry>
+  </row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para>HTML:</para>
+
+<informaltable border="1">
+<tbody>
+  <tr>
+    <td>a1</td>
+    <td colspan="2" rowspan="2">b1-c2</td>
+    <td>d1</td>
+  </tr>
+  <tr>
+    <td rowspan="3">a2-a4</td>
+    <!-- b2, c2 spans from above -->
+    <td>d2</td>
+  </tr>
+  <tr>
+    <!-- a3 spans from above -->
+    <td>b3</td>
+    <td>c3</td>
+    <td>d3</td>
+  </tr>
+  <tr>
+    <!-- a4 spans from above -->
+    <td>b4</td>
+    <td colspan="2">c4-d4</td>
+  </tr>
+  <tr>
+    <td>a5</td>
+    <td>b5</td>
+    <td>&#160;<!-- c4 is missing is not supported by HTML--></td>
+    <td>d5</td>
+  </tr>
+</tbody>
+</informaltable>
+
+</article>

@@ -1,0 +1,254 @@
+<!DOCTYPE book [
+<!ENTITY blah "<para>Blah blah blah blah. Blah blah blah blah. Blah blah blah blah.
+</para>">
+]>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0"
+      xml:id="book">
+<info>
+<title>Unit Test: book.001</title>
+<releaseinfo role="CVS">$Id: book.001.xml 4056 2004-11-23 13:28:50Z nwalsh $</releaseinfo>
+<authorgroup>
+<author><orgname>SomeCorp</orgname></author>
+<author>
+  <personname><firstname>Norman</firstname><surname>Walsh</surname></personname>
+  <email>ndw@nwalsh.com</email>
+</author>
+<editor>
+<personname>
+<firstname>Jane</firstname><surname>Doe</surname>
+</personname></editor>
+</authorgroup>
+<legalnotice>
+<para>
+Some legal notice. Some legal notice. Some legal notice.
+Some legal notice. Some legal notice. Some legal notice.
+</para>
+</legalnotice>
+<copyright>
+<year>1998</year>
+<year>1999</year>
+<year>2000</year>
+<year>2001</year>
+<year>2002</year>
+<holder>Norman Walsh</holder>
+</copyright>
+<pubdate>18 January 2002</pubdate>
+<abstract>
+<para>Some abstract. Some abstract. Some abstract. Some abstract.
+</para>
+<para>Some abstract. Some abstract. Some abstract. Some abstract.
+Some abstract. Some abstract. Some abstract. Some abstract.
+</para>
+</abstract>
+<revhistory>
+<revision>
+<revnumber>1.1</revnumber>
+<date>18 Jan 2002</date>
+<authorinitials>ndw</authorinitials>
+<revremark>Reworked.</revremark>
+</revision>
+<revision>
+<revnumber>1.0</revnumber>
+<date>20 Nov 1998</date>
+<authorinitials>ndw</authorinitials>
+<revremark>Some remark about the revision</revremark>
+</revision>
+<revision>
+<revnumber>0.9</revnumber>
+<date>19 Nov 1998</date>
+<authorinitials>ndw</authorinitials>
+<revremark>Some remark about the revision</revremark>
+</revision>
+<revision>
+<revnumber>0.4</revnumber>
+<date>18 Nov 1998</date>
+<authorinitials>ndw</authorinitials>
+<revremark>Some remark about the revision</revremark>
+</revision>
+</revhistory>
+</info>
+
+<dedication xml:id="ded1"><title>First Dedication</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</dedication>
+
+<dedication xml:id="ded2">
+
+<para>A second dedication without a title.</para>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</dedication>
+
+<preface xml:id="forward"><title>Foreword</title>
+
+<para>A preface.</para>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</preface>
+
+<preface xml:id="preface"><title>Preface</title>
+
+<para>Another preface.</para>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</preface>
+
+<part xml:id="partI">
+<title>Part One Title</title>
+<partintro xml:id="pIpintro">
+<title>PartIntro Title</title>
+
+<para>Partintro content<footnote>
+<para>This is a footnote in a partintro.</para>
+</footnote>.</para>
+
+&blah; &blah; &blah; &blah; &blah;
+
+<sect1 xml:id="pIpis1">
+<title>PartIntro Section</title>
+<para>PartIntros can actually have section content as well.</para>
+&blah; &blah; &blah; &blah; &blah;
+</sect1>
+</partintro>
+
+<chapter xml:id="chap1">
+<title>First Chapter</title>
+<titleabbrev>F. Chap</titleabbrev>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+<section xml:id="c1s1"><title>First Section</title>
+<titleabbrev>F. Sect</titleabbrev>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+<section xml:id="c1s2"><title>Second Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+<section xml:id="c1s3"><title>Third Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+</chapter>
+
+<chapter xml:id="chap2"><title>Second Chapter</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+<section xml:id="c2s1"><title>First Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+<section xml:id="c2s2"><title>Second Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+<section xml:id="c2s3"><title>Third Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+</chapter>
+
+<chapter xml:id="chap3"><title>Third Chapter</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</chapter>
+
+</part>
+<part xml:id="partII"><title>Appendixes</title>
+
+<appendix xml:id="app1"><title>First Appendix</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+<section xml:id="a1s1"><title>First Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+<section xml:id="a1s2"><title>Second Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+<section xml:id="a1s3"><title>Third Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+</appendix>
+
+<appendix xml:id="app2"><title>Second Appendix</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+<section xml:id="a2s1"><title>First Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+<section xml:id="a2s2"><title>Second Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+<section xml:id="a2s3"><title>Third Section</title>
+
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+&blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah; &blah;
+
+</section>
+</appendix>
+
+</part>
+</book>

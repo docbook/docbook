@@ -1,0 +1,28 @@
+<info xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="5.1">
+
+<extendedlink xlink:type="extended">
+  <locator xlink:type="locator" xlink:href="http://www.w3.org/TR/XQuery" xlink:label="target"
+           xlink:title="XQuery specification"/>
+  <locator xlink:type="locator" xlink:href="http://www.w3.org/XML/Query/" xlink:label="target"
+           xlink:title="XQuery WG"/>
+  <locator xlink:type="locator" xlink:href="http://en.wikipedia.org/wiki/XQuery" xlink:label="target"
+           xlink:title="XQuery on Wikipedia"/>
+  <locator xlink:type="locator" xlink:href="#xquery" xlink:label="source"/>
+  <arc xlink:type="arc" xlink:from="source" xlink:to="target"/>
+</extendedlink>
+
+<extendedlink xlink:type="extended">
+  <locator xlink:type="locator" xlink:href="http://www.marklogic.com/" xlink:label="t"
+           xlink:title="MarkLogic"/>
+  <locator xlink:type="locator" xlink:href="http://en.wikipedia.org/wiki/MarkLogic" xlink:label="t"
+           xlink:title="MarkLogic at Wikipedia"/>
+  <locator xlink:type="locator" xlink:href="xpath(//db:orgname[. = 'MarkLogic'])"
+           xlink:label="source"/>
+  <locator xlink:type="locator" xlink:href="xpath(//db:orgname[. = 'MLS'])"
+           xlink:label="source"/>
+  <arc xlink:type="arc" xlink:from="source" xlink:to="t"/>
+</extendedlink>
+
+</info>

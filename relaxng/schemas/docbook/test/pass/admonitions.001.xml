@@ -1,0 +1,51 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>This article tests admonitions.</para>
+
+<tip>
+<para>This tip has no title.</para>
+</tip>
+
+<note>
+<para>This note has no title.</para>
+</note>
+
+<important>
+<para>This important has no title.</para>
+</important>
+
+<warning>
+<para>This warning has no title.</para>
+</warning>
+
+<caution>
+<para>This caution has no title.</para>
+</caution>
+
+<tip>
+<title>Tip Title</title>
+<para>This is a tip.</para>
+</tip>
+
+<note>
+<title>Note Title</title>
+<para>This is a note.</para>
+</note>
+
+<important>
+<title>Important Title</title>
+<para>This is an important.</para>
+</important>
+
+<warning>
+<title>Warning Title</title>
+<para>This is a warning.</para>
+</warning>
+
+<caution>
+<title>Caution Title</title>
+<para>This is a caution.</para>
+</caution>
+
+</article>
