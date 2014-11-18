@@ -1,5 +1,5 @@
 REMOVESCH=0
-DBVER=V5.1CR3
+DBVER=V5.1-CSPRD01
 DBREL="DocBook $(DBVER)"
 XIREL="DocBook XInclude $(DBVER)"
 SDBREL="Simplified DocBook $(DBVER)"
@@ -22,6 +22,11 @@ TRANG=java -cp $(CLASSPATH) com.thaiopensource.relaxng.translate.Driver
 
 all: schemas doc
 
+test: all
+	$(MAKE) -C docbook/test
+	$(MAKE) -C assembly/test
+	$(MAKE) -C publishers/test
+
 schemas: docbook.rnc assembly.rnc docbookxi.rnc sdocbook.rnc dbforms.rnc dbits.rnc \
      publishers.rnc slides.rnc slides-full.rnc website.rnc website-full.rnc \
      docbook.sch docbookxi.sch assembly.sch publishers.sch dbits.sch
@@ -34,7 +39,6 @@ docbook.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc)
 
 docbook.sch: docbook.rng
 	$(SAXON) -s:$< -xsl:../tools/schematron.xsl -o:$@
-	$(MAKE) -C docbook/test
 
 assembly.rnc: docbook.rnc $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard assembly/*.rnc)
 	mkdir -p build/assembly
@@ -45,7 +49,6 @@ assembly.rnc: docbook.rnc $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard assem
 
 assembly.sch: assembly.rng
 	$(SAXON) -s:$< -xsl:../tools/schematron.xsl -o:$@
-	$(MAKE) -C assembly/test
 
 docbookxi.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard docbookxi/*.rnc)
 	mkdir -p build/docbookxi
@@ -83,7 +86,6 @@ publishers.rnc: $(MKSCHEMA) $(wildcard docbook/*.rnc) $(wildcard publishers/*.rn
 
 publishers.sch: publishers.rng
 	$(SAXON) -s:$< -xsl:../tools/schematron.xsl -o:$@
-	$(MAKE) -C publishers/test
 
 publishers.rnd: publishers.rnc
 	mkdir -p build/publishers

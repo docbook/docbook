@@ -1,19 +1,13 @@
-include ../../buildtools/Makefile.incl
-
-XJPARSE=/home/ndw/bin/xjparse
-TIDY=tidy
-
 HTMLSTYLE=html.xsl
-FOSTYLE=fo.xsl
-
-XSLPARAM=
+PIPELINE=/projects/docbook/xslt20/xslt/base/pipelines/docbook.xpl
+CONDITION=oasis
 
 all: docbook.html
 
 docbook.html: docbook.xml html.xsl
-	$(XJPARSE) $<
-	$(XSLT) $< $(HTMLSTYLE) $@ $(XSLPARAM)
-	$(TIDY) -q -utf8 -mn -asxml $@
+	calabash -isource=$< -oresult=$@ \
+	-pprofile.condition=$(CONDITION) \
+        $(PIPELINE) style=$(HTMLSTYLE)
 
 docbook.fo: docbook.xml fo.xsl
 	$(XJPARSE) $<

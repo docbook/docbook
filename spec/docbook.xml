@@ -1,6 +1,5 @@
 <!DOCTYPE article [
 <!ENTITY standard "OASIS TC Working Draft">
-<!ENTITY root "http://docs.oasis-open.org/docbook/">
 ]>
 <article xmlns="http://docbook.org/ns/docbook"
 	 xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -8,17 +7,17 @@
 	 xml:lang="en"
 	 status="&standard;">
 <info>
-<!-- product -->        <productname>docbook</productname>
-<!-- productVersion --> <productnumber>5.1CR2</productnumber>
-<!-- artifactType       spec; what else? :-) -->
-<!-- stage -->          <releaseinfo role="stage">ed</releaseinfo>
-<!-- revision -->       <biblioid class="pubsnumber"></biblioid>
-<!-- language           en; see /article/@xml:lang -->
-<!-- form               xml -->
+<productname>docbook</productname>
+<productnumber>csprd</productnumber>
+<releaseinfo role="stage">Committee Specification</releaseinfo>
+<biblioid class="pubsnumber">01</biblioid>
 
-<releaseinfo role="location">&root;specs</releaseinfo>
+<releaseinfo role="root" condition="oasis"
+>http://docs.oasis-open.org/docbook/docbook/v5.1</releaseinfo>
+<releaseinfo role="root" condition="docbook"
+>http://docbook.org/...</releaseinfo>
 
-<title>The DocBook Schema V5.1</title>
+<title>DocBook Version 5.1</title>
 
 <org>
   <orgname>OASIS</orgname>
@@ -32,7 +31,10 @@
   </personname>
   <email>norman.walsh@marklogic.com</email>
   <affiliation>
-    <orgname>MarkLogic Corporation</orgname>
+    <org>
+      <orgname>MarkLogic Corporation</orgname>
+      <uri>http://www.marklogic.com/</uri>
+    </org>
   </affiliation>
 </othercredit>
 
@@ -44,24 +46,32 @@
   </personname>
   <email>norman.walsh@marklogic.com</email>
   <affiliation>
-    <orgname>MarkLogic Corporation</orgname>
+    <org>
+      <orgname>MarkLogic Corporation</orgname>
+      <uri>http://www.marklogic.com/</uri>
+    </org>
   </affiliation>
 </editor>
 </authorgroup>
 
-<pubdate>2014-05-20</pubdate>
+<pubdate>2014-11-18</pubdate>
 
 <bibliomisc role="namespace">http://docbook.org/ns/docbook</bibliomisc>
 
-<!--
 <bibliorelation type="replaces" condition="online"
-    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cs-02.html"/>
+    xlink:title="The DocBook Schema Version 5.0"
+    xlink:href="http://docbook.org/specs/docbook-5.0-spec-os.html"/>
 
-<bibliorelation type="replaces" condition="print"
-    xlink:href="http://docbook.org/specs/docbook-5.0-spec-cs-02.pdf"/>
-<bibliorelation type="references" condition="print"
-    xlink:href="http://docs.oasis-open.org/docbook/specs/docbook-4.5-spec.pdf"/>
--->
+<bibliorelation type="othertype" othertype="workproduct"
+    xlink:href="rng/" xlink:title="RELAX NG Schemas"/>
+<bibliorelation type="othertype" othertype="workproduct"
+    xlink:href="sch/" xlink:title="Schematron Schemas"/>
+<bibliorelation type="othertype" othertype="workproduct"
+    xlink:href="catalog.xml" xlink:title="An XML Catalog"/>
+<bibliorelation type="othertype" othertype="workproduct"
+    xlink:href="docbook.nvdl" xlink:title="An NVDL Schema"/>
+<bibliorelation type="othertype" othertype="workproduct"
+    xlink:href="tools/" xlink:title="DocBook V4.x conversion tools"/>
 
 <copyright>
 <year>2001</year><year>2002</year><year>2003</year>
@@ -85,26 +95,40 @@ XML DTD, but the RELAX NG Schema is the normative schema.</para>
 </abstract>
 
 <legalnotice role="status">
-<para>This document was last revised or approved by the DocBook Technical Committee on the above date. The level of approval is also listed above. Check the &quot;Latest Version&quot; location noted above for possible later revisions of this document.</para>
+<para>This document was last revised or approved by the DocBook
+Technical Committee on the above date. The level of approval is also
+listed above. Check the current location noted above for possible
+later revisions of this document. This document is updated
+periodically on no particular schedule.</para>
 
-<para>Technical Committee members should send comments on this specification to the Technical Committee' email list. Others should send comments to the Technical Committee by using the “Send A Comment” button on the Technical Committee's web page at <link xlink:href="http://www.oasis-open.org/committees/docbook/">http://www.oasis-open.org/committees/docbook/</link>.</para>
+<para>Technical Committee members should send comments on this
+specification to the Technical Committee's email list. Others should
+send comments to the Technical Committee by using the "Send A Comment"
+button on the Technical Committee's web page at
+<link xlink:href="http://www.oasis-open.org/committees/docbook"/>.</para>
 
-<para>For information on whether any patents have been disclosed that may be essential to implementing this specification, and any offers of patent licensing terms, please refer to the Intellectual Property Rights section of the Technical Committee web page <link xlink:href="http://www.oasis-open.org/committees/docbook/ipr.php">http://www.oasis-open.org/committees/docbook/ipr.php</link>.</para>
+<para>For information on whether any patents have been disclosed that may
+be essential to implementing this specification, and any offers of
+patent licensing terms, please refer to the Intellectual Property
+Rights section of the Technical Committee web page (<link
+xlink:href="http://www.oasis-open.org/committees/docbook/ipr.php"/>).</para>
 
-<para>The non-normative errata page for this specification is located at <link xlink:href="http://www.oasis-open.org/committees/docbook/">http://www.oasis-open.org/committees/docbook/</link>.</para>
+<para>The non-normative errata page for this specification is located at
+<link xlink:href="http://www.oasis-open.org/committees/docbook"/>.</para>
 </legalnotice>
 
 <legalnotice role="notices">
-<para>Copyright © OASIS® 2014. All Rights Reserved.</para>
+<para>Copyright © OASIS Open 2014. All Rights Reserved.</para>
 
 <para>All capitalized terms in the following text have the meanings
 assigned to them in the OASIS Intellectual Property Rights Policy (the
-"OASIS IPR Policy"). The full Policy may be found at the OASIS
-website.</para>
+"OASIS IPR Policy"). The full
+<link xlink:href="http://www.oasis-open.org/policies-guidelines/ipr">Policy</link>
+may be found at the OASIS website.</para>
 
-<para>This document and translations of it may be copied and furnished
-to others, and derivative works that comment on or otherwise explain
-it or assist in its implementation may be prepared, copied, published,
+<para>This document and translations of it may be copied and furnished to
+others, and derivative works that comment on or otherwise explain it
+or assist in its implementation may be prepared, copied, published,
 and distributed, in whole or in part, without restriction of any kind,
 provided that the above copyright notice and this section are included
 on all such copies and derivative works. However, this document itself
@@ -115,11 +139,11 @@ Committee (in which case the rules applicable to copyrights, as set
 forth in the OASIS IPR Policy, must be followed) or as required to
 translate it into languages other than English.</para>
 
-<para>The limited permissions granted above are perpetual and will not
-be revoked by OASIS or its successors or assigns.</para>
+<para>The limited permissions granted above are perpetual and will not be
+revoked by OASIS or its successors or assigns.</para>
 
-<para>This document and the information contained herein is provided
-on an "AS IS" basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR
+<para>This document and the information contained herein is provided on
+an "AS IS" basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE
 INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY
 IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR
@@ -133,8 +157,8 @@ of its willingness to grant patent licenses to such patent claims in a
 manner consistent with the IPR Mode of the OASIS Technical Committee
 that produced this specification.</para>
 
-<para>OASIS invites any party to contact the OASIS TC Administrator if
-it is aware of a claim of ownership of any patent claims that would
+<para>OASIS invites any party to contact the OASIS TC Administrator if it
+is aware of a claim of ownership of any patent claims that would
 necessarily be infringed by implementations of this specification by a
 patent holder that is not willing to provide a license to such patent
 claims in a manner consistent with the IPR Mode of the OASIS Technical
@@ -158,15 +182,18 @@ OASIS makes no representation that any information or list of
 intellectual property rights will at any time be complete, or that any
 claims in such list are, in fact, Essential Claims.</para>
 
-<para>The name "OASIS" is a trademark of OASIS, the owner and
-developer of this specification, and should be used only to refer to
-the organization and its official outputs. OASIS welcomes reference
+<para>The name "OASIS" is a trademark of
+<link xlink:href="http://www.oasis-open.org">OASIS</link>, the owner
+and developer of this specification, and should be used only to refer
+to the organization and its official outputs. OASIS welcomes reference
 to, and implementation and use of, specifications, while reserving the
 right to enforce its marks against misleading uses. Please see
-<link xlink:href="http://www.oasis-open.org/who/trademark.php"/>
-for above guidance.</para>
+<link xlink:href="http://www.oasis-open.org/policies-guidelines/trademark"/> for
+above guidance.</para>
 </legalnotice>
 </info>
+
+<toc/>
 
 <section xml:id="s.intro">
 <title>Introduction</title>
@@ -283,14 +310,27 @@ World Wide Web Consortium, 2000.
 <section xml:id="s.docbook">
 <title>The DocBook RELAX NG Schema</title>
 
-<para>The DocBook
-<link xlink:href="&root;rng/">RELAX NG Schema</link> is distributed
-from the
-<link xlink:href="http://docs.oasis-open.org/docbook/">DocBook site</link> at
-<link xlink:href="http://www.oasis-open.org/">OASIS</link>.
+<para>The DocBook RELAX NG Schema (and associated non-normative schemas
+and tools) are distributed with this specification at the locations
+described above under “Additional artifacts”.
 DocBook is also available from the mirror on
 <link xlink:href="http://docbook.org/"/>.
 </para>
+
+<para>DocBook includes the following schemas:</para>
+
+<itemizedlist>
+<listitem>
+<para><filename>docbook</filename>, the DocBook <?pubver?> schema.</para>
+</listitem>
+<listitem>
+<para><filename>docbookxi</filename>, the DocBook XInclude <?pubver?> schema.
+(This schema allows XInclude elements in many places.)</para>
+</listitem>
+<listitem>
+<para><filename>assembly</filename>, the DocBook Assembly <?pubver?> schema.</para>
+</listitem>
+</itemizedlist>
 
 <section xml:id="s.assembly">
 <title>Assemblies</title>
@@ -592,6 +632,20 @@ this specification and are gratefully acknowledged:
 
 <appendix xml:id="changes">
 <title>Revision History</title>
+
+<section xml:id="s.51CR3">
+<title>Changes in DocBook V5.1CR3</title>
+
+<para>This release contains a bug fix.</para>
+
+<orderedlist>
+<listitem>
+<para><link xlink:href="https://github.com/ndw/xmlcalabash1/commit/4c53e4cbb12ee5f2154eb217314d8e82a1cfb14">Fixed</link>
+issue <link xlink:href="http://sourceforge.net/p/docbook/rfes/305/">#305</link>;
+made navigational components optional in <tag>sect1</tag>.</para>
+</listitem>
+</orderedlist>
+</section>
 
 <section xml:id="s.51CR2">
 <title>Changes in DocBook V5.1CR2</title>
