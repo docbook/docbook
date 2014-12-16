@@ -5,9 +5,10 @@
 	 xml:lang="en">
 <info>
 <productname>docbook</productname>
-<productnumber>csprd</productnumber>
+<productnumber>csd</productnumber>
 <releaseinfo role="stage">Committee Specification</releaseinfo>
 <biblioid class="pubsnumber">01</biblioid>
+<biblioid class="draftnumber">01</biblioid>
 
 <releaseinfo role="root" condition="oasis"
 >http://docs.oasis-open.org/docbook/docbook/v5.1</releaseinfo>

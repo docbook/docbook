@@ -68,8 +68,16 @@ ul.toc a:visited {
         <h2>
           <xsl:value-of select="db:releaseinfo[@role='stage']"/>
           <xsl:text> Draft </xsl:text>
-          <xsl:value-of select="db:biblioid[@role='pubsnumber']"/>
+          <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>
         </h2>
+
+        <xsl:if test="db:productnumber='csprd'">
+          <h2>
+            <xsl:text>Public Review Draft </xsl:text>
+            <xsl:value-of select="db:biblioid[@class='draftnumber']"/>
+          </h2>
+        </xsl:if>
+
         <h2>
           <xsl:apply-templates select="db:pubdate"/>
         </h2>
@@ -80,7 +88,7 @@ ul.toc a:visited {
           <dt><span class="loc-heading">Specification URIs:</span></dt>
         </dl>
         <dl>
-          <dt><span class="loc-heading">This Version:</span></dt>
+          <dt><span class="loc-heading">This version:</span></dt>
           <dd>
             <a href="{db:releaseinfo[@role='root']}/{db:productnumber}{db:biblioid[@class='pubsnumber']}/{db:productname}-v5.1-{db:productnumber}{db:biblioid[@class='pubsnumber']}.html">
               <xsl:value-of select="db:releaseinfo[@role='root']"/>
@@ -96,13 +104,41 @@ ul.toc a:visited {
             </a>
             (Authoritative)
           </dd>
+          <dd>
+            <a href="{db:releaseinfo[@role='root']}/{db:productnumber}{db:biblioid[@class='pubsnumber']}/{db:productname}-v5.1-{db:productnumber}{db:biblioid[@class='pubsnumber']}.xml">
+              <xsl:value-of select="db:releaseinfo[@role='root']"/>
+              <xsl:text>/</xsl:text>
+              <xsl:value-of select="db:productnumber"/>
+              <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>
+              <xsl:text>/</xsl:text>
+              <xsl:value-of select="db:productname"/>
+              <xsl:text>-v5.1-</xsl:text>
+              <xsl:value-of select="db:productnumber"/>
+              <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>
+              <xsl:text>.xml</xsl:text>
+            </a>
+          </dd>
+          <dd>
+            <a href="{db:releaseinfo[@role='root']}/{db:productnumber}{db:biblioid[@class='pubsnumber']}/{db:productname}-v5.1-{db:productnumber}{db:biblioid[@class='pubsnumber']}.pdf">
+              <xsl:value-of select="db:releaseinfo[@role='root']"/>
+              <xsl:text>/</xsl:text>
+              <xsl:value-of select="db:productnumber"/>
+              <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>
+              <xsl:text>/</xsl:text>
+              <xsl:value-of select="db:productname"/>
+              <xsl:text>-v5.1-</xsl:text>
+              <xsl:value-of select="db:productnumber"/>
+              <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>
+              <xsl:text>.pdf</xsl:text>
+            </a>
+          </dd>
         </dl>
         <dl>
-          <dt><span class="loc-heading">Previous Version:</span></dt>
+          <dt><span class="loc-heading">Previous version:</span></dt>
           <dd>None</dd>
         </dl>
         <dl>
-          <dt><span class="loc-heading">Latest Version:</span></dt>
+          <dt><span class="loc-heading">Latest version:</span></dt>
           <dd>
             <a href="{db:releaseinfo[@role='root']}/{db:productname}-v5.1.html">
               <xsl:value-of select="db:releaseinfo[@role='root']"/>
@@ -111,6 +147,22 @@ ul.toc a:visited {
               <xsl:text>-v5.1.html</xsl:text>
             </a>
             (Authoritative)
+          </dd>
+          <dd>
+            <a href="{db:releaseinfo[@role='root']}/{db:productname}-v5.1.xml">
+              <xsl:value-of select="db:releaseinfo[@role='root']"/>
+              <xsl:text>/</xsl:text>
+              <xsl:value-of select="db:productname"/>
+              <xsl:text>-v5.1.xml</xsl:text>
+            </a>
+          </dd>
+          <dd>
+            <a href="{db:releaseinfo[@role='root']}/{db:productname}-v5.1.pdf">
+              <xsl:value-of select="db:releaseinfo[@role='root']"/>
+              <xsl:text>/</xsl:text>
+              <xsl:value-of select="db:productname"/>
+              <xsl:text>-v5.1.pdf</xsl:text>
+            </a>
           </dd>
         </dl>
       </div>
@@ -157,7 +209,7 @@ ul.toc a:visited {
 
       <div>
         <dl>
-          <dt><span class="status-heading">Related Work:</span></dt>
+          <dt><span class="status-heading">Related work:</span></dt>
           <dd>
             <p>This specification replaces or supersedes:</p>
             <div class="itemizedlist">
@@ -176,7 +228,7 @@ ul.toc a:visited {
 
       <div>
         <dl>
-          <dt><span class="status-heading">Declared XML Namespaces:</span></dt>
+          <dt><span class="status-heading">Declared XML namespaces:</span></dt>
           <dd>
             <p><a href="http://docbook.org/ns/docbook" target="_top">http://docbook.org/ns/docbook</a></p>
           </dd>
@@ -200,11 +252,20 @@ ul.toc a:visited {
           <dt><span class="status-heading">Citation format:</span></dt>
           <dd><p>When referencing this specification, the following citation
           format should be used:</p>
-<p>[DocBook 5.1] <cite>DocBook Version 5.1</cite>.
+
+<p>[DocBook-5.1]
+<ital>DocBook Version 5.1</ital>.
+Edited by Norman Walsh.
 <xsl:apply-templates select="db:pubdate"/>.
 OASIS <xsl:value-of select="db:releaseinfo[@role='stage']"/>
-Draft <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>.
-            <a href="{db:releaseinfo[@role='root']}/{db:productnumber}{db:biblioid[@class='pubsnumber']}/{db:productname}-v5.1-{db:productnumber}{db:biblioid[@class='pubsnumber']}.html">
+Draft <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>
+<xsl:if test="db:productnumber='csprd'">
+  <xsl:text> / </xsl:text>
+  <xsl:text>Public Review Draft </xsl:text>
+  <xsl:value-of select="db:biblioid[@class='draftnumber']"/>
+</xsl:if>
+<xsl:text>. </xsl:text>
+<a href="{db:releaseinfo[@role='root']}/{db:productnumber}{db:biblioid[@class='pubsnumber']}/{db:productname}-v5.1-{db:productnumber}{db:biblioid[@class='pubsnumber']}.html">
               <xsl:value-of select="db:releaseinfo[@role='root']"/>
               <xsl:text>/</xsl:text>
               <xsl:value-of select="db:productnumber"/>
@@ -215,7 +276,10 @@ Draft <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>.
               <xsl:value-of select="db:productnumber"/>
               <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>
               <xsl:text>.html</xsl:text>
-            </a></p>
+            </a>.
+Latest version:
+<a href="http://docs.oasis-open.org/docbook/docbook/v5.1/docbook-v5.1.html">http://docs.oasis-open.org/docbook/docbook/v5.1/docbook-v5.1.html</a>.
+</p>
           </dd>
         </dl>
       </div>
@@ -229,6 +293,11 @@ Draft <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>.
   <xsl:text>V5.1-</xsl:text>
   <xsl:value-of select="/db:article/db:info/db:productnumber"/>
   <xsl:value-of select="/db:article/db:info/db:biblioid[@class='pubsnumber']"/>
+</xsl:template>
+
+<xsl:template match="processing-instruction('standard')">
+  <xsl:text>OASIS </xsl:text>
+  <xsl:value-of select="/db:article/db:info/db:releaseinfo[@role='stage']"/>
 </xsl:template>
 
 <xsl:template match="db:legalnotice[@role='status']">
