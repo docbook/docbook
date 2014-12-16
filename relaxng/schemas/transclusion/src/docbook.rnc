@@ -53,7 +53,7 @@ s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
 # for more information.
 # 
 # Please direct all questions, bug reports, or suggestions for changes
-# to the docbook@lists.oasis-open.org mailing list. For more
+# to the docbook-comment@lists.oasis-open.org mailing list. For more
 # information, see http://www.oasis-open.org/docbook/.
 # 
 # ======================================================================
