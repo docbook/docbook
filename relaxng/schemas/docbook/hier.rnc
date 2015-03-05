@@ -79,7 +79,7 @@ db.component.contentmodel =
 db.setindex.components = notAllowed
 db.toc.components = notAllowed
 
-db.set.components = (db.set | db.book)+ | db.article+
+db.set.components = db.set | db.book | db.article
 
 # ======================================================================
 
@@ -107,7 +107,7 @@ div {
          db.set.attlist,
          db.set.info,
          db.toc.components?,
-         db.set.components,
+         db.set.components+,
          db.setindex.components?
       }
 }
