@@ -110,6 +110,9 @@
     <xs:attribute name="linkend" type="xs:IDREF"/>
     <xs:attribute ref="xlink:href"/>
     <xs:attribute ref="xlink:type"/>
+    <xs:attribute ref="xlink:label"/>
+    <xs:attribute ref="xlink:from"/>
+    <xs:attribute ref="xlink:to"/>
     <xs:attribute ref="xlink:role"/>
     <xs:attribute ref="xlink:arcrole"/>
     <xs:attribute ref="xlink:title"/>
@@ -122,6 +125,9 @@
     <xs:attribute name="linkend" type="xs:IDREF"/>
     <xs:attribute ref="xlink:href"/>
     <xs:attribute ref="xlink:type"/>
+    <xs:attribute ref="xlink:label"/>
+    <xs:attribute ref="xlink:from"/>
+    <xs:attribute ref="xlink:to"/>
     <xs:attribute ref="xlink:role"/>
     <xs:attribute ref="xlink:arcrole"/>
     <xs:attribute ref="xlink:title"/>
@@ -450,23 +456,30 @@
     <xs:choice>
       <xs:element ref="db:abstract"/>
       <xs:element ref="db:address"/>
+      <xs:element ref="db:annotation"/>
       <xs:element ref="db:artpagenums"/>
       <xs:element ref="db:author"/>
       <xs:element ref="db:authorgroup"/>
       <xs:element ref="db:authorinitials"/>
       <xs:element ref="db:bibliocoverage"/>
       <xs:element ref="db:biblioid"/>
+      <xs:element ref="db:bibliomisc"/>
+      <xs:element ref="db:bibliomset"/>
+      <xs:element ref="db:bibliorelation"/>
+      <xs:element ref="db:biblioset"/>
       <xs:element ref="db:bibliosource"/>
       <xs:element ref="db:collab"/>
       <xs:element ref="db:confgroup"/>
-      <xs:element ref="db:contractsponsor"/>
       <xs:element ref="db:contractnum"/>
+      <xs:element ref="db:contractsponsor"/>
       <xs:element ref="db:copyright"/>
       <xs:element ref="db:cover"/>
       <xs:element ref="db:date"/>
       <xs:element ref="db:edition"/>
       <xs:element ref="db:editor"/>
+      <xs:element ref="db:extendedlink"/>
       <xs:element ref="db:issuenum"/>
+      <xs:element ref="db:itermset"/>
       <xs:element ref="db:keywordset"/>
       <xs:element ref="db:legalnotice"/>
       <xs:element ref="db:mediaobject"/>
@@ -475,6 +488,8 @@
       <xs:element ref="db:othercredit"/>
       <xs:element ref="db:pagenums"/>
       <xs:element ref="db:printhistory"/>
+      <xs:element ref="db:productname"/>
+      <xs:element ref="db:productnumber"/>
       <xs:element ref="db:pubdate"/>
       <xs:element ref="db:publisher"/>
       <xs:element ref="db:publishername"/>
@@ -483,15 +498,6 @@
       <xs:element ref="db:seriesvolnums"/>
       <xs:element ref="db:subjectset"/>
       <xs:element ref="db:volumenum"/>
-      <xs:element ref="db:annotation"/>
-      <xs:element ref="db:extendedlink"/>
-      <xs:element ref="db:bibliomisc"/>
-      <xs:element ref="db:bibliomset"/>
-      <xs:element ref="db:bibliorelation"/>
-      <xs:element ref="db:biblioset"/>
-      <xs:element ref="db:itermset"/>
-      <xs:element ref="db:productname"/>
-      <xs:element ref="db:productnumber"/>
     </xs:choice>
   </xs:group>
 
@@ -500,13 +506,13 @@
       <xs:group ref="db:info.elements"/>
 
       <!-- This should be publishing.inlines, but there are ambiguity problems -->
-      <!-- ubiq: <xs:element ref="db:abbrev"/> -->
-      <!-- ubiq: <xs:element ref="db:acronym"/> -->
-      <!-- ubiq: <xs:element ref="db:emphasis"/> -->
-      <!-- ubiq: <xs:element ref="db:footnote"/> -->
-      <!-- ubiq: <xs:element ref="db:footnoteref"/> -->
-      <!-- ubiq: <xs:element ref="db:foreignphrase"/> -->
-      <!-- ubiq: <xs:element ref="db:quote"/> -->
+      <xs:element ref="db:abbrev"/>
+      <xs:element ref="db:acronym"/>
+      <xs:element ref="db:emphasis"/>
+      <xs:element ref="db:footnote"/>
+      <xs:element ref="db:footnoteref"/>
+      <xs:element ref="db:foreignphrase"/>
+      <xs:element ref="db:quote"/>
       <xs:element ref="db:subscript"/>
       <xs:element ref="db:superscript"/>
       <!-- ubiq: <xs:element ref="db:wordasword"/> -->
@@ -2933,26 +2939,20 @@
 
   <xs:group name="toplevel.sections">
     <xs:choice>
-      <xs:sequence>
-        <xs:element ref="db:section" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element ref="db:simplesect" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
-      <xs:sequence>
-        <xs:element ref="db:sect1" maxOccurs="unbounded"/>
-        <xs:element ref="db:simplesect" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="db:section"/>
+        <xs:element ref="db:sect1"/>
+        <xs:element ref="db:simplesect"/>
+      </xs:choice>
       <xs:element ref="db:refentry" maxOccurs="unbounded"/>
     </xs:choice>
   </xs:group>
 
   <xs:group name="toplevel.blocks.or.sections">
-    <xs:choice>
-      <xs:sequence>
-        <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
-        <xs:group ref="db:toplevel.sections" minOccurs="0"/>
-      </xs:sequence>
-      <xs:group ref="db:toplevel.sections"/>
-    </xs:choice>
+    <xs:sequence>
+      <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
+      <xs:group ref="db:toplevel.sections" minOccurs="0"/>
+    </xs:sequence>
   </xs:group>
 
   <xs:group name="recursive.sections">
@@ -2966,13 +2966,10 @@
   </xs:group>
 
   <xs:group name="recursive.blocks.or.sections">
-    <xs:choice>
-      <xs:sequence>
-        <xs:group ref="db:all.blocks" maxOccurs="unbounded"/>
-        <xs:group ref="db:recursive.sections" minOccurs="0"/>
-      </xs:sequence>
-      <xs:group ref="db:recursive.sections"/>
-    </xs:choice>
+    <xs:sequence>
+      <xs:group ref="db:all.blocks" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:group ref="db:recursive.sections" minOccurs="0"/>
+    </xs:sequence>
   </xs:group>
 
   <xs:group name="divisions">
@@ -3005,9 +3002,10 @@
 
   <xs:group name="component.contentmodel">
     <xs:sequence>
-      <xs:group ref="db:navigation.components" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:group ref="db:toplevel.blocks.or.sections"/>
-      <xs:group ref="db:navigation.components" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="db:navigation.components"/>
+        <xs:group ref="db:toplevel.blocks.or.sections"/>
+      </xs:choice>
     </xs:sequence>
   </xs:group>
 
@@ -3246,15 +3244,11 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group ref="db:_info.title.req" minOccurs="0"/>
-        <xs:group ref="db:article.navigation.components" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:choice>
-          <xs:sequence>
-            <xs:group ref="db:all.blocks" minOccurs="1" maxOccurs="unbounded"/>
-            <xs:group ref="db:article.components" minOccurs="0"/>
-          </xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:group ref="db:article.navigation.components"/>
+          <xs:group ref="db:all.blocks"/>
           <xs:group ref="db:article.components"/>
         </xs:choice>
-        <xs:group ref="db:article.navigation.components" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="db:common.attributes"/>
