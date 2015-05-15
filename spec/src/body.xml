@@ -433,7 +433,7 @@ as specified in <xref linkend="rfc7303"/> or its successors.</para>
 </appendix>
 
 <appendix xml:id="a.committee" role="non-normative">
-<title>Acknowledgements</title>
+<title>Acknowledgements (non-normative)</title>
 
 <para>The following individuals have participated in the creation of
 this specification and are gratefully acknowledged:
@@ -456,7 +456,7 @@ this specification and are gratefully acknowledged:
 </appendix>
 
 <appendix xml:id="changes">
-<title>Revision History</title>
+<title>Revision History (non-normative)</title>
 
 <section xml:id="s.51CR3">
 <title>Changes in DocBook V5.1CR3</title>
