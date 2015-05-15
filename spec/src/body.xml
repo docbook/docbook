@@ -82,11 +82,11 @@ validation—RELAX NG</link></citetitle>.
 Schema Definition Language (DSDL)—Part 3: Rule-based
 validation—Schematron</link></citetitle>.
 </bibliomixed>
-<bibliomixed xml:id="rfc2119"><abbrev>RFC 2119</abbrev>IETF
-(Internet Engineering Task Force).
-<citetitle><link xlink:href="http://www.ietf.org/rfc/rfc2119.txt">RFC 2119:
-Key words for use in RFCs to Indicate Requirement Levels</link></citetitle>.
-S. Bradner. 1997.</bibliomixed>
+<bibliomixed xml:id="rfc2119"><abbrev>RFC 2119</abbrev>Bradner, S.
+“Key words for use in RFCs to Indicate Requirement Levels”, BCP 14,
+RFC 2119, March 1997,
+<link xlink:href="http://www.rfc-editor.org/info/rfc2119"/>.
+</bibliomixed>
 <bibliomixed xml:id="rfc3023"><abbrev>RFC 3023</abbrev>IETF
 (Internet Engineering Task Force).
 <citetitle><link xlink:href="http://www.ietf.org/rfc/rfc3023.txt">RFC 3023: XML
