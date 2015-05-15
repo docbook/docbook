@@ -216,9 +216,10 @@ need not only the individual topics, but also some sort of “map” or
 what relationships exist between them and, at least for print
 presentation, what linear order is to be imposed upon them.</para>
 
-<para>DocBook uses an
-<link xlink:href="http://docbook.org/tdg51/en/html/ch06.html">assemblies</link>
-for this purpose.
+<para>DocBook uses assemblies for this purpose, see
+<citetitle xlink:href="http://docbook.org/tdg51/en/html/">DocBook 5.1:
+The Definitive Guide</citetitle>,
+<link xlink:href="http://docbook.org/tdg51/en/html/ch06.html">Chapter 6</link>.
 </para>
 
 </section>
