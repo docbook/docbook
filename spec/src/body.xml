@@ -55,12 +55,11 @@ interpreted as described in <xref linkend="rfc2119"/>.</para>
 <title>Normative References</title>
 
 <bibliolist>
-<bibliomixed xml:id="xml-rec"><abbrev>XML</abbrev>Tim Bray,
-Jean Paoli, C. M. Sperberg-McQueen, <foreignphrase>et. al.</foreignphrase>,
-editors.
+<bibliomixed xml:id="xml-rec"><abbrev>XML</abbrev>T.&#xa0;Bray,
+J.&#xa0;Paoli,&#xa0;M., E.&#xa0;Maler, F.&#xa0;Yergeau, Editors,
 <citetitle><link xlink:href="http://www.w3.org/TR/REC-xml">Extensible Markup
-Language (XML) 1.0 (Fourth Edition)</link></citetitle>.
-World Wide Web Consortium, 16 August 2006.
+(XML) 1.0 (Fifth Edition)</link></citetitle>, W3C Recommendation,
+26 November 2008.
 </bibliomixed>
 <bibliomixed xml:id="xlink11"><abbrev>XLink11</abbrev>Steven DeRose, Eve Maler,
 David Orchard, Norman Walsh, editors.
