@@ -48,13 +48,13 @@
     xlink:href="http://docbook.org/specs/docbook-5.0-spec-os.html"/>
 
 <bibliorelation type="othertype" othertype="workproduct"
-    xlink:href="rng/" xlink:title="RELAX NG Schemas"/>
+    xlink:href="schemas/rng/" xlink:title="RELAX NG Schemas"/>
 <bibliorelation type="othertype" othertype="workproduct"
-    xlink:href="sch/" xlink:title="Schematron Schemas"/>
+    xlink:href="schemas/sch/" xlink:title="Schematron Schemas"/>
 <bibliorelation type="othertype" othertype="workproduct"
-    xlink:href="catalog.xml" xlink:title="An XML Catalog"/>
+    xlink:href="schemas/catalog.xml" xlink:title="An XML Catalog"/>
 <bibliorelation type="othertype" othertype="workproduct"
-    xlink:href="docbook.nvdl" xlink:title="An NVDL Schema"/>
+    xlink:href="schemas/docbook.nvdl" xlink:title="An NVDL Schema"/>
 <bibliorelation type="othertype" othertype="workproduct"
     xlink:href="tools/" xlink:title="DocBook V4.x conversion tools"/>
 
@@ -62,7 +62,7 @@
 <year>2001</year><year>2002</year><year>2003</year>
 <year>2004</year><year>2005</year><year>2006</year>
 <year>2007</year><year>2008</year><year>2009</year>
-<year>2014</year>
+<year>2014</year><year>2015</year>
 <holder>The Organization for the Advancement of Structured Information
 Standards [OASIS]. All Rights Reserved. </holder></copyright>
 
@@ -105,7 +105,7 @@ the Technical Committee (TC) are listed at
 </legalnotice>
 
 <legalnotice role="notices">
-<para>Copyright © OASIS Open 2014. All Rights Reserved.</para>
+<para>Copyright © OASIS Open 2015. All Rights Reserved.</para>
 
 <para>All capitalized terms in the following text have the meanings
 assigned to them in the OASIS Intellectual Property Rights Policy (the
