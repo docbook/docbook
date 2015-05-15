@@ -87,11 +87,9 @@ validation—Schematron</link></citetitle>.
 RFC 2119, March 1997,
 <link xlink:href="http://www.rfc-editor.org/info/rfc2119"/>.
 </bibliomixed>
-<bibliomixed xml:id="rfc3023"><abbrev>RFC 3023</abbrev>IETF
-(Internet Engineering Task Force).
-<citetitle><link xlink:href="http://www.ietf.org/rfc/rfc3023.txt">RFC 3023: XML
-Media Types</link></citetitle>.
-M. Murata, S. St. Laurent, D. Kohn. 2001.
+<bibliomixed xml:id="rfc7303"><abbrev>RFC 7303</abbrev>Thompson, H.
+and C. Lilley, "XML Media Types", RFC 7303, July 2014,
+<link xlink:href="http://www.rfc-editor.org/info/rfc7303"/>.
 </bibliomixed>
 <bibliomixed xml:id="bib.docbooktdg5"><abbrev>DocBook 5: TDG</abbrev>
 Norman Walsh.
@@ -304,7 +302,7 @@ are capable of evaluating the Schematron assertions in the schema.</para>
 
   <para>This parameter has identical semantics to the <code>charset</code>
 parameter of the <code>application/xml</code> media type as
-specified in <xref linkend="rfc3023"/> or its successors.
+specified in <xref linkend="rfc7303"/> or its successors.
 </para>
   </listitem>
   </varlistentry>
@@ -317,7 +315,7 @@ specified in <xref linkend="rfc3023"/> or its successors.
 <listitem>
 <para>By virtue of DocBook XML content being XML, it has the same
 considerations when sent as <quote><code>application/docbook+xml</code></quote>
-as does XML. See <xref linkend="rfc3023"/>, Section 3.2.
+as does XML. See <xref linkend="rfc7303"/>, Section 3.2.
 </para>
 </listitem>
 </varlistentry>
@@ -424,7 +422,7 @@ Technical Committee at OASIS.</para>
 the fragment
 identifier notation is exactly that for
 <quote><code>application/xml</code></quote>,
-as specified in <xref linkend="rfc3023"/> or its successors.</para>
+as specified in <xref linkend="rfc7303"/> or its successors.</para>
 </section>
 </appendix>
 
