@@ -11,7 +11,9 @@
 <section xml:id="s.background">
 <title>Background</title>
 
-<para>DocBook is general purpose XML schema
+<para>DocBook is general purpose
+<xref linkend="xml-rec"/>
+schema
 particularly well suited to books and papers about computer hardware
 and software (though it is by no means limited to these applications).
 </para>
