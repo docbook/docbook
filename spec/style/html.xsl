@@ -37,6 +37,11 @@ ul.toc a,
 ul.toc a:visited {
     text-decoration: none;
 }
+
+p.bibliomixed span.entry {
+   display: block;
+   margin-left: 2em;
+}
   </style>
 </xsl:template>
 
