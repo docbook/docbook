@@ -8,6 +8,9 @@
 <section xml:id="s.intro">
 <title>Introduction</title>
 
+<section xml:id="s.background">
+<title>Background</title>
+
 <para>DocBook is general purpose XML schema
 particularly well suited to books and papers about computer hardware
 and software (though it is by no means limited to these applications).
@@ -36,6 +39,7 @@ in the
 <link xlink:href="http://sourceforge.net/p/docbook/rfes/">tracker</link>
 interface.
 </para>
+</section>
 
 <section xml:id="s.terminology"><title>Terminology</title>
 <para>The key words <glossterm>must</glossterm>, <glossterm>must
@@ -124,6 +128,9 @@ World Wide Web Consortium, 2000.
 <section xml:id="s.docbook">
 <title>The DocBook RELAX NG Schema</title>
 
+<section xml:id="s.distribution">
+<title>Distribution</title>
+
 <para>The DocBook RELAX NG Schema (and associated non-normative schemas
 and tools) are distributed with this specification at the locations
 described above under “Additional artifacts”.
@@ -146,6 +153,7 @@ DocBook is also available from the mirror on
 </listitem>
 </itemizedlist>
 
+</section>
 <section xml:id="s.assembly">
 <title>Assemblies</title>
 
