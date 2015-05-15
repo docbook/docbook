@@ -63,12 +63,14 @@ J.&#xa0;Paoli,&#xa0;M., E.&#xa0;Maler, F.&#xa0;Yergeau, Editors,
 (XML) 1.0 (Fifth Edition)</link></citetitle>, W3C Recommendation,
 26 November 2008.
 </bibliomixed>
+<!--
 <bibliomixed xml:id="xlink11"><abbrev>XLink11</abbrev>Steven DeRose, Eve Maler,
 David Orchard, Norman Walsh, editors.
 <citetitle><link xlink:href="http://www.w3.org/TR/xlink11">XML Linking Language (XLink)
 Version 1.1</link></citetitle>.
 World Wide Web Consortium, 2005.
 </bibliomixed>
+-->
 <bibliomixed xml:id="xmlschema-2"><abbrev>W3C XML Datatypes</abbrev>Paul V. Biron
 and Ashok Malhotra, editors.
 <citetitle><link xlink:href="http://www.w3.org/TR/xmlschema-2/">XML Schema Part 2: Datatypes</link></citetitle>.
