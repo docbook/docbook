@@ -272,6 +272,7 @@ are capable of evaluating the Schematron assertions in the schema.</para>
 
 </section>
 
+<!--
 <appendix xml:id="a.mimetype">
 <title>The DocBook Media Type</title>
 
@@ -439,6 +440,7 @@ identifier notation is exactly that for
 as specified in <xref linkend="rfc7303"/> or its successors.</para>
 </section>
 </appendix>
+-->
 
 <appendix xml:id="a.committee" role="non-normative">
 <title>Acknowledgements (non-normative)</title>
