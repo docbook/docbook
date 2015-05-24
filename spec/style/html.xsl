@@ -305,6 +305,14 @@ Latest version:
   <xsl:value-of select="/db:article/db:info/db:releaseinfo[@role='stage']"/>
 </xsl:template>
 
+<xsl:template match="processing-instruction('schemas-list')">
+  <ul>
+    <xsl:apply-templates
+        select="/db:article/db:info/db:bibliorelation
+                [@othertype='workproduct' and @role='schema']"/>
+  </ul>
+</xsl:template>
+
 <xsl:template match="db:legalnotice[@role='status']">
   <dl>
     <dt><span class="status-heading">Status:</span></dt>

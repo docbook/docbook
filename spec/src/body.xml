@@ -250,6 +250,10 @@ grammar and a set of Schematron assertions. A conformant DocBook V5.1 document
 <glossterm>must</glossterm> be valid according to both the grammar and the
 assertions.</para>
 
+<para>The schemas in question are:</para>
+
+<?schemas-list?>
+
 <para>The reference documentation describes additional constraints and
 processing expectations. A conformant DocBook V5.1 document
 <glossterm>should</glossterm> respect those constraints and anticipate
