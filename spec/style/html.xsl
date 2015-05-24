@@ -9,7 +9,8 @@
 
 <xsl:import href="/projects/docbook/xslt20/xslt/base/html/final-pass.xsl"/>
 
-<xsl:param name="dateTime-format" select="'[D1] [MNn,*-3] [Y0001]'"/>
+<xsl:param name="dateTime-format" select="'[D1] [MNn] [Y0001]'"/>
+<xsl:param name="date-format" select="'[D01] [MNn] [Y0001]'"/>
 
 <xsl:param name="generate.toc" as="element()*"
            xmlns="http://docbook.org/ns/docbook">
