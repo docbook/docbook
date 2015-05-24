@@ -254,10 +254,12 @@ assertions.</para>
 
 <?schemas-list?>
 
-<para>The reference documentation describes additional constraints and
-processing expectations. A conformant DocBook V5.1 document
-<glossterm>should</glossterm> respect those constraints and anticipate
-those processing expectations.</para>
+<para>The reference documentation (see <biblioref
+linkend="bib.docbooktdg51"/>) describes general processing
+expectations for each element and some of the circumstances in which
+they may or may not apply. Understanding and conforming to these
+processing expectations where practical is likely to improve
+interoperability.</para>
 
 </section>
 
