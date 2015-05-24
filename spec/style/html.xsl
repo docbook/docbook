@@ -74,15 +74,13 @@ p.bibliomixed span.entry {
           <xsl:value-of select="db:releaseinfo[@role='stage']"/>
           <xsl:text> Draft </xsl:text>
           <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>
-        </h2>
-
-        <xsl:if test="db:productnumber='csprd'">
-          <h2>
+          <xsl:if test="db:productnumber='csprd'">
+            <xsl:text> / </xsl:text>
+            <br/>
             <xsl:text>Public Review Draft </xsl:text>
             <xsl:value-of select="db:biblioid[@class='draftnumber']"/>
-          </h2>
-        </xsl:if>
-
+          </xsl:if>
+        </h2>
         <h2>
           <xsl:apply-templates select="db:pubdate"/>
         </h2>
