@@ -13,19 +13,29 @@
 
 <para>DocBook is general purpose
 <xref linkend="xml-rec"/>
-schema
-particularly well suited to books and papers about computer hardware
-and software (though it is by no means limited to these applications).
+schema particularly well suited to books and papers about computer
+hardware and software (though it is by no means limited to these
+applications).
 </para>
 
 <para>The <link xlink:href="http://www.oasis-open.org/committees/docbook">DocBook
 Technical Committee</link> maintains the DocBook schema. Starting
 with V5.0, DocBook is normatively available as a
-<xref linkend="iso19757-2"/> Schema (with some additional
-<xref linkend="iso19757-3"/> assertions).
-W3C XML Schema and Document Type
-Definition (DTD) versions are also available.
-</para>
+<biblioref linkend="iso19757-2"/> Schema (with some additional
+<biblioref linkend="iso19757-3"/> assertions).
+A non-normative <biblioref linkend="xmlschema-1"/> version will
+be published when it is available.
+DocBook builds on existing XML technologies: it uses
+<biblioref linkend="xlink11"/> for linking,
+<biblioref linkend="xmlschema-2"/> for atomic data types, and
+anticipates the use of
+<biblioref linkend="xinclude"/> for transclusion.</para>
+
+<note>
+<para>DocBook has been
+under active maintenance for more than 20 years, it began life as
+an <biblioref linkend="iso8879"/> document type definition.</para>
+</note>
 
 <para>The Version 5.1 introduces assemblies for topic-oriented authoring
 and addresses a selection of bugs and feature requests.</para>
@@ -63,18 +73,22 @@ J.&#xa0;Paoli,&#xa0;M., E.&#xa0;Maler, F.&#xa0;Yergeau, Editors,
 (XML) 1.0 (Fifth Edition)</link></citetitle>, W3C Recommendation,
 26 November 2008.
 </bibliomixed>
-<!--
-<bibliomixed xml:id="xlink11"><abbrev>XLink11</abbrev>Steven DeRose, Eve Maler,
+<bibliomixed xml:id="xlink11"><abbrev>XLink</abbrev>Steven DeRose, Eve Maler,
 David Orchard, Norman Walsh, editors.
 <citetitle><link xlink:href="http://www.w3.org/TR/xlink11">XML Linking Language (XLink)
 Version 1.1</link></citetitle>.
 World Wide Web Consortium, 2005.
 </bibliomixed>
--->
+<bibliomixed xml:id="xinclude"><abbrev>XInclude</abbrev>Jonathan Marsh, David
+Orchard, Daniel Veillard, Norman Walsh, editors.
+<citetitle><link xlink:href="http://www.w3.org/TR/xinclude/">XML
+Inclusions (XInclude) Version 1.0 (Second Edition)</link></citetitle>.
+World Wide Web Consortium, 2006.
+</bibliomixed>
 <bibliomixed xml:id="xmlschema-2"><abbrev>W3C XML Datatypes</abbrev>Paul V. Biron
 and Ashok Malhotra, editors.
-<citetitle><link xlink:href="http://www.w3.org/TR/xmlschema-2/">XML Schema Part 2: Datatypes</link></citetitle>.
-World Wide Web Consortium, 2000.
+<citetitle><link xlink:href="http://www.w3.org/TR/xmlschema-2/">XML Schema Part 2: Datatypes Second Edition</link></citetitle>.
+World Wide Web Consortium, 2004.
 </bibliomixed>
 <bibliomixed xml:id="iso19757-2"><abbrev>RELAX NG</abbrev>
 <citetitle><link xlink:href="http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=52348">ISO/IEC 19757-2:2008 Information Technology—Document
@@ -98,11 +112,6 @@ RFC 2119, March 1997,
 and C. Lilley, "XML Media Types", RFC 7303, July 2014,
 <link xlink:href="http://www.rfc-editor.org/info/rfc7303"/>.
 </bibliomixed>
-<bibliomixed xml:id="bib.docbooktdg5"><abbrev>DocBook 5: TDG</abbrev>
-Norman Walsh.
-<citetitle><link xlink:href="http://shop.oreilly.com/product/9780596805012.do">DocBook 5.0:
-The Definitive Guide</link>. O'Reilly Media. April 2010.</citetitle>
-</bibliomixed>
 <bibliomixed xml:id="bib.docbooktdg51"><abbrev>DocBook 5.1: TDG</abbrev>
 Norman Walsh.
 <citetitle><link xlink:href="http://docbook.org/tdg51/en/html/">DocBook 5.1:
@@ -113,8 +122,12 @@ The Definitive Guide</link>.</citetitle>
 
 <section xml:id="non-normative.refs">
 <title>Non-Normative References</title>
-
 <bibliolist>
+<bibliomixed xml:id="bib.docbooktdg5"><abbrev>DocBook 5: TDG</abbrev>
+Norman Walsh.
+<citetitle><link xlink:href="http://shop.oreilly.com/product/9780596805012.do">DocBook 5.0:
+The Definitive Guide</link>. O'Reilly Media. April 2010.</citetitle>
+</bibliomixed>
 <bibliomixed xml:id="iso8879"><abbrev>SGML</abbrev>JTC 1, SC 34.
 <citetitle>ISO 8879:1986
 Information processing -- Text and office systems --
@@ -122,8 +135,8 @@ Standard Generalized Markup Language (SGML)</citetitle>. 1986.
 </bibliomixed>
 <bibliomixed xml:id="xmlschema-1"><abbrev>W3C XML Schema</abbrev>Henry S. Thompson,
 David Beech, Murray Maloney, et. al., editors.
-<citetitle><link xlink:href="http://www.w3.org/TR/xmlschema-1/">XML Schema Part 1: Structures</link></citetitle>.
-World Wide Web Consortium, 2000.
+<citetitle><link xlink:href="http://www.w3.org/TR/xmlschema-1/">XML Schema Part 1: Structures Second Edition</link></citetitle>.
+World Wide Web Consortium, 2004.
 </bibliomixed>
 </bibliolist>
 </section>
@@ -261,6 +274,13 @@ they may or may not apply. Understanding and conforming to these
 processing expectations where practical is likely to improve
 interoperability.</para>
 
+<note>
+<para><biblioref linkend="bib.docbooktdg5"/>, the reference
+documentation for DocBook V5.0, much of which still applies to DocBook
+V5.1, is also available in published form from
+<citetitle>O'Reilly Media</citetitle>
+</para>
+</note>
 </section>
 
 <section xml:id="s.relnotes">
