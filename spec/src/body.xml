@@ -160,73 +160,6 @@ that also includes:</para>
 <?artifact-list?>
 
 </section>
-<section xml:id="s.assembly">
-<title>Assemblies</title>
-
-<para>One modern school of thought on technical documentation stresses
-the development of independent units of documentation, often called
-topics, rather than a single narrative. Instead of writing something
-that DocBook users would easily recognize as a book consisting of a
-preface, several consecutive chapters, and a few appendixes, the
-author (or authors) write a set of discrete topics covering different aspects of
-the system as if they were wholly independent.</para>
-
-<para>In a typical online presentation system, for example the world
-wide web or online help, each topic is a page that stands alone.
-Except, of course, that just as no man is an island, no topic is
-completely unrelated to the other topics that are available.</para>
-
-<para>From any given topic, there may be topics of obviously related
-interest. The nature of the relationships may vary. Some topics are
-related by physical proximity (if you're interested in the ink
-cartridges in a printer, you may also be interested in the print
-head), others by their procedural nature (adding or replacing memory,
-adding or replacing a hard drive, or even changing the CPU are all
-topics that might logically follow a topic that describes how to open
-the computer case).</para>
-
-<para>In a single narrative, it is the responsibility of the author to
-manage these relationships. He or she can reasonably assume that
-anyone reading chapter 4 has read chapters 1, 2, and 3. If the reader
-needs to be directed elsewhere, a cross reference can be used (for
-example, “for more information on paper jams, see Section 3.5,
-<citetitle>The Paper Path</citetitle>”).</para>
-
-<para>In a topic-oriented system, authors are explicitly instructed to
-write independent units. No linear order can be assumed and many forms
-of explicit cross-reference are discouraged.</para>
-
-<para>Documentation managers treat the library of available topics
-very much as programmers treat libraries of available functions. Just
-as any given program can pick and choose from the available libraries,
-the documentation for any given system can pick and choose from the
-available topics.</para>
-
-<para>If you imagine a large documentation group managing the documentation
-for several related systems (different models of printer, different
-configurations of a software system, computers assembled from
-different components, etc.) it's easy to see the appeal of topic-oriented
-authoring.</para>
-
-<para>In a successful deployment, you might find a library of say 1,000
-topics which, taken together, document five or six related systems, each of
-which uses 700-800 topics. Some topics are used in every system, many are
-used in several systems, and a small number of topics are unique to a
-specific system.</para>
-
-<para>In order to make such a documentation platform functional, you
-need not only the individual topics, but also some sort of “map” or
-“assembly” file that describes which topics from the library are used,
-what relationships exist between them and, at least for print
-presentation, what linear order is to be imposed upon them.</para>
-
-<para>DocBook uses assemblies for this purpose, see
-<citetitle xlink:href="http://docbook.org/tdg51/en/html/">DocBook 5.1:
-The Definitive Guide</citetitle>,
-<link xlink:href="http://docbook.org/tdg51/en/html/ch06.html">Chapter 6</link>.
-</para>
-
-</section>
 </section>
 
 <section xml:id="s.identifying">
@@ -476,6 +409,81 @@ this specification and are gratefully acknowledged:
 
 <appendix xml:id="changes">
 <title>Revision History (non-normative)</title>
+
+<section xml:id="s.51">
+<title>Changes in DocBook V5.1</title>
+
+<para>DocBook V5.1 fixes a number of bugs, summarized below, and adds
+a significant new feature designed for the purpose of topic-based
+authoring: assemblies.</para>
+
+<section xml:id="s.assembly">
+<title>Assemblies</title>
+
+<para>One modern school of thought on technical documentation stresses
+the development of independent units of documentation, often called
+topics, rather than a single narrative. Instead of writing something
+that DocBook users would easily recognize as a book consisting of a
+preface, several consecutive chapters, and a few appendixes, the
+author (or authors) write a set of discrete topics covering different aspects of
+the system as if they were wholly independent.</para>
+
+<para>In a typical online presentation system, for example the world
+wide web or online help, each topic is a page that stands alone.
+Except, of course, that just as no man is an island, no topic is
+completely unrelated to the other topics that are available.</para>
+
+<para>From any given topic, there may be topics of obviously related
+interest. The nature of the relationships may vary. Some topics are
+related by physical proximity (if you're interested in the ink
+cartridges in a printer, you may also be interested in the print
+head), others by their procedural nature (adding or replacing memory,
+adding or replacing a hard drive, or even changing the CPU are all
+topics that might logically follow a topic that describes how to open
+the computer case).</para>
+
+<para>In a single narrative, it is the responsibility of the author to
+manage these relationships. He or she can reasonably assume that
+anyone reading chapter 4 has read chapters 1, 2, and 3. If the reader
+needs to be directed elsewhere, a cross reference can be used (for
+example, “for more information on paper jams, see Section 3.5,
+<citetitle>The Paper Path</citetitle>”).</para>
+
+<para>In a topic-oriented system, authors are explicitly instructed to
+write independent units. No linear order can be assumed and many forms
+of explicit cross-reference are discouraged.</para>
+
+<para>Documentation managers treat the library of available topics
+very much as programmers treat libraries of available functions. Just
+as any given program can pick and choose from the available libraries,
+the documentation for any given system can pick and choose from the
+available topics.</para>
+
+<para>If you imagine a large documentation group managing the documentation
+for several related systems (different models of printer, different
+configurations of a software system, computers assembled from
+different components, etc.) it's easy to see the appeal of topic-oriented
+authoring.</para>
+
+<para>In a successful deployment, you might find a library of say 1,000
+topics which, taken together, document five or six related systems, each of
+which uses 700-800 topics. Some topics are used in every system, many are
+used in several systems, and a small number of topics are unique to a
+specific system.</para>
+
+<para>In order to make such a documentation platform functional, you
+need not only the individual topics, but also some sort of “map” or
+“assembly” file that describes which topics from the library are used,
+what relationships exist between them and, at least for print
+presentation, what linear order is to be imposed upon them.</para>
+
+<para>DocBook uses assemblies for this purpose, see
+<citetitle xlink:href="http://docbook.org/tdg51/en/html/">DocBook 5.1:
+The Definitive Guide</citetitle>,
+<link xlink:href="http://docbook.org/tdg51/en/html/ch06.html">Chapter 6</link>.
+</para>
+</section>
+</section>
 
 <section xml:id="s.51CR3">
 <title>Changes in DocBook V5.1CR3</title>
