@@ -12,6 +12,7 @@
 
 <xsl:param name="dateTime-format" select="'[D1] [MNn] [Y0001]'"/>
 <xsl:param name="date-format" select="'[D01] [MNn] [Y0001]'"/>
+<xsl:param name="section.label.includes.component.label" select="1"/>
 
 <xsl:param name="generate.toc" as="element()*"
            xmlns="http://docbook.org/ns/docbook">
