@@ -149,26 +149,15 @@ World Wide Web Consortium, 2004.
 <title>Distribution</title>
 
 <para>The DocBook RELAX NG Schema (and associated non-normative schemas
-and tools) are distributed with this specification at the locations
-described above under “Additional artifacts”.
+and tools) are distributed with this specification.
 DocBook is also available from the mirror on
 <link xlink:href="http://docbook.org/"/>.
 </para>
 
-<para>DocBook includes the following schemas:</para>
+<para>This prose specification is one component of a Work Product
+that also includes:</para>
 
-<itemizedlist>
-<listitem>
-<para><filename>docbook</filename>, the DocBook <?pubver?> schema.</para>
-</listitem>
-<listitem>
-<para><filename>docbookxi</filename>, the DocBook XInclude <?pubver?> schema.
-(This schema allows XInclude elements in many places.)</para>
-</listitem>
-<listitem>
-<para><filename>assembly</filename>, the DocBook Assembly <?pubver?> schema.</para>
-</listitem>
-</itemizedlist>
+<?artifact-list?>
 
 </section>
 <section xml:id="s.assembly">

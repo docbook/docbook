@@ -47,9 +47,9 @@
     xlink:title="The DocBook Schema Version 5.0"
     xlink:href="http://docbook.org/specs/docbook-5.0-spec-os.html"/>
 
-<bibliorelation type="othertype" othertype="workproduct" role="schema"
+<bibliorelation type="othertype" othertype="workproduct" role="schema normative"
     xlink:href="schemas/rng/" xlink:title="RELAX NG Schemas"/>
-<bibliorelation type="othertype" othertype="workproduct" role="schema"
+<bibliorelation type="othertype" othertype="workproduct" role="schema normative"
     xlink:href="schemas/sch/" xlink:title="Schematron Schemas"/>
 <bibliorelation type="othertype" othertype="workproduct"
     xlink:href="schemas/catalog.xml" xlink:title="An XML Catalog"/>

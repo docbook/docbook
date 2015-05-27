@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:db="http://docbook.org/ns/docbook"
 		xmlns:t="http://docbook.org/xslt/ns/template"
 	        xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns="http://www.w3.org/1999/xhtml"
-                exclude-result-prefixes="db t xlink"
+                exclude-result-prefixes="db t xlink xs"
                 version="2.0">
 
 <xsl:import href="/projects/docbook/xslt20/xslt/base/html/final-pass.xsl"/>
@@ -299,6 +300,11 @@ Latest version:
   <xsl:value-of select="/db:article/db:info/db:biblioid[@class='pubsnumber']"/>
 </xsl:template>
 
+<xsl:template match="processing-instruction('pubid')">
+  <xsl:value-of select="/db:article/db:info/db:productnumber"/>
+  <xsl:value-of select="/db:article/db:info/db:biblioid[@class='pubsnumber']"/>
+</xsl:template>
+
 <xsl:template match="processing-instruction('standard')">
   <xsl:text>OASIS </xsl:text>
   <xsl:value-of select="/db:article/db:info/db:releaseinfo[@role='stage']"/>
@@ -308,7 +314,17 @@ Latest version:
   <ul>
     <xsl:apply-templates
         select="/db:article/db:info/db:bibliorelation
-                [@othertype='workproduct' and @role='schema']"/>
+                [@othertype='workproduct' and contains(@role,'schema')]"/>
+  </ul>
+</xsl:template>
+
+<xsl:template match="processing-instruction('artifact-list')">
+  <ul>
+    <xsl:apply-templates
+        select="/db:article/db:info/db:bibliorelation
+                [@othertype='workproduct']">
+      <xsl:with-param name="show-normative" select="true()"/>
+    </xsl:apply-templates>
   </ul>
 </xsl:template>
 
@@ -367,9 +383,15 @@ Latest version:
 </xsl:template>
 
 <xsl:template match="db:bibliorelation[@othertype='workproduct']">
+  <xsl:param name="show-normative" as="xs:boolean" select="false()"/>
   <xsl:variable name="info" select="ancestor::db:info"/>
   <li>
     <xsl:value-of select="@xlink:title"/>
+    <xsl:if test="$show-normative">
+      <xsl:text> (</xsl:text>
+      <xsl:if test="not(contains(@role,'normative'))">non-</xsl:if>
+      <xsl:text>normative)</xsl:text>
+    </xsl:if>
     <xsl:text> accessible from </xsl:text>
     <a href="{$info/db:releaseinfo[@role='root']}/{$info/db:productnumber}{$info/db:biblioid[@class='pubsnumber']}/{@xlink:href}">
       <xsl:value-of select="$info/db:releaseinfo[@role='root']"/>
