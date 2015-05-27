@@ -45,7 +45,7 @@
 
 <bibliorelation type="replaces" condition="online"
     xlink:title="The DocBook Schema Version 5.0"
-    xlink:href="http://docbook.org/specs/docbook-5.0-spec-os.html"/>
+    xlink:href="http://docs.oasis-open.org/docbook/specs/docbook-5.0-spec.html"/>
 
 <bibliorelation type="othertype" othertype="workproduct" role="schema normative"
     xlink:href="schemas/rng/docbook.rnc" xlink:title="RELAX NG DocBook Schema"/>
