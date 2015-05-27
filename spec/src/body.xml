@@ -165,16 +165,19 @@ that also includes:</para>
 <section xml:id="s.identifying">
 <title>Identifying DocBook Documents and Schemas</title>
 
+<para>For systems that can make use of public identifiers, e.g., systems
+where the informative DTD is being used, the following
+public identifier <glossterm>should</glossterm> be used for DocBook V5.1:
+“<literal>-//OASIS//DTD DocBook V5.1//EN//XML</literal>”.</para>
+
+<note>
 <para>Historically, when DocBook was defined by a DTD, DocBook
 documents could be identified by the presence of standard public
 and/or system identifiers in the document type declaration. RELAX NG,
 the normative schema language for DocBook V5.0, does not provide
 any equivalent mechanism.</para>
+</note>
 
-<para>For systems that can make use of public identifiers, e.g., systems
-where the informative DTD is being used, the following
-public identifier <glossterm>should</glossterm> be used for DocBook V5.1:
-“<literal>-//OASIS//DTD DocBook V5.1//EN//XML</literal>”.</para>
 </section>
 
 <section xml:id="s.conformance">
