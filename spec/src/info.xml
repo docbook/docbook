@@ -39,7 +39,7 @@
 </editor>
 </authorgroup>
 
-<pubdate>2015-02-11</pubdate>
+<pubdate>2015-05-27</pubdate>
 
 <bibliomisc role="namespace">http://docbook.org/ns/docbook</bibliomisc>
 
@@ -48,9 +48,23 @@
     xlink:href="http://docbook.org/specs/docbook-5.0-spec-os.html"/>
 
 <bibliorelation type="othertype" othertype="workproduct" role="schema normative"
-    xlink:href="schemas/rng/" xlink:title="RELAX NG Schemas"/>
+    xlink:href="schemas/rng/docbook.rnc" xlink:title="RELAX NG DocBook Schema"/>
 <bibliorelation type="othertype" othertype="workproduct" role="schema normative"
-    xlink:href="schemas/sch/" xlink:title="Schematron Schemas"/>
+    xlink:href="schemas/rng/assembly.rnc" xlink:title="RELAX NG DocBook Assembly Schema"/>
+<bibliorelation type="othertype" othertype="workproduct" role="schema normative"
+    xlink:href="schemas/rng/dbits.rnc" xlink:title="RELAX NG DocBook+ITS Schema"/>
+<bibliorelation type="othertype" othertype="workproduct" role="schema"
+    xlink:href="schemas/rng/docbooxi.rnc" xlink:title="RELAX NG DocBook+XInclude Schema"/>
+
+<bibliorelation type="othertype" othertype="workproduct" role="schema normative"
+    xlink:href="schemas/rng/docbook.sch" xlink:title="RELAX NG DocBook Schematron"/>
+<bibliorelation type="othertype" othertype="workproduct" role="schema normative"
+    xlink:href="schemas/rng/assembly.sch" xlink:title="RELAX NG DocBook Assembly Schematron"/>
+<bibliorelation type="othertype" othertype="workproduct" role="schema normative"
+    xlink:href="schemas/rng/dbits.sch" xlink:title="RELAX NG DocBook+ITS Schematron"/>
+<bibliorelation type="othertype" othertype="workproduct" role="schema"
+    xlink:href="schemas/rng/docbooxi.sch" xlink:title="RELAX NG DocBook+XInclude Schematron"/>
+
 <bibliorelation type="othertype" othertype="workproduct"
     xlink:href="schemas/catalog.xml" xlink:title="An XML Catalog"/>
 <bibliorelation type="othertype" othertype="workproduct" role="schema"

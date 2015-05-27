@@ -7,8 +7,8 @@
 <productname>docbook</productname>
 <productnumber>csd</productnumber>
 <releaseinfo role="stage">Committee Specification</releaseinfo>
-<biblioid class="pubsnumber">01</biblioid>
-<biblioid class="draftnumber">01</biblioid>
+<biblioid class="pubsnumber">02</biblioid>
+<biblioid class="draftnumber">02</biblioid>
 
 <releaseinfo role="root" condition="oasis"
 >http://docs.oasis-open.org/docbook/docbook/v5.1</releaseinfo>

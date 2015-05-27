@@ -90,6 +90,12 @@ and Ashok Malhotra, editors.
 <citetitle><link xlink:href="http://www.w3.org/TR/xmlschema-2/">XML Schema Part 2: Datatypes Second Edition</link></citetitle>.
 World Wide Web Consortium, 2004.
 </bibliomixed>
+<bibliomixed xml:id="its20"><abbrev>ITS</abbrev>David Filip, Shaun McCance,
+Dave Lewis, et. al., editors.
+<citetitle><link xlink:href="http://www.w3.org/TR/its20/">International Tag Set
+(ITS) 2.0</link></citetitle>.
+World Wide Web Consortium, 2013.
+</bibliomixed>
 <bibliomixed xml:id="iso19757-2"><abbrev>RELAX NG</abbrev>
 <citetitle><link xlink:href="http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=52348">ISO/IEC 19757-2:2008 Information Technology—Document
 Schema Definition Language (DSDL)—Part 2: Regular-grammar-based
@@ -187,6 +193,29 @@ any equivalent mechanism.</para>
 grammar and a set of Schematron assertions. A conformant DocBook V5.1 document
 <glossterm>must</glossterm> be valid according to both the grammar and the
 assertions.</para>
+
+<para>DocBook documents are described by a set of schemas:</para>
+
+<itemizedlist>
+<listitem>
+<para>“Plain” DocBook documents and DocBook Assembly documents. The schema
+for assembly documents is separate as a convenience for authors, it is
+conceptually part of the whole set of DocBook documents.
+</para>
+</listitem>
+<listitem>
+<para>DocBook + International Tag Set (ITS) Version 2.0; this schema allows
+authors to write valid DocBook documents that satisfy
+ITS Conformance Type 1 as defined in <biblioref linkend="its20"/>.
+</para>
+</listitem>
+<listitem>
+<para>DocBook + XInclude markup; this schema is not normative. It allows
+authors to write documents which mix DocBook markup and XInclude in many
+(but perhaps not all) reasonable places.
+</para>
+</listitem>
+</itemizedlist>
 
 <para>The schemas in question are:</para>
 
