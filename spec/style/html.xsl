@@ -13,6 +13,7 @@
 <xsl:param name="dateTime-format" select="'[D1] [MNn] [Y0001]'"/>
 <xsl:param name="date-format" select="'[D01] [MNn] [Y0001]'"/>
 <xsl:param name="section.label.includes.component.label" select="1"/>
+<xsl:param name="resource.root" select="''"/>
 
 <xsl:param name="generate.toc" as="element()*"
            xmlns="http://docbook.org/ns/docbook">
@@ -62,7 +63,7 @@ p.bibliomixed span.entry {
 <xsl:template match="db:article/db:info">
   <div class="titlepage">
     <div>
-      <p class="logo"><a href="http://www.oasis-open.org/"><img src="http://docs.oasis-open.org/templates/DocBook/spec-0.6/OASISLogo.jpg" alt="OASIS" /></a>
+      <p class="logo"><a href="https://www.oasis-open.org/"><img src="http://docs.oasis-open.org/templates/DocBook/spec-0.6/OASISLogo.jpg" alt="OASIS" /></a>
       </p>
 
       <div>

@@ -18,7 +18,7 @@ hardware and software (though it is by no means limited to these
 applications).
 </para>
 
-<para>The <link xlink:href="http://www.oasis-open.org/committees/docbook">DocBook
+<para>The <link xlink:href="https://www.oasis-open.org/committees/docbook/">DocBook
 Technical Committee</link> maintains the DocBook schema. Starting
 with V5.0, DocBook is normatively available as a
 <biblioref linkend="iso19757-2"/> Schema (with some additional
@@ -69,13 +69,13 @@ interpreted as described in <xref linkend="rfc2119"/>.</para>
 <bibliolist>
 <bibliomixed xml:id="xml-rec"><abbrev>XML</abbrev>T.&#xa0;Bray,
 J.&#xa0;Paoli,&#xa0;M., E.&#xa0;Maler, F.&#xa0;Yergeau, Editors,
-<citetitle><link xlink:href="http://www.w3.org/TR/REC-xml">Extensible Markup
+<citetitle><link xlink:href="http://www.w3.org/TR/REC-xml/">Extensible Markup
 (XML) 1.0 (Fifth Edition)</link></citetitle>, W3C Recommendation,
 26 November 2008.
 </bibliomixed>
 <bibliomixed xml:id="xlink11"><abbrev>XLink</abbrev>Steven DeRose, Eve Maler,
 David Orchard, Norman Walsh, editors.
-<citetitle><link xlink:href="http://www.w3.org/TR/xlink11">XML Linking Language (XLink)
+<citetitle><link xlink:href="http://www.w3.org/TR/xlink11/">XML Linking Language (XLink)
 Version 1.1</link></citetitle>.
 World Wide Web Consortium, 2005.
 </bibliomixed>
@@ -714,7 +714,7 @@ info on structure and module optional in assemblies.
 
 <listitem>
 <para><link xlink:href="https://github.com/docbook/docbook/commit/a59c5daa60c051512487aa1d95a4c8304b67c6b1">Implemented</link>
-recent <link xlink:href="http://lists.oasis-open.org/archives/docbook-tc/201203/msg00000.html">TC decisions</link> about assemblies.
+recent <link xlink:href="https://lists.oasis-open.org/archives/docbook-tc/201203/msg00000.html">TC decisions</link> about assemblies.
 </para>
 </listitem>
 
