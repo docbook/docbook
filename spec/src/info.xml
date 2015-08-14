@@ -54,7 +54,7 @@
 <bibliorelation type="othertype" othertype="workproduct" role="schema normative"
     xlink:href="schemas/rng/dbits.rnc" xlink:title="RELAX NG DocBook+ITS Schema"/>
 <bibliorelation type="othertype" othertype="workproduct" role="schema"
-    xlink:href="schemas/rng/docbooxi.rnc" xlink:title="RELAX NG DocBook+XInclude Schema"/>
+    xlink:href="schemas/rng/docbookxi.rnc" xlink:title="RELAX NG DocBook+XInclude Schema"/>
 
 <bibliorelation type="othertype" othertype="workproduct" role="schema normative"
     xlink:href="schemas/rng/docbook.sch" xlink:title="RELAX NG DocBook Schematron"/>
@@ -63,7 +63,7 @@
 <bibliorelation type="othertype" othertype="workproduct" role="schema normative"
     xlink:href="schemas/rng/dbits.sch" xlink:title="RELAX NG DocBook+ITS Schematron"/>
 <bibliorelation type="othertype" othertype="workproduct" role="schema"
-    xlink:href="schemas/rng/docbooxi.sch" xlink:title="RELAX NG DocBook+XInclude Schematron"/>
+    xlink:href="schemas/rng/docbookxi.sch" xlink:title="RELAX NG DocBook+XInclude Schematron"/>
 
 <bibliorelation type="othertype" othertype="workproduct"
     xlink:href="schemas/catalog.xml" xlink:title="An XML Catalog"/>
