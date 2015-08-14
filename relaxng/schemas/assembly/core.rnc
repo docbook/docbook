@@ -172,11 +172,11 @@ div {
    db.structure =
       [
          s:pattern [
-            name = "Specification of renderas"
+            s:title [ "Specification of renderas" ]
             s:rule [
                context = "db:structure"
                s:assert [
-                  test = "@renderas and db:output/@renderas"
+                  test = "not(@renderas and db:output/@renderas)"
                   "The renderas attribute can be specified on either the structure or output, but not both."
                ]
             ]
@@ -350,11 +350,11 @@ div {
    db.module =
       [
          s:pattern [
-            name = "Specification of renderas"
+            s:title [ "Specification of renderas" ]
             s:rule [
                context = "db:module"
                s:assert [
-                  test = "@renderas and db:output/@renderas"
+                  test = "not(@renderas and db:output/@renderas)"
                   "The renderas attribute can be specified on either the structure or output, but not both."
                ]
             ]
