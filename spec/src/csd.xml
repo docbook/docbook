@@ -15,6 +15,9 @@
 <releaseinfo role="root" condition="docbook"
 >http://docbook.org/...</releaseinfo>
 
+<releaseinfo role="previous" condition="oasis"
+>http://docs.oasis-open.org/docbook/docbook/v5.1/csprd01/docbook-v5.1-csprd01</releaseinfo>
+
 <xi:include parse="xml" href="info.xml" xpointer="xpath(/*/*)"/>
 </info>
 

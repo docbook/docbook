@@ -142,7 +142,25 @@ p.bibliomixed span.entry {
         </dl>
         <dl>
           <dt><span class="loc-heading">Previous version:</span></dt>
-          <dd>None</dd>
+          <dd>
+            <a href="{db:releaseinfo[@role='previous']}.html">
+              <xsl:value-of select="db:releaseinfo[@role='previous']"/>
+              <xsl:text>.html</xsl:text>
+            </a>
+            (Authoritative)
+          </dd>
+          <dd>
+            <a href="{db:releaseinfo[@role='previous']}.xml">
+              <xsl:value-of select="db:releaseinfo[@role='previous']"/>
+              <xsl:text>.xml</xsl:text>
+            </a>
+          </dd>
+          <dd>
+            <a href="{db:releaseinfo[@role='previous']}.pdf">
+              <xsl:value-of select="db:releaseinfo[@role='previous']"/>
+              <xsl:text>.pdf</xsl:text>
+            </a>
+          </dd>
         </dl>
         <dl>
           <dt><span class="loc-heading">Latest version:</span></dt>
@@ -340,7 +358,7 @@ Latest version:
 </xsl:template>
 
 <xsl:template match="db:legalnotice[@role='notices']">
-  <div>
+  <div class="notices">
     <hr />
     <h2 class="notices-heading">Notices</h2>
     <xsl:apply-templates/>

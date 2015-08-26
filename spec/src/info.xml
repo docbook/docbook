@@ -39,7 +39,7 @@
 </editor>
 </authorgroup>
 
-<pubdate>2015-05-27</pubdate>
+<pubdate>2015-08-26</pubdate>
 
 <bibliomisc role="namespace">http://docbook.org/ns/docbook</bibliomisc>
 
@@ -96,9 +96,11 @@ XML DTD, but the RELAX NG Schema is the normative schema.</para>
 <legalnotice role="status">
 <para>This document was last revised or approved by the DocBook
 Technical Committee on the above date. The level of approval is also
-listed above. Check the current location noted above for possible
-later revisions of this document. This document is updated
-periodically on no particular schedule.</para>
+listed above. Check the “Latest version” location noted above for
+possible later revisions of this document. Any other numbered Versions
+and other technical work produced by the Technical Committee (TC) are
+listed at
+<link xlink:href="https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=docbook#technical"/>.</para>
 
 <para>Technical Committee members should send comments on this
 specification to the Technical Committee's email list. Others should
