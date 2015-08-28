@@ -39,7 +39,7 @@
 </editor>
 </authorgroup>
 
-<pubdate>2015-08-26</pubdate>
+<pubdate>2015-08-19</pubdate>
 
 <bibliomisc role="namespace">http://docbook.org/ns/docbook</bibliomisc>
 
@@ -57,13 +57,13 @@
     xlink:href="schemas/rng/docbookxi.rnc" xlink:title="RELAX NG DocBook+XInclude Schema"/>
 
 <bibliorelation type="othertype" othertype="workproduct" role="schema normative"
-    xlink:href="schemas/rng/docbook.sch" xlink:title="RELAX NG DocBook Schematron"/>
+    xlink:href="schemas/sch/docbook.sch" xlink:title="RELAX NG DocBook Schematron"/>
 <bibliorelation type="othertype" othertype="workproduct" role="schema normative"
-    xlink:href="schemas/rng/assembly.sch" xlink:title="RELAX NG DocBook Assembly Schematron"/>
+    xlink:href="schemas/sch/assembly.sch" xlink:title="RELAX NG DocBook Assembly Schematron"/>
 <bibliorelation type="othertype" othertype="workproduct" role="schema normative"
-    xlink:href="schemas/rng/dbits.sch" xlink:title="RELAX NG DocBook+ITS Schematron"/>
+    xlink:href="schemas/sch/dbits.sch" xlink:title="RELAX NG DocBook+ITS Schematron"/>
 <bibliorelation type="othertype" othertype="workproduct" role="schema"
-    xlink:href="schemas/rng/docbookxi.sch" xlink:title="RELAX NG DocBook+XInclude Schematron"/>
+    xlink:href="schemas/sch/docbookxi.sch" xlink:title="RELAX NG DocBook+XInclude Schematron"/>
 
 <bibliorelation type="othertype" othertype="workproduct"
     xlink:href="schemas/catalog.xml" xlink:title="An XML Catalog"/>

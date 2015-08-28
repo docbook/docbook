@@ -1,6 +1,7 @@
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="1.0"
                 xmlns:c="http://www.w3.org/ns/xproc-step"
                 xmlns:cx="http://xmlcalabash.com/ns/extensions"
+                xmlns:html="http://www.w3.org/1999/xhtml"
                 name="main">
 <p:input port="source"/>
 
@@ -79,6 +80,7 @@
                       version="2.0">
 
         <xsl:param name="docid" required="yes"/>
+        <xsl:param name="date" required="yes"/>
 
         <xsl:template match="element()">
           <xsl:copy>
@@ -92,11 +94,8 @@
 
         <xsl:template match="text()">
           <xsl:variable name="year"
-                        select="format-date(current-date(), '[Y0001]')"/>
-          <xsl:variable name="date"
-                        select="format-date(current-date(),
-			                    '[D01] [MNn] [Y0001]')"/>
-
+                        select="substring($date, string-length($date) - 4)"/>
+          <xsl:variable name="date" select="$date"/>
           <xsl:variable name="docid"
                         select="replace(., '@@DOCID@@', $docid)"/>
           <xsl:variable name="year"
@@ -110,8 +109,8 @@
       </xsl:stylesheet>
     </p:inline>
   </p:input>
-  <p:log port="result" href="/tmp/out.xml"/>
   <p:with-param name="docid" select="$docid"/>
+  <p:with-param name="date" select="(//html:span[@class='pubdate'])[1]"/>
 </p:xslt>
 
 <cx:css-formatter name="css">
