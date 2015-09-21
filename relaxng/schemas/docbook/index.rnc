@@ -352,7 +352,16 @@ div {
 
    db.see.role.attribute = attribute role { text }
 
-   db.see.class.attribute = attribute class { "normal" | "under" }
+   db.see.class.attribute =
+      [
+         db:refpurpose [ "Identifies the class of 'see'" ]
+      ]
+      attribute class {
+         ## Normal
+         "normal"
+       | ## See 'under'
+         "under"
+      }
 
    db.see.attlist =
       db.see.role.attribute?
@@ -377,7 +386,16 @@ div {
 
    db.seealso.role.attribute = attribute role { text }
 
-   db.seealso.class.attribute = attribute class { "normal" | "under" }
+   db.seealso.class.attribute =
+      [
+         db:refpurpose [ "Identifies the class of 'seealso'" ]
+      ]
+      attribute class {
+         ## Normal
+         "normal"
+       | ## See 'under'
+         "under"
+      }
 
    db.seealso.attlist =
       db.seealso.role.attribute?
