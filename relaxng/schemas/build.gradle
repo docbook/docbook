@@ -1,0 +1,457 @@
+//defaultTasks 'tdg'
+
+buildscript {
+  repositories {
+    mavenCentral()
+    maven { url "http://maven.restlet.org" }
+  }
+
+  dependencies {
+    classpath group: 'org.docbook', name: 'docbook-xslt2', version: '2.0.15'
+    classpath group: 'com.xmlcalabash', name: 'gradle', version: '0.0.2'
+  }
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+apply plugin: 'org.docbook.task'
+apply plugin: 'com.xmlcalabash.task'
+
+import org.docbook.DocBookTask
+import com.xmlcalabash.XMLCalabashTask
+
+project.ext.dbrel="DocBook " + dbver
+project.ext.asmrel="DocBook Assembly " + dbver
+project.ext.xirel="DocBook XInclude " + dbver
+project.ext.sdbrel="Simplified DocBook " + dbver
+project.ext.formrel="DocBook Forms " + dbver
+project.ext.itsrel="DocBook ITS " + dbver
+project.ext.pubrel="DocBook Publishers " + dbver + "-1"
+project.ext.slirel="DocBook Slides " + dbver + "-1"
+project.ext.webrel="DocBook Wesite " + dbver + "-1"
+
+// test: all
+// 	$(MAKE) -C docbook/test
+// 	$(MAKE) -C assembly/test
+// 	$(MAKE) -C publishers/test
+
+task docbook_rnc(type: XMLCalabashTask) {
+  FileCollection sources = fileTree(dir: 'docbook').exclude("test/**")
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/docbook"
+  outputs.file "docbook.rnc"
+
+  pipeline mkschema
+  option("schema","docbook")
+  option("release",dbrel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/docbook")
+  }
+}
+
+task docbook_sch(dependsOn: docbook_rnc, type: XMLCalabashTask) {
+  inputs.file "docbook.rng"
+  outputs.file "docbook.sch"
+  pipeline mkschematron
+  input("source", "docbook.rng")
+  output("result", "docbook.sch")
+}
+
+task any_docbook_rng(dependsOn: docbook_rnc, type: XMLCalabashTask) {
+  inputs.file "docbook.rng"
+  inputs.file "../tools/xslt.xpl"
+  inputs.file "../tools/all-patterns.xsl"
+  outputs.file "build/docbook/any.docbook.rng"
+
+  pipeline "../tools/xslt.xpl"
+  input("source", "docbook.rng")
+  input("stylesheet", "../tools/all-patterns.xsl")
+  output("result", "build/docbook/any.docbook.rng")
+}
+
+task any_docbook_rnc(dependsOn: any_docbook_rng, type: XMLCalabashTask) {
+  inputs.file "build/docbook/any.docbook.rng"
+  inputs.file "../tools/rng-to-rnc.xpl"
+  outputs.file "build/docbook/any.docbook.rnc"
+
+  pipeline "../tools/rng-to-rnc.xpl"
+  option("schema", "build/docbook/any.docbook")
+}
+
+task assembly_rnc(dependsOn: any_docbook_rnc, type: XMLCalabashTask) {
+  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
+  FileCollection sources = fileTree(dir: 'assembly').exclude("test/**")
+  inputs.file dbsources
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/assembly"
+  outputs.file "assembly.rnc"
+
+  pipeline mkschema
+  option("schema","assembly")
+  option("release",asmrel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/assembly")
+  }
+}
+
+task assembly_sch(dependsOn: assembly_rnc, type: XMLCalabashTask) {
+  inputs.file "assembly.rng"
+  outputs.file "assembly.sch"
+  pipeline mkschematron
+  input("source", "assembly.rng")
+  output("result", "assembly.sch")
+}
+
+task docbookxi_rnc(type: XMLCalabashTask) {
+  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
+  FileCollection sources = fileTree(dir: 'docbookxi').exclude("test/**")
+  inputs.file dbsources
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/docbookxi"
+  outputs.file "docbookxi.rnc"
+
+  pipeline mkschema
+  option("schema","docbookxi")
+  option("release",xirel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/docbookxi")
+  }
+}
+
+task docbookxi_sch(dependsOn: docbookxi_rnc, type: XMLCalabashTask) {
+  inputs.file "docbookxi.rng"
+  outputs.file "docbookxi.sch"
+  pipeline mkschematron
+  input("source", "docbookxi.rng")
+  output("result", "docbookxi.sch")
+}
+
+task defguide_rnd(dependsOn: ['docbook_rnc', 'assembly_rnc', 'any_docbook_rnc'],
+                  type: XMLCalabashTask) {
+  FileCollection sources = fileTree(dir: 'defguide').exclude("test/**")
+  inputs.file sources
+  inputs.file mkdoc
+  outputs.dir "build/defguide"
+  outputs.file "defguide.rnd"
+
+  pipeline mkdoc
+  option("schema","defguide")
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/defguide")
+  }
+}
+
+task sdocbook_rnc(type: XMLCalabashTask) {
+  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
+  FileCollection sources = fileTree(dir: 'sdocbook').exclude("test/**")
+  inputs.file dbsources
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/sdocbook"
+  outputs.file "sdocbook.rnc"
+
+  pipeline mkschema
+  option("schema","sdocbook")
+  option("release",sdbrel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/sdocbook")
+  }
+}
+
+task sdocbook_sch(dependsOn: sdocbook_rnc, type: XMLCalabashTask) {
+  inputs.file "sdocbook.rng"
+  outputs.file "sdocbook.sch"
+  pipeline mkschematron
+  input("source", "sdocbook.rng")
+  output("result", "sdocbook.sch")
+}
+
+task sdocbook_rnd(dependsOn: ['sdocbook_rnc'], type: XMLCalabashTask) {
+  inputs.file mkdoc
+  outputs.file "sdocbook.rnd"
+
+  pipeline mkdoc
+  option("schema","sdocbook")
+}
+
+task dbforms_rnc(type: XMLCalabashTask) {
+  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
+  FileCollection sources = fileTree(dir: 'dbforms').exclude("test/**")
+  inputs.file dbsources
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/dbforms"
+  outputs.file "dbforms.rnc"
+
+  pipeline mkschema
+  option("schema","dbforms")
+  option("release",formrel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/dbforms")
+  }
+}
+
+task dbforms_sch(dependsOn: dbforms_rnc, type: XMLCalabashTask) {
+  inputs.file "dbforms.rng"
+  outputs.file "dbforms.sch"
+  pipeline mkschematron
+  input("source", "dbforms.rng")
+  output("result", "dbforms.sch")
+}
+
+task dbits_rnc(type: XMLCalabashTask) {
+  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
+  FileCollection sources = fileTree(dir: 'dbits').exclude("test/**")
+  inputs.file dbsources
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/dbits"
+  outputs.file "dbits.rnc"
+
+  pipeline mkschema
+  option("schema","dbits")
+  option("release",itsrel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/dbits")
+  }
+}
+
+task dbits_sch(dependsOn: dbits_rnc, type: XMLCalabashTask) {
+  inputs.file "dbits.rng"
+  outputs.file "dbits.sch"
+  pipeline mkschematron
+  input("source", "dbits.rng")
+  output("result", "dbits.sch")
+}
+
+task publishers_rnc(type: XMLCalabashTask) {
+  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
+  FileCollection sources = fileTree(dir: 'publishers').exclude("test/**")
+  inputs.file dbsources
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/publishers"
+  outputs.file "publishers.rnc"
+
+  pipeline mkschema
+  option("schema","publishers")
+  option("release",sdbrel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/publishers")
+  }
+}
+
+task publishers_sch(dependsOn: publishers_rnc, type: XMLCalabashTask) {
+  inputs.file "publishers.rng"
+  outputs.file "publishers.sch"
+  pipeline mkschematron
+  input("source", "publishers.rng")
+  output("result", "publishers.sch")
+}
+
+task publishers_rnd(dependsOn: ['publishers_rnc'], type: XMLCalabashTask) {
+  inputs.file mkdoc
+  outputs.file "publishers.rnd"
+
+  pipeline mkdoc
+  option("schema","publishers")
+}
+
+task slides_rnc(type: XMLCalabashTask) {
+  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
+  FileCollection sources = fileTree(dir: 'slides').exclude("test/**")
+  inputs.file dbsources
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/slides"
+  outputs.file "slides.rnc"
+
+  pipeline mkschema
+  option("schema","slides")
+  option("release",sdbrel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/slides")
+  }
+}
+
+task slides_sch(dependsOn: slides_rnc, type: XMLCalabashTask) {
+  inputs.file "slides.rng"
+  outputs.file "slides.sch"
+  pipeline mkschematron
+  input("source", "slides.rng")
+  output("result", "slides.sch")
+}
+
+task slides_full_rnc(type: XMLCalabashTask) {
+  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
+  FileCollection sources = fileTree(dir: 'slides-full').exclude("test/**")
+  inputs.file dbsources
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/slides-full"
+  outputs.file "slides-full.rnc"
+
+  pipeline mkschema
+  option("schema","slides-full")
+  option("release",sdbrel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/slides-full")
+  }
+}
+
+task slides_full_sch(dependsOn: slides_full_rnc, type: XMLCalabashTask) {
+  inputs.file "slides-full.rng"
+  outputs.file "slides-full.sch"
+  pipeline mkschematron
+  input("source", "slides-full.rng")
+  output("result", "slides-full.sch")
+}
+
+task website_rnc(type: XMLCalabashTask) {
+  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
+  FileCollection sources = fileTree(dir: 'website').exclude("test/**")
+  inputs.file dbsources
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/website"
+  outputs.file "website.rnc"
+
+  pipeline mkschema
+  option("schema","website")
+  option("release",sdbrel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/website")
+  }
+}
+
+task website_sch(dependsOn: website_rnc, type: XMLCalabashTask) {
+  inputs.file "website.rng"
+  outputs.file "website.sch"
+  pipeline mkschematron
+  input("source", "website.rng")
+  output("result", "website.sch")
+}
+
+task website_full_rnc(type: XMLCalabashTask) {
+  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
+  FileCollection sources = fileTree(dir: 'website-full').exclude("test/**")
+  inputs.file dbsources
+  inputs.file sources
+  inputs.file mkschema
+  outputs.dir "build/website-full"
+  outputs.file "website-full.rnc"
+
+  pipeline mkschema
+  option("schema","website-full")
+  option("release",sdbrel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build")
+    mkdir("build/website-full")
+  }
+}
+
+task website_full_sch(dependsOn: website_full_rnc, type: XMLCalabashTask) {
+  inputs.file "website-full.rng"
+  outputs.file "website-full.sch"
+  pipeline mkschematron
+  input("source", "website-full.rng")
+  output("result", "website-full.sch")
+}
+
+task schemas(dependsOn: ['assembly_rnc',
+                         'assembly_sch',
+                         'dbforms_rnc',
+                         'dbforms_sch',
+                         'dbits_rnc',
+                         'dbits_sch',
+                         'docbook_rnc',
+                         'docbook_sch',
+                         'docbookxi_rnc',
+                         'docbookxi_sch',
+                         'publishers_rnc',
+                         'publishers_sch',
+                         'sdocbook_rnc',
+                         'sdocbook_sch',
+                         'slides_full_rnc',
+                         'slides_full_sch',
+                         'slides_rnc',
+                         'slides_sch',
+                         'website_full_rnc',
+                         'website_full_sch',
+                         'website_rnc',
+                         'website_sch']) {
+  doLast {
+    println("Generated schemas.")
+  }
+}
+
+task docs(dependsOn: ['defguide_rnd',
+                      'publishers_rnd',
+                      'sdocbook_rnd']) {
+  doLast {
+    println("Generated documentation.")
+  }
+}
+
+task clean
+task clean.doFirst {
+  delete "build"
+  delete fileTree(dir: '.').include("*.rnc")
+  delete fileTree(dir: '.').include("*.rng")
+  delete fileTree(dir: '.').include("*.rnd")
+  delete fileTree(dir: '.').include("*.sch")
+}
+
+task testDocBook1(type: XMLCalabashTask) {
+  input("source", "docbook/test/pass/article-001.xml")
+  output("result", "build/test/docbook/article-001.pass")
+  option("schema", "docbook")
+  pipeline "../tools/validate-fail.xpl"
+}
+
+task testDocBook2(type: XMLCalabashTask) {
+  input("source", "docbook/test/fail/keycap.001.xml")
+  output("result", "build/test/docbook/keycap.001.fail")
+  option("schema", "docbook")
+  pipeline "../tools/validate-pass.xpl"
+}
