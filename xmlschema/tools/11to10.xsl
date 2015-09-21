@@ -13,14 +13,6 @@
 
 <xsl:param name="sch-file" select="'docbook-xsd.sch'"/>
 
-<xsl:template match="/">
-  <xsl:apply-templates/>
-
-  <xsl:result-document href="{$sch-file}">
-    <xsl:apply-templates select="/" mode="extractsch"/>
-  </xsl:result-document>
-</xsl:template>
-
 <xsl:template match="element()">
   <xsl:copy>
     <xsl:apply-templates select="@*,node()"/>
@@ -46,46 +38,6 @@
 <xsl:template match="xs:annotation[xs:appinfo]"/>
 
 <xsl:template match="attribute()|text()|comment()|processing-instruction()">
-  <xsl:copy/>
-</xsl:template>
-
-<!-- ============================================================ -->
-
-<xsl:template match="/" mode="extractsch">
-  <s:schema xmlns:s="http://purl.oclc.org/dsdl/schematron"
-            xmlns:db="http://docbook.org/ns/docbook">
-    <s:ns prefix="db" uri="http://docbook.org/ns/docbook"/>
-    <s:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
-
-    <xsl:apply-templates mode="extractsch"/>
-  </s:schema>
-</xsl:template>
-
-<xsl:template match="element()" mode="extractsch">
-  <xsl:apply-templates select="*" mode="extractsch"/>
-</xsl:template>
-
-<xsl:template match="s:*" mode="extractsch">
-  <xsl:copy>
-    <xsl:apply-templates select="@*,node()" mode="extractsch"/>
-  </xsl:copy>
-</xsl:template>
-
-<xsl:template match="xs:assert" mode="extractsch">
-  <xsl:variable name="elname" select="(ancestor::xs:element)[1]/@name"/>
-
-  <s:pattern>
-    <s:title>Assertion on <xsl:value-of select="$elname"/></s:title>
-    <s:rule context="db:{$elname}">
-      <s:assert test="{@test}">
-        <xsl:value-of select="xs:annotation/xs:documentation"/>
-      </s:assert>
-    </s:rule>
-  </s:pattern>
-</xsl:template>
-
-<xsl:template match="attribute()|text()|comment()|processing-instruction()"
-              mode="extractsch">
   <xsl:copy/>
 </xsl:template>
 
