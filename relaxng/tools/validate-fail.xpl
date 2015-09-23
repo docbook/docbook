@@ -23,7 +23,7 @@
   <p:group>
     <p:output port="result"/>
 
-    <p:validate-with-relax-ng>
+    <p:validate-with-relax-ng dtd-id-idref-warnings="true">
       <p:input port="source">
         <p:pipe step="main" port="source"/>
       </p:input>
