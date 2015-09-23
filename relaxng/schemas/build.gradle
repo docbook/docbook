@@ -7,8 +7,8 @@ buildscript {
   }
 
   dependencies {
-    classpath group: 'org.docbook', name: 'docbook-xslt2', version: '2.0.15'
-    classpath group: 'com.xmlcalabash', name: 'gradle', version: '0.0.2'
+    classpath group: 'org.docbook', name: 'docbook-xslt2', version: '2.0.16'
+    classpath group: 'com.xmlcalabash', name: 'xmlcalabash1-gradle', version: '1.0.0'
   }
 }
 
@@ -66,11 +66,10 @@ task docbook_sch(dependsOn: docbook_rnc, type: XMLCalabashTask) {
 
 task any_docbook_rng(dependsOn: docbook_rnc, type: XMLCalabashTask) {
   inputs.file "docbook.rng"
-  inputs.file "../tools/xslt.xpl"
   inputs.file "../tools/all-patterns.xsl"
   outputs.file "build/docbook/any.docbook.rng"
 
-  pipeline "../tools/xslt.xpl"
+  step "xslt"
   input("source", "docbook.rng")
   input("stylesheet", "../tools/all-patterns.xsl")
   output("result", "build/docbook/any.docbook.rng")
