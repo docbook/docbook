@@ -1,4 +1,4 @@
-//defaultTasks 'tdg'
+defaultTasks 'schemas'
 
 buildscript {
   repositories {
@@ -52,6 +52,14 @@ task docbook_sch(dependsOn: docbook11_xsd, type: XMLCalabashTask) {
   input("source", "docbook-xsd11.xsd")
   input("stylesheet", "../tools/xsd-to-sch.xsl")
   output("result", "docbook-xsd.sch")
+}
+
+task schemas(dependsOn: ['docbook11_xsd',
+                         'docbook10_xsd',
+                         'docbook_sch']) {
+  doLast {
+    println("Generated schemas.")
+  }
 }
 
 task clean

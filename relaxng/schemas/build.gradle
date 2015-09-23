@@ -1,4 +1,4 @@
-//defaultTasks 'tdg'
+defaultTasks 'schemas', 'test'
 
 buildscript {
   repositories {
@@ -441,16 +441,145 @@ task clean.doFirst {
   delete fileTree(dir: '.').include("*.sch")
 }
 
-task testDocBook1(type: XMLCalabashTask) {
-  input("source", "docbook/test/pass/article-001.xml")
-  output("result", "build/test/docbook/article-001.pass")
-  option("schema", "docbook")
-  pipeline "../tools/validate-fail.xpl"
+// DocBook Tests
+
+task createDocBookTestDirectories() {
+  doFirst {
+    mkdir("build")
+    mkdir("build/test")
+    mkdir("build/test/docbook")
+    mkdir("build/test/docbook/pass")
+    mkdir("build/test/docbook/fail")
+  }
 }
 
-task testDocBook2(type: XMLCalabashTask) {
-  input("source", "docbook/test/fail/keycap.001.xml")
-  output("result", "build/test/docbook/keycap.001.fail")
-  option("schema", "docbook")
-  pipeline "../tools/validate-pass.xpl"
+task positiveDocBookTests(dependsOn: ['docbook_sch',
+                                      'createDocBookTestDirectories']) {
+  // nothing to see here
+}
+
+task negativeDocBookTests(dependsOn: ['docbook_sch',
+                                      'createDocBookTestDirectories']) {
+  // nothing to see here
+}
+
+task testDocBook(dependsOn: ['positiveDocBookTests','negativeDocBookTests']) {
+  // nothing to see here
+}
+
+fileTree(dir: "docbook/test/pass").each { file ->
+  task "testDocBookPass_$file.name"(type: XMLCalabashTask) {
+    input("source", "docbook/test/pass/$file.name")
+    output("result", "build/test/docbook/pass/$file.name")
+    option("schema", "docbook")
+    pipeline "../tools/validate-pass.xpl"
+  }
+  positiveDocBookTests.dependsOn "testDocBookPass_$file.name"
+}
+
+fileTree(dir: "docbook/test/fail").each { file ->
+  task "testDocBookFail_$file.name"(type: XMLCalabashTask) {
+    input("source", "docbook/test/fail/$file.name")
+    output("result", "build/test/docbook/fail/$file.name")
+    option("schema", "docbook")
+    pipeline "../tools/validate-fail.xpl"
+  }
+  negativeDocBookTests.dependsOn "testDocBookFail_$file.name"
+}
+
+// Assembly Tests
+
+task createAssemblyTestDirectories() {
+  doFirst {
+    mkdir("build")
+    mkdir("build/test")
+    mkdir("build/test/assembly")
+    mkdir("build/test/assembly/pass")
+    mkdir("build/test/assembly/fail")
+  }
+}
+
+task positiveAssemblyTests(dependsOn: ['assembly_sch',
+                                       'createAssemblyTestDirectories']) {
+  // nothing to see here
+}
+
+task negativeAssemblyTests(dependsOn: ['assembly_sch',
+                                       'createAssemblyTestDirectories']) {
+  // nothing to see here
+}
+
+task testAssembly(dependsOn: ['positiveAssemblyTests','negativeAssemblyTests']) {
+  // nothing to see here
+}
+
+fileTree(dir: "assembly/test/pass").each { file ->
+  task "testAssemblyPass_$file.name"(type: XMLCalabashTask) {
+    input("source", "assembly/test/pass/$file.name")
+    output("result", "build/test/assembly/pass/$file.name")
+    option("schema", "assembly")
+    pipeline "../tools/validate-pass.xpl"
+  }
+  positiveAssemblyTests.dependsOn "testAssemblyPass_$file.name"
+}
+
+fileTree(dir: "assembly/test/fail").each { file ->
+  task "testAssemblyFail_$file.name"(type: XMLCalabashTask) {
+    input("source", "assembly/test/fail/$file.name")
+    output("result", "build/test/assembly/fail/$file.name")
+    option("schema", "assembly")
+    pipeline "../tools/validate-fail.xpl"
+  }
+  negativeAssemblyTests.dependsOn "testAssemblyFail_$file.name"
+}
+
+// Publishers Tests
+
+task createPublishersTestDirectories() {
+  doFirst {
+    mkdir("build")
+    mkdir("build/test")
+    mkdir("build/test/publishers")
+    mkdir("build/test/publishers/pass")
+    mkdir("build/test/publishers/fail")
+  }
+}
+
+task positivePublishersTests(dependsOn: ['publishers_sch',
+                                         'createPublishersTestDirectories']) {
+  // nothing to see here
+}
+
+task negativePublishersTests(dependsOn: ['publishers_sch',
+                                         'createPublishersTestDirectories']) {
+  // nothing to see here
+}
+
+task testPublishers(dependsOn: ['positivePublishersTests',
+                                'negativePublishersTests']) {
+  // nothing to see here
+}
+
+fileTree(dir: "publishers/test/pass").each { file ->
+  task "testPublishersPass_$file.name"(type: XMLCalabashTask) {
+    input("source", "publishers/test/pass/$file.name")
+    output("result", "build/test/publishers/pass/$file.name")
+    option("schema", "publishers")
+    pipeline "../tools/validate-pass.xpl"
+  }
+  positivePublishersTests.dependsOn "testPublishersPass_$file.name"
+}
+
+fileTree(dir: "publishers/test/fail").each { file ->
+  task "testPublishersFail_$file.name"(type: XMLCalabashTask) {
+    input("source", "publishers/test/fail/$file.name")
+    output("result", "build/test/publishers/fail/$file.name")
+    option("schema", "publishers")
+    pipeline "../tools/validate-fail.xpl"
+  }
+  negativePublishersTests.dependsOn "testPublishersFail_$file.name"
+}
+
+task test(dependsOn: ['testDocBook', 'testAssembly', 'testPublishers']) {
+  // nothing to see here
 }
