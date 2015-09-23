@@ -7,8 +7,8 @@ buildscript {
   }
 
   dependencies {
-    classpath group: 'org.docbook', name: 'docbook-xslt2', version: '2.0.15'
-    classpath group: 'com.xmlcalabash', name: 'gradle', version: '0.0.2'
+    classpath group: 'org.docbook', name: 'docbook-xslt2', version: '2.0.16'
+    classpath group: 'com.xmlcalabash', name: 'xmlcalabash1-gradle', version: '1.0.0'
   }
 }
 
@@ -25,22 +25,19 @@ import com.xmlcalabash.XMLCalabashTask
 
 task docbook11_xsd(type: XMLCalabashTask) {
   inputs.file "docbook/docbook.xsd"
-  inputs.file "../tools/identity.xpl"
   outputs.file "docbook-xsd11.xsd"
 
-  pipeline "../tools/xslt.xpl"
+  step "identity"
   input("source", "docbook/docbook.xsd")
-  input("stylesheet", "../tools/identity.xsl")
   output("result", "docbook-xsd11.xsd")
 }
 
 task docbook10_xsd(dependsOn: docbook11_xsd, type: XMLCalabashTask) {
   inputs.file "docbook-xsd11.xsd"
-  inputs.file "../tools/xslt.xpl"
   inputs.file "../tools/11to10.xsl"
   outputs.file "docbook-xsd10.xsd"
 
-  pipeline "../tools/xslt.xpl"
+  step "xslt"
   input("source", "docbook-xsd11.xsd")
   input("stylesheet", "../tools/11to10.xsl")
   output("result", "docbook-xsd10.xsd")
@@ -48,11 +45,10 @@ task docbook10_xsd(dependsOn: docbook11_xsd, type: XMLCalabashTask) {
 
 task docbook_sch(dependsOn: docbook11_xsd, type: XMLCalabashTask) {
   inputs.file "docbook-xsd11.xsd"
-  inputs.file "../tools/xslt.xpl"
   inputs.file "../tools/xsd-to-sch.xsl"
   outputs.file "docbook-xsd.sch"
 
-  pipeline "../tools/xslt.xpl"
+  step "xslt"
   input("source", "docbook-xsd11.xsd")
   input("stylesheet", "../tools/xsd-to-sch.xsl")
   output("result", "docbook-xsd.sch")
