@@ -415,7 +415,7 @@ db.dublincore.elements =
 
 [
    db:refname [ "speaker" ]
-   db:refpurpose [ "Designates a person who is giving a speech or lecture." ]
+   db:refpurpose [ "Designates a person who is giving a speech or lecture" ]
 ]
 div {
    db.speaker.role.attribute = attribute role { text }
@@ -434,7 +434,7 @@ div {
 
 [
    db:refname [ "line" ]
-   db:refpurpose [ "A line of dialogue or other form of communication." ]
+   db:refpurpose [ "A line of dialogue or other form of communication" ]
 ]
 div {
    db.line.role.attribute = attribute role { text }
@@ -452,7 +452,7 @@ div {
 
 [
    db:refname [ "linegroup" ]
-   db:refpurpose [ "A grouping of lines in dialogue or other form of communication." ]
+   db:refpurpose [ "A grouping of lines in dialogue or other form of communication" ]
 ]
 div {
    db.linegroup.role.attribute = attribute role { text }
@@ -470,7 +470,7 @@ div {
 
 [
    db:refname [ "poetry" ]
-   db:refpurpose [ "A container for poetry." ]
+   db:refpurpose [ "A container for poetry" ]
 ]
 div {
    db.poetry.info =
@@ -492,7 +492,7 @@ div {
 
 [
    db:refname [ "dialogue" ]
-   db:refpurpose [ "A container for speeches and other forms of communication involving dialogue." ]
+   db:refpurpose [ "A container for speeches and other forms of communication involving dialogue" ]
 ]
 div {
    db.dialogue.info =
@@ -514,7 +514,7 @@ div {
 
 [
    db:refname [ "drama" ]
-   db:refpurpose [ "A container for plays and other forms of dramatic presentation." ]
+   db:refpurpose [ "A container for plays and other forms of dramatic presentation" ]
 ]
 div {
    db.drama = element drama {
