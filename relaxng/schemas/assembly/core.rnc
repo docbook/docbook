@@ -44,6 +44,7 @@ db.grammar.attribute =
 
 [
    db:refname [ "assembly" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Defines the hierarchy and relationships for a collection of resources" ]
 ]
 div {
@@ -71,6 +72,7 @@ div {
 
 [
    db:refname [ "resources" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Contains one or more resource objects that are managed by the assembly" ]
 ]
 div {
@@ -98,6 +100,7 @@ div {
 
 [
    db:refname [ "resource" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Identifies an object managed within the assembly" ]
 ]
 div {
@@ -129,6 +132,7 @@ div {
 
 [
    db:refname [ "structure" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Describes the structure of a document" ]
 ]
 div {
@@ -195,6 +199,7 @@ div {
 
 [
    db:refname [ "output" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Specify an output format and/or file name and/or renderas" ]
 ]
 div {
@@ -263,6 +268,7 @@ div {
 
 [
    db:refname [ "merge" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "A wrapper for information that a module overrides in the resource it includes" ]
 ]
 div {
@@ -291,6 +297,7 @@ div {
 
 [
    db:refname [ "module" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "A modular component within a structure" ]
 ]
 div {
@@ -373,6 +380,7 @@ div {
 
 [
    db:refname [ "filterout" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Elements with effectivity attributes matching this element are suppressed" ]
 ]
 div {
@@ -393,6 +401,7 @@ div {
 
 [
    db:refname [ "filterin" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Elements with effectivity attributes matching this element are allowed" ]
 ]
 div {
@@ -413,6 +422,7 @@ div {
 
 [
    db:refname [ "relationships" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Groups relationship elements to define associations between resources" ]
 ]
 div {
@@ -444,6 +454,7 @@ div {
 
 [
    db:refname [ "relationship" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "A relationship associates one or more resources" ]
 ]
 div {
@@ -473,6 +484,7 @@ div {
 
 [
    db:refname [ "association" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Identifies the type of relationship between one or more resources" ]
 ]
 div {
@@ -494,6 +506,7 @@ div {
 
 [
    db:refname [ "instance" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Identifies a resource that is part of a relationship" ]
 ]
 div {
@@ -522,6 +535,7 @@ div {
 
 [
    db:refname [ "transforms" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "List of transforms for converting from non-DocBook schemas" ]
 ]
 div {
@@ -545,6 +559,7 @@ div {
 
 [
    db:refname [ "transform" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "Identifies a transform for converting from a non-DocBook schema" ]
 ]
 div {
@@ -582,6 +597,7 @@ div {
 
 [
    db:refname [ "description" ]
+   db:refmiscinfo [ class = "manual" "assembly" ]
    db:refpurpose [ "A description of a resource or resources" ]
 ]
 div {
