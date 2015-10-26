@@ -60,6 +60,17 @@
       </xsl:if>
     </xsl:for-each>
     <xsl:copy-of select="@*"/>
+
+    <xsl:if test="$remove-schematron = 0">
+      <xsl:for-each select="namespace::*">
+        <xsl:if test="local-name(.) != 'dbx'
+                      and local-name(.) != 'xml'
+                      and local-name(.) != ''">
+          <s:ns prefix="{local-name(.)}" uri="{.}"/>
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:if>
+
     <xsl:apply-templates/>
   </xsl:element>
 </xsl:template>

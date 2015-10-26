@@ -165,10 +165,14 @@ div {
     & ws.script.type.attribute?
     & db.common.attributes
 
+   # This used to be "ws.script.src.attribute | text" but that
+   # confuses the documentation generator, so I'm making this
+   # less constrained. Mmph.
    ws.script =
       element script {
          ws.script.attlist,
-         (ws.script.src.attribute | text)
+         ws.script.src.attribute?,
+         text
       }
 }
 
@@ -190,10 +194,14 @@ div {
     & ws.style.type.attribute?
     & db.common.attributes
 
+   # This used to be "ws.style.src.attribute | text" but that
+   # confuses the documentation generator, so I'm making this
+   # less constrained. Mmph.
    ws.style =
       element style {
          ws.style.attlist,
-         (ws.style.src.attribute | text)
+         ws.style.src.attribute?,
+         text
       }
 }
 
