@@ -1,13 +1,3 @@
-# This file is part of Slides NG
-
-# This schema is a reinterpretation of "Slides" for DocBook V5.0.
-#
-# Author: Norman Walsh, <ndw@nwalsh.com>
-# Source: Derived from Slides 3.3.1
-# Release: $Id$
-#
-# ======================================================================
-
 namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
 namespace rng  = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://purl.oclc.org/dsdl/schematron"
