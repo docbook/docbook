@@ -1,10 +1,10 @@
-# This schema integrates ITS 2.0 markup (http://www.w3.org/TR/its20/) 
+# This schema integrates ITS 2.0 markup (http://www.w3.org/TR/its20/)
 # into DocBook schema (http://docbook.org)
 #
 # This schema conforms to Conformance Type 1 defined in
 # http://www.w3.org/TR/its20/#conformance-product-schema
-# 
-# Schema adds the following ITS elements into DocBook schema: 
+#
+# Schema adds the following ITS elements into DocBook schema:
 #  * rules
 #  * provenanceRecords
 #  * locQualityIssues
@@ -68,12 +68,11 @@
 # suitability of the schema for any purpose. It is provided "as is"
 # without expressed or implied warranty.
 
-# Namespace declarations for DocBook, ITS and HTML (HTML is used internally in DocBook schema)  
+# Namespace declarations for DocBook, ITS and HTML (HTML is used internally in DocBook schema)
 namespace db = "http://docbook.org/ns/docbook"
 namespace its = "http://www.w3.org/2005/11/its"
 namespace html = "http://www.w3.org/1999/xhtml"
 
-# Include base DocBook schema
 include "../docbook/docbook.rnc"
 {
    # Exclude ITS markup from "wildcard" element
@@ -90,9 +89,9 @@ include "its20.rnc"
 {
    # Disable ITS directionality
    its-attribute.dir = empty
-   
+
    # Keep extensibility but prevent conflicting ID type problem
-   its-foreign-element = element * - its:* { (its-foreign-no-xml-id-attribute* | text | its-foreign-element)* } 
+   its-foreign-element = element * - its:* { (its-foreign-no-xml-id-attribute* | text | its-foreign-element)* }
 }
 
 # Add local ITS attributes to all DocBook elements
