@@ -12,7 +12,7 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 
 # This file is part of DocBook ITS V5.1-CSPRD02
 # 
-# Copyright 2007-2011 HaL Computer Systems, Inc.,
+# Copyright 2007-2015 HaL Computer Systems, Inc.,
 # O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
 # Corporation, Norman Walsh, Jirka Kosek, Sun Microsystems, Inc.,
 # and the Organization for the Advancement of Structured Information
@@ -50,7 +50,6 @@ s:ns [ prefix = "ctrl" uri = "http://nwalsh.com/xmlns/schema-control/" ]
 s:ns [ prefix = "mml" uri = "http://www.w3.org/1998/Math/MathML" ]
 s:ns [ prefix = "svg" uri = "http://www.w3.org/2000/svg" ]
 s:ns [ prefix = "its" uri = "http://www.w3.org/2005/11/its" ]
-# Include base DocBook schema
 start =
   (db.set
    | db.book
