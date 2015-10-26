@@ -1,0 +1,38 @@
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">
+
+<!-- ............................................................ -->
+<!-- XML Catalog for DocBook Website ............................ -->
+<!-- File catalog.xml ........................................... -->
+
+<!-- Please direct all questions, bug reports, or suggestions for
+     changes to the docbook-comment@lists.oasis-open.org mailing list.
+     For more information, see http://www.oasis-open.org/.
+-->
+
+<!-- This is a catalog data file for DocBook Website. It is
+     provided as a convenience in building your own catalog files. You
+     need not use the filenames listed here, and need not use the
+     filename method of identifying storage objects at all. See the
+     documentation for detailed information on the files associated
+     with the DocBook DTD. See XML Catalogs at
+     http://www.oasis-open.org/committees/entity/ for detailed
+     information on supplying and using catalog data.
+-->
+
+<uri name="ROOT/VERSION/rng/website-full.rnc" uri="rng/website-full.rnc"/>
+<uri name="ROOT/VERSION/rng/website-full.rng" uri="rng/website-full.rng"/>
+<uri name="ROOT/VERSION/rng/website.rnc" uri="rng/website.rnc"/>
+<uri name="ROOT/VERSION/rng/website.rng" uri="rng/website.rng"/>
+<uri name="ROOT/VERSION/sch/website-full.sch" uri="sch/website-full.rng"/>
+<uri name="ROOT/VERSION/sch/website.sch" uri="sch/website.rng"/>
+
+<uri name="ROOT2/VERSION/rng/website-full.rnc" uri="rng/website-full.rnc"/>
+<uri name="ROOT2/VERSION/rng/website-full.rng" uri="rng/website-full.rng"/>
+<uri name="ROOT2/VERSION/rng/website.rnc" uri="rng/website.rnc"/>
+<uri name="ROOT2/VERSION/rng/website.rng" uri="rng/website.rng"/>
+<uri name="ROOT2/VERSION/sch/website-full.sch" uri="sch/website-full.rng"/>
+<uri name="ROOT2/VERSION/sch/website.sch" uri="sch/website.rng"/>
+
+<!-- End of XML Catalog for DocBook Website ..................... -->
+<!-- ............................................................ -->
+</catalog>

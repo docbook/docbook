@@ -33,11 +33,6 @@ project.ext.pubrel="DocBook Publishers " + dbver + "-1"
 project.ext.slirel="DocBook Slides " + dbver + "-1"
 project.ext.webrel="DocBook Wesite " + dbver + "-1"
 
-// test: all
-// 	$(MAKE) -C docbook/test
-// 	$(MAKE) -C assembly/test
-// 	$(MAKE) -C publishers/test
-
 task docbook_rnc(type: XMLCalabashTask) {
   FileCollection sources = fileTree(dir: 'docbook').exclude("test/**")
   inputs.file sources
@@ -51,7 +46,6 @@ task docbook_rnc(type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/docbook")
   }
 }
@@ -99,7 +93,6 @@ task assembly_rnc(dependsOn: any_docbook_rnc, type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/assembly")
   }
 }
@@ -127,7 +120,6 @@ task docbookxi_rnc(type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/docbookxi")
   }
 }
@@ -152,7 +144,6 @@ task defguide_rnd(dependsOn: ['docbook_rnc', 'assembly_rnc', 'any_docbook_rnc'],
   option("schema","defguide")
 
   doFirst {
-    mkdir("build")
     mkdir("build/defguide")
   }
 }
@@ -172,7 +163,6 @@ task sdocbook_rnc(type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/sdocbook")
   }
 }
@@ -208,7 +198,6 @@ task dbforms_rnc(type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/dbforms")
   }
 }
@@ -236,7 +225,6 @@ task dbits_rnc(type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/dbits")
   }
 }
@@ -264,7 +252,6 @@ task publishers_rnc(type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/publishers")
   }
 }
@@ -300,7 +287,6 @@ task slides_rnc(type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/slides")
   }
 }
@@ -311,6 +297,14 @@ task slides_sch(dependsOn: slides_rnc, type: XMLCalabashTask) {
   pipeline mkschematron
   input("source", "slides.rng")
   output("result", "slides.sch")
+}
+
+task slides_rnd(dependsOn: ['slides_rnc'], type: XMLCalabashTask) {
+  inputs.file mkdoc
+  outputs.file "slides.rnd"
+
+  pipeline mkdoc
+  option("schema","slides")
 }
 
 task slides_full_rnc(type: XMLCalabashTask) {
@@ -328,7 +322,6 @@ task slides_full_rnc(type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/slides-full")
   }
 }
@@ -356,7 +349,6 @@ task website_rnc(type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/website")
   }
 }
@@ -367,6 +359,14 @@ task website_sch(dependsOn: website_rnc, type: XMLCalabashTask) {
   pipeline mkschematron
   input("source", "website.rng")
   output("result", "website.sch")
+}
+
+task website_rnd(dependsOn: ['website_rnc'], type: XMLCalabashTask) {
+  inputs.file mkdoc
+  outputs.file "website.rnd"
+
+  pipeline mkdoc
+  option("schema","website")
 }
 
 task website_full_rnc(type: XMLCalabashTask) {
@@ -384,7 +384,6 @@ task website_full_rnc(type: XMLCalabashTask) {
   option("remove-schematron",removesch)
 
   doFirst {
-    mkdir("build")
     mkdir("build/website-full")
   }
 }
@@ -426,7 +425,9 @@ task schemas(dependsOn: ['assembly_rnc',
 
 task docs(dependsOn: ['defguide_rnd',
                       'publishers_rnd',
-                      'sdocbook_rnd']) {
+                      'sdocbook_rnd',
+                      'slides_rnd',
+                      'website_rnd']) {
   doLast {
     println("Generated documentation.")
   }
@@ -491,9 +492,6 @@ fileTree(dir: "docbook/test/fail").each { file ->
 
 task createAssemblyTestDirectories() {
   doFirst {
-    mkdir("build")
-    mkdir("build/test")
-    mkdir("build/test/assembly")
     mkdir("build/test/assembly/pass")
     mkdir("build/test/assembly/fail")
   }
@@ -537,8 +535,6 @@ fileTree(dir: "assembly/test/fail").each { file ->
 
 task createPublishersTestDirectories() {
   doFirst {
-    mkdir("build")
-    mkdir("build/test")
     mkdir("build/test/publishers")
     mkdir("build/test/publishers/pass")
     mkdir("build/test/publishers/fail")
@@ -582,4 +578,454 @@ fileTree(dir: "publishers/test/fail").each { file ->
 
 task test(dependsOn: ['testDocBook', 'testAssembly', 'testPublishers']) {
   // nothing to see here
+}
+
+// ============================================================
+
+task distDocBook1(dependsOn: ['docbook_rnc','docbookxi_rnc',
+                              'assembly_rnc','dbits_rnc'],
+                  type: Copy) {
+  from('.') {
+    include 'docbook.rn*'
+    include 'docbookxi.rn*'
+    include 'assembly.rn*'
+    include 'dbits.rn*'
+  }
+  into "build/dist/xml/${docbook_version}/rng"
+  doFirst {
+    mkdir("build/dist/xml/${docbook_version}/rng")
+  }
+}
+
+task distDocBook2(dependsOn: ['docbook_sch','docbookxi_sch',
+                              'assembly_sch','dbits_sch'],
+                  type: Copy) {
+  from('.') {
+    include 'docbook.sch'
+    include 'docbookxi.sch'
+    include 'assembly.sch'
+    include 'dbits.sch'
+  }
+  into "build/dist/xml/${docbook_version}/sch"
+  doFirst {
+    mkdir("build/dist/xml/${docbook_version}/sch")
+  }
+}
+
+task distDocBook3(type: Copy) {
+  from('../tools') {
+    include 'db4-entities.pl'
+    include 'db4-upgrade.xsl'
+  }
+  into "build/dist/xml/${docbook_version}/tools"
+  doFirst {
+    mkdir("build/dist/xml/${docbook_version}/tools")
+  }
+}
+
+task distDocBook4(type: Copy) {
+  from('docbook') {
+    include 'docbook.nvdl'
+  }
+  into "build/dist/xml/${docbook_version}"
+  doFirst {
+    mkdir("build/dist/xml/${docbook_version}")
+  }
+}
+
+task distDocBook5(type: XMLCalabashTask) {
+  inputs.file "../tools/make-index.xpl"
+  inputs.file "docbook/index.xhtml"
+  outputs.file "build/dist/xml/${docbook_version}/index.html"
+
+  pipeline "../tools/make-index.xpl"
+  input("source", "docbook/index.xhtml")
+  output("result", "build/dist/xml/${docbook_version}/index.html")
+  option("version", "${docbook_version}")
+  option("tdg", "http://docbook.org/tdg51/en/html/")
+  option("tdgtitle", "DocBook 5.1: The Definitive Guide")
+}
+
+task distCatalog(type: XMLCalabashTask) {
+  inputs.file "docbook/docbook-catalog.xml"
+  inputs.file "../tools/catalog.xsl"
+  outputs.file "build/dist/xml/${docbook_version}/catalog.xml"
+
+  pipeline "../tools/catalog.xpl"
+  input("source", "docbook/docbook-catalog.xml")
+  output("result", "build/dist/xml/${docbook_version}/catalog.xml")
+  option("ROOT", "http://docbook.org/xml")
+  option("ROOT2", "http://www.docbook.org/xml")
+  option("VERSION", "${docbook_version}")
+  doFirst {
+    mkdir("build/dist/xml/${docbook_version}")
+  }
+}
+
+task distDocBook(dependsOn: ['distDocBook1', 'distDocBook2',
+                             'distDocBook3', 'distDocBook4',
+                             'distDocBook5',
+                             'distCatalog']) {
+  // nop
+}
+
+// ============================================================
+
+task distDocBookOASIS1(dependsOn: ['docbook_rnc','docbookxi_rnc',
+                                   'assembly_rnc','dbits_rnc'],
+                       type: Copy) {
+  from('.') {
+    include 'docbook.rn*'
+    include 'docbookxi.rn*'
+    include 'assembly.rn*'
+    include 'dbits.rn*'
+  }
+  into "build/dist/docbook/docbook/${oasis_version}/${oasis_release}/rng"
+  doFirst {
+    mkdir("build/dist/docbook/docbook/${oasis_version}/${oasis_release}/rng")
+  }
+}
+
+task distDocBookOASIS2(dependsOn: ['docbook_sch','docbookxi_sch',
+                                   'assembly_sch','dbits_sch'],
+                       type: Copy) {
+  from('.') {
+    include 'docbook.sch'
+    include 'docbookxi.sch'
+    include 'assembly.sch'
+    include 'dbits.sch'
+  }
+  into "build/dist/docbook/docbook/${oasis_version}/${oasis_release}/sch"
+  doFirst {
+    mkdir("build/dist/docbook/docbook/${oasis_version}/${oasis_release}/sch")
+  }
+}
+
+task distDocBookOASIS3(type: Copy) {
+  from('../tools') {
+    include 'db4-entities.pl'
+    include 'db4-upgrade.xsl'
+  }
+  into "build/dist/docbook/docbook/${oasis_version}/${oasis_release}/tools"
+  doFirst {
+    mkdir("build/dist/docbook/docbook/${oasis_version}/${oasis_release}/tools")
+  }
+}
+
+task distDocBookOASIS4(type: Copy) {
+  from('docbook') {
+    include 'docbook.nvdl'
+  }
+  into "build/dist/docbook/docbook/${oasis_version}/${oasis_release}"
+  doFirst {
+    mkdir("build/dist/docbook/docbook/${oasis_version}/${oasis_release}")
+  }
+}
+
+task distCatalogOASIS(type: XMLCalabashTask) {
+  inputs.file "docbook/oasis-catalog.xml"
+  inputs.file "../tools/catalog.xsl"
+  outputs.file "build/dist/docbook/docbook/${oasis_version}/${oasis_release}/catalog.xml"
+
+  pipeline "../tools/catalog.xpl"
+  input("source", "docbook/oasis-catalog.xml")
+  output("result", "build/dist/docbook/docbook/${oasis_version}/${oasis_release}/catalog.xml")
+  option("ROOT", "http://docs.oasis-open.org/docbook/docbook")
+  option("VERSION", "${oasis_version}")
+  option("RELEASE", "${oasis_release}")
+  doFirst {
+    mkdir("build/dist/docbook/docbook/${oasis_version}/${oasis_release}")
+  }
+}
+
+task distDocBookOASIS(dependsOn: ['distDocBookOASIS1', 'distDocBookOASIS2',
+                                  'distDocBookOASIS3', 'distDocBookOASIS4',
+                                  'distCatalogOASIS']) {
+  // nop
+}
+
+// ============================================================
+
+task distPub1(dependsOn: publishers_rnc, type: Copy) {
+  from('.') {
+    include 'publishers.rnc'
+    include 'publishers.rng'
+  }
+  into "build/dist/xml/publishers/${publishers_version}/rng"
+  doFirst {
+    mkdir("build/dist/xml/publishers/${publishers_version}/rng")
+  }
+}
+
+task distPub2(dependsOn: publishers_sch, type: Copy) {
+  from('.') {
+    include 'publishers.sch'
+  }
+  into "build/dist/xml/publishers/${publishers_version}/sch"
+  doFirst {
+    mkdir("build/dist/xml/publishers/${publishers_version}/sch")
+  }
+}
+
+task distPub3(type: Copy) {
+  from('publishers') {
+    include 'publishers.nvdl'
+  }
+  into "build/dist/xml/publishers/${publishers_version}"
+  doFirst {
+    mkdir("build/dist/xml/publishers/${publishers_version}")
+  }
+}
+
+task distPub4(type: XMLCalabashTask) {
+  inputs.file "../tools/make-index.xpl"
+  inputs.file "publishers/index.xhtml"
+  outputs.file "build/dist/xml/publishers/${publishers_version}/index.html"
+
+  pipeline "../tools/make-index.xpl"
+  input("source", "publishers/index.xhtml")
+  output("result", "build/dist/xml/publishers/${publishers_version}/index.html")
+  option("version", "${publishers_version}")
+  option("tdg", "http://docbook.org/tdg51/publishers/en/html/")
+  option("tdgtitle", "DocBook Publishers 5.1: The Definitive Guide")
+}
+
+task distPubCatalog(type: XMLCalabashTask) {
+  inputs.file "publishers/catalog.xml"
+  inputs.file "../tools/catalog.xsl"
+  outputs.file "build/dist/xml/publishers/${publishers_version}/catalog.xml"
+
+  pipeline "../tools/catalog.xpl"
+  input("source", "publishers/catalog.xml")
+  output("result", "build/dist/xml/publishers/${publishers_version}/catalog.xml")
+  option("ROOT", "http://docbook.org/xml/publishers")
+  option("ROOT2", "http://www.docbook.org/xml/publishers")
+  option("VERSION", "${publishers_version}")
+  doFirst {
+    mkdir("build/dist/xml/publishers/${publishers_version}")
+  }
+}
+
+task distPublishers(dependsOn: ['distPub1', 'distPub2', 'distPub3',
+                                'distPub4',
+                                'distPubCatalog']) {
+  // nop
+}
+
+// ============================================================
+
+task distSimple1(dependsOn: sdocbook_rnc, type: Copy) {
+  from('.') {
+    include 'sdocbook.rnc'
+    include 'sdocbook.rng'
+  }
+  into "build/dist/xml/sdocbook/${sdocbook_version}/rng"
+  doFirst {
+    mkdir("build/dist/xml/sdocbook/${sdocbook_version}/rng")
+  }
+}
+
+task distSimple2(dependsOn: sdocbook_sch, type: Copy) {
+  from('.') {
+    include 'sdocbook.sch'
+  }
+  into "build/dist/xml/sdocbook/${sdocbook_version}/sch"
+  doFirst {
+    mkdir("build/dist/xml/sdocbook/${sdocbook_version}/sch")
+  }
+}
+
+task distSimple3(type: Copy) {
+  from('sdocbook') {
+    include 'sdocbook.nvdl'
+  }
+  into "build/dist/xml/sdocbook/${sdocbook_version}"
+  doFirst {
+    mkdir("build/dist/xml/sdocbook/${sdocbook_version}")
+  }
+}
+
+task distSimple4(type: XMLCalabashTask) {
+  inputs.file "../tools/make-index.xpl"
+  inputs.file "sdocbook/index.xhtml"
+  outputs.file "build/dist/xml/sdocbook/${sdocbook_version}/index.html"
+
+  pipeline "../tools/make-index.xpl"
+  input("source", "sdocbook/index.xhtml")
+  output("result", "build/dist/xml/sdocbook/${sdocbook_version}/index.html")
+  option("version", "${sdocbook_version}")
+  option("tdg", "http://docbook.org/tdg51/sdocbook/en/html/")
+  option("tdgtitle", "Simplified DocBook 5.1: The Definitive Guide")
+}
+
+task distSimpleCatalog(type: XMLCalabashTask) {
+  inputs.file "sdocbook/catalog.xml"
+  inputs.file "../tools/catalog.xsl"
+  outputs.file "build/dist/xml/sdocbook/${sdocbook_version}/catalog.xml"
+
+  pipeline "../tools/catalog.xpl"
+  input("source", "sdocbook/catalog.xml")
+  output("result", "build/dist/xml/sdocbook/${sdocbook_version}/catalog.xml")
+  option("ROOT", "http://docbook.org/xml/sdocbook")
+  option("ROOT2", "http://www.docbook.org/xml/sdocbook")
+  option("VERSION", "${sdocbook_version}")
+  doFirst {
+    mkdir("build/dist/xml/sdocbook/${sdocbook_version}")
+  }
+}
+
+task distSimple(dependsOn: ['distSimple1', 'distSimple2', 'distSimple3',
+                            'distSimple4',
+                            'distSimpleCatalog']) {
+  // nop
+}
+
+// ============================================================
+
+task distSlides1(dependsOn: ['slides_rnc', 'slides_full_rnc'], type: Copy) {
+  from('.') {
+    include 'slides.rnc'
+    include 'slides.rng'
+    include 'slides-full.rnc'
+    include 'slides-full.rng'
+  }
+  into "build/dist/xml/slides/${slides_version}/rng"
+  doFirst {
+    mkdir("build/dist/xml/slides/${slides_version}/rng")
+  }
+}
+
+task distSlides2(dependsOn: ['slides_sch', 'slides_full_sch'], type: Copy) {
+  from('.') {
+    include 'slides.sch'
+    include 'slides-full.sch'
+  }
+  into "build/dist/xml/slides/${slides_version}/sch"
+  doFirst {
+    mkdir("build/dist/xml/slides/${slides_version}/sch")
+  }
+}
+
+task distSlides3(type: Copy) {
+  from('slides') {
+    include 'slides.nvdl'
+  }
+  into "build/dist/xml/slides/${slides_version}"
+  doFirst {
+    mkdir("build/dist/xml/slides/${slides_version}")
+  }
+}
+
+task distSlides4(type: XMLCalabashTask) {
+  inputs.file "../tools/make-index.xpl"
+  inputs.file "slides/index.xhtml"
+  outputs.file "build/dist/xml/slides/${slides_version}/index.html"
+
+  pipeline "../tools/make-index.xpl"
+  input("source", "slides/index.xhtml")
+  output("result", "build/dist/xml/slides/${slides_version}/index.html")
+  option("version", "${slides_version}")
+  option("tdg", "http://docbook.org/tdg51/slides/en/html/")
+  option("tdgtitle", "DocBook Slides 5.1: The Definitive Guide")
+}
+
+task distSlidesCatalog(type: XMLCalabashTask) {
+  inputs.file "slides/catalog.xml"
+  inputs.file "../tools/catalog.xsl"
+  outputs.file "build/dist/xml/slides/${slides_version}/catalog.xml"
+
+  pipeline "../tools/catalog.xpl"
+  input("source", "slides/catalog.xml")
+  output("result", "build/dist/xml/slides/${slides_version}/catalog.xml")
+  option("ROOT", "http://docbook.org/xml/slides")
+  option("ROOT2", "http://www.docbook.org/xml/slides")
+  option("VERSION", "${slides_version}")
+  doFirst {
+    mkdir("build/dist/xml/slides/${slides_version}")
+  }
+}
+
+task distSlides(dependsOn: ['distSlides1', 'distSlides2', 'distSlides3',
+                            'distSlides4',
+                            'distSlidesCatalog']) {
+  // nop
+}
+
+// ============================================================
+
+task distWebsite1(dependsOn: ['website_rnc', 'website_full_rnc'], type: Copy) {
+  from('.') {
+    include 'website.rnc'
+    include 'website.rng'
+    include 'website-full.rnc'
+    include 'website-full.rng'
+  }
+  into "build/dist/xml/website/${website_version}/rng"
+  doFirst {
+    mkdir("build/dist/xml/website/${website_version}/rng")
+  }
+}
+
+task distWebsite2(dependsOn: ['website_sch', 'website_full_sch'], type: Copy) {
+  from('.') {
+    include 'website.sch'
+    include 'website-full.sch'
+  }
+  into "build/dist/xml/website/${website_version}/sch"
+  doFirst {
+    mkdir("build/dist/xml/website/${website_version}/sch")
+  }
+}
+
+task distWebsite3(type: Copy) {
+  from('website') {
+    include 'website.nvdl'
+  }
+  into "build/dist/xml/website/${website_version}"
+  doFirst {
+    mkdir("build/dist/xml/website/${website_version}")
+  }
+}
+
+task distWebsite4(type: XMLCalabashTask) {
+  inputs.file "../tools/make-index.xpl"
+  inputs.file "website/index.xhtml"
+  outputs.file "build/dist/xml/website/${website_version}/index.html"
+
+  pipeline "../tools/make-index.xpl"
+  input("source", "website/index.xhtml")
+  output("result", "build/dist/xml/website/${website_version}/index.html")
+  option("version", "${website_version}")
+  option("tdg", "http://docbook.org/tdg51/website/en/html/")
+  option("tdgtitle", "DocBook Website 5.1: The Definitive Guide")
+}
+
+task distWebsiteCatalog(type: XMLCalabashTask) {
+  inputs.file "website/catalog.xml"
+  inputs.file "../tools/catalog.xsl"
+  outputs.file "build/dist/xml/website/${website_version}/catalog.xml"
+
+  pipeline "../tools/catalog.xpl"
+  input("source", "website/catalog.xml")
+  output("result", "build/dist/xml/website/${website_version}/catalog.xml")
+  option("ROOT", "http://docbook.org/xml/website")
+  option("ROOT2", "http://www.docbook.org/xml/website")
+  option("VERSION", "${website_version}")
+  doFirst {
+    mkdir("build/dist/xml/website/${website_version}")
+  }
+}
+
+task distWebsite(dependsOn: ['distWebsite1', 'distWebsite2', 'distWebsite3',
+                             'distWebsite4',
+                             'distWebsiteCatalog']) {
+  // nop
+}
+
+// ============================================================
+
+task dist(dependsOn: ['schemas', 'test',
+                      'distDocBook','distPublishers','distSimple',
+                      'distSlides','distWebsite']) {
+  // nop
 }
