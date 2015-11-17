@@ -3,12 +3,15 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:db="http://docbook.org/ns/docbook"
 		xmlns:t="http://docbook.org/xslt/ns/template"
+                xmlns:m="http://docbook.org/xslt/ns/mode"
 	        xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns="http://www.w3.org/1999/xhtml"
-                exclude-result-prefixes="db t xlink xs"
+                exclude-result-prefixes="db t m xlink xs"
                 version="2.0">
 
 <xsl:import href="/projects/docbook/xslt20/xslt/base/html/final-pass.xsl"/>
+
+<xsl:output method="xhtml" encoding="utf-8" indent="no" />
 
 <xsl:param name="dateTime-format" select="'[D1] [MNn] [Y0001]'"/>
 <xsl:param name="date-format" select="'[D01] [MNn] [Y0001]'"/>
@@ -21,7 +24,7 @@
 <tocparam path="article" toc="1" title="1"/>
 </xsl:param>
 
-<xsl:template name="t:css">
+<xsl:template match="*" mode="m:css">
   <xsl:param name="node" select="."/>
   <link rel="stylesheet" href="http://docs.oasis-open.org/templates/DocBook/spec-0.6/css/oasis-spec.css" type="text/css" />
   <style type="text/css">
@@ -76,7 +79,7 @@ p.bibliomixed span.entry {
       <div>
         <h2>
           <xsl:value-of select="db:releaseinfo[@role='stage']"/>
-          <xsl:text> Draft </xsl:text>
+          <xsl:text> </xsl:text>
           <xsl:value-of select="db:biblioid[@class='pubsnumber']"/>
           <xsl:if test="db:productnumber='csprd'">
             <xsl:text> / </xsl:text>

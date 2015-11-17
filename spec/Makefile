@@ -1,11 +1,18 @@
 HTMLSTYLE=style/html.xsl
-PIPELINE=/projects/docbook/xslt20/xslt/base/pipelines/docbook.xpl
+PIPELINE=/projects/docbook/xslt20/xslt/base/pipelines/db2xhtml.xpl
 CONDITION=oasis
 VPATH=src
-NUM=02
+NUM=01
 
-all: docbook-v5.1-csd$(NUM).html docbook-v5.1-csprd$(NUM).html \
+all: docbook-v5.1-cs$(NUM).html docbook-v5.1-cs$(NUM).pdf
+
+old: docbook-v5.1-csd$(NUM).html docbook-v5.1-csprd$(NUM).html \
      docbook-v5.1-csd$(NUM).pdf docbook-v5.1-csprd$(NUM).pdf
+
+docbook-v5.1-cs$(NUM).html: docbook-v5.1-cs$(NUM).xml $(HTMLSTYLE)
+	calabash -isource=$< -oresult=$@ \
+	-pprofile.condition=$(CONDITION) \
+        $(PIPELINE) style=$(HTMLSTYLE)
 
 docbook-v5.1-csd$(NUM).html: docbook-v5.1-csd$(NUM).xml $(HTMLSTYLE)
 	calabash -isource=$< -oresult=$@ \
@@ -17,6 +24,9 @@ docbook-v5.1-csprd$(NUM).html: docbook-v5.1-csprd$(NUM).xml $(HTMLSTYLE)
 	-pprofile.condition=$(CONDITION) \
         $(PIPELINE) style=$(HTMLSTYLE)
 
+docbook-v5.1-cs$(NUM).xml: cs.xml info.xml body.xml
+	calabash -isource=$< -oresult=$@ style/xinclude.xpl
+
 docbook-v5.1-csd$(NUM).xml: csd.xml info.xml body.xml
 	calabash -isource=$< -oresult=$@ style/xinclude.xpl
 
@@ -25,6 +35,9 @@ docbook-v5.1-csprd$(NUM).xml: prd.xml info.xml body.xml
 
 docbook-v5.1-csd$(NUM).pdf: docbook-v5.1-csd$(NUM).html style/pdf.xpl
 	calabash -isource=$< style/pdf.xpl pdf=$@ docid=docbook-v5.1-csd$(NUM)
+
+docbook-v5.1-cs$(NUM).pdf: docbook-v5.1-cs$(NUM).html style/pdf.xpl
+	calabash -isource=$< style/pdf.xpl pdf=$@ docid=docbook-v5.1-cs$(NUM)
 
 docbook-v5.1-csprd$(NUM).pdf: docbook-v5.1-csprd$(NUM).html style/pdf.xpl
 	calabash -isource=$< style/pdf.xpl pdf=$@ docid=docbook-v5.1-csprd$(NUM)

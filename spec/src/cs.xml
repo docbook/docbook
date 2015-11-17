@@ -1,0 +1,25 @@
+<article xmlns="http://docbook.org/ns/docbook"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+	 version="5.0"
+	 xml:lang="en">
+<info>
+<productname>docbook</productname>
+<productnumber>cs</productnumber>
+<releaseinfo role="stage">Committee Specification</releaseinfo>
+<biblioid class="pubsnumber">01</biblioid>
+<biblioid class="draftnumber">01</biblioid>
+
+<releaseinfo role="root" condition="oasis"
+>http://docs.oasis-open.org/docbook/docbook/v5.1</releaseinfo>
+<releaseinfo role="root" condition="docbook"
+>http://docbook.org/...</releaseinfo>
+
+<releaseinfo role="previous" condition="oasis"
+>http://docs.oasis-open.org/docbook/docbook/v5.1/cs01/docbook-v5.1-cs01</releaseinfo>
+
+<xi:include parse="xml" href="info.xml" xpointer="xpath(/*/*)"/>
+</info>
+
+<xi:include parse="xml" href="body.xml" xpointer="xpath(/*/*)"/>
+</article>
