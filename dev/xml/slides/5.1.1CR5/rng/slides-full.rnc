@@ -3929,8 +3929,7 @@ div {
     & db.common.linking.attributes
   db.subscript =
     
-    ## A subscript (as in H2
-    ## O, the molecular formula for water)
+    ## A subscript (as in H₂O, the molecular formula for water)
     element subscript { db.subscript.attlist, db._text }
 }
 div {
@@ -3941,8 +3940,7 @@ div {
     & db.common.linking.attributes
   db.superscript =
     
-    ## A superscript (as in x2
-    ## , the mathematical notation for x multiplied by itself)
+    ## A superscript (as in x², the mathematical notation for x multiplied by itself)
     element superscript { db.superscript.attlist, db._text }
 }
 div {
