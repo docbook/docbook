@@ -5024,7 +5024,7 @@ div {
 
 [
    db:refname [ "subscript" ]
-   db:refpurpose [ "A subscript (as in H" db:subscript [ "2" ] "O, the molecular formula for water)" ]
+   db:refpurpose [ "A subscript (as in H₂O, the molecular formula for water)" ]
 ]
 div {
 
@@ -5046,7 +5046,7 @@ div {
 
 [
    db:refname [ "superscript" ]
-   db:refpurpose [ "A superscript (as in x" db:superscript [ "2" ] ", the mathematical notation for x multiplied by itself)" ]
+   db:refpurpose [ "A superscript (as in x², the mathematical notation for x multiplied by itself)" ]
 ]
 div {
 
