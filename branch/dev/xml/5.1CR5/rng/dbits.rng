@@ -13,7 +13,7 @@
          ns="http://docbook.org/ns/docbook">
 
 <!--
-This file is part of DocBook ITS V5.1-CSPRD02
+This file is part of DocBook ITS V5.1-CS01
 
 Copyright 2007-2015 HaL Computer Systems, Inc.,
 O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
@@ -7039,8 +7039,7 @@ information, see http://www.oasis-open.org/docbook/.
 
       <define name="db.subscript">
          <element name="subscript">
-            <a:documentation>A subscript (as in H2
-O, the molecular formula for water)</a:documentation>
+            <a:documentation>A subscript (as in H₂O, the molecular formula for water)</a:documentation>
             <ref name="db.subscript.attlist"/>
             <ref name="db._text"/>
          </element>
@@ -7064,8 +7063,7 @@ O, the molecular formula for water)</a:documentation>
 
       <define name="db.superscript">
          <element name="superscript">
-            <a:documentation>A superscript (as in x2
-, the mathematical notation for x multiplied by itself)</a:documentation>
+            <a:documentation>A superscript (as in x², the mathematical notation for x multiplied by itself)</a:documentation>
             <ref name="db.superscript.attlist"/>
             <ref name="db._text"/>
          </element>

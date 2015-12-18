@@ -6,7 +6,7 @@ namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# This file is part of Simplified DocBook V5.1-CSPRD02
+# This file is part of Simplified DocBook V5.1-CS01
 # 
 # Copyright 1992-2015 HaL Computer Systems, Inc.,
 # O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
@@ -3685,8 +3685,7 @@ div {
     & db.common.linking.attributes
   db.subscript =
     
-    ## A subscript (as in H2
-    ## O, the molecular formula for water)
+    ## A subscript (as in H₂O, the molecular formula for water)
     element subscript { db.subscript.attlist, db._text }
 }
 div {
@@ -3697,8 +3696,7 @@ div {
     & db.common.linking.attributes
   db.superscript =
     
-    ## A superscript (as in x2
-    ## , the mathematical notation for x multiplied by itself)
+    ## A superscript (as in x², the mathematical notation for x multiplied by itself)
     element superscript { db.superscript.attlist, db._text }
 }
 div {
