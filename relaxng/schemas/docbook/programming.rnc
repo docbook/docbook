@@ -288,7 +288,7 @@ div {
    db.paramdef =
       element paramdef {
          db.paramdef.attlist,
-         (db._text | db.initializer | db.type | db.parameter | db.funcparams)*
+         (db._text | db.initializer | db.modifier | db.type | db.parameter | db.funcparams)*
       }
 }
 
