@@ -1373,7 +1373,7 @@ div {
    db.abstract = element abstract {
       db.abstract.attlist,
       db.abstract.info,
-      db.para.blocks+
+      db.all.blocks+
    }
 }
 
