@@ -1,3 +1,4 @@
+namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
 namespace rng  = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace db = "http://docbook.org/ns/docbook"
@@ -441,7 +442,10 @@ div {
 
    db.article.status.attribute = db.status.attribute
 
-
+   ctrl:other-attribute [ name="db.article.class.attribute"
+                          enum-name="db.article.class-enum.attribute"
+                          other-name="db.article.class-other.attributes" ]
+   
    db.article.class.enumeration =
       ## A collection of frequently asked questions.
       "faq"
@@ -456,11 +460,30 @@ div {
     | ## A white paper.
       "whitepaper"
 
-   db.article.class.attribute =
+   db.article.class-enum.attribute =
       [
          db:refpurpose [ "Identifies the nature of the article" ]
       ]
       attribute class { db.article.class.enumeration }
+
+    db.article.class-other.attribute =
+      [
+         db:refpurpose [ "Identifies the nature of the non-standard article" ]
+      ]
+      attribute otherclass { xsd:NMTOKEN }
+
+   db.article.class-other.attributes =
+      [
+         db:refpurpose [ "Identifies the nature of the article" ]
+      ]
+      attribute class {
+         ## Indicates that the identifier is some 'other' kind.
+         "other"
+      }
+      & db.article.class-other.attribute
+
+   db.article.class.attribute =
+     (db.article.class-enum.attribute | db.article.class-other.attributes)
 
    db.article.role.attribute = attribute role { text }
 
