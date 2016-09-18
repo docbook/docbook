@@ -161,7 +161,7 @@ div {
    db.funcdef =
       element funcdef {
          db.funcdef.attlist,
-         (db._text | db.type | db.function)*
+         (db._text | db.type | db.void | db.function)*
       }
 }
 
