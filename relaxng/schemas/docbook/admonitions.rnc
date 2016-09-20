@@ -16,6 +16,7 @@ ctrl:exclude [ from="db.caption" exclude="db.admonition.blocks" ]
 
 db.admonition.blocks =
    db.caution
+ | db.danger
  | db.important
  | db.note
  | db.tip
@@ -41,6 +42,28 @@ div {
    db.caution =
       element caution {
          db.caution.attlist,
+         db.admonition.contentmodel
+      }
+}
+
+# ======================================================================
+
+  [
+   db:refname [ "danger" ]
+   db:refpurpose [ "An admonition set off from the text indicating hazardous situation" ]
+]
+div {
+
+   db.danger.role.attribute = attribute role { text }
+
+   db.danger.attlist =
+      db.danger.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.danger =
+      element danger {
+         db.danger.attlist,
          db.admonition.contentmodel
       }
 }
