@@ -470,7 +470,7 @@ task testDocBook(dependsOn: ['positiveDocBookTests','negativeDocBookTests']) {
 
 Random random = new Random()
 Boolean travis = (System.getenv("GH_TOKEN") != null)
-int threshold = 50
+int threshold = 90
 
 if (travis) {
   print("Skipping roughly " + threshold + "% of tests to avoid memory problems on Travis\n")
