@@ -10,7 +10,7 @@
          ns="http://docbook.org/ns/docbook">
 
 <!--
-This file is part of Simplified DocBook V5.1-CS01
+This file is part of Simplified DocBook V5.2-b01
 
 Copyright 1992-2015 HaL Computer Systems, Inc.,
 O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
@@ -1786,6 +1786,12 @@ information, see http://www.oasis-open.org/docbook/.
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caption</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:caption">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
@@ -2412,6 +2418,7 @@ information, see http://www.oasis-open.org/docbook/.
 
    <define name="db.admonition.blocks">
       <choice>
+         <ref name="db.danger"/>
          <ref name="db.note"/>
       </choice>
    </define>
@@ -2422,6 +2429,42 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.all.blocks"/>
       </oneOrMore>
    </define>
+
+   <div>
+      <define name="db.danger.role.attribute">
+         <attribute name="role"/>
+      </define>
+
+      <define name="db.danger.attlist">
+         <interleave>
+            <optional>
+               <ref name="db.danger.role.attribute"/>
+            </optional>
+            <ref name="db.common.attributes"/>
+            <ref name="db.common.linking.attributes"/>
+         </interleave>
+      </define>
+
+      <define name="db.danger">
+         <element name="danger">
+            <a:documentation>An admonition set off from the text indicating hazardous situation</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:note)">note must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <ref name="db.danger.attlist"/>
+            <ref name="db.admonition.contentmodel"/>
+         </element>
+      </define>
+   </div>
 
    <div>
       <define name="db.note.role.attribute">
@@ -2441,6 +2484,12 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.note">
          <element name="note">
             <a:documentation>A message set off from the text</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:note">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of note</s:assert>
+               </s:rule>
+            </s:pattern>
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:note">
@@ -3430,7 +3479,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.abstract.attlist"/>
             <ref name="db.abstract.info"/>
             <oneOrMore>
-               <ref name="db.para.blocks"/>
+               <ref name="db.all.blocks"/>
             </oneOrMore>
          </element>
       </define>
@@ -3596,6 +3645,12 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.footnote">
          <element name="footnote">
             <a:documentation>A footnote</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:footnote">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of footnote</s:assert>
+               </s:rule>
+            </s:pattern>
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
@@ -4853,6 +4908,12 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.caption">
          <element name="caption">
             <a:documentation>A caption</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:caption">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caption</s:assert>
+               </s:rule>
+            </s:pattern>
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">

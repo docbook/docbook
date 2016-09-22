@@ -10,7 +10,7 @@ namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace svg = "http://www.w3.org/2000/svg"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# This file is part of Simplified DocBook V5.1-CS01
+# This file is part of Simplified DocBook V5.2-b01
 # 
 # This file is a customization of DocBook V5.x created by the OASIS
 # DocBook Publishers Subcommittee.
@@ -1025,7 +1025,7 @@ div {
       ]
     ]
     element abstract {
-      db.abstract.attlist, db.abstract.info, db.para.blocks+
+      db.abstract.attlist, db.abstract.info, db.all.blocks+
     }
 }
 div {
@@ -1321,6 +1321,26 @@ div {
           s:assert [
             test = "not(.//db:epigraph)"
             "epigraph must not occur among the children or descendants of footnote"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:footnote"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:danger)"
+            "danger must not occur among the children or descendants of footnote"
           ]
           "\x{a}" ~
           "               "
@@ -2296,6 +2316,26 @@ div {
           s:assert [
             test = "not(.//db:task)"
             "task must not occur among the children or descendants of caption"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caption"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:danger)"
+            "danger must not occur among the children or descendants of caption"
           ]
           "\x{a}" ~
           "               "
@@ -4292,10 +4332,25 @@ div {
     | 
       ## A white paper.
       "whitepaper"
-  db.article.class.attribute =
+  db.article.class-enum.attribute =
     
     ## Identifies the nature of the article
     attribute class { db.article.class.enumeration }
+  db.article.class-other.attribute =
+    
+    ## Identifies the nature of the non-standard article
+    attribute otherclass { xsd:NMTOKEN }
+  db.article.class-other.attributes =
+    
+    ## Identifies the nature of the article
+    attribute class {
+      
+      ## Indicates that the identifier is some 'other' kind.
+      "other"
+    }
+    & db.article.class-other.attribute
+  db.article.class.attribute =
+    db.article.class-enum.attribute | db.article.class-other.attributes
   db.article.role.attribute = attribute role { text }
   db.article.attlist =
     db.article.role.attribute?
@@ -6695,8 +6750,61 @@ div {
     ## A number assigned to a product
     element productnumber { db.productnumber.attlist, db._text }
 }
-db.admonition.blocks = db.note
+db.admonition.blocks = db.danger | db.note
 db.admonition.contentmodel = db._info.title.only, db.all.blocks+
+div {
+  db.danger.role.attribute = attribute role { text }
+  db.danger.attlist =
+    db.danger.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+  db.danger =
+    
+    ## An admonition set off from the text indicating hazardous situation
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:danger"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:danger)"
+            "danger must not occur among the children or descendants of danger"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:danger"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:note)"
+            "note must not occur among the children or descendants of danger"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element danger { db.danger.attlist, db.admonition.contentmodel }
+}
 div {
   db.note.role.attribute = attribute role { text }
   db.note.attlist =
@@ -6707,6 +6815,26 @@ div {
     
     ## A message set off from the text
     [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:note"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:danger)"
+            "danger must not occur among the children or descendants of note"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
       s:pattern [
         "\x{a}" ~
         "               "

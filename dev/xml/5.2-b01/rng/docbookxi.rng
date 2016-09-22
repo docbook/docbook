@@ -6,19 +6,19 @@
          xmlns:xlink="http://www.w3.org/1999/xlink"
          xmlns:html="http://www.w3.org/1999/xhtml"
          xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
          xmlns:mml="http://www.w3.org/1998/Math/MathML"
          xmlns:svg="http://www.w3.org/2000/svg"
-         xmlns:its="http://www.w3.org/2005/11/its"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://docbook.org/ns/docbook">
 
 <!--
-This file is part of DocBook ITS V5.1-CS01
+This file is part of DocBook XInclude V5.2-b01
 
-Copyright 2007-2015 HaL Computer Systems, Inc.,
+Copyright 1992-2015 HaL Computer Systems, Inc.,
 O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
-Corporation, Norman Walsh, Jirka Kosek, Sun Microsystems, Inc.,
-and the Organization for the Advancement of Structured Information
+Corporation, Norman Walsh, Sun Microsystems, Inc., and the
+Organization for the Advancement of Structured Information
 Standards (OASIS).
 
 Permission to use, copy, modify and distribute the DocBook schema
@@ -48,9 +48,9 @@ information, see http://www.oasis-open.org/docbook/.
    <s:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
    <s:ns prefix="html" uri="http://www.w3.org/1999/xhtml"/>
    <s:ns prefix="ctrl" uri="http://nwalsh.com/xmlns/schema-control/"/>
+   <s:ns prefix="xi" uri="http://www.w3.org/2001/XInclude"/>
    <s:ns prefix="mml" uri="http://www.w3.org/1998/Math/MathML"/>
    <s:ns prefix="svg" uri="http://www.w3.org/2000/svg"/>
-   <s:ns prefix="its" uri="http://www.w3.org/2005/11/its"/>
    <start>
       <choice>
          <choice>
@@ -174,6 +174,25 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>Any attribute, including any attribute in any namespace.</a:documentation>
             <anyName/>
          </attribute>
+      </define>
+
+      <define name="db._any">
+         <element>
+            <a:documentation>Any element from almost any namespace</a:documentation>
+            <anyName>
+               <except>
+                  <nsName/>
+                  <nsName ns="http://www.w3.org/1999/xhtml"/>
+               </except>
+            </anyName>
+            <zeroOrMore>
+               <choice>
+                  <ref name="db._any.attribute"/>
+                  <text/>
+                  <ref name="db._any"/>
+               </choice>
+            </zeroOrMore>
+         </element>
       </define>
    </div>
 
@@ -578,12 +597,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
          <ref name="db.effectivity.attributes"/>
          <ref name="db.rdfalite.attributes"/>
-         <interleave>
-            <ref name="its-local.attributes"/>
-            <optional>
-               <ref name="its-attribute.version"/>
-            </optional>
-         </interleave>
       </interleave>
    </define>
 
@@ -1075,10 +1088,14 @@ information, see http://www.oasis-open.org/docbook/.
 
    <define name="db.all.inlines">
       <choice>
-         <text/>
-         <ref name="db.ubiq.inlines"/>
-         <ref name="db.general.inlines"/>
-         <ref name="db.domain.inlines"/>
+         <choice>
+            <text/>
+            <ref name="db.ubiq.inlines"/>
+            <ref name="db.general.inlines"/>
+            <ref name="db.domain.inlines"/>
+            <ref name="db.extension.inlines"/>
+         </choice>
+         <ref name="db.xi.include"/>
       </choice>
    </define>
 
@@ -1197,6 +1214,10 @@ information, see http://www.oasis-open.org/docbook/.
       </choice>
    </define>
 
+   <define name="db.extension.inlines">
+      <notAllowed/>
+   </define>
+
    <define name="db.nopara.blocks">
       <choice>
          <choice>
@@ -1231,8 +1252,10 @@ information, see http://www.oasis-open.org/docbook/.
          <choice>
             <ref name="db.nopara.blocks"/>
             <ref name="db.para.blocks"/>
+            <ref name="db.extension.blocks"/>
          </choice>
          <ref name="db.annotation"/>
+         <ref name="db.xi.include"/>
       </choice>
    </define>
 
@@ -1320,14 +1343,12 @@ information, see http://www.oasis-open.org/docbook/.
       </choice>
    </define>
 
+   <define name="db.extension.blocks">
+      <notAllowed/>
+   </define>
+
    <define name="db.info.extension">
-      <choice>
-         <ref name="db._any"/>
-         <choice>
-            <ref name="its-rules"/>
-            <ref name="its-standoff"/>
-         </choice>
-      </choice>
+      <ref name="db._any"/>
    </define>
 
    <define name="db.info.elements">
@@ -1383,6 +1404,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.productname"/>
             <ref name="db.productnumber"/>
          </choice>
+         <ref name="db.xi.include"/>
       </choice>
    </define>
 
@@ -2076,7 +2098,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.abstract.attlist"/>
             <ref name="db.abstract.info"/>
             <oneOrMore>
-               <ref name="db.para.blocks"/>
+               <ref name="db.all.blocks"/>
             </oneOrMore>
          </element>
       </define>
@@ -2418,6 +2440,12 @@ information, see http://www.oasis-open.org/docbook/.
                <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of footnote</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:footnote">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -3711,6 +3739,7 @@ information, see http://www.oasis-open.org/docbook/.
          <oneOrMore>
             <ref name="db.imagedata.svg"/>
          </oneOrMore>
+         <ref name="db.xi.include"/>
       </choice>
    </define>
 
@@ -4308,6 +4337,12 @@ information, see http://www.oasis-open.org/docbook/.
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of caption</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:caption">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -5335,6 +5370,7 @@ information, see http://www.oasis-open.org/docbook/.
       <choice>
          <choice>
             <ref name="db.para.blocks"/>
+            <ref name="db.extension.blocks"/>
             <ref name="db.list.blocks"/>
             <ref name="db.informal.blocks"/>
             <ref name="db.publishing.blocks"/>
@@ -7408,6 +7444,38 @@ information, see http://www.oasis-open.org/docbook/.
          <oneOrMore>
             <ref name="db.refentry"/>
          </oneOrMore>
+         <choice>
+            <oneOrMore>
+               <choice>
+                  <ref name="db.section"/>
+                  <ref name="db.xi.include"/>
+               </choice>
+            </oneOrMore>
+            <oneOrMore>
+               <choice>
+                  <ref name="db.simplesect"/>
+                  <ref name="db.xi.include"/>
+               </choice>
+            </oneOrMore>
+         </choice>
+         <oneOrMore>
+            <choice>
+               <ref name="db.refentry"/>
+               <ref name="db.xi.include"/>
+            </choice>
+         </oneOrMore>
+         <oneOrMore>
+            <choice>
+               <ref name="db.refsect1"/>
+               <ref name="db.xi.include"/>
+            </choice>
+         </oneOrMore>
+         <oneOrMore>
+            <choice>
+               <ref name="db.sect1"/>
+               <ref name="db.xi.include"/>
+            </choice>
+         </oneOrMore>
       </choice>
    </define>
 
@@ -7443,6 +7511,32 @@ information, see http://www.oasis-open.org/docbook/.
          <oneOrMore>
             <ref name="db.refentry"/>
          </oneOrMore>
+         <choice>
+            <oneOrMore>
+               <choice>
+                  <ref name="db.section"/>
+                  <ref name="db.xi.include"/>
+               </choice>
+            </oneOrMore>
+            <oneOrMore>
+               <choice>
+                  <ref name="db.simplesect"/>
+                  <ref name="db.xi.include"/>
+               </choice>
+            </oneOrMore>
+         </choice>
+         <oneOrMore>
+            <choice>
+               <ref name="db.refentry"/>
+               <ref name="db.xi.include"/>
+            </choice>
+         </oneOrMore>
+         <oneOrMore>
+            <choice>
+               <ref name="db.refsect1"/>
+               <ref name="db.xi.include"/>
+            </choice>
+         </oneOrMore>
       </choice>
    </define>
 
@@ -7464,18 +7558,22 @@ information, see http://www.oasis-open.org/docbook/.
       <choice>
          <ref name="db.part"/>
          <ref name="db.reference"/>
+         <ref name="db.xi.include"/>
       </choice>
    </define>
 
    <define name="db.components">
       <choice>
-         <ref name="db.dedication"/>
-         <ref name="db.acknowledgements"/>
-         <ref name="db.preface"/>
-         <ref name="db.chapter"/>
-         <ref name="db.appendix"/>
-         <ref name="db.article"/>
-         <ref name="db.colophon"/>
+         <choice>
+            <ref name="db.dedication"/>
+            <ref name="db.acknowledgements"/>
+            <ref name="db.preface"/>
+            <ref name="db.chapter"/>
+            <ref name="db.appendix"/>
+            <ref name="db.article"/>
+            <ref name="db.colophon"/>
+         </choice>
+         <ref name="db.xi.include"/>
       </choice>
    </define>
 
@@ -7515,9 +7613,12 @@ information, see http://www.oasis-open.org/docbook/.
 
    <define name="db.set.components">
       <choice>
-         <ref name="db.set"/>
-         <ref name="db.book"/>
-         <ref name="db.article"/>
+         <choice>
+            <ref name="db.set"/>
+            <ref name="db.book"/>
+            <ref name="db.article"/>
+         </choice>
+         <ref name="db.xi.include"/>
       </choice>
    </define>
 
@@ -7912,6 +8013,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.refentry"/>
             <ref name="db.reference"/>
          </choice>
+         <ref name="db.xi.include"/>
       </choice>
    </define>
 
@@ -8206,11 +8308,36 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </define>
 
-      <define name="db.article.class.attribute">
+      <define name="db.article.class-enum.attribute">
          <attribute name="class">
             <a:documentation>Identifies the nature of the article</a:documentation>
             <ref name="db.article.class.enumeration"/>
          </attribute>
+      </define>
+
+      <define name="db.article.class-other.attribute">
+         <attribute name="otherclass">
+            <a:documentation>Identifies the nature of the non-standard article</a:documentation>
+            <data type="NMTOKEN"/>
+         </attribute>
+      </define>
+
+      <define name="db.article.class-other.attributes">
+         <interleave>
+            <attribute name="class">
+               <a:documentation>Identifies the nature of the article</a:documentation>
+               <value>other</value>
+               <a:documentation>Indicates that the identifier is some 'other' kind.</a:documentation>
+            </attribute>
+            <ref name="db.article.class-other.attribute"/>
+         </interleave>
+      </define>
+
+      <define name="db.article.class.attribute">
+         <choice>
+            <ref name="db.article.class-enum.attribute"/>
+            <ref name="db.article.class-other.attributes"/>
+         </choice>
       </define>
 
       <define name="db.article.role.attribute">
@@ -8623,16 +8750,24 @@ information, see http://www.oasis-open.org/docbook/.
 
    <define name="db.sect1.sections">
       <choice>
-         <group>
+         <choice>
+            <group>
+               <oneOrMore>
+                  <ref name="db.sect2"/>
+               </oneOrMore>
+               <zeroOrMore>
+                  <ref name="db.simplesect"/>
+               </zeroOrMore>
+            </group>
             <oneOrMore>
-               <ref name="db.sect2"/>
-            </oneOrMore>
-            <zeroOrMore>
                <ref name="db.simplesect"/>
-            </zeroOrMore>
-         </group>
+            </oneOrMore>
+         </choice>
          <oneOrMore>
-            <ref name="db.simplesect"/>
+            <choice>
+               <ref name="db.sect2"/>
+               <ref name="db.xi.include"/>
+            </choice>
          </oneOrMore>
       </choice>
    </define>
@@ -8702,16 +8837,24 @@ information, see http://www.oasis-open.org/docbook/.
 
    <define name="db.sect2.sections">
       <choice>
-         <group>
+         <choice>
+            <group>
+               <oneOrMore>
+                  <ref name="db.sect3"/>
+               </oneOrMore>
+               <zeroOrMore>
+                  <ref name="db.simplesect"/>
+               </zeroOrMore>
+            </group>
             <oneOrMore>
-               <ref name="db.sect3"/>
-            </oneOrMore>
-            <zeroOrMore>
                <ref name="db.simplesect"/>
-            </zeroOrMore>
-         </group>
+            </oneOrMore>
+         </choice>
          <oneOrMore>
-            <ref name="db.simplesect"/>
+            <choice>
+               <ref name="db.sect3"/>
+               <ref name="db.xi.include"/>
+            </choice>
          </oneOrMore>
       </choice>
    </define>
@@ -8781,16 +8924,24 @@ information, see http://www.oasis-open.org/docbook/.
 
    <define name="db.sect3.sections">
       <choice>
-         <group>
+         <choice>
+            <group>
+               <oneOrMore>
+                  <ref name="db.sect4"/>
+               </oneOrMore>
+               <zeroOrMore>
+                  <ref name="db.simplesect"/>
+               </zeroOrMore>
+            </group>
             <oneOrMore>
-               <ref name="db.sect4"/>
-            </oneOrMore>
-            <zeroOrMore>
                <ref name="db.simplesect"/>
-            </zeroOrMore>
-         </group>
+            </oneOrMore>
+         </choice>
          <oneOrMore>
-            <ref name="db.simplesect"/>
+            <choice>
+               <ref name="db.sect4"/>
+               <ref name="db.xi.include"/>
+            </choice>
          </oneOrMore>
       </choice>
    </define>
@@ -8860,16 +9011,24 @@ information, see http://www.oasis-open.org/docbook/.
 
    <define name="db.sect4.sections">
       <choice>
-         <group>
+         <choice>
+            <group>
+               <oneOrMore>
+                  <ref name="db.sect5"/>
+               </oneOrMore>
+               <zeroOrMore>
+                  <ref name="db.simplesect"/>
+               </zeroOrMore>
+            </group>
             <oneOrMore>
-               <ref name="db.sect5"/>
-            </oneOrMore>
-            <zeroOrMore>
                <ref name="db.simplesect"/>
-            </zeroOrMore>
-         </group>
+            </oneOrMore>
+         </choice>
          <oneOrMore>
-            <ref name="db.simplesect"/>
+            <choice>
+               <ref name="db.sect5"/>
+               <ref name="db.xi.include"/>
+            </choice>
          </oneOrMore>
       </choice>
    </define>
@@ -8938,9 +9097,17 @@ information, see http://www.oasis-open.org/docbook/.
    </div>
 
    <define name="db.sect5.sections">
-      <oneOrMore>
-         <ref name="db.simplesect"/>
-      </oneOrMore>
+      <choice>
+         <oneOrMore>
+            <ref name="db.simplesect"/>
+         </oneOrMore>
+         <oneOrMore>
+            <choice>
+               <ref name="db.simplesect"/>
+               <ref name="db.xi.include"/>
+            </choice>
+         </oneOrMore>
+      </choice>
    </define>
 
    <div>
@@ -9014,6 +9181,18 @@ information, see http://www.oasis-open.org/docbook/.
          <oneOrMore>
             <ref name="db.refsect1"/>
          </oneOrMore>
+         <oneOrMore>
+            <choice>
+               <ref name="db.refentry"/>
+               <ref name="db.xi.include"/>
+            </choice>
+         </oneOrMore>
+         <oneOrMore>
+            <choice>
+               <ref name="db.refsect1"/>
+               <ref name="db.xi.include"/>
+            </choice>
+         </oneOrMore>
       </choice>
    </define>
 
@@ -9025,11 +9204,26 @@ information, see http://www.oasis-open.org/docbook/.
          <oneOrMore>
             <ref name="db.refsect2"/>
          </oneOrMore>
+         <oneOrMore>
+            <choice>
+               <ref name="db.refentry"/>
+               <ref name="db.xi.include"/>
+            </choice>
+         </oneOrMore>
+         <oneOrMore>
+            <choice>
+               <ref name="db.refsect2"/>
+               <ref name="db.xi.include"/>
+            </choice>
+         </oneOrMore>
       </choice>
    </define>
 
    <define name="db.reference.components">
-      <ref name="db.refentry"/>
+      <choice>
+         <ref name="db.refentry"/>
+         <ref name="db.xi.include"/>
+      </choice>
    </define>
 
    <div>
@@ -13914,6 +14108,12 @@ where the nonterminal
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caption</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:caption">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
@@ -14845,6 +15045,9 @@ where the nonterminal
          <oneOrMore>
             <ref name="db._any.mml"/>
          </oneOrMore>
+         <oneOrMore>
+            <ref name="db.xi.include"/>
+         </oneOrMore>
       </choice>
    </define>
 
@@ -14860,6 +15063,9 @@ where the nonterminal
          </choice>
          <oneOrMore>
             <ref name="db._any.mml"/>
+         </oneOrMore>
+         <oneOrMore>
+            <ref name="db.xi.include"/>
          </oneOrMore>
       </choice>
    </define>
@@ -15047,7 +15253,10 @@ where the nonterminal
    </div>
 
    <define name="db.imagedata.mathml.content">
-      <ref name="db._any.mml"/>
+      <choice>
+         <ref name="db._any.mml"/>
+         <ref name="db.xi.include"/>
+      </choice>
    </define>
 
    <div>
@@ -15134,7 +15343,10 @@ where the nonterminal
    </div>
 
    <define name="db.imagedata.svg.content">
-      <ref name="db._any.svg"/>
+      <choice>
+         <ref name="db._any.svg"/>
+         <ref name="db.xi.include"/>
+      </choice>
    </define>
 
    <div>
@@ -17013,6 +17225,7 @@ where the nonterminal
                <choice>
                   <ref name="db._text"/>
                   <ref name="db.type"/>
+                  <ref name="db.void"/>
                   <ref name="db.function"/>
                </choice>
             </zeroOrMore>
@@ -17170,6 +17383,7 @@ where the nonterminal
                <choice>
                   <ref name="db._text"/>
                   <ref name="db.initializer"/>
+                  <ref name="db.modifier"/>
                   <ref name="db.type"/>
                   <ref name="db.parameter"/>
                   <ref name="db.funcparams"/>
@@ -17973,6 +18187,7 @@ where the nonterminal
    <define name="db.admonition.blocks">
       <choice>
          <ref name="db.caution"/>
+         <ref name="db.danger"/>
          <ref name="db.important"/>
          <ref name="db.note"/>
          <ref name="db.tip"/>
@@ -18014,6 +18229,12 @@ where the nonterminal
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caution">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caution</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:caution">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of caution</s:assert>
                </s:rule>
             </s:pattern>
@@ -18048,6 +18269,72 @@ where the nonterminal
    </div>
 
    <div>
+      <define name="db.danger.role.attribute">
+         <attribute name="role"/>
+      </define>
+
+      <define name="db.danger.attlist">
+         <interleave>
+            <optional>
+               <ref name="db.danger.role.attribute"/>
+            </optional>
+            <ref name="db.common.attributes"/>
+            <ref name="db.common.linking.attributes"/>
+         </interleave>
+      </define>
+
+      <define name="db.danger">
+         <element name="danger">
+            <a:documentation>An admonition set off from the text indicating hazardous situation</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:important)">important must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:note)">note must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:tip)">tip must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:warning)">warning must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <title>Root must have version</title>
+               <s:rule context="/db:danger">
+                  <s:assert test="@version">If this element is the root element, it must have a version attribute.</s:assert>
+               </s:rule>
+            </s:pattern>
+            <ref name="db.danger.attlist"/>
+            <ref name="db.admonition.contentmodel"/>
+         </element>
+      </define>
+   </div>
+
+   <div>
       <define name="db.important.role.attribute">
          <attribute name="role"/>
       </define>
@@ -18069,6 +18356,12 @@ where the nonterminal
                <s:title>Element exclusion</s:title>
                <s:rule context="db:important">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of important</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:important">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of important</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -18134,6 +18427,12 @@ where the nonterminal
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:note">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of note</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:note">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of note</s:assert>
                </s:rule>
             </s:pattern>
@@ -18194,6 +18493,12 @@ where the nonterminal
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:tip">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of tip</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:tip">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of tip</s:assert>
                </s:rule>
             </s:pattern>
@@ -18249,6 +18554,12 @@ where the nonterminal
                <s:title>Element exclusion</s:title>
                <s:rule context="db:warning">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of warning</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:warning">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of warning</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -18643,2158 +18954,78 @@ where the nonterminal
       </define>
    </div>
 
-   <define name="db._any">
-      <element>
-         <anyName>
-            <except>
-               <nsName ns="http://docbook.org/ns/docbook"/>
-               <nsName ns="http://www.w3.org/1999/xhtml"/>
-               <nsName ns="http://www.w3.org/2005/11/its"/>
-            </except>
-         </anyName>
-         <zeroOrMore>
-            <choice>
-               <attribute>
-                  <anyName/>
-               </attribute>
-               <text/>
-               <ref name="db._any"/>
-            </choice>
-         </zeroOrMore>
-      </element>
-   </define>
-
-   <!-- Include base ITS schema -->   <define name="its-version.type">
-      <a:documentation>Version of ITS</a:documentation>
-      <data type="string">
-         <param name="pattern">[0-9]+\.[0-9]+</param>
-      </data>
-   </define>
-
-   <define name="its-queryLanguage.type">
-      <a:documentation>The query language to be used for processing the rules</a:documentation>
-      <choice>
-         <value>xpath</value>
-         <value>css</value>
-         <text/>
-      </choice>
-   </define>
-
-   <define name="its-absolute-selector.type">
-      <data type="string" datatypeLibrary="">
-         <a:documentation>Absolute selector</a:documentation>
-      </data>
-   </define>
-
-   <define name="its-relative-selector.type">
-      <data type="string" datatypeLibrary="">
-         <a:documentation>Relative selector</a:documentation>
-      </data>
-   </define>
-
-   <define name="its-xpath-expression.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-confidence.type">
-      <data type="double">
-         <param name="minInclusive">0</param>
-         <param name="maxInclusive">1</param>
-      </data>
-   </define>
-
-   <define name="its-translate.type">
-      <a:documentation>The Translate data category information to be attached to the current node</a:documentation>
-      <choice>
-         <value>yes</value>
-         <a:documentation>The nodes need to be translated</a:documentation>
-         <value>no</value>
-         <a:documentation>The nodes must not be translated</a:documentation>
-      </choice>
-   </define>
-
-   <define name="its-locNote.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-locNoteType.type">
-      <a:documentation>The type of localization note</a:documentation>
-      <choice>
-         <value>alert</value>
-         <a:documentation>Localization note is an alert</a:documentation>
-         <value>description</value>
-         <a:documentation>Localization note is a description</a:documentation>
-      </choice>
-   </define>
-
-   <define name="its-locNoteRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-termInfoRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-term.type">
-      <a:documentation>Indicates a term locally</a:documentation>
-      <choice>
-         <value>yes</value>
-         <a:documentation>The value 'yes' means that this is a term</a:documentation>
-         <value>no</value>
-         <a:documentation>The value 'no' means that this is not a term</a:documentation>
-      </choice>
-   </define>
-
-   <define name="its-termConfidence.type">
-      <ref name="its-confidence.type"/>
-   </define>
-
-   <define name="its-dir.type">
-      <a:documentation>The text direction for the context</a:documentation>
-      <choice>
-         <value>ltr</value>
-         <a:documentation>Left-to-right text</a:documentation>
-         <value>rtl</value>
-         <a:documentation>Right-to-left text</a:documentation>
-         <value>lro</value>
-         <a:documentation>Left-to-right override</a:documentation>
-         <value>rlo</value>
-         <a:documentation>Right-to-left override</a:documentation>
-      </choice>
-   </define>
-
-   <define name="its-withinText.type">
-      <a:documentation>States whether current context is regarded as "within text"</a:documentation>
-      <choice>
-         <value>yes</value>
-         <a:documentation>The element and its content are part of the flow of its parent element</a:documentation>
-         <value>no</value>
-         <a:documentation>The element splits the text flow of its parent element and its content is an independent text flow</a:documentation>
-         <value>nested</value>
-         <a:documentation>The element is part of the flow of its parent element, its content is an independent flow</a:documentation>
-      </choice>
-   </define>
-
-   <define name="its-domainMapping.type">
-      <a:documentation>A comma separated list of mappings between values in the content
-and workflow specific values. The values may contain spaces; in
-that case they MUST be delimited by quotation marks.</a:documentation>
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-taConfidence.type">
-      <ref name="its-confidence.type"/>
-   </define>
-
-   <define name="its-taClassRefPointer.type">
-      <ref name="its-relative-selector.type"/>
-   </define>
-
-   <define name="its-taClassRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-taIdentRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-taIdent.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-taSource.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-taIdentPointer.type">
-      <ref name="its-relative-selector.type"/>
-   </define>
-
-   <define name="its-taIdentRefPointer.type">
-      <ref name="its-relative-selector.type"/>
-   </define>
-
-   <define name="its-taSourcePointer.type">
-      <ref name="its-relative-selector.type"/>
-   </define>
-
-   <define name="its-localeFilterList.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-localeFilterType.type">
-      <choice>
-         <value>include</value>
-         <value>exclude</value>
-      </choice>
-   </define>
-
-   <define name="its-provenanceRecordsRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-person.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-personRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-org.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-orgRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-tool.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-toolRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-revPerson.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-revPersonRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-revOrg.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-revOrgRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-revTool.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-revToolRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-provRef.type">
-      <list>
-         <oneOrMore>
-            <data type="anyURI"/>
-         </oneOrMore>
-      </list>
-   </define>
-
-   <define name="its-locQualityIssuesRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-locQualityIssueType.type">
-      <choice>
-         <value>terminology</value>
-         <value>mistranslation</value>
-         <value>omission</value>
-         <value>untranslated</value>
-         <value>addition</value>
-         <value>duplication</value>
-         <value>inconsistency</value>
-         <value>grammar</value>
-         <value>legal</value>
-         <value>register</value>
-         <value>locale-specific-content</value>
-         <value>locale-violation</value>
-         <value>style</value>
-         <value>characters</value>
-         <value>misspelling</value>
-         <value>typographical</value>
-         <value>formatting</value>
-         <value>inconsistent-entities</value>
-         <value>numbers</value>
-         <value>markup</value>
-         <value>pattern-problem</value>
-         <value>whitespace</value>
-         <value>internationalization</value>
-         <value>length</value>
-         <value>non-conformance</value>
-         <value>uncategorized</value>
-         <value>other</value>
-      </choice>
-   </define>
-
-   <define name="its-locQualityIssueComment.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-locQualityIssueSeverity.type">
-      <data type="double">
-         <param name="minInclusive">0</param>
-         <param name="maxInclusive">100</param>
-      </data>
-   </define>
-
-   <define name="its-locQualityIssueProfileRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-locQualityIssueEnabled.type">
-      <choice>
-         <value>yes</value>
-         <value>no</value>
-      </choice>
-   </define>
-
-   <define name="its-locQualityRatingScore.type">
-      <data type="double">
-         <param name="minInclusive">0</param>
-         <param name="maxInclusive">100</param>
-      </data>
-   </define>
-
-   <define name="its-locQualityRatingVote.type">
-      <data type="integer"/>
-   </define>
-
-   <define name="its-locQualityRatingScoreThreshold.type">
-      <data type="double">
-         <param name="minInclusive">0</param>
-         <param name="maxInclusive">100</param>
-      </data>
-   </define>
-
-   <define name="its-locQualityRatingVoteThreshold.type">
-      <data type="integer"/>
-   </define>
-
-   <define name="its-locQualityRatingProfileRef.type">
-      <data type="anyURI"/>
-   </define>
-
-   <define name="its-mtConfidence.type">
-      <ref name="its-confidence.type"/>
-   </define>
-
-   <define name="its-allowedCharacters.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-storageSize.type">
-      <data type="nonNegativeInteger"/>
-   </define>
-
-   <define name="its-storageEncoding.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-lineBreakType.type">
-      <choice>
-         <value>cr</value>
-         <value>lf</value>
-         <value>crlf</value>
-      </choice>
-   </define>
-
-   <define name="its-annotatorsRef.type">
-      <data type="string" datatypeLibrary=""/>
-   </define>
-
-   <define name="its-attribute.translate">
-      <attribute name="its:translate">
-         <ref name="its-translate.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.translate.nons">
-      <attribute name="translate">
-         <ref name="its-translate.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.dir.nons">
-      <attribute name="dir">
-         <ref name="its-dir.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locNote">
-      <attribute name="its:locNote">
-         <ref name="its-locNote.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locNote.nons">
-      <attribute name="locNote">
-         <ref name="its-locNote.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locNoteType">
-      <attribute name="its:locNoteType">
-         <ref name="its-locNoteType.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locNoteType.nons">
-      <attribute name="locNoteType">
-         <ref name="its-locNoteType.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locNoteRef">
-      <attribute name="its:locNoteRef">
-         <ref name="its-locNoteRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locNoteRef.nons">
-      <attribute name="locNoteRef">
-         <ref name="its-locNoteRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.termInfoRef">
-      <attribute name="its:termInfoRef">
-         <ref name="its-termInfoRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.termInfoRef.nons">
-      <attribute name="termInfoRef">
-         <ref name="its-termInfoRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.term">
-      <attribute name="its:term">
-         <ref name="its-term.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.term.nons">
-      <attribute name="term">
-         <ref name="its-term.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.termConfidence">
-      <attribute name="its:termConfidence">
-         <ref name="its-termConfidence.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.termConfidence.nons">
-      <attribute name="termConfidence">
-         <ref name="its-termConfidence.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.withinText">
-      <attribute name="its:withinText">
-         <ref name="its-withinText.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.withinText.nons">
-      <attribute name="withinText">
-         <ref name="its-withinText.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.domainMapping.nons">
-      <attribute name="domainMapping">
-         <ref name="its-domainMapping.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taConfidence">
-      <attribute name="its:taConfidence">
-         <ref name="its-taConfidence.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taConfidence.nons">
-      <attribute name="taConfidence">
-         <ref name="its-taConfidence.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taClassRef">
-      <attribute name="its:taClassRef">
-         <ref name="its-taClassRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taClassRef.nons">
-      <attribute name="taClassRef">
-         <ref name="its-taClassRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taIdent">
-      <attribute name="its:taIdent">
-         <ref name="its-taIdent.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taIdent.nons">
-      <attribute name="taIdent">
-         <ref name="its-taIdent.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taIdentRef">
-      <attribute name="its:taIdentRef">
-         <ref name="its-taIdentRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taIdentRef.nons">
-      <attribute name="taIdentRef">
-         <ref name="its-taIdentRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taSource">
-      <attribute name="its:taSource">
-         <ref name="its-taSource.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taSource.nons">
-      <attribute name="taSource">
-         <ref name="its-taSource.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.localeFilterList">
-      <attribute name="its:localeFilterList">
-         <ref name="its-localeFilterList.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.localeFilterList.nons">
-      <attribute name="localeFilterList">
-         <ref name="its-localeFilterList.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.localeFilterType">
-      <attribute name="its:localeFilterType">
-         <ref name="its-localeFilterType.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.localeFilterType.nons">
-      <attribute name="localeFilterType">
-         <ref name="its-localeFilterType.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.person">
-      <attribute name="its:person">
-         <ref name="its-person.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.person.nons">
-      <attribute name="person">
-         <ref name="its-person.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.personRef">
-      <attribute name="its:personRef">
-         <ref name="its-personRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.personRef.nons">
-      <attribute name="personRef">
-         <ref name="its-personRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.org">
-      <attribute name="its:org">
-         <ref name="its-org.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.org.nons">
-      <attribute name="org">
-         <ref name="its-org.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.orgRef">
-      <attribute name="its:orgRef">
-         <ref name="its-orgRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.orgRef.nons">
-      <attribute name="orgRef">
-         <ref name="its-orgRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.tool">
-      <attribute name="its:tool">
-         <ref name="its-tool.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.tool.nons">
-      <attribute name="tool">
-         <ref name="its-tool.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.toolRef">
-      <attribute name="its:toolRef">
-         <ref name="its-toolRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.toolRef.nons">
-      <attribute name="toolRef">
-         <ref name="its-toolRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revPerson">
-      <attribute name="its:revPerson">
-         <ref name="its-revPerson.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revPerson.nons">
-      <attribute name="revPerson">
-         <ref name="its-revPerson.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revPersonRef">
-      <attribute name="its:revPersonRef">
-         <ref name="its-revPersonRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revPersonRef.nons">
-      <attribute name="revPersonRef">
-         <ref name="its-revPersonRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revOrg">
-      <attribute name="its:revOrg">
-         <ref name="its-revOrg.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revOrg.nons">
-      <attribute name="revOrg">
-         <ref name="its-revOrg.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revOrgRef">
-      <attribute name="its:revOrgRef">
-         <ref name="its-revOrgRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revOrgRef.nons">
-      <attribute name="revOrgRef">
-         <ref name="its-revOrgRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revTool">
-      <attribute name="its:revTool">
-         <ref name="its-revTool.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revTool.nons">
-      <attribute name="revTool">
-         <ref name="its-revTool.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revToolRef">
-      <attribute name="its:revToolRef">
-         <ref name="its-revToolRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.revToolRef.nons">
-      <attribute name="revToolRef">
-         <ref name="its-revToolRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.provRef">
-      <attribute name="its:provRef">
-         <ref name="its-provRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.provRef.nons">
-      <attribute name="provRef">
-         <ref name="its-provRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.provenanceRecordsRef">
-      <attribute name="its:provenanceRecordsRef">
-         <ref name="its-provenanceRecordsRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.provenanceRecordsRef.nons">
-      <attribute name="provenanceRecordsRef">
-         <ref name="its-provenanceRecordsRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssuesRef">
-      <attribute name="its:locQualityIssuesRef">
-         <ref name="its-locQualityIssuesRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssuesRef.nons">
-      <attribute name="locQualityIssuesRef">
-         <ref name="its-locQualityIssuesRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssueType">
-      <attribute name="its:locQualityIssueType">
-         <ref name="its-locQualityIssueType.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssueType.nons">
-      <attribute name="locQualityIssueType">
-         <ref name="its-locQualityIssueType.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssueComment">
-      <attribute name="its:locQualityIssueComment">
-         <ref name="its-locQualityIssueComment.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssueComment.nons">
-      <attribute name="locQualityIssueComment">
-         <ref name="its-locQualityIssueComment.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssueSeverity">
-      <attribute name="its:locQualityIssueSeverity">
-         <ref name="its-locQualityIssueSeverity.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssueSeverity.nons">
-      <attribute name="locQualityIssueSeverity">
-         <ref name="its-locQualityIssueSeverity.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssueProfileRef">
-      <attribute name="its:locQualityIssueProfileRef">
-         <ref name="its-locQualityIssueProfileRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssueProfileRef.nons">
-      <attribute name="locQualityIssueProfileRef">
-         <ref name="its-locQualityIssueProfileRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssueEnabled">
-      <attribute name="its:locQualityIssueEnabled">
-         <ref name="its-locQualityIssueEnabled.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityIssueEnabled.nons">
-      <attribute name="locQualityIssueEnabled">
-         <ref name="its-locQualityIssueEnabled.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityRatingScore">
-      <attribute name="its:locQualityRatingScore">
-         <ref name="its-locQualityRatingScore.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityRatingScore.nons">
-      <attribute name="locQualityRatingScore">
-         <ref name="its-locQualityRatingScore.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityRatingVote">
-      <attribute name="its:locQualityRatingVote">
-         <ref name="its-locQualityRatingVote.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityRatingVote.nons">
-      <attribute name="locQualityRatingVote">
-         <ref name="its-locQualityRatingVote.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityRatingScoreThreshold">
-      <attribute name="its:locQualityRatingScoreThreshold">
-         <ref name="its-locQualityRatingScoreThreshold.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityRatingScoreThreshold.nons">
-      <attribute name="locQualityRatingScoreThreshold">
-         <ref name="its-locQualityRatingScoreThreshold.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityRatingVoteThreshold">
-      <attribute name="its:locQualityRatingVoteThreshold">
-         <ref name="its-locQualityRatingVoteThreshold.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityRatingVoteThreshold.nons">
-      <attribute name="locQualityRatingVoteThreshold">
-         <ref name="its-locQualityRatingVoteThreshold.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityRatingProfileRef">
-      <attribute name="its:locQualityRatingProfileRef">
-         <ref name="its-locQualityRatingProfileRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locQualityRatingProfileRef.nons">
-      <attribute name="locQualityRatingProfileRef">
-         <ref name="its-locQualityRatingProfileRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.mtConfidence">
-      <attribute name="its:mtConfidence">
-         <ref name="its-mtConfidence.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.mtConfidence.nons">
-      <attribute name="mtConfidence">
-         <ref name="its-mtConfidence.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.allowedCharacters">
-      <attribute name="its:allowedCharacters">
-         <ref name="its-allowedCharacters.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.allowedCharacters.nons">
-      <attribute name="allowedCharacters">
-         <ref name="its-allowedCharacters.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.storageSize">
-      <attribute name="its:storageSize">
-         <ref name="its-storageSize.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.storageSize.nons">
-      <attribute name="storageSize">
-         <ref name="its-storageSize.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.storageEncoding">
-      <attribute name="its:storageEncoding">
-         <ref name="its-storageEncoding.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.storageEncoding.nons">
-      <attribute name="storageEncoding">
-         <ref name="its-storageEncoding.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.lineBreakType">
-      <attribute name="its:lineBreakType">
-         <ref name="its-lineBreakType.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.lineBreakType.nons">
-      <attribute name="lineBreakType">
-         <ref name="its-lineBreakType.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.annotatorsRef">
-      <attribute name="its:annotatorsRef">
-         <ref name="its-annotatorsRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.annotatorsRef.nons">
-      <attribute name="annotatorsRef">
-         <ref name="its-annotatorsRef.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.version">
-      <attribute name="its:version">
-         <a:documentation>Version of ITS</a:documentation>
-         <ref name="its-version.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.version.nons">
-      <attribute name="version">
-         <a:documentation>Version of ITS</a:documentation>
-         <ref name="its-version.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.queryLanguage.nons">
-      <attribute name="queryLanguage">
-         <ref name="its-queryLanguage.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.xlink.href">
-      <attribute name="xlink:href">
-         <data type="anyURI"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.xlink.type">
-      <attribute name="xlink:type">
-         <value>simple</value>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.selector">
-      <attribute name="selector">
-         <ref name="its-absolute-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-foreign-attribute">
-      <attribute>
-         <anyName>
-            <except>
-               <nsName ns=""/>
-            </except>
-         </anyName>
-      </attribute>
-   </define>
-
-   <define name="its-foreign-no-xml-id-attribute">
-      <attribute>
-         <anyName>
-            <except>
-               <nsName ns=""/>
-               <name>xml:id</name>
-            </except>
-         </anyName>
-      </attribute>
-   </define>
-
-   <define name="its-foreign-no-xlink-attribute">
-      <attribute>
-         <anyName>
-            <except>
-               <nsName ns=""/>
-               <nsName ns="http://www.w3.org/1999/xlink"/>
-            </except>
-         </anyName>
-      </attribute>
-   </define>
-
-   <define name="its-any-attribute">
-      <attribute>
-         <anyName/>
-      </attribute>
-   </define>
-
-   <define name="its-any-element">
-      <element ns="http://www.w3.org/2005/11/its">
-         <anyName/>
-         <zeroOrMore>
-            <choice>
-               <zeroOrMore>
-                  <ref name="its-any-attribute"/>
-               </zeroOrMore>
-               <text/>
-               <ref name="its-any-element"/>
-            </choice>
-         </zeroOrMore>
-      </element>
-   </define>
-
-   <define name="its-rules">
-      <element name="rules" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Container for global rules</a:documentation>
-         <ref name="its-rules.content"/>
-         <ref name="its-rules.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-rules.content">
-      <zeroOrMore>
-         <ref name="its-param"/>
-      </zeroOrMore>
-      <zeroOrMore>
-         <choice>
-            <ref name="its-translateRule"/>
-            <ref name="its-locNoteRule"/>
-            <ref name="its-termRule"/>
-            <ref name="its-dirRule"/>
-            <ref name="its-langRule"/>
-            <ref name="its-withinTextRule"/>
-            <ref name="its-domainRule"/>
-            <ref name="its-textAnalysisRule"/>
-            <ref name="its-localeFilterRule"/>
-            <ref name="its-provRule"/>
-            <ref name="its-locQualityIssueRule"/>
-            <ref name="its-mtConfidenceRule"/>
-            <ref name="its-externalResourceRefRule"/>
-            <ref name="its-targetPointerRule"/>
-            <ref name="its-idValueRule"/>
-            <ref name="its-preserveSpaceRule"/>
-            <ref name="its-allowedCharactersRule"/>
-            <ref name="its-storageSizeRule"/>
-            <ref name="its-foreign-element"/>
-         </choice>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-rules.attributes">
-      <ref name="its-attribute.version.nons"/>
-      <optional>
-         <ref name="its-attribute.xlink.href"/>
+   <div>
+      <define name="db.any.other.attribute">
+         <attribute>
+            <anyName>
+               <except>
+                  <nsName ns=""/>
+               </except>
+            </anyName>
+         </attribute>
+      </define>
+
+      <define name="db.xi.include.attlist">
          <optional>
-            <ref name="its-attribute.xlink.type"/>
-         </optional>
-      </optional>
-      <optional>
-         <ref name="its-attribute.queryLanguage.nons"/>
-      </optional>
-      <zeroOrMore>
-         <ref name="its-foreign-no-xlink-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-param">
-      <element name="param" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Declaration of variable used in selectors</a:documentation>
-         <ref name="its-param.content"/>
-         <ref name="its-param.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-param.content">
-      <text/>
-   </define>
-
-   <define name="its-param.attributes">
-      <attribute name="name">
-         <data type="string"/>
-      </attribute>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-local.attributes">
-      <interleave>
-         <optional>
-            <ref name="its-attribute.translate"/>
+            <attribute name="href">
+               <data type="anyURI">
+                  <param name="pattern">[^#]+</param>
+               </data>
+            </attribute>
          </optional>
          <optional>
-            <ref name="its-attribute.dir"/>
-         </optional>
-         <optional>
-            <choice>
-               <ref name="its-attribute.locNote"/>
-               <ref name="its-attribute.locNoteRef"/>
-            </choice>
-            <optional>
-               <ref name="its-attribute.locNoteType"/>
-            </optional>
-         </optional>
-         <optional>
-            <ref name="its-attribute.term"/>
-            <optional>
-               <ref name="its-attribute.termInfoRef"/>
-            </optional>
-            <optional>
-               <ref name="its-attribute.termConfidence"/>
-            </optional>
-         </optional>
-         <optional>
-            <ref name="its-attribute.withinText"/>
-         </optional>
-         <optional>
-            <interleave>
-               <optional>
-                  <ref name="its-attribute.taConfidence"/>
-               </optional>
-               <interleave>
-                  <optional>
-                     <ref name="its-attribute.taClassRef"/>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <group>
-                           <ref name="its-attribute.taSource"/>
-                           <ref name="its-attribute.taIdent"/>
-                        </group>
-                        <ref name="its-attribute.taIdentRef"/>
-                     </choice>
-                  </optional>
-               </interleave>
-            </interleave>
-         </optional>
-         <optional>
-            <ref name="its-attribute.localeFilterList"/>
-            <optional>
-               <ref name="its-attribute.localeFilterType"/>
-            </optional>
-         </optional>
-         <optional>
-            <choice>
-               <interleave>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.person"/>
-                        <ref name="its-attribute.personRef"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.org"/>
-                        <ref name="its-attribute.orgRef"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.tool"/>
-                        <ref name="its-attribute.toolRef"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.revPerson"/>
-                        <ref name="its-attribute.revPersonRef"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.revOrg"/>
-                        <ref name="its-attribute.revOrgRef"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.revTool"/>
-                        <ref name="its-attribute.revToolRef"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <ref name="its-attribute.provRef"/>
-                  </optional>
-               </interleave>
-               <ref name="its-attribute.provenanceRecordsRef"/>
-            </choice>
-         </optional>
-         <optional>
-            <choice>
-               <ref name="its-attribute.locQualityIssuesRef"/>
-               <interleave>
-                  <interleave>
-                     <optional>
-                        <ref name="its-attribute.locQualityIssueType"/>
-                     </optional>
-                     <optional>
-                        <ref name="its-attribute.locQualityIssueComment"/>
-                     </optional>
-                  </interleave>
-                  <optional>
-                     <ref name="its-attribute.locQualityIssueSeverity"/>
-                  </optional>
-                  <optional>
-                     <ref name="its-attribute.locQualityIssueProfileRef"/>
-                  </optional>
-                  <optional>
-                     <ref name="its-attribute.locQualityIssueEnabled"/>
-                  </optional>
-               </interleave>
-            </choice>
-         </optional>
-         <optional>
-            <choice>
-               <group>
-                  <ref name="its-attribute.locQualityRatingScore"/>
-                  <optional>
-                     <ref name="its-attribute.locQualityRatingScoreThreshold"/>
-                  </optional>
-               </group>
-               <group>
-                  <ref name="its-attribute.locQualityRatingVote"/>
-                  <optional>
-                     <ref name="its-attribute.locQualityRatingVoteThreshold"/>
-                  </optional>
-               </group>
-            </choice>
-            <optional>
-               <ref name="its-attribute.locQualityRatingProfileRef"/>
-            </optional>
-         </optional>
-         <optional>
-            <ref name="its-attribute.mtConfidence"/>
-         </optional>
-         <optional>
-            <ref name="its-attribute.allowedCharacters"/>
-         </optional>
-         <optional>
-            <ref name="its-attribute.storageSize"/>
-            <optional>
-               <ref name="its-attribute.storageEncoding"/>
-            </optional>
-            <optional>
-               <ref name="its-attribute.lineBreakType"/>
-            </optional>
-         </optional>
-         <optional>
-            <ref name="its-attribute.annotatorsRef"/>
-         </optional>
-      </interleave>
-   </define>
-
-   <define name="its-local.nons.attributes">
-      <interleave>
-         <optional>
-            <ref name="its-attribute.translate.nons"/>
-         </optional>
-         <optional>
-            <ref name="its-attribute.dir.nons"/>
-         </optional>
-         <optional>
-            <choice>
-               <ref name="its-attribute.locNote.nons"/>
-               <ref name="its-attribute.locNoteRef.nons"/>
-            </choice>
-            <optional>
-               <ref name="its-attribute.locNoteType.nons"/>
-            </optional>
-         </optional>
-         <optional>
-            <ref name="its-attribute.term.nons"/>
-            <optional>
-               <ref name="its-attribute.termInfoRef.nons"/>
-            </optional>
-            <optional>
-               <ref name="its-attribute.termConfidence.nons"/>
-            </optional>
-         </optional>
-         <optional>
-            <ref name="its-attribute.withinText.nons"/>
-         </optional>
-         <optional>
-            <interleave>
-               <optional>
-                  <ref name="its-attribute.taConfidence.nons"/>
-               </optional>
-               <interleave>
-                  <optional>
-                     <ref name="its-attribute.taClassRef.nons"/>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <group>
-                           <ref name="its-attribute.taSource.nons"/>
-                           <ref name="its-attribute.taIdent.nons"/>
-                        </group>
-                        <ref name="its-attribute.taIdentRef.nons"/>
-                     </choice>
-                  </optional>
-               </interleave>
-            </interleave>
-         </optional>
-         <optional>
-            <ref name="its-attribute.localeFilterList.nons"/>
-            <optional>
-               <ref name="its-attribute.localeFilterType.nons"/>
-            </optional>
-         </optional>
-         <optional>
-            <choice>
-               <interleave>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.person.nons"/>
-                        <ref name="its-attribute.personRef.nons"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.org.nons"/>
-                        <ref name="its-attribute.orgRef.nons"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.tool.nons"/>
-                        <ref name="its-attribute.toolRef.nons"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.revPerson.nons"/>
-                        <ref name="its-attribute.revPersonRef.nons"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.revOrg.nons"/>
-                        <ref name="its-attribute.revOrgRef.nons"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <choice>
-                        <ref name="its-attribute.revTool.nons"/>
-                        <ref name="its-attribute.revToolRef.nons"/>
-                     </choice>
-                  </optional>
-                  <optional>
-                     <ref name="its-attribute.provRef.nons"/>
-                  </optional>
-               </interleave>
-               <ref name="its-attribute.provenanceRecordsRef.nons"/>
-            </choice>
-         </optional>
-         <optional>
-            <choice>
-               <ref name="its-attribute.locQualityIssuesRef.nons"/>
-               <interleave>
-                  <interleave>
-                     <optional>
-                        <ref name="its-attribute.locQualityIssueType.nons"/>
-                     </optional>
-                     <optional>
-                        <ref name="its-attribute.locQualityIssueComment.nons"/>
-                     </optional>
-                  </interleave>
-                  <optional>
-                     <ref name="its-attribute.locQualityIssueSeverity.nons"/>
-                  </optional>
-                  <optional>
-                     <ref name="its-attribute.locQualityIssueProfileRef.nons"/>
-                  </optional>
-                  <optional>
-                     <ref name="its-attribute.locQualityIssueEnabled.nons"/>
-                  </optional>
-               </interleave>
-            </choice>
-         </optional>
-         <optional>
-            <choice>
-               <group>
-                  <ref name="its-attribute.locQualityRatingScore.nons"/>
-                  <optional>
-                     <ref name="its-attribute.locQualityRatingScoreThreshold.nons"/>
-                  </optional>
-               </group>
-               <group>
-                  <ref name="its-attribute.locQualityRatingVote.nons"/>
-                  <optional>
-                     <ref name="its-attribute.locQualityRatingVoteThreshold.nons"/>
-                  </optional>
-               </group>
-            </choice>
-            <optional>
-               <ref name="its-attribute.locQualityRatingProfileRef.nons"/>
-            </optional>
-         </optional>
-         <optional>
-            <ref name="its-attribute.mtConfidence.nons"/>
-         </optional>
-         <optional>
-            <ref name="its-attribute.allowedCharacters.nons"/>
-         </optional>
-         <optional>
-            <ref name="its-attribute.storageSize.nons"/>
-            <optional>
-               <ref name="its-attribute.storageEncoding.nons"/>
-            </optional>
-            <optional>
-               <ref name="its-attribute.lineBreakType.nons"/>
-            </optional>
-         </optional>
-         <optional>
-            <ref name="its-attribute.annotatorsRef.nons"/>
-         </optional>
-      </interleave>
-   </define>
-
-   <define name="its-span">
-      <element name="span" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Inline element to contain ITS information</a:documentation>
-         <ref name="its-span.content"/>
-         <ref name="its-span.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-span.content">
-      <zeroOrMore>
-         <choice>
-            <text/>
-            <ref name="its-span"/>
-         </choice>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-span.attributes">
-      <interleave>
-         <ref name="its-local.nons.attributes"/>
-         <zeroOrMore>
-            <ref name="its-foreign-attribute"/>
-         </zeroOrMore>
-      </interleave>
-   </define>
-
-   <define name="its-translateRule">
-      <element name="translateRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Translate data category</a:documentation>
-         <ref name="its-translateRule.content"/>
-         <ref name="its-translateRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-translateRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-translateRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.translate.nons"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-locNoteRule">
-      <element name="locNoteRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Localization Note data category</a:documentation>
-         <ref name="its-attribute.selector"/>
-         <ref name="its-attribute.locNoteType.nons"/>
-         <choice>
-            <ref name="its-locNote"/>
-            <ref name="its-attribute.locNotePointer.nons"/>
-            <ref name="its-attribute.locNoteRef.nons"/>
-            <ref name="its-attribute.locNoteRefPointer.nons"/>
-         </choice>
-         <zeroOrMore>
-            <ref name="its-foreign-attribute"/>
-         </zeroOrMore>
-      </element>
-   </define>
-
-   <define name="its-attribute.locNotePointer.nons">
-      <attribute name="locNotePointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.locNoteRefPointer.nons">
-      <attribute name="locNoteRefPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-locNote">
-      <element name="locNote" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Localization note</a:documentation>
-         <ref name="its-locNote.content"/>
-         <ref name="its-locNote.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-locNote.content">
-      <zeroOrMore>
-         <choice>
-            <text/>
-            <ref name="its-span"/>
-         </choice>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-locNote.attributes">
-      <ref name="its-local.nons.attributes"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-termRule">
-      <element name="termRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Terminology data category</a:documentation>
-         <ref name="its-termRule.content"/>
-         <ref name="its-termRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-termRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-termRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.term.nons"/>
-      <optional>
-         <choice>
-            <ref name="its-attribute.termInfoPointer.nons"/>
-            <ref name="its-attribute.termInfoRef.nons"/>
-            <ref name="its-attribute.termInfoRefPointer.nons"/>
-         </choice>
-      </optional>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.termInfoPointer.nons">
-      <attribute name="termInfoPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.termInfoRefPointer.nons">
-      <attribute name="termInfoRefPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-dirRule">
-      <element name="dirRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Directionality data category</a:documentation>
-         <ref name="its-dirRule.content"/>
-         <ref name="its-dirRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-dirRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-dirRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.dir.nons"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-langRule">
-      <element name="langRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Language Information data category</a:documentation>
-         <ref name="its-langRule.content"/>
-         <ref name="its-langRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-langRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-langRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.langPointer.nons"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.langPointer.nons">
-      <attribute name="langPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-withinTextRule">
-      <element name="withinTextRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Elements Within Text data category</a:documentation>
-         <ref name="its-withinTextRule.content"/>
-         <ref name="its-withinTextRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-withinTextRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-withinTextRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.withinText.nons"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-domainRule">
-      <element name="domainRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Domain data category</a:documentation>
-         <ref name="its-domainRule.content"/>
-         <ref name="its-domainRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-domainRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-domainRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.domainPointer.nons"/>
-      <optional>
-         <ref name="its-attribute.domainMapping.nons"/>
-      </optional>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.domainPointer.nons">
-      <attribute name="domainPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-textAnalysisRule">
-      <element name="textAnalysisRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Disambiguation data category</a:documentation>
-         <ref name="its-textAnalysisRule.content"/>
-         <ref name="its-textAnalysisRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-textAnalysisRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-textAnalysisRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <optional>
-         <ref name="its-attribute.taClassRefPointer.nons"/>
-      </optional>
-      <optional>
-         <choice>
-            <group>
-               <ref name="its-attribute.taSourcePointer.nons"/>
-               <ref name="its-attribute.taIdentPointer.nons"/>
-            </group>
-            <ref name="its-attribute.taIdentRefPointer.nons"/>
-         </choice>
-      </optional>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.taClassRefPointer.nons">
-      <attribute name="taClassRefPointer">
-         <ref name="its-taClassRefPointer.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taIdentPointer.nons">
-      <attribute name="taIdentPointer">
-         <ref name="its-taIdentPointer.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taSourcePointer.nons">
-      <attribute name="taSourcePointer">
-         <ref name="its-taSourcePointer.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.taIdentRefPointer.nons">
-      <attribute name="taIdentRefPointer">
-         <ref name="its-taIdentRefPointer.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-localeFilterRule">
-      <element name="localeFilterRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the LocaleFilter data category</a:documentation>
-         <ref name="its-localeFilterRule.content"/>
-         <ref name="its-localeFilterRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-localeFilterRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-localeFilterRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.localeFilterList.nons"/>
-      <optional>
-         <ref name="its-attribute.localeFilterType.nons"/>
-      </optional>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-provRule">
-      <element name="provRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Provenance data category</a:documentation>
-         <ref name="its-provRule.content"/>
-         <ref name="its-provRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-provRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-provRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.provenanceRecordsRefPointer.nons"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.provenanceRecordsRefPointer.nons">
-      <attribute name="provenanceRecordsRefPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-externalResourceRefRule">
-      <element name="externalResourceRefRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the External Resource data category</a:documentation>
-         <ref name="its-externalResourceRefRule.content"/>
-         <ref name="its-externalResourceRefRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-externalResourceRefRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-externalResourceRefRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.externalResourceRefPointer.nons"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.externalResourceRefPointer.nons">
-      <attribute name="externalResourceRefPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-targetPointerRule">
-      <element name="targetPointerRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Target Pointer data category</a:documentation>
-         <ref name="its-targetPointerRule.content"/>
-         <ref name="its-targetPointerRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-targetPointerRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-targetPointerRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.targetPointer.nons"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.targetPointer.nons">
-      <attribute name="targetPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-idValueRule">
-      <element name="idValueRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Id Value data category</a:documentation>
-         <ref name="its-idValueRule.content"/>
-         <ref name="its-idValueRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-idValueRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-idValueRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.idValue.nons"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.idValue.nons">
-      <attribute name="idValue">
-         <ref name="its-xpath-expression.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-preserveSpaceRule">
-      <element name="preserveSpaceRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Preserve Space data category</a:documentation>
-         <ref name="its-preserveSpaceRule.content"/>
-         <ref name="its-preserveSpaceRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-preserveSpaceRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-preserveSpaceRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.space.nons"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.space.nons">
-      <attribute name="space">
-         <choice>
-            <value>default</value>
-            <value>preserve</value>
-         </choice>
-      </attribute>
-   </define>
-
-   <define name="its-locQualityIssueRule">
-      <element name="locQualityIssueRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Localization Quality Issue data category</a:documentation>
-         <ref name="its-locQualityIssueRule.content"/>
-         <ref name="its-locQualityIssueRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-locQualityIssueRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-locQualityIssueRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <choice>
-         <choice>
-            <ref name="its-attribute.locQualityIssuesRef.nons"/>
-            <ref name="its-attribute.locQualityIssuesRefPointer.nons"/>
-         </choice>
-         <group>
-            <oneOrMore>
+            <attribute name="parse" a:defaultValue="xml">
                <choice>
-                  <ref name="its-attribute.locQualityIssueType.nons"/>
-                  <ref name="its-attribute.locQualityIssueComment.nons"/>
+                  <value>xml</value>
+                  <value>text</value>
                </choice>
-            </oneOrMore>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="xpointer"/>
+         </optional>
+         <optional>
+            <attribute name="encoding"/>
+         </optional>
+         <optional>
+            <attribute name="accept"/>
+         </optional>
+         <optional>
+            <attribute name="accept-language"/>
+         </optional>
+         <zeroOrMore>
+            <ref name="db.any.other.attribute"/>
+         </zeroOrMore>
+      </define>
+
+      <define name="db.xi.include">
+         <element name="xi:include" ns="">
+            <a:documentation>An XInclude</a:documentation>
+            <ref name="db.xi.include.attlist"/>
             <optional>
-               <ref name="its-attribute.locQualityIssueSeverity.nons"/>
+               <ref name="db.xi.fallback"/>
             </optional>
-            <optional>
-               <ref name="its-attribute.locQualityIssueProfileRef.nons"/>
-            </optional>
-            <optional>
-               <ref name="its-attribute.locQualityIssueEnabled.nons"/>
-            </optional>
-         </group>
-      </choice>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
+         </element>
+      </define>
+   </div>
 
-   <define name="its-attribute.locQualityIssuesRefPointer.nons">
-      <attribute name="locQualityIssuesRefPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-mtConfidenceRule">
-      <element name="mtConfidenceRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the MT Confidence data category</a:documentation>
-         <ref name="its-mtConfidenceRule.content"/>
-         <ref name="its-mtConfidenceRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-mtConfidenceRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-mtConfidenceRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <ref name="its-attribute.mtConfidence.nons"/>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-allowedCharactersRule">
-      <element name="allowedCharactersRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Allowed Characters data category</a:documentation>
-         <ref name="its-allowedCharactersRule.content"/>
-         <ref name="its-allowedCharactersRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-allowedCharactersRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-allowedCharactersRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <choice>
-         <ref name="its-attribute.allowedCharacters.nons"/>
-         <ref name="its-attribute.allowedCharactersPointer.nons"/>
-      </choice>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.allowedCharactersPointer.nons">
-      <attribute name="allowedCharactersPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-storageSizeRule">
-      <element name="storageSizeRule" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Rule about the Allowed Characters data category</a:documentation>
-         <ref name="its-storageSizeRule.content"/>
-         <ref name="its-storageSizeRule.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-storageSizeRule.content">
-      <empty/>
-   </define>
-
-   <define name="its-storageSizeRule.attributes">
-      <ref name="its-attribute.selector"/>
-      <choice>
-         <ref name="its-attribute.storageSize.nons"/>
-         <ref name="its-attribute.storageSizePointer.nons"/>
-      </choice>
-      <optional>
-         <choice>
-            <ref name="its-attribute.storageEncoding.nons"/>
-            <ref name="its-attribute.storageEncodingPointer.nons"/>
-         </choice>
-      </optional>
-      <optional>
-         <ref name="its-attribute.lineBreakType.nons"/>
-      </optional>
-      <zeroOrMore>
-         <ref name="its-foreign-attribute"/>
-      </zeroOrMore>
-   </define>
-
-   <define name="its-attribute.storageSizePointer.nons">
-      <attribute name="storageSizePointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-attribute.storageEncodingPointer.nons">
-      <attribute name="storageEncodingPointer">
-         <ref name="its-relative-selector.type"/>
-      </attribute>
-   </define>
-
-   <define name="its-standoff">
-      <choice>
-         <ref name="its-provenanceRecords"/>
-         <ref name="its-locQualityIssues"/>
-      </choice>
-   </define>
-
-   <define name="its-provenanceRecords">
-      <element name="its:provenanceRecords" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Standoff markup for Provenance data category</a:documentation>
-         <oneOrMore>
-            <ref name="its-provenanceRecord"/>
-         </oneOrMore>
-         <attribute name="xml:id">
-            <data type="ID"/>
-         </attribute>
-         <optional>
-            <ref name="its-attribute.version.nons"/>
-         </optional>
-         <zeroOrMore>
-            <ref name="its-foreign-no-xml-id-attribute"/>
-         </zeroOrMore>
-      </element>
-   </define>
-
-   <define name="its-provenanceRecord">
-      <element name="its:provenanceRecord" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Provenance record used in Provenance standoff markup</a:documentation>
-         <ref name="its-provenanceRecord.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-provenanceRecord.attributes">
-      <interleave>
-         <optional>
+   <div><!-- The fallback element has no attributes -->
+      <define name="db.xi.fallback">
+         <element name="xi:fallback" ns="">
+            <a:documentation>An XInclude fallback</a:documentation>
             <choice>
-               <ref name="its-attribute.person.nons"/>
-               <ref name="its-attribute.personRef.nons"/>
-            </choice>
-         </optional>
-         <optional>
-            <choice>
-               <ref name="its-attribute.org.nons"/>
-               <ref name="its-attribute.orgRef.nons"/>
-            </choice>
-         </optional>
-         <optional>
-            <choice>
-               <ref name="its-attribute.tool.nons"/>
-               <ref name="its-attribute.toolRef.nons"/>
-            </choice>
-         </optional>
-         <optional>
-            <choice>
-               <ref name="its-attribute.revPerson.nons"/>
-               <ref name="its-attribute.revPersonRef.nons"/>
-            </choice>
-         </optional>
-         <optional>
-            <choice>
-               <ref name="its-attribute.revOrg.nons"/>
-               <ref name="its-attribute.revOrgRef.nons"/>
-            </choice>
-         </optional>
-         <optional>
-            <choice>
-               <ref name="its-attribute.revTool.nons"/>
-               <ref name="its-attribute.revToolRef.nons"/>
-            </choice>
-         </optional>
-         <optional>
-            <ref name="its-attribute.provRef.nons"/>
-         </optional>
-         <zeroOrMore>
-            <ref name="its-foreign-attribute"/>
-         </zeroOrMore>
-      </interleave>
-   </define>
-
-   <define name="its-locQualityIssues">
-      <element name="its:locQualityIssues" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Standoff markup for Localization Quality Issue data category</a:documentation>
-         <oneOrMore>
-            <ref name="its-locQualityIssue"/>
-         </oneOrMore>
-         <attribute name="xml:id">
-            <data type="ID"/>
-         </attribute>
-         <optional>
-            <ref name="its-attribute.version.nons"/>
-         </optional>
-         <zeroOrMore>
-            <ref name="its-foreign-no-xml-id-attribute"/>
-         </zeroOrMore>
-      </element>
-   </define>
-
-   <define name="its-locQualityIssue">
-      <element name="its:locQualityIssue" ns="http://www.w3.org/2005/11/its">
-         <a:documentation>Issue recorded in Localization Quality standoff markup</a:documentation>
-         <ref name="its-locQualityIssue.attributes"/>
-      </element>
-   </define>
-
-   <define name="its-locQualityIssue.attributes">
-      <interleave>
-         <optional>
-            <ref name="its-attribute.locQualityIssueType.nons"/>
-         </optional>
-         <optional>
-            <ref name="its-attribute.locQualityIssueComment.nons"/>
-         </optional>
-         <optional>
-            <ref name="its-attribute.locQualityIssueSeverity.nons"/>
-         </optional>
-         <optional>
-            <ref name="its-attribute.locQualityIssueProfileRef.nons"/>
-         </optional>
-         <optional>
-            <ref name="its-attribute.locQualityIssueEnabled.nons"/>
-         </optional>
-         <zeroOrMore>
-            <ref name="its-foreign-attribute"/>
-         </zeroOrMore>
-      </interleave>
-   </define>
-
-   <define name="its-attribute.dir">
-      <empty/>
-   </define>
-
-   <define name="its-foreign-element">
-      <element>
-         <anyName>
-            <except>
-               <nsName ns="http://www.w3.org/2005/11/its"/>
-            </except>
-         </anyName>
-         <zeroOrMore>
-            <choice>
+               <oneOrMore>
+                  <ref name="db.all.blocks"/>
+               </oneOrMore>
+               <oneOrMore>
+                  <ref name="db.all.inlines"/>
+               </oneOrMore>
                <zeroOrMore>
-                  <ref name="its-foreign-no-xml-id-attribute"/>
+                  <ref name="db._any"/>
                </zeroOrMore>
-               <text/>
-               <ref name="its-foreign-element"/>
             </choice>
-         </zeroOrMore>
-      </element>
-   </define>
+         </element>
+      </define>
+   </div>
 
-   <!-- Add local ITS attributes to all DocBook elements -->   <!-- Allow its:rules inside info element --></grammar>
+</grammar>

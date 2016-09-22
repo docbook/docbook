@@ -13,7 +13,7 @@
          ns="http://docbook.org/ns/docbook">
 
 <!--
-This file is part of Simplified DocBook V5.1-CS01
+This file is part of Simplified DocBook V5.2-b01
 
 Copyright 1992-2015 HaL Computer Systems, Inc.,
 O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
@@ -1943,7 +1943,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.abstract.attlist"/>
             <ref name="db.abstract.info"/>
             <oneOrMore>
-               <ref name="db.para.blocks"/>
+               <ref name="db.all.blocks"/>
             </oneOrMore>
          </element>
       </define>
@@ -2267,6 +2267,12 @@ information, see http://www.oasis-open.org/docbook/.
                <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of footnote</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:footnote">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -4008,6 +4014,12 @@ information, see http://www.oasis-open.org/docbook/.
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of caption</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:caption">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -7876,11 +7888,36 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </define>
 
-      <define name="db.article.class.attribute">
+      <define name="db.article.class-enum.attribute">
          <attribute name="class">
             <a:documentation>Identifies the nature of the article</a:documentation>
             <ref name="db.article.class.enumeration"/>
          </attribute>
+      </define>
+
+      <define name="db.article.class-other.attribute">
+         <attribute name="otherclass">
+            <a:documentation>Identifies the nature of the non-standard article</a:documentation>
+            <data type="NMTOKEN"/>
+         </attribute>
+      </define>
+
+      <define name="db.article.class-other.attributes">
+         <interleave>
+            <attribute name="class">
+               <a:documentation>Identifies the nature of the article</a:documentation>
+               <value>other</value>
+               <a:documentation>Indicates that the identifier is some 'other' kind.</a:documentation>
+            </attribute>
+            <ref name="db.article.class-other.attribute"/>
+         </interleave>
+      </define>
+
+      <define name="db.article.class.attribute">
+         <choice>
+            <ref name="db.article.class-enum.attribute"/>
+            <ref name="db.article.class-other.attributes"/>
+         </choice>
       </define>
 
       <define name="db.article.role.attribute">
@@ -13417,6 +13454,12 @@ where the nonterminal
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caption</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:caption">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
@@ -16420,6 +16463,7 @@ where the nonterminal
                <choice>
                   <ref name="db._text"/>
                   <ref name="db.type"/>
+                  <ref name="db.void"/>
                   <ref name="db.function"/>
                </choice>
             </zeroOrMore>
@@ -16577,6 +16621,7 @@ where the nonterminal
                <choice>
                   <ref name="db._text"/>
                   <ref name="db.initializer"/>
+                  <ref name="db.modifier"/>
                   <ref name="db.type"/>
                   <ref name="db.parameter"/>
                   <ref name="db.funcparams"/>
@@ -17338,6 +17383,7 @@ where the nonterminal
    <define name="db.admonition.blocks">
       <choice>
          <ref name="db.caution"/>
+         <ref name="db.danger"/>
          <ref name="db.important"/>
          <ref name="db.note"/>
          <ref name="db.tip"/>
@@ -17379,6 +17425,12 @@ where the nonterminal
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caution">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caution</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:caution">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of caution</s:assert>
                </s:rule>
             </s:pattern>
@@ -17407,6 +17459,66 @@ where the nonterminal
    </div>
 
    <div>
+      <define name="db.danger.role.attribute">
+         <attribute name="role"/>
+      </define>
+
+      <define name="db.danger.attlist">
+         <interleave>
+            <optional>
+               <ref name="db.danger.role.attribute"/>
+            </optional>
+            <ref name="db.common.attributes"/>
+            <ref name="db.common.linking.attributes"/>
+         </interleave>
+      </define>
+
+      <define name="db.danger">
+         <element name="danger">
+            <a:documentation>An admonition set off from the text indicating hazardous situation</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:important)">important must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:note)">note must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:tip)">tip must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:warning)">warning must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <ref name="db.danger.attlist"/>
+            <ref name="db.admonition.contentmodel"/>
+         </element>
+      </define>
+   </div>
+
+   <div>
       <define name="db.important.role.attribute">
          <attribute name="role"/>
       </define>
@@ -17428,6 +17540,12 @@ where the nonterminal
                <s:title>Element exclusion</s:title>
                <s:rule context="db:important">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of important</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:important">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of important</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -17487,6 +17605,12 @@ where the nonterminal
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:note">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of note</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:note">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of note</s:assert>
                </s:rule>
             </s:pattern>
@@ -17541,6 +17665,12 @@ where the nonterminal
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:tip">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of tip</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:tip">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of tip</s:assert>
                </s:rule>
             </s:pattern>
@@ -17590,6 +17720,12 @@ where the nonterminal
                <s:title>Element exclusion</s:title>
                <s:rule context="db:warning">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of warning</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:warning">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of warning</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>

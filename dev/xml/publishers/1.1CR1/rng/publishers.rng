@@ -14,7 +14,7 @@
          ns="http://docbook.org/ns/docbook">
 
 <!--
-This file is part of Simplified DocBook V5.1-CS01
+This file is part of Simplified DocBook V5.2-b01
 
 This file is a customization of DocBook V5.x created by the OASIS
 DocBook Publishers Subcommittee.
@@ -1882,7 +1882,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.abstract.attlist"/>
             <ref name="db.abstract.info"/>
             <oneOrMore>
-               <ref name="db.para.blocks"/>
+               <ref name="db.all.blocks"/>
             </oneOrMore>
          </element>
       </define>
@@ -2200,6 +2200,12 @@ information, see http://www.oasis-open.org/docbook/.
                <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:epigraph)">epigraph must not occur among the children or descendants of footnote</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:footnote">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -3742,6 +3748,12 @@ information, see http://www.oasis-open.org/docbook/.
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:task)">task must not occur among the children or descendants of caption</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:caption">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -7263,11 +7275,36 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </define>
 
-      <define name="db.article.class.attribute">
+      <define name="db.article.class-enum.attribute">
          <attribute name="class">
             <a:documentation>Identifies the nature of the article</a:documentation>
             <ref name="db.article.class.enumeration"/>
          </attribute>
+      </define>
+
+      <define name="db.article.class-other.attribute">
+         <attribute name="otherclass">
+            <a:documentation>Identifies the nature of the non-standard article</a:documentation>
+            <data type="NMTOKEN"/>
+         </attribute>
+      </define>
+
+      <define name="db.article.class-other.attributes">
+         <interleave>
+            <attribute name="class">
+               <a:documentation>Identifies the nature of the article</a:documentation>
+               <value>other</value>
+               <a:documentation>Indicates that the identifier is some 'other' kind.</a:documentation>
+            </attribute>
+            <ref name="db.article.class-other.attribute"/>
+         </interleave>
+      </define>
+
+      <define name="db.article.class.attribute">
+         <choice>
+            <ref name="db.article.class-enum.attribute"/>
+            <ref name="db.article.class-other.attributes"/>
+         </choice>
       </define>
 
       <define name="db.article.role.attribute">
@@ -11149,6 +11186,7 @@ s which refer to this area. (This provides bidirectional linking which may be us
 
    <define name="db.admonition.blocks">
       <choice>
+         <ref name="db.danger"/>
          <ref name="db.note"/>
       </choice>
    </define>
@@ -11159,6 +11197,42 @@ s which refer to this area. (This provides bidirectional linking which may be us
          <ref name="db.all.blocks"/>
       </oneOrMore>
    </define>
+
+   <div>
+      <define name="db.danger.role.attribute">
+         <attribute name="role"/>
+      </define>
+
+      <define name="db.danger.attlist">
+         <interleave>
+            <optional>
+               <ref name="db.danger.role.attribute"/>
+            </optional>
+            <ref name="db.common.attributes"/>
+            <ref name="db.common.linking.attributes"/>
+         </interleave>
+      </define>
+
+      <define name="db.danger">
+         <element name="danger">
+            <a:documentation>An admonition set off from the text indicating hazardous situation</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:danger">
+                  <s:assert test="not(.//db:note)">note must not occur among the children or descendants of danger</s:assert>
+               </s:rule>
+            </s:pattern>
+            <ref name="db.danger.attlist"/>
+            <ref name="db.admonition.contentmodel"/>
+         </element>
+      </define>
+   </div>
 
    <div>
       <define name="db.note.role.attribute">
@@ -11178,6 +11252,12 @@ s which refer to this area. (This provides bidirectional linking which may be us
       <define name="db.note">
          <element name="note">
             <a:documentation>A message set off from the text</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:note">
+                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of note</s:assert>
+               </s:rule>
+            </s:pattern>
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:note">
