@@ -469,7 +469,7 @@ task testDocBook(dependsOn: ['positiveDocBookTests','negativeDocBookTests']) {
 }
 
 Random random = new Random()
-Boolean travis = (System.getenv("GH_TOKEN") != null)
+Boolean travis = (System.getenv("RUNNING_ON_TRAVIS") != null)
 int threshold = 90
 
 if (travis) {

@@ -23,3 +23,4 @@ This distribution contains:
   dtd/                   DocBook schemas implemented in XML DTDs
   xsd/                   DocBook schemas implemented in W3C XML Schema
   sch/                   Additional normative constraints expressed in Schematron
+
