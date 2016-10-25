@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../publishers.rnc" type="application/relax-ng-compact-syntax"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="1.1">
+    <info>
+        <title>Pygmalion</title>
+        <source xmlns="http://purl.org/dc/terms/">http://www.gutenberg.org/files/3825/3825-h/3825-h.htm</source>
+        <author><personname>George Bernard Shaw</personname></author>
+    </info>
+    <drama>
+        <linegroup>
+            <speaker>THE FLOWER GIRL</speaker>
+            <stagedir>
+                <para>picking up her scattered flowers and replacing them in the basket</para>
+            </stagedir>
+            <line>There's menners f' yer! Te-oo banches o voylets trod into the mad.</line>
+            <stagedir>
+                <para>She sits down on the plinth of the column, sorting herflowers, on the lady's
+                    right. She is not at all an attractive person.She is perhaps eighteen, perhaps
+                    twenty, hardly older. She wears a little sailor hat of black straw that has long
+                    been exposed to the dustand soot of London and has seldom if ever been brushed.
+                    Her hair needs washing rather badly: its mousy color can hardly be natural. She
+                    wears a shoddy black coat that reaches nearly to her knees and is shaped to her
+                    waist. She has a brown skirt with a coarse apron. Her boots aremuch the worse
+                    for wear. She is no doubt as clean as she can afford tobe; but compared to the
+                    ladies she is very dirty. Her features are no worse than theirs; but their
+                    condition leaves something to be desired;and she needs the services of a
+                    dentist.</para>
+            </stagedir>
+        </linegroup>
+    </drama>
+</article>
