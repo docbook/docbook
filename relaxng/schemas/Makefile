@@ -5,7 +5,7 @@ PERL=perl
 
 .PHONY: clean
 
-TARGETS=docbook docbookxi assembly dbits dbforms transclusion sdocbook \
+TARGETS=docbook docbookxi dbits dbforms transclusion sdocbook \
         publishers \
         slides slides-full website website-full
 
@@ -87,26 +87,6 @@ build/defguide/defguide.rnx: build/defguide/defguide.rng
 	$(XSLT) -saxon $< ../tools/include.xsl build/defguide/defguide.rnx, use.extensions=1
 	$(XSLT) -saxon build/defguide/defguide.rnx, ../tools/augment.xsl build/defguide/defguide.rnx,, use.extensions=1
 	$(PERL) ../tools/cleanup.pl build/defguide/defguide.rnx,, > $@
-
-########################################################################
-# DocBook Assembly
-
-assembly.rng: build/assembly/assembly.rnx
-	$(XSLTPROC) --param remove-schematron 1 --output $@ ../tools/removedoc.xsl $<
-
-assembly.sch: build/assembly/assembly.rnx
-	$(XSLT) -saxon $< ../tools/schematron.xsl $@
-
-build/assembly/assembly.rng: assembly/assembly.rnc docbook.rnc \
-             $(filter-out assembly/assembly.rnc, $(wildcard assembly/*.rnc)) \
-             build/docbook/any.docbook.rnc
-	@if !([ -d build/assembly ]); then mkdir -p build/assembly; fi
-	$(TRANG) $< $@
-
-build/assembly/assembly.rnx: build/assembly/assembly.rng
-	$(XSLT) -saxon $< ../tools/include.xsl build/assembly/assembly.rnx, use.extensions=1
-	$(XSLT) -saxon build/assembly/assembly.rnx, ../tools/augment.xsl build/assembly/assembly.rnx,, use.extensions=1
-	$(PERL) ../tools/cleanup.pl build/assembly/assembly.rnx,, > $@
 
 # A schema that contains a pattern for any DocBook element
 
