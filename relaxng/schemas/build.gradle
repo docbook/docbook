@@ -8,7 +8,7 @@ buildscript {
 
   dependencies {
     classpath group: 'org.docbook', name: 'docbook-xslt2', version: '2.0.16'
-    classpath group: 'com.xmlcalabash', name: 'xmlcalabash1-gradle', version: '1.0.0'
+    classpath group: 'com.xmlcalabash', name: 'xmlcalabash1-gradle', version: '1.1.3'
   }
 }
 
