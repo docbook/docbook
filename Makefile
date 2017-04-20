@@ -5,7 +5,7 @@
 # looks like a real mess.
 
 all:
-	cd relaxng/schemas && gradle dist
+	cd relaxng/schemas && gradle --stacktrace dist
 	cd xmlschema/schemas && gradle
 
 clean:
