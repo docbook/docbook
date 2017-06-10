@@ -2639,7 +2639,8 @@ div {
    db.imagedata =
       element imagedata {
          db.imagedata.attlist,
-         db.imagedata.info
+         db.imagedata.info,
+         db.multimediaparam*
       }
 }
 
