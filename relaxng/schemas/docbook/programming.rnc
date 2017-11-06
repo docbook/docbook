@@ -553,7 +553,7 @@ div {
       element fieldsynopsis {
          db.fieldsynopsis.attlist,
          db.modifier*,
-         db.type?,
+         db.type*,
          db.varname,
          db.initializer?
       }
@@ -655,7 +655,7 @@ div {
       element methodsynopsis {
          db.methodsynopsis.attlist,
          db.modifier*,
-         (db.type | db.void)?,
+         (db.type+ | db.void)?,
          db.methodname,
          ((db.methodparam|db.group.methodparam)+ | db.void),
          db.exceptionname*,
@@ -708,7 +708,7 @@ div {
       element methodparam {
          db.methodparam.attlist,
          db.modifier*,
-         db.type?,
+         db.type*,
          ((db.modifier*, db.parameter, db.initializer?)
           | db.funcparams),
          db.modifier*
