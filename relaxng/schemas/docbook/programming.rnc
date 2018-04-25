@@ -29,6 +29,7 @@ db.programming.inlines =
  | db.methodname
  | db.modifier
  | db.initializer
+ | db.buildtarget
  | db.oo.inlines
 
 db.oo.inlines =
@@ -757,6 +758,27 @@ div {
    db.varname =
       element varname {
          db.varname.attlist,
+         db._text
+      }
+}
+
+# ======================================================================
+[
+   db:refname [ "buildtarget" ]
+   db:refpurpose [ "Target of a build" ]
+]
+div {
+
+   db.buildtarget.role.attribute = attribute role { text }
+
+   db.buildtarget.attlist =
+      db.buildtarget.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.buildtarget =
+      element buildtarget {
+         db.buildtarget.attlist,
          db._text
       }
 }
