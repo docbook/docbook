@@ -808,6 +808,7 @@ db.formal.blocks =
    db.example
  | db.figure
  | db.table
+ | db.formalgroup
 
 db.informal.blocks =
    db.informalexample
@@ -5307,3 +5308,40 @@ div {
 }
 
 
+# ======================================================================
+
+[
+   db:refname [ "formalgroup" ]
+   db:refpurpose [ "A group of formal objects, for example subfigures" ]
+]
+div {
+
+   db.formalgroup.fgstyle.attribute = 
+      [
+         db:refpurpose [ "Holds style of formalgroup - this can be used to specify desired layout and positioning of subfigures" ]
+      ]
+      attribute fgstyle { text }
+
+   db.formalgroup.role.attribute = attribute role { text }
+   db.formalgroup.pgwide.attribute = db.pgwide.attribute
+   db.formalgroup.floatstyle.attribute = db.floatstyle.attribute
+
+   db.formalgroup.attlist =
+      db.formalgroup.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.formalgroup.floatstyle.attribute?
+    & db.formalgroup.pgwide.attribute?
+    & db.formalgroup.fgstyle.attribute?
+
+   db.formalgroup.info = db._info.title.onlyreq
+
+   db.formalgroup =
+      element formalgroup {
+        db.formalgroup.attlist,
+        db.formalgroup.info,
+        (db.figure+ | db.table+ | db.example+ | db.equation+)
+      }
+}
+
+# ======================================================================
