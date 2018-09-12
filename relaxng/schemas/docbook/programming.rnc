@@ -815,15 +815,28 @@ div {
 
    db.type.role.attribute = attribute role { text }
 
+   db.type.class.enumeration =
+      ## Combined type is union of nested types
+      "union"
+    | ## Combined type is intersection of nested types
+      "intersection"
+
+   db.type.class.attribute =
+      [
+         db:refpurpose [ "Specifies the way how are nested types combined together" ]
+      ]
+      attribute class { db.type.class.enumeration }
+
    db.type.attlist =
       db.type.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
+    & db.type.class.attribute?
 
    db.type =
       element type {
          db.type.attlist,
-         db._text
+         (db._text | db.type)*
       }
 }
 

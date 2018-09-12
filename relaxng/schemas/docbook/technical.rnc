@@ -39,6 +39,8 @@ div {
       "fqdomainname"
     | ## A group name (wheel)
       "groupname"
+    | ## A network interface (eth0)
+      "interface"
     | ## An IP address (127.0.0.1)
       "ipaddress"
     | ## A library (libncurses)
