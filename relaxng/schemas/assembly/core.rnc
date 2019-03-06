@@ -85,10 +85,17 @@ div {
       attribute href { xsd:anyURI }
 
    db.resource.grammar.attribute = db.grammar.attribute
+   
+   db.resource.transform.attribute =
+   [
+      db:refpurpose [ "Identifies the markup grammar of a resource" ]
+   ]
+   attribute transform { xsd:NMTOKEN }
+
 
    db.resource.attlist =
       db.resource.role.attribute?
-    & db.resource.grammar.attribute?
+    & (db.resource.transform.attribute | db.resource.grammar.attribute)?
     & db.common.attributes
 
    db.resource =
@@ -204,8 +211,6 @@ div {
       ]
       attribute renderas { xsd:QName }
 
-   db.output.grammar.attribute = db.grammar.attribute
-
    db.output.transform.attribute =
       [
          db:refpurpose [ "Specifies the transformation that should be applied to this unit" ]
@@ -224,7 +229,6 @@ div {
     & db.output.chunk.attribute?
     & db.output.file.attribute?
     & db.output.renderas.attribute?
-    & db.output.grammar.attribute?
     & db.output.transform.attribute?
     & db.output.suppress.attribute?
 
