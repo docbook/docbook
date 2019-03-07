@@ -296,7 +296,7 @@ div {
 
    db.module.resourceref.attribute =
       [
-         db:refpurpose [ "Indicates a single resource from which to construct this module" ]
+         db:refpurpose [ "Identifies a single resource or structure within the assembly from which to construct this module" ]
       ]
       attribute resourceref { xsd:IDREF }
 
@@ -308,13 +308,13 @@ div {
 
    db.module.contentonly.attribute =
       [
-         db:refpurpose [ "Indicates if only the content should be copied when including a resource" ]
+         db:refpurpose [ "Indicates if the root element should be omitted when including the resource (copying only the children)" ]
       ]
       attribute contentonly {xsd:boolean }?
 
    db.module.renderas.attribute =
       [
-         db:refpurpose [ "Specifies the DocBook element to which this unit should be renamed" ]
+         db:refpurpose [ "Changes the name of the root element of the included resource to the specified name" ]
       ]
       attribute renderas { xsd:QName }
 
@@ -551,7 +551,7 @@ div {
 
    db.transform.name.attribute =
       [
-         db:refpurpose [ "Identifies the location of the data by reference" ]
+         db:refpurpose [ "The name of the transform" ]
       ]
       attribute name { xsd:NMTOKEN }
 
