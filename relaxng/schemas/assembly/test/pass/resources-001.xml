@@ -1,4 +1,4 @@
-<assembly xmlns="http://docbook.org/ns/docbook">
+<assembly xmlns="http://docbook.org/ns/docbook" version="5.1">
   <resources xml:base="some/path">
     <description>Resources for help system.</description>
     <resource xml:id="overview" href="overview.xml">
