@@ -23,6 +23,7 @@ start |= db.abstract
  | db.videodata
  | db.caption
  | db.publishing.blocks
+ | db.wrapper.blocks
  | db.formal.blocks
  | db.informal.blocks
  | db.formalpara
@@ -781,6 +782,7 @@ db.extension.inlines = notAllowed
 
 db.nopara.blocks =
    db.list.blocks
+ | db.wrapper.blocks
  | db.formal.blocks
  | db.informal.blocks
  | db.publishing.blocks
@@ -802,13 +804,15 @@ db.all.blocks =
  | db.para.blocks
  | db.extension.blocks
 
+db.wrapper.blocks =
+   db.formalgroup
+
 ctrl:exclude [ from="db.formal.blocks" exclude="db.formal.blocks" ]
 
 db.formal.blocks =
    db.example
  | db.figure
  | db.table
- | db.formalgroup
 
 db.informal.blocks =
    db.informalexample
