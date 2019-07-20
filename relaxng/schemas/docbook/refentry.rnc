@@ -14,6 +14,16 @@ db.toplevel.sections |= db.refentry+
 
 db.recursive.sections |= db.refentry+
 
+db.sect1.sections |= db.refentry+
+
+db.sect2.sections |= db.refentry+
+
+db.sect3.sections |= db.refentry+
+
+db.sect4.sections |= db.refentry+
+
+db.sect5.sections |= db.refentry+
+
 db.toplevel.refsection = db.refsection+
 
 db.secondlevel.refsection = db.refsection+
