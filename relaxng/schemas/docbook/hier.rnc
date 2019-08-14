@@ -5,7 +5,7 @@ namespace db = "http://docbook.org/ns/docbook"
 namespace dbx = "http://sourceforge.net/projects/docbook/defguide/schema/extra-markup"
 default namespace = "http://docbook.org/ns/docbook"
 
-start |= db.partintro | db.simplesect
+start |= db.partintro | db.simplesect | db.legalsection
 
 db.status.attribute =
    [
@@ -18,12 +18,12 @@ db.status.attribute =
 
 # ======================================================================
 
-db.toplevel.sections = (db.section+, db.simplesect*) | db.simplesect+
+db.toplevel.sections = ((db.section|db.legalsection)+, db.simplesect*) | db.simplesect+
 
 db.toplevel.blocks.or.sections =
   (db.all.blocks+, db.toplevel.sections?) | db.toplevel.sections
 
-db.recursive.sections = (db.section+, db.simplesect*) | db.simplesect+
+db.recursive.sections = ((db.section|db.legalsection)+, db.simplesect*) | db.simplesect+
 
 db.recursive.blocks.or.sections =
   (db.all.blocks+, db.recursive.sections?) | db.recursive.sections
@@ -422,8 +422,34 @@ div {
          db.simplesect.info,
          db.all.blocks*
       }
-}
 
+}
+# ======================================================================
+
+[
+   db:refname [ "legalsection" ]
+   db:refpurpose [ "A recursive section of legal obligations or requirements." ]
+]
+div {
+   db.legalsection.role.attribute = attribute role { text }
+
+   db.legalsection.attlist =
+      db.legalsection.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.label.attribute?
+
+   db.legalsection.info = db._info.title.req
+
+   db.legalsection =
+      element legalsection {
+         db.legalsection.attlist,
+         db.legalsection.info,
+         db.all.blocks*,
+         db.legalsection*
+      }
+    
+}
 # ======================================================================
 
 db.article.components = db.toplevel.sections
