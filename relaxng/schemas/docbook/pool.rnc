@@ -3929,7 +3929,8 @@ div {
       element legalnotice {
          db.legalnotice.attlist,
          db.legalnotice.info,
-         db.all.blocks+
+         db.all.blocks+,
+         db.legalsection*
       }
 }
 
