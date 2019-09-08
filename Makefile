@@ -5,10 +5,10 @@
 # looks like a real mess.
 
 all:
-	cd relaxng/schemas && ./gradlew dist
-	cd xmlschema/schemas && ./gradlew
+	cd relaxng/schemas && ./gradlew --console=plain dist
+	cd xmlschema/schemas && ./gradlew --console=plain
 
 clean:
-	cd relaxng/schemas && ./gradlew clean
-	cd xmlschema/schemas && ./gradlew clean
+	cd relaxng/schemas && ./gradlew --console=plain clean
+	cd xmlschema/schemas && ./gradlew --console=plain clean
 
