@@ -10,7 +10,7 @@ namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace svg = "http://www.w3.org/2000/svg"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# This file is part of Simplified DocBook V5.2-b01
+# This file is part of Simplified DocBook V5.2b05
 # 
 # This file is a customization of DocBook V5.x created by the OASIS
 # DocBook Publishers Subcommittee.
@@ -47,13 +47,13 @@ s:ns [
   prefix = "a"
   uri = "http://relaxng.org/ns/compatibility/annotations/1.0"
 ]
-s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
 s:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
+s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
 s:ns [ prefix = "ctrl" uri = "http://nwalsh.com/xmlns/schema-control/" ]
 s:ns [ prefix = "mml" uri = "http://www.w3.org/1998/Math/MathML" ]
 s:ns [ prefix = "svg" uri = "http://www.w3.org/2000/svg" ]
-s:ns [ prefix = "dcmitype" uri = "http://purl.org/dc/dcmitype/" ]
 s:ns [ prefix = "dcterms" uri = "http://purl.org/dc/terms/" ]
+s:ns [ prefix = "dcmitype" uri = "http://purl.org/dc/dcmitype/" ]
 div {
   db._any.attribute =
     
@@ -561,7 +561,11 @@ db._info.title.onlyreq =
   (db._title.onlyreq, db.titleforbidden.info?) | db.titleonlyreq.info
 db._info.title.forbidden = db.titleforbidden.info?
 db.all.inlines =
-  text | db.ubiq.inlines | db.general.inlines | db.domain.inlines
+  text
+  | db.ubiq.inlines
+  | db.general.inlines
+  | db.domain.inlines
+  | db.extension.inlines
 db.general.inlines =
   db.publishing.inlines
   | db.product.inlines
@@ -570,7 +574,10 @@ db.general.inlines =
   | db.indexing.inlines
   | db.link.inlines
 db.domain.inlines =
-  db.technical.inlines | db.math.inlines | db.markup.inlines
+  db.technical.inlines
+  | db.math.inlines
+  | db.markup.inlines
+  | db.programming.inlines
 db.technical.inlines = db.termdef | (db.optional)
 db.product.inlines = db.trademark | (db.productnumber | db.productname)
 db.bibliography.inlines =
@@ -619,7 +626,8 @@ db.nopara.blocks =
 db.para.blocks = db.anchor | db.para | db.formalpara | db.simpara
 db.all.blocks =
   (db.nopara.blocks | db.para.blocks | db.extension.blocks)
-db.formal.blocks = (db.example | db.figure | db.table) | db.equation
+db.formal.blocks =
+  (db.example | db.figure | db.table | db.formalgroup) | db.equation
 db.informal.blocks =
   (db.informalexample | db.informalfigure | db.informaltable)
   | db.informalequation
@@ -692,7 +700,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -819,7 +827,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1006,7 +1014,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1259,6 +1267,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of footnote"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:footnote"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:equation)"
             "equation must not occur among the children or descendants of footnote"
           ]
@@ -1339,6 +1367,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:caution)"
+            "caution must not occur among the children or descendants of footnote"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:footnote"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:danger)"
             "danger must not occur among the children or descendants of footnote"
           ]
@@ -1359,8 +1407,68 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:important)"
+            "important must not occur among the children or descendants of footnote"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:footnote"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:note)"
             "note must not occur among the children or descendants of footnote"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:footnote"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:tip)"
+            "tip must not occur among the children or descendants of footnote"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:footnote"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:warning)"
+            "warning must not occur among the children or descendants of footnote"
           ]
           "\x{a}" ~
           "               "
@@ -1402,7 +1510,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1727,6 +1835,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of example"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:example"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:equation)"
             "equation must not occur among the children or descendants of example"
           ]
@@ -1863,6 +1991,26 @@ div {
           s:assert [
             test = "not(.//db:table)"
             "table must not occur among the children or descendants of figure"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:figure"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of figure"
           ]
           "\x{a}" ~
           "               "
@@ -2148,7 +2296,9 @@ div {
   db.imagedata =
     
     ## Pointer to external image data
-    element imagedata { db.imagedata.attlist, db.imagedata.info }
+    element imagedata {
+      db.imagedata.attlist, db.imagedata.info, db.multimediaparam*
+    }
 }
 div {
   db.textdata.role.attribute = attribute role { text }
@@ -2274,6 +2424,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of caption"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caption"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:equation)"
             "equation must not occur among the children or descendants of caption"
           ]
@@ -2334,6 +2504,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:caution)"
+            "caution must not occur among the children or descendants of caption"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caption"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:danger)"
             "danger must not occur among the children or descendants of caption"
           ]
@@ -2354,8 +2544,68 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:important)"
+            "important must not occur among the children or descendants of caption"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caption"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:note)"
             "note must not occur among the children or descendants of caption"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caption"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:tip)"
+            "tip must not occur among the children or descendants of caption"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caption"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:warning)"
+            "warning must not occur among the children or descendants of caption"
           ]
           "\x{a}" ~
           "               "
@@ -2878,7 +3128,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3306,7 +3556,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3841,6 +4091,133 @@ div {
     ## A text-only annotation, often used for accessibility
     element alt { db.alt.attlist, (text | db.inlinemediaobject)* }
 }
+div {
+  db.formalgroup.fgstyle.attribute =
+    
+    ## Holds style of formalgroup - this can be used to specify desired layout and positioning of subfigures
+    attribute fgstyle { text }
+  db.formalgroup.role.attribute = attribute role { text }
+  db.formalgroup.pgwide.attribute = db.pgwide.attribute
+  db.formalgroup.floatstyle.attribute = db.floatstyle.attribute
+  db.formalgroup.attlist =
+    db.formalgroup.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.formalgroup.floatstyle.attribute?
+    & db.formalgroup.pgwide.attribute?
+    & db.formalgroup.fgstyle.attribute?
+  db.formalgroup.info = db._info.title.onlyreq
+  db.formalgroup =
+    
+    ## A group of formal objects, for example subfigures
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:example)"
+            "example must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:figure)"
+            "figure must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:table)"
+            "table must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:equation)"
+            "equation must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element formalgroup {
+      db.formalgroup.attlist,
+      db.formalgroup.info,
+      (db.figure+ | db.table+ | db.example+ | db.equation+)
+    }
+}
 db.status.attribute =
   
   ## Identifies the editorial or publication status of the element on which it occurs
@@ -3880,7 +4257,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3923,7 +4300,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3960,7 +4337,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3999,7 +4376,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4040,7 +4417,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4082,7 +4459,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4121,7 +4498,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4161,7 +4538,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4203,7 +4580,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4261,7 +4638,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4367,7 +4744,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4885,7 +5262,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5082,7 +5459,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5450,7 +5827,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5502,7 +5879,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6329,6 +6706,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of table"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:table"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:equation)"
             "equation must not occur among the children or descendants of table"
           ]
@@ -6559,6 +6956,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of equation"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:equation"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:equation)"
             "equation must not occur among the children or descendants of equation"
           ]
@@ -6750,8 +7167,154 @@ div {
     ## A number assigned to a product
     element productnumber { db.productnumber.attlist, db._text }
 }
-db.admonition.blocks = db.danger | db.note
+db.programming.inlines = db.buildtarget
+div {
+  db.buildtarget.role.attribute = attribute role { text }
+  db.buildtarget.attlist =
+    db.buildtarget.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+  db.buildtarget =
+    
+    ## Target of a build
+    element buildtarget { db.buildtarget.attlist, db._text }
+}
+db.admonition.blocks =
+  db.caution | db.danger | db.important | db.note | db.tip | db.warning
 db.admonition.contentmodel = db._info.title.only, db.all.blocks+
+div {
+  db.caution.role.attribute = attribute role { text }
+  db.caution.attlist =
+    db.caution.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+  db.caution =
+    
+    ## A note of caution
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caution"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:caution)"
+            "caution must not occur among the children or descendants of caution"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caution"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:danger)"
+            "danger must not occur among the children or descendants of caution"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caution"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:important)"
+            "important must not occur among the children or descendants of caution"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caution"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:note)"
+            "note must not occur among the children or descendants of caution"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caution"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:tip)"
+            "tip must not occur among the children or descendants of caution"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caution"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:warning)"
+            "warning must not occur among the children or descendants of caution"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element caution { db.caution.attlist, db.admonition.contentmodel }
+}
 div {
   db.danger.role.attribute = attribute role { text }
   db.danger.attlist =
@@ -6762,6 +7325,26 @@ div {
     
     ## An admonition set off from the text indicating hazardous situation
     [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:danger"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:caution)"
+            "caution must not occur among the children or descendants of danger"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
       s:pattern [
         "\x{a}" ~
         "               "
@@ -6793,8 +7376,68 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:important)"
+            "important must not occur among the children or descendants of danger"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:danger"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:note)"
             "note must not occur among the children or descendants of danger"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:danger"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:tip)"
+            "tip must not occur among the children or descendants of danger"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:danger"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:warning)"
+            "warning must not occur among the children or descendants of danger"
           ]
           "\x{a}" ~
           "               "
@@ -6806,6 +7449,141 @@ div {
     element danger { db.danger.attlist, db.admonition.contentmodel }
 }
 div {
+  db.important.role.attribute = attribute role { text }
+  db.important.attlist =
+    db.important.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+  db.important =
+    
+    ## An admonition set off from the text
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:important"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:caution)"
+            "caution must not occur among the children or descendants of important"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:important"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:danger)"
+            "danger must not occur among the children or descendants of important"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:important"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:important)"
+            "important must not occur among the children or descendants of important"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:important"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:note)"
+            "note must not occur among the children or descendants of important"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:important"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:tip)"
+            "tip must not occur among the children or descendants of important"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:important"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:warning)"
+            "warning must not occur among the children or descendants of important"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element important {
+      db.important.attlist, db.admonition.contentmodel
+    }
+}
+div {
   db.note.role.attribute = attribute role { text }
   db.note.attlist =
     db.note.role.attribute?
@@ -6815,6 +7593,26 @@ div {
     
     ## A message set off from the text
     [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:note"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:caution)"
+            "caution must not occur among the children or descendants of note"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
       s:pattern [
         "\x{a}" ~
         "               "
@@ -6846,6 +7644,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:important)"
+            "important must not occur among the children or descendants of note"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:note"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:note)"
             "note must not occur among the children or descendants of note"
           ]
@@ -6855,8 +7673,314 @@ div {
         "\x{a}" ~
         "            "
       ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:note"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:tip)"
+            "tip must not occur among the children or descendants of note"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:note"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:warning)"
+            "warning must not occur among the children or descendants of note"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
     ]
     element note { db.note.attlist, db.admonition.contentmodel }
+}
+div {
+  db.tip.role.attribute = attribute role { text }
+  db.tip.attlist =
+    db.tip.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+  db.tip =
+    
+    ## A suggestion to the user, set off from the text
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:tip"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:caution)"
+            "caution must not occur among the children or descendants of tip"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:tip"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:danger)"
+            "danger must not occur among the children or descendants of tip"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:tip"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:important)"
+            "important must not occur among the children or descendants of tip"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:tip"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:note)"
+            "note must not occur among the children or descendants of tip"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:tip"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:tip)"
+            "tip must not occur among the children or descendants of tip"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:tip"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:warning)"
+            "warning must not occur among the children or descendants of tip"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element tip { db.tip.attlist, db.admonition.contentmodel }
+}
+div {
+  db.warning.role.attribute = attribute role { text }
+  db.warning.attlist =
+    db.warning.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+  db.warning =
+    
+    ## An admonition set off from the text
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:warning"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:caution)"
+            "caution must not occur among the children or descendants of warning"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:warning"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:danger)"
+            "danger must not occur among the children or descendants of warning"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:warning"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:important)"
+            "important must not occur among the children or descendants of warning"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:warning"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:note)"
+            "note must not occur among the children or descendants of warning"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:warning"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:tip)"
+            "tip must not occur among the children or descendants of warning"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:warning"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:warning)"
+            "warning must not occur among the children or descendants of warning"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element warning { db.warning.attlist, db.admonition.contentmodel }
 }
 div {
   db.optional.role.attribute = attribute role { text }
@@ -6947,7 +8071,8 @@ db.bibliographic.elements =
   | db.subtitle
   | db.title
   | db.titleabbrev
-db.extension.blocks = db.dialogue | db.poetry | db.drama
+db.extension.blocks = db.dialogue | db.poetry | db.drama | db.stagedir
+db.extension.inlines = db.inlinestagedir
 db.book.components =
   (db.navigation.components | db.components | db.divisions)*
 db.part.contentmodel = db.part.components+
@@ -7360,7 +8485,7 @@ dcterms.any =
     s:pattern [
       "\x{a}" ~
       "            "
-      rng:title [ "Root must have version" ]
+      s:title [ "Root must have version" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -7480,6 +8605,28 @@ div {
   db.speaker =
     
     ## Designates a person who is giving a speech or lecture
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:speaker"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:speaker)"
+            "speaker must not occur among the children or descendants of speaker"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
     element speaker { db.speaker.attlist, (db.person | text)* }
 }
 div {
@@ -7520,7 +8667,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7558,7 +8705,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7590,7 +8737,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7619,4 +8766,26 @@ div {
     db.drama.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
+}
+# Publishers 1.1
+
+# https://sourceforge.net/p/docbook/publishers-rfe/8/
+div {
+  db.stagedir =
+    
+    ## A stage direction
+    element db:stagedir { db.stagedir.attlist, db.stagedir.content }
+  db.stagedir.attlist = db.common.attributes
+  db.stagedir.content = db.para+
+}
+# https://sourceforge.net/p/docbook/publishers-rfe/8/
+div {
+  db.inlinestagedir =
+    
+    ## An inline stage direction
+    element db:inlinestagedir {
+      db.inlinestagedir.attlist, db.inlinestagedir.content
+    }
+  db.inlinestagedir.attlist = db.common.attributes
+  db.inlinestagedir.content = db.all.inlines+
 }

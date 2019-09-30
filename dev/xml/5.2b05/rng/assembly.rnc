@@ -2,20 +2,18 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
 default namespace db = "http://docbook.org/ns/docbook"
 namespace html = "http://www.w3.org/1999/xhtml"
-namespace its = "http://www.w3.org/2005/11/its"
-namespace local = ""
 namespace mml = "http://www.w3.org/1998/Math/MathML"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace svg = "http://www.w3.org/2000/svg"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# This file is part of DocBook ITS V5.2-b01
+# This file is part of DocBook Assembly V5.2b05
 # 
-# Copyright 2007-2015 HaL Computer Systems, Inc.,
+# Copyright 2008-2015 HaL Computer Systems, Inc.,
 # O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
-# Corporation, Norman Walsh, Jirka Kosek, Sun Microsystems, Inc.,
-# and the Organization for the Advancement of Structured Information
+# Corporation, Norman Walsh, Sun Microsystems, Inc., and the
+# Organization for the Advancement of Structured Information
 # Standards (OASIS).
 # 
 # Permission to use, copy, modify and distribute the DocBook schema
@@ -44,73 +42,22 @@ s:ns [
   prefix = "a"
   uri = "http://relaxng.org/ns/compatibility/annotations/1.0"
 ]
-s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
-s:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
 s:ns [ prefix = "ctrl" uri = "http://nwalsh.com/xmlns/schema-control/" ]
+s:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
+s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
 s:ns [ prefix = "mml" uri = "http://www.w3.org/1998/Math/MathML" ]
 s:ns [ prefix = "svg" uri = "http://www.w3.org/2000/svg" ]
-s:ns [ prefix = "its" uri = "http://www.w3.org/2005/11/its" ]
-start =
-  (db.set
-   | db.book
-   | db.divisions
-   | db.components
-   | db.navigation.components
-   | db.section
-   | db.para)
-  | (db.abstract
-     | db.mediaobject.content
-     | db.audiodata
-     | db.imagedata
-     | db.textdata
-     | db.videodata
-     | db.caption
-     | db.publishing.blocks
-     | db.formal.blocks
-     | db.informal.blocks
-     | db.formalpara
-     | db.inlinemediaobject
-     | db.list.blocks
-     | db.legalnotice
-     | db.verbatim.blocks
-     | db.graphic.blocks
-     | db.personblurb
-     | db.revhistory
-     | db.simpara
-     | db.step
-     | db.stepalternatives)
-  | (db.partintro | db.simplesect)
-  | db.annotation
-  | (db.sect1 | db.sect2 | db.sect3 | db.sect4 | db.sect5)
-  | (db.refentry | db.refsection | db.refsynopsisdiv)
-  | (db.refsect1 | db.refsect2 | db.refsect3)
-  | (db.glossary | db.glossdiv | db.glosslist)
-  | (db.bibliodiv | db.bibliolist)
-  | (db.setindex | db.index | db.indexdiv)
-  | (db.toc | db.tocdiv)
-  | (db.task | db.taskprerequisites | db.taskrelated | db.tasksummary)
-  | (db.calloutlist
-     | db.programlistingco
-     | db.screenco
-     | db.imageobjectco)
-  | (db.productionset | db.constraintdef)
-  | (db.msg
-     | db.msgexplan
-     | db.msgmain
-     | db.msgrel
-     | db.msgset
-     | db.msgsub)
-  | (db.qandadiv | db.qandaentry | db.qandaset)
-  | (db.equation | db.informalequation)
-  | db.cmdsynopsis
-  | (db.synopsis.blocks | db.funcsynopsisinfo | db.classsynopsisinfo)
-  | db.admonition.blocks
-  | db.topic
 div {
   db._any.attribute =
     
     ## Any attribute, including any attribute in any namespace.
     attribute * { text }
+  db._any =
+    
+    ## Any element from almost any namespace
+    element * - (db:* | html:*) {
+      (db._any.attribute | text | db._any)*
+    }
 }
 db.arch.attribute =
   
@@ -354,7 +301,6 @@ db.common.base.attributes =
   & db.dir.attribute?
   & db.effectivity.attributes
   & db.rdfalite.attributes
-  & (its-local.attributes & its-attribute.version?)
 db.common.attributes =
   db.xml.id.attribute?
   & db.common.base.attributes
@@ -689,7 +635,8 @@ db.nopara.blocks =
   | db.admonition.blocks
 db.para.blocks = db.anchor | db.para | db.formalpara | db.simpara
 db.all.blocks = (db.nopara.blocks | db.para.blocks) | db.annotation
-db.formal.blocks = (db.example | db.figure | db.table) | db.equation
+db.formal.blocks =
+  (db.example | db.figure | db.table | db.formalgroup) | db.equation
 db.informal.blocks =
   (db.informalexample | db.informalfigure | db.informaltable)
   | db.informalequation
@@ -716,7 +663,7 @@ db.verbatim.blocks =
   (db.screen | db.literallayout)
   | (db.programlistingco | db.screenco)
   | (db.programlisting | db.synopsis)
-db.info.extension = db._any | (its-rules | its-standoff)
+db.info.extension = db._any
 db.info.elements =
   (db.abstract
    | db.address
@@ -935,28 +882,6 @@ div {
   db.procedure =
     
     ## A list of operations to be performed in a well-defined sequence
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:procedure"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element procedure {
       db.procedure.attlist,
       db.procedure.info,
@@ -978,28 +903,6 @@ div {
   db.step =
     
     ## A unit of action in a procedure
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:step"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element step {
       db.step.attlist,
       db.step.info,
@@ -1022,28 +925,6 @@ div {
   db.stepalternatives =
     
     ## Alternative steps in a procedure
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:stepalternatives"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element stepalternatives {
       db.stepalternatives.attlist, db.stepalternatives.info, db.step+
     }
@@ -1104,26 +985,6 @@ div {
         "\x{a}" ~
         "            "
       ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:sidebar"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
     ]
     element sidebar {
       db.sidebar.attlist, db.sidebar.info, db.all.blocks+
@@ -1139,28 +1000,6 @@ div {
   db.abstract =
     
     ## A summary
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:abstract"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element abstract {
       db.abstract.attlist, db.abstract.info, db.all.blocks+
     }
@@ -1175,28 +1014,6 @@ div {
   db.personblurb =
     
     ## A short description or note about a person
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:personblurb"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element personblurb {
       db.personblurb.attlist, db.personblurb.info, db.para.blocks+
     }
@@ -1211,28 +1028,6 @@ div {
   db.blockquote =
     
     ## A quotation set off from the main text
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:blockquote"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element blockquote {
       db.blockquote.attlist,
       db.blockquote.info,
@@ -1327,28 +1122,6 @@ div {
   db.epigraph =
     
     ## A short inscription at the beginning of a document or component
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:epigraph"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element epigraph {
       db.epigraph.attlist,
       db.epigraph.info,
@@ -1444,6 +1217,26 @@ div {
           s:assert [
             test = "not(.//db:table)"
             "table must not occur among the children or descendants of footnote"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:footnote"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of footnote"
           ]
           "\x{a}" ~
           "               "
@@ -1664,28 +1457,6 @@ div {
   db.formalpara =
     
     ## A paragraph with a title
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:formalpara"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element formalpara {
       db.formalpara.attlist,
       db.formalpara.info,
@@ -1703,28 +1474,6 @@ div {
   db.para =
     
     ## A paragraph
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:para"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element para {
       db.para.attlist,
       db.para.info,
@@ -1741,28 +1490,6 @@ div {
   db.simpara =
     
     ## A paragraph that contains only text and inline markup, no block elements
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:simpara"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element simpara {
       db.simpara.attlist, db.simpara.info, db.all.inlines*
     }
@@ -1783,28 +1510,6 @@ div {
   db.itemizedlist =
     
     ## A list in which each entry is marked with a bullet or other dingbat
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:itemizedlist"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element itemizedlist {
       db.itemizedlist.attlist,
       db.itemizedlist.info,
@@ -1873,28 +1578,6 @@ div {
   db.orderedlist =
     
     ## A list in which each entry is marked with a sequentially incremented label
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:orderedlist"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element orderedlist {
       db.orderedlist.attlist,
       db.orderedlist.info,
@@ -1929,28 +1612,6 @@ div {
   db.segmentedlist =
     
     ## A segmented list, a list of sets of elements
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:segmentedlist"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element segmentedlist {
       db.segmentedlist.attlist,
       db.segmentedlist.info,
@@ -2043,28 +1704,6 @@ div {
   db.simplelist =
     
     ## An undecorated list of single words or short phrases
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:simplelist"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element simplelist { db.simplelist.attlist, db.member+ }
 }
 div {
@@ -2094,28 +1733,6 @@ div {
   db.variablelist =
     
     ## A list in which each entry is composed of a set of one or more terms and an associated description
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:variablelist"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element variablelist {
       db.variablelist.attlist,
       db.variablelist.info,
@@ -2236,8 +1853,8 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "not(.//db:equation)"
-            "equation must not occur among the children or descendants of example"
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of example"
           ]
           "\x{a}" ~
           "               "
@@ -2248,16 +1865,16 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
-          context = "/db:example"
+          context = "db:example"
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
+            test = "not(.//db:equation)"
+            "equation must not occur among the children or descendants of example"
           ]
           "\x{a}" ~
           "               "
@@ -2286,28 +1903,6 @@ div {
   db.informalexample =
     
     ## A displayed example without a title
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:informalexample"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element informalexample {
       db.informalexample.attlist,
       db.informalexample.info,
@@ -2340,28 +1935,6 @@ div {
   db.literallayout =
     
     ## A block of text in which line breaks and white space are to be reproduced faithfully
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:literallayout"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element literallayout {
       db.literallayout.attlist, db.verbatim.contentmodel
     }
@@ -2378,28 +1951,6 @@ div {
   db.screen =
     
     ## Text that a user sees or might see on a computer screen
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:screen"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element screen { db.screen.attlist, db.verbatim.contentmodel }
 }
 div {
@@ -2412,28 +1963,6 @@ div {
   db.screenshot =
     
     ## A representation of what the user sees or might see on a computer screen
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:screenshot"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element screenshot {
       db.screenshot.attlist, db.screenshot.info, db.mediaobject
     }
@@ -2526,8 +2055,8 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "not(.//db:equation)"
-            "equation must not occur among the children or descendants of figure"
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of figure"
           ]
           "\x{a}" ~
           "               "
@@ -2538,16 +2067,16 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
-          context = "/db:figure"
+          context = "db:figure"
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
+            test = "not(.//db:equation)"
+            "equation must not occur among the children or descendants of figure"
           ]
           "\x{a}" ~
           "               "
@@ -2576,28 +2105,6 @@ div {
   db.informalfigure =
     
     ## A untitled figure
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:informalfigure"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element informalfigure {
       db.informalfigure.attlist,
       db.informalfigure.info,
@@ -2618,28 +2125,6 @@ div {
   db.mediaobject =
     
     ## A displayed media object (video, audio, image, etc.)
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:mediaobject"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element mediaobject {
       db.mediaobject.attlist,
       db.mediaobject.info,
@@ -2658,28 +2143,6 @@ div {
   db.inlinemediaobject =
     
     ## An inline media object (video, audio, image, and so on)
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:inlinemediaobject"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element inlinemediaobject {
       db.inlinemediaobject.attlist,
       db.inlinemediaobject.info,
@@ -2697,28 +2160,6 @@ div {
   db.videoobject =
     
     ## A wrapper for video data and its associated meta-information
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:videoobject"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element videoobject {
       db.videoobject.attlist, db.videoobject.info, db.videodata+
     }
@@ -2733,28 +2174,6 @@ div {
   db.audioobject =
     
     ## A wrapper for audio data and its associated meta-information
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:audioobject"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element audioobject {
       db.audioobject.attlist, db.audioobject.info, db.audiodata+
     }
@@ -2771,28 +2190,6 @@ div {
   db.imageobject =
     
     ## A wrapper for image data and its associated meta-information
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:imageobject"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element imageobject {
       db.imageobject.attlist,
       db.imageobject.info,
@@ -2809,28 +2206,6 @@ div {
   db.textobject =
     
     ## A wrapper for a text description of an object and its associated meta-information
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:textobject"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element textobject {
       db.textobject.attlist,
       db.textobject.info,
@@ -2879,28 +2254,6 @@ div {
   db.videodata =
     
     ## Pointer to external video data
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:videodata"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element videodata {
       db.videodata.attlist, db.videodata.info, db.multimediaparam*
     }
@@ -2947,28 +2300,6 @@ div {
   db.audiodata =
     
     ## Pointer to external audio data
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:audiodata"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element audiodata {
       db.audiodata.attlist, db.audiodata.info, db.multimediaparam*
     }
@@ -3011,29 +2342,9 @@ div {
   db.imagedata =
     
     ## Pointer to external image data
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:imagedata"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
-    element imagedata { db.imagedata.attlist, db.imagedata.info }
+    element imagedata {
+      db.imagedata.attlist, db.imagedata.info, db.multimediaparam*
+    }
 }
 div {
   db.textdata.role.attribute = attribute role { text }
@@ -3050,28 +2361,6 @@ div {
   db.textdata =
     
     ## Pointer to external text data
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:textdata"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element textdata { db.textdata.attlist, db.textdata.info }
 }
 div {
@@ -3163,6 +2452,26 @@ div {
           s:assert [
             test = "not(.//db:table)"
             "table must not occur among the children or descendants of caption"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caption"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of caption"
           ]
           "\x{a}" ~
           "               "
@@ -3350,26 +2659,6 @@ div {
         "\x{a}" ~
         "            "
       ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:caption"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
     ]
     element caption {
       db.caption.attlist, db.caption.info, db.all.blocks+
@@ -3385,28 +2674,6 @@ div {
   db.address =
     
     ## A real-world address, generally a postal address
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:address"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element address {
       db.address.attlist,
       (db._text
@@ -4112,28 +3379,6 @@ div {
   db.legalnotice =
     
     ## A statement of legal obligations or requirements
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:legalnotice"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element legalnotice {
       db.legalnotice.attlist, db.legalnotice.info, db.all.blocks+
     }
@@ -4367,28 +3612,6 @@ div {
   db.revhistory =
     
     ## A history of the revisions to a document
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:revhistory"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element revhistory {
       db.revhistory.attlist, db.revhistory.info, db.revision+
     }
@@ -4985,6 +4208,133 @@ div {
     ## A text-only annotation, often used for accessibility
     element alt { db.alt.attlist, (text | db.inlinemediaobject)* }
 }
+div {
+  db.formalgroup.fgstyle.attribute =
+    
+    ## Holds style of formalgroup - this can be used to specify desired layout and positioning of subfigures
+    attribute fgstyle { text }
+  db.formalgroup.role.attribute = attribute role { text }
+  db.formalgroup.pgwide.attribute = db.pgwide.attribute
+  db.formalgroup.floatstyle.attribute = db.floatstyle.attribute
+  db.formalgroup.attlist =
+    db.formalgroup.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.formalgroup.floatstyle.attribute?
+    & db.formalgroup.pgwide.attribute?
+    & db.formalgroup.fgstyle.attribute?
+  db.formalgroup.info = db._info.title.onlyreq
+  db.formalgroup =
+    
+    ## A group of formal objects, for example subfigures
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:example)"
+            "example must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:figure)"
+            "figure must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:table)"
+            "table must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:equation)"
+            "equation must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element formalgroup {
+      db.formalgroup.attlist,
+      db.formalgroup.info,
+      (db.figure+ | db.table+ | db.example+ | db.equation+)
+    }
+}
 db.status.attribute =
   
   ## Identifies the editorial or publication status of the element on which it occurs
@@ -5031,28 +4381,6 @@ div {
   db.set =
     
     ## A collection of books
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:set"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element set {
       db.set.attlist,
       db.set.info,
@@ -5076,28 +4404,6 @@ div {
   db.book =
     
     ## A book
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:book"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element book { db.book.attlist, db.book.info, db.book.components }
 }
 div {
@@ -5113,28 +4419,6 @@ div {
   db.dedication =
     
     ## The dedication of a book or other component
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:dedication"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element dedication {
       db.dedication.attlist, db.dedication.info, db.all.blocks+
     }
@@ -5152,28 +4436,6 @@ div {
   db.acknowledgements =
     
     ## Acknowledgements of a book or other component
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:acknowledgements"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element acknowledgements {
       db.acknowledgements.attlist,
       db.acknowledgements.info,
@@ -5193,28 +4455,6 @@ div {
   db.colophon =
     
     ## Text at the back of a book describing facts about its production
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:colophon"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element colophon {
       db.colophon.attlist,
       db.colophon.info,
@@ -5236,28 +4476,6 @@ div {
   db.appendix =
     
     ## An appendix in a book or article
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:appendix"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element appendix {
       db.appendix.attlist, db.appendix.info, db.appendix.contentmodel?
     }
@@ -5276,28 +4494,6 @@ div {
   db.chapter =
     
     ## A chapter, as of a book
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:chapter"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element chapter {
       db.chapter.attlist, db.chapter.info, db.chapter.contentmodel?
     }
@@ -5319,28 +4515,6 @@ div {
   db.part =
     
     ## A division in a book
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:part"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element part {
       db.part.attlist,
       db.part.info,
@@ -5361,28 +4535,6 @@ div {
   db.preface =
     
     ## Introductory matter preceding the first chapter of a book
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:preface"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element preface {
       db.preface.attlist, db.preface.info, db.component.contentmodel?
     }
@@ -5400,28 +4552,6 @@ div {
   db.partintro =
     
     ## An introduction to the contents of a part
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:partintro"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element partintro {
       db.partintro.attlist,
       db.partintro.info,
@@ -5441,28 +4571,6 @@ div {
   db.section =
     
     ## A recursive section
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:section"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element section {
       db.section.attlist,
       db.section.info,
@@ -5484,28 +4592,6 @@ div {
   db.simplesect =
     
     ## A section of a document with no subdivisions
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:simplesect"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element simplesect {
       db.simplesect.attlist, db.simplesect.info, db.all.blocks*
     }
@@ -5569,28 +4655,6 @@ div {
   db.article =
     
     ## An article
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:article"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element article {
       db.article.attlist,
       db.article.info,
@@ -5632,26 +4696,6 @@ div {
           s:assert [
             test = "not(.//db:annotation)"
             "annotation must not occur among the children or descendants of annotation"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:annotation"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
           ]
           "\x{a}" ~
           "               "
@@ -5933,28 +4977,6 @@ div {
   db.sect1 =
     
     ## A top-level section of document
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:sect1"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element sect1 {
       db.sect1.attlist,
       db.sect1.info,
@@ -5977,28 +4999,6 @@ div {
   db.sect2 =
     
     ## A subsection within a sect1
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:sect2"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element sect2 {
       db.sect2.attlist,
       db.sect2.info,
@@ -6021,28 +5021,6 @@ div {
   db.sect3 =
     
     ## A subsection within a sect2
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:sect3"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element sect3 {
       db.sect3.attlist,
       db.sect3.info,
@@ -6065,28 +5043,6 @@ div {
   db.sect4 =
     
     ## A subsection within a sect3
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:sect4"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element sect4 {
       db.sect4.attlist,
       db.sect4.info,
@@ -6109,28 +5065,6 @@ div {
   db.sect5 =
     
     ## A subsection within a sect4
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:sect5"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element sect5 {
       db.sect5.attlist,
       db.sect5.info,
@@ -6155,28 +5089,6 @@ div {
   db.reference =
     
     ## A collection of reference entries
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:reference"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element reference {
       db.reference.attlist,
       db.reference.info,
@@ -6197,28 +5109,6 @@ div {
   db.refentry =
     
     ## A reference page (originally a UNIX man-style reference page)
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:refentry"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element refentry {
       db.refentry.attlist,
       db.indexterm*,
@@ -6366,28 +5256,6 @@ div {
   db.refsynopsisdiv =
     
     ## A syntactic synopsis of the subject of the reference page
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:refsynopsisdiv"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element refsynopsisdiv {
       db.refsynopsisdiv.attlist,
       db.refsynopsisdiv.info,
@@ -6408,28 +5276,6 @@ div {
   db.refsection =
     
     ## A recursive section in a refentry
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:refsection"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element refsection {
       db.refsection.attlist,
       db.refsection.info,
@@ -6450,28 +5296,6 @@ div {
   db.refsect1 =
     
     ## A major subsection of a reference entry
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:refsect1"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element refsect1 {
       db.refsect1.attlist,
       db.refsect1.info,
@@ -6492,28 +5316,6 @@ div {
   db.refsect2 =
     
     ## A subsection of a refsect1
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:refsect2"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element refsect2 {
       db.refsect2.attlist,
       db.refsect2.info,
@@ -6533,28 +5335,6 @@ div {
   db.refsect3 =
     
     ## A subsection of a refsect2
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:refsect3"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element refsect3 {
       db.refsect3.attlist, db.refsect3.info, db.all.blocks+
     }
@@ -6575,28 +5355,6 @@ div {
   db.glosslist =
     
     ## A wrapper for a list of glossary entries
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:glosslist"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element glosslist {
       db.glosslist.attlist,
       db.glosslist.info?,
@@ -6877,28 +5635,6 @@ div {
   db.glossary =
     
     ## A glossary
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:glossary"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element glossary {
       db.glossary.attlist,
       db.glossary.info,
@@ -6920,28 +5656,6 @@ div {
   db.glossdiv =
     
     ## A division in a glossary
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:glossdiv"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element glossdiv {
       db.glossdiv.attlist,
       db.glossdiv.info,
@@ -7096,28 +5810,6 @@ div {
   db.bibliography =
     
     ## A bibliography
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:bibliography"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element bibliography {
       db.bibliography.attlist,
       db.bibliography.info,
@@ -7138,28 +5830,6 @@ div {
   db.bibliodiv =
     
     ## A section of a bibliography
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:bibliodiv"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element bibliodiv {
       db.bibliodiv.attlist,
       db.bibliodiv.info,
@@ -7177,28 +5847,6 @@ div {
   db.bibliolist =
     
     ## A wrapper for a list of bibliography entries
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:bibliolist"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element bibliolist {
       db.bibliolist.attlist,
       db.bibliolist.info?,
@@ -7508,28 +6156,6 @@ div {
   db.index =
     
     ## An index to a book or part of a book
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:index"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element index {
       db.index.attlist,
       db.index.info,
@@ -7551,28 +6177,6 @@ div {
   db.setindex =
     
     ## An index to a set of books
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:setindex"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element setindex {
       db.setindex.attlist,
       db.setindex.info,
@@ -7593,28 +6197,6 @@ div {
   db.indexdiv =
     
     ## A division in an index
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:indexdiv"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element indexdiv {
       db.indexdiv.attlist,
       db.indexdiv.info,
@@ -7709,28 +6291,6 @@ div {
   db.toc =
     
     ## A table of contents
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:toc"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element toc {
       db.toc.attlist,
       db.toc.info,
@@ -7750,28 +6310,6 @@ div {
   db.tocdiv =
     
     ## A division in a table of contents
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:tocdiv"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element tocdiv {
       db.tocdiv.attlist,
       db.tocdiv.info,
@@ -7802,28 +6340,6 @@ div {
   db.task =
     
     ## A task to be completed
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:task"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element task {
       db.task.attlist,
       db.task.info,
@@ -7844,28 +6360,6 @@ div {
   db.tasksummary =
     
     ## A summary of a task
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:tasksummary"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element tasksummary {
       db.tasksummary.attlist, db.tasksummary.info, db.all.blocks+
     }
@@ -7880,28 +6374,6 @@ div {
   db.taskprerequisites =
     
     ## The prerequisites for a task
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:taskprerequisites"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element taskprerequisites {
       db.taskprerequisites.attlist,
       db.taskprerequisites.info,
@@ -7918,28 +6390,6 @@ div {
   db.taskrelated =
     
     ## Information related to a task
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:taskrelated"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element taskrelated {
       db.taskrelated.attlist, db.taskrelated.info, db.all.blocks+
     }
@@ -7992,28 +6442,6 @@ div {
     
     ## A list of callout
     ## s
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:calloutlist"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element calloutlist {
       db.calloutlist.attlist,
       db.calloutlist.info,
@@ -8047,28 +6475,6 @@ div {
   db.programlistingco =
     
     ## A program listing with associated areas used in callouts
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:programlistingco"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element programlistingco {
       db.programlistingco.attlist,
       db.programlistingco.info,
@@ -8156,28 +6562,6 @@ div {
   db.screenco =
     
     ## A screen with associated areas used in callouts
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:screenco"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element screenco {
       db.screenco.attlist,
       db.screenco.info,
@@ -8196,28 +6580,6 @@ div {
   db.imageobjectco =
     
     ## A wrapper for an image object with callouts
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:imageobjectco"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element imageobjectco {
       db.imageobjectco.attlist,
       db.imageobjectco.info,
@@ -8263,28 +6625,6 @@ div {
   db.productionset =
     
     ## A set of EBNF productions
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:productionset"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element productionset {
       db.productionset.attlist,
       db.productionset.info,
@@ -8379,28 +6719,6 @@ div {
   db.constraintdef =
     
     ## The definition of a constraint in an EBNF production
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:constraintdef"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element constraintdef {
       db.constraintdef.attlist, db.constraintdef.info, db.all.blocks+
     }
@@ -8963,8 +7281,8 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "not(.//db:equation)"
-            "equation must not occur among the children or descendants of table"
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of table"
           ]
           "\x{a}" ~
           "               "
@@ -8975,16 +7293,16 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
-          context = "/db:table"
+          context = "db:table"
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
+            test = "not(.//db:equation)"
+            "equation must not occur among the children or descendants of table"
           ]
           "\x{a}" ~
           "               "
@@ -9019,28 +7337,6 @@ div {
   db.cals.informaltable =
     
     ## A table without a title
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:informaltable"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element informaltable {
       db.cals.informaltable.attlist,
       db.cals.informaltable.info,
@@ -9346,8 +7642,8 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "not(.//db:equation)"
-            "equation must not occur among the children or descendants of table"
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of table"
           ]
           "\x{a}" ~
           "               "
@@ -9358,16 +7654,16 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
-          context = "/db:table"
+          context = "db:table"
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
+            test = "not(.//db:equation)"
+            "equation must not occur among the children or descendants of table"
           ]
           "\x{a}" ~
           "               "
@@ -9393,28 +7689,6 @@ div {
   db.html.informaltable =
     
     ## An HTML table without a title
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:informaltable"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element informaltable {
       db.html.informaltable.attlist, db.html.informaltable.model
     }
@@ -9478,6 +7752,26 @@ div {
           s:assert [
             test = "not(.//db:table)"
             "table must not occur among the children or descendants of caption"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caption"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of caption"
           ]
           "\x{a}" ~
           "               "
@@ -9665,26 +7959,6 @@ div {
         "\x{a}" ~
         "            "
       ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:caption"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
     ]
     element caption { db.html.caption.attlist, db.all.inlines* }
 }
@@ -9802,28 +8076,6 @@ div {
   db.msgset =
     
     ## A detailed set of messages, usually error messages
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:msgset"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element msgset {
       db.msgset.attlist,
       db.msgset.info,
@@ -9881,28 +8133,6 @@ div {
   db.msg =
     
     ## A message in a message set
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:msg"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element msg {
       db.msg.attlist, db.msg.info, db.msgmain, (db.msgsub | db.msgrel)*
     }
@@ -9917,28 +8147,6 @@ div {
   db.msgmain =
     
     ## The primary component of a message in a message set 
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:msgmain"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element msgmain { db.msgmain.attlist, db.msgmain.info, db.msgtext }
 }
 div {
@@ -9951,28 +8159,6 @@ div {
   db.msgsub =
     
     ## A subcomponent of a message in a message set
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:msgsub"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element msgsub { db.msgsub.attlist, db.msgsub.info, db.msgtext }
 }
 div {
@@ -9985,28 +8171,6 @@ div {
   db.msgrel =
     
     ## A related component of a message in a message set
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:msgrel"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element msgrel { db.msgrel.attlist, db.msgrel.info, db.msgtext }
 }
 div {
@@ -10076,28 +8240,6 @@ div {
   db.msgexplan =
     
     ## Explanatory material relating to a message in a message set
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:msgexplan"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element msgexplan {
       db.msgexplan.attlist, db.msgexplan.info, db.all.blocks+
     }
@@ -10127,28 +8269,6 @@ div {
   db.qandaset =
     
     ## A question-and-answer set
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:qandaset"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element qandaset {
       db.qandaset.attlist,
       db.qandaset.info,
@@ -10166,28 +8286,6 @@ div {
   db.qandadiv =
     
     ## A titled division in a qandaset
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:qandadiv"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element qandadiv {
       db.qandadiv.attlist,
       db.qandadiv.info,
@@ -10205,28 +8303,6 @@ div {
   db.qandaentry =
     
     ## A question/answer set within a qandaset
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:qandaentry"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element qandaentry {
       db.qandaentry.attlist, db.qandaentry.info, db.question, db.answer*
     }
@@ -10354,8 +8430,8 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "not(.//db:equation)"
-            "equation must not occur among the children or descendants of equation"
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of equation"
           ]
           "\x{a}" ~
           "               "
@@ -10366,16 +8442,16 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
-          context = "/db:equation"
+          context = "db:equation"
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
+            test = "not(.//db:equation)"
+            "equation must not occur among the children or descendants of equation"
           ]
           "\x{a}" ~
           "               "
@@ -10404,28 +8480,6 @@ div {
   db.informalequation =
     
     ## A displayed mathematical equation without a title
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:informalequation"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element informalequation {
       db.informalequation.attlist,
       db.informalequation.info,
@@ -10486,28 +8540,6 @@ div {
   db.imagedata.mathml =
     
     ## A MathML expression in a media object
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:imagedata"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element imagedata {
       db.imagedata.mathml.attlist,
       db.imagedata.mathml.info,
@@ -10545,28 +8577,6 @@ div {
   db.imagedata.svg =
     
     ## An SVG drawing in a media object
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:imagedata"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element imagedata {
       db.imagedata.svg.attlist,
       db.imagedata.svg.info,
@@ -11363,28 +9373,6 @@ div {
   db.cmdsynopsis =
     
     ## A syntax summary for a software command
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:cmdsynopsis"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element cmdsynopsis {
       db.cmdsynopsis.attlist,
       db.cmdsynopsis.info,
@@ -11534,6 +9522,7 @@ db.programming.inlines =
   | db.methodname
   | db.modifier
   | db.initializer
+  | db.buildtarget
   | db.oo.inlines
 db.oo.inlines = db.ooclass | db.ooexception | db.oointerface
 db.synopsis.blocks =
@@ -11556,28 +9545,6 @@ div {
   db.synopsis =
     
     ## A general-purpose element for representing the syntax of commands or functions
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:synopsis"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element synopsis { db.synopsis.attlist, db.verbatim.contentmodel }
 }
 div {
@@ -11591,28 +9558,6 @@ div {
   db.funcsynopsis =
     
     ## The syntax summary for a function definition
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:funcsynopsis"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element funcsynopsis {
       db.funcsynopsis.attlist,
       db.funcsynopsis.info,
@@ -11629,28 +9574,6 @@ div {
   db.funcsynopsisinfo =
     
     ## Information supplementing the funcdefs of a funcsynopsis
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:funcsynopsisinfo"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element funcsynopsisinfo {
       db.funcsynopsisinfo.attlist, db.verbatim.contentmodel
     }
@@ -11800,28 +9723,6 @@ div {
   db.classsynopsis =
     
     ## The syntax summary for a class definition
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:classsynopsis"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element classsynopsis {
       db.classsynopsis.attlist,
       db.oo.inlines+,
@@ -11842,28 +9743,6 @@ div {
   db.classsynopsisinfo =
     
     ## Information supplementing the contents of a classsynopsis
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:classsynopsisinfo"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element classsynopsisinfo {
       db.classsynopsisinfo.attlist, db.verbatim.contentmodel
     }
@@ -11975,32 +9854,10 @@ div {
   db.fieldsynopsis =
     
     ## The name of a field in a class definition
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:fieldsynopsis"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element fieldsynopsis {
       db.fieldsynopsis.attlist,
       db.modifier*,
-      db.type?,
+      db.type*,
       db.varname,
       db.initializer?
     }
@@ -12029,28 +9886,6 @@ div {
   db.constructorsynopsis =
     
     ## A syntax summary for a constructor
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:constructorsynopsis"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element constructorsynopsis {
       db.constructorsynopsis.attlist,
       db.modifier*,
@@ -12069,28 +9904,6 @@ div {
   db.destructorsynopsis =
     
     ## A syntax summary for a destructor
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:destructorsynopsis"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element destructorsynopsis {
       db.destructorsynopsis.attlist,
       db.modifier*,
@@ -12109,32 +9922,10 @@ div {
   db.methodsynopsis =
     
     ## A syntax summary for a method
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:methodsynopsis"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element methodsynopsis {
       db.methodsynopsis.attlist,
       db.modifier*,
-      (db.type | db.void)?,
+      (db.type+ | db.void)?,
       db.methodname,
       ((db.methodparam | db.group.methodparam)+ | db.void),
       db.exceptionname*,
@@ -12168,7 +9959,7 @@ div {
     element methodparam {
       db.methodparam.attlist,
       db.modifier*,
-      db.type?,
+      db.type*,
       ((db.modifier*, db.parameter, db.initializer?) | db.funcparams),
       db.modifier*
     }
@@ -12201,6 +9992,17 @@ div {
     element varname { db.varname.attlist, db._text }
 }
 div {
+  db.buildtarget.role.attribute = attribute role { text }
+  db.buildtarget.attlist =
+    db.buildtarget.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+  db.buildtarget =
+    
+    ## Target of a build
+    element buildtarget { db.buildtarget.attlist, db._text }
+}
+div {
   db.returnvalue.role.attribute = attribute role { text }
   db.returnvalue.attlist =
     db.returnvalue.role.attribute?
@@ -12213,14 +10015,26 @@ div {
 }
 div {
   db.type.role.attribute = attribute role { text }
+  db.type.class.enumeration =
+    
+    ## Combined type is union of nested types
+    "union"
+    | 
+      ## Combined type is intersection of nested types
+      "intersection"
+  db.type.class.attribute =
+    
+    ## Specifies the way how are nested types combined together
+    attribute class { db.type.class.enumeration }
   db.type.attlist =
     db.type.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
+    & db.type.class.attribute?
   db.type =
     
     ## The classification of a value
-    element type { db.type.attlist, db._text }
+    element type { db.type.attlist, (db._text | db.type)* }
 }
 div {
   db.classname.role.attribute = attribute role { text }
@@ -12245,28 +10059,6 @@ div {
   db.programlisting =
     
     ## A literal listing of all or part of a program
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:programlisting"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
     element programlisting {
       db.programlisting.attlist, db.verbatim.contentmodel
     }
@@ -12397,26 +10189,6 @@ div {
           s:assert [
             test = "not(.//db:warning)"
             "warning must not occur among the children or descendants of caution"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:caution"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
           ]
           "\x{a}" ~
           "               "
@@ -12557,26 +10329,6 @@ div {
         "\x{a}" ~
         "            "
       ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:danger"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
     ]
     element danger { db.danger.attlist, db.admonition.contentmodel }
 }
@@ -12703,26 +10455,6 @@ div {
           s:assert [
             test = "not(.//db:warning)"
             "warning must not occur among the children or descendants of important"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:important"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
           ]
           "\x{a}" ~
           "               "
@@ -12865,26 +10597,6 @@ div {
         "\x{a}" ~
         "            "
       ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:note"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
     ]
     element note { db.note.attlist, db.admonition.contentmodel }
 }
@@ -13011,26 +10723,6 @@ div {
           s:assert [
             test = "not(.//db:warning)"
             "warning must not occur among the children or descendants of tip"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:tip"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
           ]
           "\x{a}" ~
           "               "
@@ -13171,26 +10863,6 @@ div {
         "\x{a}" ~
         "            "
       ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        rng:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:warning"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
     ]
     element warning { db.warning.attlist, db.admonition.contentmodel }
 }
@@ -13267,6 +10939,9 @@ div {
     | 
       ## A group name (wheel)
       "groupname"
+    | 
+      ## A network interface (eth0)
+      "interface"
     | 
       ## An IP address (127.0.0.1)
       "ipaddress"
@@ -13391,15 +11066,41 @@ div {
   db.topic =
     
     ## A modular unit of documentation not part of any particular narrative flow
+    element topic {
+      db.topic.attlist,
+      db.topic.info,
+      db.navigation.components*,
+      db.toplevel.blocks.or.sections,
+      db.navigation.components*
+    }
+}
+start =
+  db.assembly
+  | db.resources
+  | db.relationships
+  | db.transforms
+  | db.module
+db.grammar.attribute =
+  
+  ## Identifies the markup grammar of a resource
+  attribute grammar { text }
+div {
+  db.assembly.role.attribute = attribute role { text }
+  db.assembly.attlist =
+    db.assembly.role.attribute? & db.common.attributes
+  db.assembly.info = db._info
+  db.assembly =
+    
+    ## Defines the hierarchy and relationships for a collection of resources
     [
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
-          context = "/db:topic"
+          context = "/db:assembly"
           "\x{a}" ~
           "                  "
           s:assert [
@@ -13413,802 +11114,446 @@ div {
         "            "
       ]
     ]
-    element topic {
-      db.topic.attlist,
-      db.topic.info,
-      db.navigation.components*,
-      db.toplevel.blocks.or.sections,
-      db.navigation.components*
+    element assembly {
+      db.assembly.attlist,
+      db.assembly.info,
+      db.resources+,
+      db.structure*,
+      db.relationships*,
+      db.transforms?
     }
 }
-db._any =
-  element * - (db:* | html:* | its:*) {
-    (attribute * { text }
-     | text
-     | db._any)*
-  }
-# Include base ITS schema
-
-## Version of ITS
-its-version.type = xsd:string { pattern = "[0-9]+\.[0-9]+" }
-
-## The query language to be used for processing the rules
-its-queryLanguage.type = "xpath" | "css" | text
-its-absolute-selector.type =
-  
-  ## Absolute selector
-  string
-its-relative-selector.type =
-  
-  ## Relative selector
-  string
-its-xpath-expression.type = string
-its-confidence.type =
-  xsd:double { minInclusive = "0" maxInclusive = "1" }
-
-## The Translate data category information to be attached to the current node
-its-translate.type =
-  
-  ## The nodes need to be translated
-  "yes"
-  | 
-    ## The nodes must not be translated
-    "no"
-its-locNote.type = string
-
-## The type of localization note
-its-locNoteType.type =
-  
-  ## Localization note is an alert
-  "alert"
-  | 
-    ## Localization note is a description
-    "description"
-its-locNoteRef.type = xsd:anyURI
-its-termInfoRef.type = xsd:anyURI
-
-## Indicates a term locally
-its-term.type =
-  
-  ## The value 'yes' means that this is a term
-  "yes"
-  | 
-    ## The value 'no' means that this is not a term
-    "no"
-its-termConfidence.type = its-confidence.type
-
-## The text direction for the context
-its-dir.type =
-  
-  ## Left-to-right text
-  "ltr"
-  | 
-    ## Right-to-left text
-    "rtl"
-  | 
-    ## Left-to-right override
-    "lro"
-  | 
-    ## Right-to-left override
-    "rlo"
-
-## States whether current context is regarded as "within text"
-its-withinText.type =
-  
-  ## The element and its content are part of the flow of its parent element
-  "yes"
-  | 
-    ## The element splits the text flow of its parent element and its content is an independent text flow
-    "no"
-  | 
-    ## The element is part of the flow of its parent element, its content is an independent flow
-    "nested"
-
-## A comma separated list of mappings between values in the content
-## and workflow specific values. The values may contain spaces; in
-## that case they MUST be delimited by quotation marks.
-its-domainMapping.type = string
-its-taConfidence.type = its-confidence.type
-its-taClassRefPointer.type = its-relative-selector.type
-its-taClassRef.type = xsd:anyURI
-its-taIdentRef.type = xsd:anyURI
-its-taIdent.type = string
-its-taSource.type = string
-its-taIdentPointer.type = its-relative-selector.type
-its-taIdentRefPointer.type = its-relative-selector.type
-its-taSourcePointer.type = its-relative-selector.type
-its-localeFilterList.type = string
-its-localeFilterType.type = "include" | "exclude"
-its-provenanceRecordsRef.type = xsd:anyURI
-its-person.type = string
-its-personRef.type = xsd:anyURI
-its-org.type = string
-its-orgRef.type = xsd:anyURI
-its-tool.type = string
-its-toolRef.type = xsd:anyURI
-its-revPerson.type = string
-its-revPersonRef.type = xsd:anyURI
-its-revOrg.type = string
-its-revOrgRef.type = xsd:anyURI
-its-revTool.type = string
-its-revToolRef.type = xsd:anyURI
-its-provRef.type = list { xsd:anyURI+ }
-its-locQualityIssuesRef.type = xsd:anyURI
-its-locQualityIssueType.type =
-  "terminology"
-  | "mistranslation"
-  | "omission"
-  | "untranslated"
-  | "addition"
-  | "duplication"
-  | "inconsistency"
-  | "grammar"
-  | "legal"
-  | "register"
-  | "locale-specific-content"
-  | "locale-violation"
-  | "style"
-  | "characters"
-  | "misspelling"
-  | "typographical"
-  | "formatting"
-  | "inconsistent-entities"
-  | "numbers"
-  | "markup"
-  | "pattern-problem"
-  | "whitespace"
-  | "internationalization"
-  | "length"
-  | "non-conformance"
-  | "uncategorized"
-  | "other"
-its-locQualityIssueComment.type = string
-its-locQualityIssueSeverity.type =
-  xsd:double { minInclusive = "0" maxInclusive = "100" }
-its-locQualityIssueProfileRef.type = xsd:anyURI
-its-locQualityIssueEnabled.type = "yes" | "no"
-its-locQualityRatingScore.type =
-  xsd:double { minInclusive = "0" maxInclusive = "100" }
-its-locQualityRatingVote.type = xsd:integer
-its-locQualityRatingScoreThreshold.type =
-  xsd:double { minInclusive = "0" maxInclusive = "100" }
-its-locQualityRatingVoteThreshold.type = xsd:integer
-its-locQualityRatingProfileRef.type = xsd:anyURI
-its-mtConfidence.type = its-confidence.type
-its-allowedCharacters.type = string
-its-storageSize.type = xsd:nonNegativeInteger
-its-storageEncoding.type = string
-its-lineBreakType.type = "cr" | "lf" | "crlf"
-its-annotatorsRef.type = string
-its-attribute.translate = attribute its:translate { its-translate.type }
-its-attribute.translate.nons =
-  attribute translate { its-translate.type }
-its-attribute.dir.nons = attribute dir { its-dir.type }
-its-attribute.locNote = attribute its:locNote { its-locNote.type }
-its-attribute.locNote.nons = attribute locNote { its-locNote.type }
-its-attribute.locNoteType =
-  attribute its:locNoteType { its-locNoteType.type }
-its-attribute.locNoteType.nons =
-  attribute locNoteType { its-locNoteType.type }
-its-attribute.locNoteRef =
-  attribute its:locNoteRef { its-locNoteRef.type }
-its-attribute.locNoteRef.nons =
-  attribute locNoteRef { its-locNoteRef.type }
-its-attribute.termInfoRef =
-  attribute its:termInfoRef { its-termInfoRef.type }
-its-attribute.termInfoRef.nons =
-  attribute termInfoRef { its-termInfoRef.type }
-its-attribute.term = attribute its:term { its-term.type }
-its-attribute.term.nons = attribute term { its-term.type }
-its-attribute.termConfidence =
-  attribute its:termConfidence { its-termConfidence.type }
-its-attribute.termConfidence.nons =
-  attribute termConfidence { its-termConfidence.type }
-its-attribute.withinText =
-  attribute its:withinText { its-withinText.type }
-its-attribute.withinText.nons =
-  attribute withinText { its-withinText.type }
-its-attribute.domainMapping.nons =
-  attribute domainMapping { its-domainMapping.type }
-its-attribute.taConfidence =
-  attribute its:taConfidence { its-taConfidence.type }
-its-attribute.taConfidence.nons =
-  attribute taConfidence { its-taConfidence.type }
-its-attribute.taClassRef =
-  attribute its:taClassRef { its-taClassRef.type }
-its-attribute.taClassRef.nons =
-  attribute taClassRef { its-taClassRef.type }
-its-attribute.taIdent = attribute its:taIdent { its-taIdent.type }
-its-attribute.taIdent.nons = attribute taIdent { its-taIdent.type }
-its-attribute.taIdentRef =
-  attribute its:taIdentRef { its-taIdentRef.type }
-its-attribute.taIdentRef.nons =
-  attribute taIdentRef { its-taIdentRef.type }
-its-attribute.taSource = attribute its:taSource { its-taSource.type }
-its-attribute.taSource.nons = attribute taSource { its-taSource.type }
-its-attribute.localeFilterList =
-  attribute its:localeFilterList { its-localeFilterList.type }
-its-attribute.localeFilterList.nons =
-  attribute localeFilterList { its-localeFilterList.type }
-its-attribute.localeFilterType =
-  attribute its:localeFilterType { its-localeFilterType.type }
-its-attribute.localeFilterType.nons =
-  attribute localeFilterType { its-localeFilterType.type }
-its-attribute.person = attribute its:person { its-person.type }
-its-attribute.person.nons = attribute person { its-person.type }
-its-attribute.personRef = attribute its:personRef { its-personRef.type }
-its-attribute.personRef.nons =
-  attribute personRef { its-personRef.type }
-its-attribute.org = attribute its:org { its-org.type }
-its-attribute.org.nons = attribute org { its-org.type }
-its-attribute.orgRef = attribute its:orgRef { its-orgRef.type }
-its-attribute.orgRef.nons = attribute orgRef { its-orgRef.type }
-its-attribute.tool = attribute its:tool { its-tool.type }
-its-attribute.tool.nons = attribute tool { its-tool.type }
-its-attribute.toolRef = attribute its:toolRef { its-toolRef.type }
-its-attribute.toolRef.nons = attribute toolRef { its-toolRef.type }
-its-attribute.revPerson = attribute its:revPerson { its-revPerson.type }
-its-attribute.revPerson.nons =
-  attribute revPerson { its-revPerson.type }
-its-attribute.revPersonRef =
-  attribute its:revPersonRef { its-revPersonRef.type }
-its-attribute.revPersonRef.nons =
-  attribute revPersonRef { its-revPersonRef.type }
-its-attribute.revOrg = attribute its:revOrg { its-revOrg.type }
-its-attribute.revOrg.nons = attribute revOrg { its-revOrg.type }
-its-attribute.revOrgRef = attribute its:revOrgRef { its-revOrgRef.type }
-its-attribute.revOrgRef.nons =
-  attribute revOrgRef { its-revOrgRef.type }
-its-attribute.revTool = attribute its:revTool { its-revTool.type }
-its-attribute.revTool.nons = attribute revTool { its-revTool.type }
-its-attribute.revToolRef =
-  attribute its:revToolRef { its-revToolRef.type }
-its-attribute.revToolRef.nons =
-  attribute revToolRef { its-revToolRef.type }
-its-attribute.provRef = attribute its:provRef { its-provRef.type }
-its-attribute.provRef.nons = attribute provRef { its-provRef.type }
-its-attribute.provenanceRecordsRef =
-  attribute its:provenanceRecordsRef { its-provenanceRecordsRef.type }
-its-attribute.provenanceRecordsRef.nons =
-  attribute provenanceRecordsRef { its-provenanceRecordsRef.type }
-its-attribute.locQualityIssuesRef =
-  attribute its:locQualityIssuesRef { its-locQualityIssuesRef.type }
-its-attribute.locQualityIssuesRef.nons =
-  attribute locQualityIssuesRef { its-locQualityIssuesRef.type }
-its-attribute.locQualityIssueType =
-  attribute its:locQualityIssueType { its-locQualityIssueType.type }
-its-attribute.locQualityIssueType.nons =
-  attribute locQualityIssueType { its-locQualityIssueType.type }
-its-attribute.locQualityIssueComment =
-  attribute its:locQualityIssueComment {
-    its-locQualityIssueComment.type
-  }
-its-attribute.locQualityIssueComment.nons =
-  attribute locQualityIssueComment { its-locQualityIssueComment.type }
-its-attribute.locQualityIssueSeverity =
-  attribute its:locQualityIssueSeverity {
-    its-locQualityIssueSeverity.type
-  }
-its-attribute.locQualityIssueSeverity.nons =
-  attribute locQualityIssueSeverity { its-locQualityIssueSeverity.type }
-its-attribute.locQualityIssueProfileRef =
-  attribute its:locQualityIssueProfileRef {
-    its-locQualityIssueProfileRef.type
-  }
-its-attribute.locQualityIssueProfileRef.nons =
-  attribute locQualityIssueProfileRef {
-    its-locQualityIssueProfileRef.type
-  }
-its-attribute.locQualityIssueEnabled =
-  attribute its:locQualityIssueEnabled {
-    its-locQualityIssueEnabled.type
-  }
-its-attribute.locQualityIssueEnabled.nons =
-  attribute locQualityIssueEnabled { its-locQualityIssueEnabled.type }
-its-attribute.locQualityRatingScore =
-  attribute its:locQualityRatingScore { its-locQualityRatingScore.type }
-its-attribute.locQualityRatingScore.nons =
-  attribute locQualityRatingScore { its-locQualityRatingScore.type }
-its-attribute.locQualityRatingVote =
-  attribute its:locQualityRatingVote { its-locQualityRatingVote.type }
-its-attribute.locQualityRatingVote.nons =
-  attribute locQualityRatingVote { its-locQualityRatingVote.type }
-its-attribute.locQualityRatingScoreThreshold =
-  attribute its:locQualityRatingScoreThreshold {
-    its-locQualityRatingScoreThreshold.type
-  }
-its-attribute.locQualityRatingScoreThreshold.nons =
-  attribute locQualityRatingScoreThreshold {
-    its-locQualityRatingScoreThreshold.type
-  }
-its-attribute.locQualityRatingVoteThreshold =
-  attribute its:locQualityRatingVoteThreshold {
-    its-locQualityRatingVoteThreshold.type
-  }
-its-attribute.locQualityRatingVoteThreshold.nons =
-  attribute locQualityRatingVoteThreshold {
-    its-locQualityRatingVoteThreshold.type
-  }
-its-attribute.locQualityRatingProfileRef =
-  attribute its:locQualityRatingProfileRef {
-    its-locQualityRatingProfileRef.type
-  }
-its-attribute.locQualityRatingProfileRef.nons =
-  attribute locQualityRatingProfileRef {
-    its-locQualityRatingProfileRef.type
-  }
-its-attribute.mtConfidence =
-  attribute its:mtConfidence { its-mtConfidence.type }
-its-attribute.mtConfidence.nons =
-  attribute mtConfidence { its-mtConfidence.type }
-its-attribute.allowedCharacters =
-  attribute its:allowedCharacters { its-allowedCharacters.type }
-its-attribute.allowedCharacters.nons =
-  attribute allowedCharacters { its-allowedCharacters.type }
-its-attribute.storageSize =
-  attribute its:storageSize { its-storageSize.type }
-its-attribute.storageSize.nons =
-  attribute storageSize { its-storageSize.type }
-its-attribute.storageEncoding =
-  attribute its:storageEncoding { its-storageEncoding.type }
-its-attribute.storageEncoding.nons =
-  attribute storageEncoding { its-storageEncoding.type }
-its-attribute.lineBreakType =
-  attribute its:lineBreakType { its-lineBreakType.type }
-its-attribute.lineBreakType.nons =
-  attribute lineBreakType { its-lineBreakType.type }
-its-attribute.annotatorsRef =
-  attribute its:annotatorsRef { its-annotatorsRef.type }
-its-attribute.annotatorsRef.nons =
-  attribute annotatorsRef { its-annotatorsRef.type }
-its-attribute.version =
-  
-  ## Version of ITS
-  attribute its:version { its-version.type }
-its-attribute.version.nons =
-  
-  ## Version of ITS
-  attribute version { its-version.type }
-its-attribute.queryLanguage.nons =
-  attribute queryLanguage { its-queryLanguage.type }
-its-attribute.xlink.href = attribute xlink:href { xsd:anyURI }
-its-attribute.xlink.type = attribute xlink:type { "simple" }
-its-attribute.selector =
-  attribute selector { its-absolute-selector.type }
-its-foreign-attribute = attribute * - local:* { text }
-its-foreign-no-xml-id-attribute =
-  attribute * - (local:* | xml:id) { text }
-its-foreign-no-xlink-attribute =
-  attribute * - (local:* | xlink:*) { text }
-its-any-attribute = attribute * { text }
-its-any-element =
-  element * { (its-any-attribute* | text | its-any-element)* }
-its-rules =
-  
-  ## Container for global rules
-  element its:rules { its-rules.content, its-rules.attributes }
-its-rules.content =
-  its-param*,
-  (its-translateRule
-   | its-locNoteRule
-   | its-termRule
-   | its-dirRule
-   | its-langRule
-   | its-withinTextRule
-   | its-domainRule
-   | its-textAnalysisRule
-   | its-localeFilterRule
-   | its-provRule
-   | its-locQualityIssueRule
-   | its-mtConfidenceRule
-   | its-externalResourceRefRule
-   | its-targetPointerRule
-   | its-idValueRule
-   | its-preserveSpaceRule
-   | its-allowedCharactersRule
-   | its-storageSizeRule
-   | its-foreign-element)*
-its-rules.attributes =
-  its-attribute.version.nons,
-  (its-attribute.xlink.href, its-attribute.xlink.type?)?,
-  its-attribute.queryLanguage.nons?,
-  its-foreign-no-xlink-attribute*
-its-param =
-  
-  ## Declaration of variable used in selectors
-  element its:param { its-param.content, its-param.attributes }
-its-param.content = text
-its-param.attributes =
-  attribute name { xsd:string },
-  its-foreign-attribute*
-its-local.attributes =
-  its-attribute.translate?
-  & its-attribute.dir?
-  & ((its-attribute.locNote | its-attribute.locNoteRef),
-     its-attribute.locNoteType?)?
-  & (its-attribute.term,
-     its-attribute.termInfoRef?,
-     its-attribute.termConfidence?)?
-  & its-attribute.withinText?
-  & (its-attribute.taConfidence?
-     & (its-attribute.taClassRef?
-        & ((its-attribute.taSource, its-attribute.taIdent)
-           | its-attribute.taIdentRef)?))?
-  & (its-attribute.localeFilterList, its-attribute.localeFilterType?)?
-  & (((its-attribute.person | its-attribute.personRef)?
-      & (its-attribute.org | its-attribute.orgRef)?
-      & (its-attribute.tool | its-attribute.toolRef)?
-      & (its-attribute.revPerson | its-attribute.revPersonRef)?
-      & (its-attribute.revOrg | its-attribute.revOrgRef)?
-      & (its-attribute.revTool | its-attribute.revToolRef)?
-      & its-attribute.provRef?)
-     | its-attribute.provenanceRecordsRef)?
-  & (its-attribute.locQualityIssuesRef
-     | ((its-attribute.locQualityIssueType?
-         & its-attribute.locQualityIssueComment?)
-        & its-attribute.locQualityIssueSeverity?
-        & its-attribute.locQualityIssueProfileRef?
-        & its-attribute.locQualityIssueEnabled?))?
-  & (((its-attribute.locQualityRatingScore,
-       its-attribute.locQualityRatingScoreThreshold?)
-      | (its-attribute.locQualityRatingVote,
-         its-attribute.locQualityRatingVoteThreshold?)),
-     its-attribute.locQualityRatingProfileRef?)?
-  & its-attribute.mtConfidence?
-  & its-attribute.allowedCharacters?
-  & (its-attribute.storageSize,
-     its-attribute.storageEncoding?,
-     its-attribute.lineBreakType?)?
-  & its-attribute.annotatorsRef?
-its-local.nons.attributes =
-  its-attribute.translate.nons?
-  & its-attribute.dir.nons?
-  & ((its-attribute.locNote.nons | its-attribute.locNoteRef.nons),
-     its-attribute.locNoteType.nons?)?
-  & (its-attribute.term.nons,
-     its-attribute.termInfoRef.nons?,
-     its-attribute.termConfidence.nons?)?
-  & its-attribute.withinText.nons?
-  & (its-attribute.taConfidence.nons?
-     & (its-attribute.taClassRef.nons?
-        & ((its-attribute.taSource.nons, its-attribute.taIdent.nons)
-           | its-attribute.taIdentRef.nons)?))?
-  & (its-attribute.localeFilterList.nons,
-     its-attribute.localeFilterType.nons?)?
-  & (((its-attribute.person.nons | its-attribute.personRef.nons)?
-      & (its-attribute.org.nons | its-attribute.orgRef.nons)?
-      & (its-attribute.tool.nons | its-attribute.toolRef.nons)?
-      & (its-attribute.revPerson.nons
-         | its-attribute.revPersonRef.nons)?
-      & (its-attribute.revOrg.nons | its-attribute.revOrgRef.nons)?
-      & (its-attribute.revTool.nons | its-attribute.revToolRef.nons)?
-      & its-attribute.provRef.nons?)
-     | its-attribute.provenanceRecordsRef.nons)?
-  & (its-attribute.locQualityIssuesRef.nons
-     | ((its-attribute.locQualityIssueType.nons?
-         & its-attribute.locQualityIssueComment.nons?)
-        & its-attribute.locQualityIssueSeverity.nons?
-        & its-attribute.locQualityIssueProfileRef.nons?
-        & its-attribute.locQualityIssueEnabled.nons?))?
-  & (((its-attribute.locQualityRatingScore.nons,
-       its-attribute.locQualityRatingScoreThreshold.nons?)
-      | (its-attribute.locQualityRatingVote.nons,
-         its-attribute.locQualityRatingVoteThreshold.nons?)),
-     its-attribute.locQualityRatingProfileRef.nons?)?
-  & its-attribute.mtConfidence.nons?
-  & its-attribute.allowedCharacters.nons?
-  & (its-attribute.storageSize.nons,
-     its-attribute.storageEncoding.nons?,
-     its-attribute.lineBreakType.nons?)?
-  & its-attribute.annotatorsRef.nons?
-its-span =
-  
-  ## Inline element to contain ITS information
-  element its:span { its-span.content, its-span.attributes }
-its-span.content = (text | its-span)*
-its-span.attributes = its-local.nons.attributes & its-foreign-attribute*
-its-translateRule =
-  
-  ## Rule about the Translate data category
-  element its:translateRule {
-    its-translateRule.content, its-translateRule.attributes
-  }
-its-translateRule.content = empty
-its-translateRule.attributes =
-  its-attribute.selector,
-  its-attribute.translate.nons,
-  its-foreign-attribute*
-its-locNoteRule =
-  
-  ## Rule about the Localization Note data category
-  element its:locNoteRule {
-    its-attribute.selector,
-    its-attribute.locNoteType.nons,
-    (its-locNote
-     | its-attribute.locNotePointer.nons
-     | its-attribute.locNoteRef.nons
-     | its-attribute.locNoteRefPointer.nons),
-    its-foreign-attribute*
-  }
-its-attribute.locNotePointer.nons =
-  attribute locNotePointer { its-relative-selector.type }
-its-attribute.locNoteRefPointer.nons =
-  attribute locNoteRefPointer { its-relative-selector.type }
-its-locNote =
-  
-  ## Localization note
-  element its:locNote { its-locNote.content, its-locNote.attributes }
-its-locNote.content = (text | its-span)*
-its-locNote.attributes =
-  its-local.nons.attributes, its-foreign-attribute*
-its-termRule =
-  
-  ## Rule about the Terminology data category
-  element its:termRule { its-termRule.content, its-termRule.attributes }
-its-termRule.content = empty
-its-termRule.attributes =
-  its-attribute.selector,
-  its-attribute.term.nons,
-  (its-attribute.termInfoPointer.nons
-   | its-attribute.termInfoRef.nons
-   | its-attribute.termInfoRefPointer.nons)?,
-  its-foreign-attribute*
-its-attribute.termInfoPointer.nons =
-  attribute termInfoPointer { its-relative-selector.type }
-its-attribute.termInfoRefPointer.nons =
-  attribute termInfoRefPointer { its-relative-selector.type }
-its-dirRule =
-  
-  ## Rule about the Directionality data category
-  element its:dirRule { its-dirRule.content, its-dirRule.attributes }
-its-dirRule.content = empty
-its-dirRule.attributes =
-  its-attribute.selector, its-attribute.dir.nons, its-foreign-attribute*
-its-langRule =
-  
-  ## Rule about the Language Information data category
-  element its:langRule { its-langRule.content, its-langRule.attributes }
-its-langRule.content = empty
-its-langRule.attributes =
-  its-attribute.selector,
-  its-attribute.langPointer.nons,
-  its-foreign-attribute*
-its-attribute.langPointer.nons =
-  attribute langPointer { its-relative-selector.type }
-its-withinTextRule =
-  
-  ## Rule about the Elements Within Text data category
-  element its:withinTextRule {
-    its-withinTextRule.content, its-withinTextRule.attributes
-  }
-its-withinTextRule.content = empty
-its-withinTextRule.attributes =
-  its-attribute.selector,
-  its-attribute.withinText.nons,
-  its-foreign-attribute*
-its-domainRule =
-  
-  ## Rule about the Domain data category
-  element its:domainRule {
-    its-domainRule.content, its-domainRule.attributes
-  }
-its-domainRule.content = empty
-its-domainRule.attributes =
-  its-attribute.selector,
-  its-attribute.domainPointer.nons,
-  its-attribute.domainMapping.nons?,
-  its-foreign-attribute*
-its-attribute.domainPointer.nons =
-  attribute domainPointer { its-relative-selector.type }
-its-textAnalysisRule =
-  
-  ## Rule about the Disambiguation data category
-  element its:textAnalysisRule {
-    its-textAnalysisRule.content, its-textAnalysisRule.attributes
-  }
-its-textAnalysisRule.content = empty
-its-textAnalysisRule.attributes =
-  its-attribute.selector,
-  its-attribute.taClassRefPointer.nons?,
-  ((its-attribute.taSourcePointer.nons,
-    its-attribute.taIdentPointer.nons)
-   | its-attribute.taIdentRefPointer.nons)?,
-  its-foreign-attribute*
-its-attribute.taClassRefPointer.nons =
-  attribute taClassRefPointer { its-taClassRefPointer.type }
-its-attribute.taIdentPointer.nons =
-  attribute taIdentPointer { its-taIdentPointer.type }
-its-attribute.taSourcePointer.nons =
-  attribute taSourcePointer { its-taSourcePointer.type }
-its-attribute.taIdentRefPointer.nons =
-  attribute taIdentRefPointer { its-taIdentRefPointer.type }
-its-localeFilterRule =
-  
-  ## Rule about the LocaleFilter data category
-  element its:localeFilterRule {
-    its-localeFilterRule.content, its-localeFilterRule.attributes
-  }
-its-localeFilterRule.content = empty
-its-localeFilterRule.attributes =
-  its-attribute.selector,
-  its-attribute.localeFilterList.nons,
-  its-attribute.localeFilterType.nons?,
-  its-foreign-attribute*
-its-provRule =
-  
-  ## Rule about the Provenance data category
-  element its:provRule { its-provRule.content, its-provRule.attributes }
-its-provRule.content = empty
-its-provRule.attributes =
-  its-attribute.selector,
-  its-attribute.provenanceRecordsRefPointer.nons,
-  its-foreign-attribute*
-its-attribute.provenanceRecordsRefPointer.nons =
-  attribute provenanceRecordsRefPointer { its-relative-selector.type }
-its-externalResourceRefRule =
-  
-  ## Rule about the External Resource data category
-  element its:externalResourceRefRule {
-    its-externalResourceRefRule.content,
-    its-externalResourceRefRule.attributes
-  }
-its-externalResourceRefRule.content = empty
-its-externalResourceRefRule.attributes =
-  its-attribute.selector,
-  its-attribute.externalResourceRefPointer.nons,
-  its-foreign-attribute*
-its-attribute.externalResourceRefPointer.nons =
-  attribute externalResourceRefPointer { its-relative-selector.type }
-its-targetPointerRule =
-  
-  ## Rule about the Target Pointer data category
-  element its:targetPointerRule {
-    its-targetPointerRule.content, its-targetPointerRule.attributes
-  }
-its-targetPointerRule.content = empty
-its-targetPointerRule.attributes =
-  its-attribute.selector,
-  its-attribute.targetPointer.nons,
-  its-foreign-attribute*
-its-attribute.targetPointer.nons =
-  attribute targetPointer { its-relative-selector.type }
-its-idValueRule =
-  
-  ## Rule about the Id Value data category
-  element its:idValueRule {
-    its-idValueRule.content, its-idValueRule.attributes
-  }
-its-idValueRule.content = empty
-its-idValueRule.attributes =
-  its-attribute.selector,
-  its-attribute.idValue.nons,
-  its-foreign-attribute*
-its-attribute.idValue.nons =
-  attribute idValue { its-xpath-expression.type }
-its-preserveSpaceRule =
-  
-  ## Rule about the Preserve Space data category
-  element its:preserveSpaceRule {
-    its-preserveSpaceRule.content, its-preserveSpaceRule.attributes
-  }
-its-preserveSpaceRule.content = empty
-its-preserveSpaceRule.attributes =
-  its-attribute.selector,
-  its-attribute.space.nons,
-  its-foreign-attribute*
-its-attribute.space.nons = attribute space { "default" | "preserve" }
-its-locQualityIssueRule =
-  
-  ## Rule about the Localization Quality Issue data category
-  element its:locQualityIssueRule {
-    its-locQualityIssueRule.content, its-locQualityIssueRule.attributes
-  }
-its-locQualityIssueRule.content = empty
-its-locQualityIssueRule.attributes =
-  its-attribute.selector,
-  ((its-attribute.locQualityIssuesRef.nons
-    | its-attribute.locQualityIssuesRefPointer.nons)
-   | ((its-attribute.locQualityIssueType.nons
-       | its-attribute.locQualityIssueComment.nons)+,
-      its-attribute.locQualityIssueSeverity.nons?,
-      its-attribute.locQualityIssueProfileRef.nons?,
-      its-attribute.locQualityIssueEnabled.nons?)),
-  its-foreign-attribute*
-its-attribute.locQualityIssuesRefPointer.nons =
-  attribute locQualityIssuesRefPointer { its-relative-selector.type }
-its-mtConfidenceRule =
-  
-  ## Rule about the MT Confidence data category
-  element its:mtConfidenceRule {
-    its-mtConfidenceRule.content, its-mtConfidenceRule.attributes
-  }
-its-mtConfidenceRule.content = empty
-its-mtConfidenceRule.attributes =
-  its-attribute.selector,
-  its-attribute.mtConfidence.nons,
-  its-foreign-attribute*
-its-allowedCharactersRule =
-  
-  ## Rule about the Allowed Characters data category
-  element its:allowedCharactersRule {
-    its-allowedCharactersRule.content,
-    its-allowedCharactersRule.attributes
-  }
-its-allowedCharactersRule.content = empty
-its-allowedCharactersRule.attributes =
-  its-attribute.selector,
-  (its-attribute.allowedCharacters.nons
-   | its-attribute.allowedCharactersPointer.nons),
-  its-foreign-attribute*
-its-attribute.allowedCharactersPointer.nons =
-  attribute allowedCharactersPointer { its-relative-selector.type }
-its-storageSizeRule =
-  
-  ## Rule about the Allowed Characters data category
-  element its:storageSizeRule {
-    its-storageSizeRule.content, its-storageSizeRule.attributes
-  }
-its-storageSizeRule.content = empty
-its-storageSizeRule.attributes =
-  its-attribute.selector,
-  (its-attribute.storageSize.nons
-   | its-attribute.storageSizePointer.nons),
-  (its-attribute.storageEncoding.nons
-   | its-attribute.storageEncodingPointer.nons)?,
-  its-attribute.lineBreakType.nons?,
-  its-foreign-attribute*
-its-attribute.storageSizePointer.nons =
-  attribute storageSizePointer { its-relative-selector.type }
-its-attribute.storageEncodingPointer.nons =
-  attribute storageEncodingPointer { its-relative-selector.type }
-its-standoff = its-provenanceRecords | its-locQualityIssues
-its-provenanceRecords =
-  
-  ## Standoff markup for Provenance data category
-  element its:provenanceRecords {
-    its-provenanceRecord+,
-    attribute xml:id { xsd:ID },
-    its-attribute.version.nons?,
-    its-foreign-no-xml-id-attribute*
-  }
-its-provenanceRecord =
-  
-  ## Provenance record used in Provenance standoff markup
-  element its:provenanceRecord { its-provenanceRecord.attributes }
-its-provenanceRecord.attributes =
-  (its-attribute.person.nons | its-attribute.personRef.nons)?
-  & (its-attribute.org.nons | its-attribute.orgRef.nons)?
-  & (its-attribute.tool.nons | its-attribute.toolRef.nons)?
-  & (its-attribute.revPerson.nons | its-attribute.revPersonRef.nons)?
-  & (its-attribute.revOrg.nons | its-attribute.revOrgRef.nons)?
-  & (its-attribute.revTool.nons | its-attribute.revToolRef.nons)?
-  & its-attribute.provRef.nons?
-  & its-foreign-attribute*
-its-locQualityIssues =
-  
-  ## Standoff markup for Localization Quality Issue data category
-  element its:locQualityIssues {
-    its-locQualityIssue+,
-    attribute xml:id { xsd:ID },
-    its-attribute.version.nons?,
-    its-foreign-no-xml-id-attribute*
-  }
-its-locQualityIssue =
-  
-  ## Issue recorded in Localization Quality standoff markup
-  element its:locQualityIssue { its-locQualityIssue.attributes }
-its-locQualityIssue.attributes =
-  its-attribute.locQualityIssueType.nons?
-  & its-attribute.locQualityIssueComment.nons?
-  & its-attribute.locQualityIssueSeverity.nons?
-  & its-attribute.locQualityIssueProfileRef.nons?
-  & its-attribute.locQualityIssueEnabled.nons?
-  & its-foreign-attribute*
-its-attribute.dir = empty
-its-foreign-element =
-  element * - its:* {
-    (its-foreign-no-xml-id-attribute* | text | its-foreign-element)*
-  }
-# Add local ITS attributes to all DocBook elements
-
-# Allow its:rules inside info element
+div {
+  db.resources.role.attribute = attribute role { text }
+  db.resources.grammar.attribute = db.grammar.attribute
+  db.resources.attlist =
+    db.resources.role.attribute?
+    & db.resources.grammar.attribute?
+    & db.common.attributes
+  db.resources.info = db._info.title.forbidden
+  db.resources =
+    
+    ## Contains one or more resource objects that are managed by the assembly
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Root must have version" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "/db:resources"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "@version"
+            "If this element is the root element, it must have a version attribute."
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element resources {
+      db.resources.attlist,
+      db.resources.info?,
+      (db.description*, db.resource+)
+    }
+}
+div {
+  db.resource.role.attribute = attribute role { text }
+  db.resource.href.attribute =
+    
+    ## Indentifies the location of the data by URI
+    attribute href { xsd:anyURI }
+  db.resource.grammar.attribute = db.grammar.attribute
+  db.resource.attlist =
+    db.resource.role.attribute?
+    & db.resource.grammar.attribute?
+    & db.common.attributes
+  db.resource =
+    
+    ## Identifies an object managed within the assembly
+    element resource {
+      db.resource.attlist, db.resource.href.attribute, db.description*
+    }
+}
+div {
+  db.structure.role.attribute = attribute role { text }
+  db.structure.type.attribute =
+    
+    ## Identifies the structure type of the structure
+    attribute type { xsd:NMTOKEN }
+  db.structure.resourceref.attribute =
+    
+    ## Indicates a single resource from which to construct this structure
+    attribute resourceref { xsd:IDREF }
+  db.structure.defaultformat.attribute =
+    
+    ## Identifies the default format of the structure
+    attribute defaultformat { xsd:NMTOKEN }
+  db.structure.renderas.attribute =
+    
+    ## Specifies the DocBook element to which this unit should be renamed
+    attribute renderas { xsd:QName }
+  db.structure.attlist =
+    db.structure.role.attribute?
+    & db.structure.type.attribute?
+    & db.structure.resourceref.attribute?
+    & db.structure.renderas.attribute?
+    & db.structure.defaultformat.attribute?
+    & db.common.attributes
+  db.structure.info = db.info?
+  db.structure =
+    
+    ## Describes the structure of a document
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Specification of renderas" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:structure"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(@renderas and db:output/@renderas)"
+            "The renderas attribute can be specified on either the structure or output, but not both."
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element structure {
+      db.structure.attlist,
+      (db.output* & db.filterin? & db.filterout? & db.structure.info),
+      db.merge?,
+      db.revhistory?,
+      db.module+
+    }
+}
+div {
+  db.output.role.attribute = attribute role { text }
+  db.output.chunk.attribute =
+    
+    ## Specifies chunking for this module
+    [ a:defaultValue = "auto" ]
+    attribute chunk { db.module.chunk.enumeration }
+  db.output.file.attribute =
+    
+    ## Specifies the output file for this module or structure
+    attribute file { xsd:anyURI }
+  db.output.renderas.attribute =
+    
+    ## Specifies the DocBook element to which this unit should be renamed
+    attribute renderas { xsd:QName }
+  db.output.grammar.attribute = db.grammar.attribute
+  db.output.transform.attribute =
+    
+    ## Specifies the transformation that should be applied to this unit
+    attribute transform { xsd:NMTOKEN }
+  db.output.suppress.attribute =
+    
+    ## Indicates whether or not this unit should be suppressed
+    attribute suppress { xsd:boolean }
+  db.output.attlist =
+    db.output.role.attribute?
+    & db.common.attributes
+    & db.output.chunk.attribute?
+    & db.output.file.attribute?
+    & db.output.renderas.attribute?
+    & db.output.grammar.attribute?
+    & db.output.transform.attribute?
+    & db.output.suppress.attribute?
+  db.output =
+    
+    ## Specify an output format and/or file name and/or renderas
+    element output { db.output.attlist, empty }
+}
+div {
+  db.merge.role.attribute = attribute role { text }
+  db.merge.resourceref.attribute =
+    
+    ## Indicates a single resource from which to read merged info
+    attribute resourceref { xsd:IDREF }
+  db.merge.attlist =
+    db.merge.role.attribute?
+    & db.merge.resourceref.attribute?
+    & db.common.attributes
+  db.merge =
+    
+    ## A wrapper for information that a module overrides in the resource it includes
+    element merge { db.merge.attlist, (db._title & db.info.elements*) }
+}
+div {
+  db.module.role.attribute = attribute role { text }
+  db.module.chunk.enumeration =
+    
+    ## This module will be in a chunk
+    "true"
+    | 
+      ## This module will not be in a chunk
+      "false"
+    | 
+      ## Chunking of this module depends on the overall chunking algorithm
+      "auto"
+  db.module.chunk.attribute =
+    
+    ## Specifies chunking for this module
+    [ a:defaultValue = "auto" ]
+    attribute chunk { db.module.chunk.enumeration }
+  db.module.resourceref.attribute =
+    
+    ## Indicates a single resource from which to construct this module
+    attribute resourceref { xsd:IDREF }
+  db.module.omittitles.attribute =
+    
+    ## Indicates if titles should be omitted when including a resource
+    attribute omittitles { xsd:boolean }?
+  db.module.contentonly.attribute =
+    
+    ## Indicates if only the content should be copied when including a resource
+    attribute contentonly { xsd:boolean }?
+  db.module.renderas.attribute =
+    
+    ## Specifies the DocBook element to which this unit should be renamed
+    attribute renderas { xsd:QName }
+  db.module.attlist =
+    db.module.role.attribute?
+    & db.module.chunk.attribute?
+    & db.module.resourceref.attribute?
+    & db.module.omittitles.attribute?
+    & db.module.contentonly.attribute?
+    & db.module.renderas.attribute?
+    & db.common.attributes
+  db.module.info = db.info?
+  db.module =
+    
+    ## A modular component within a structure
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Root must have version" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "/db:module"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "@version"
+            "If this element is the root element, it must have a version attribute."
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Specification of renderas" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:module"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(@renderas and db:output/@renderas)"
+            "The renderas attribute can be specified on either the structure or output, but not both."
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element module {
+      db.module.attlist,
+      ((db.output | db.filterin | db.filterout)*,
+       db.module.info,
+       db.merge?,
+       db.module*)
+    }
+}
+div {
+  db.filterout.role.attribute = attribute role { text }
+  db.filterout.attlist =
+    db.filterout.role.attribute? & db.common.attributes
+  db.filterout =
+    
+    ## Elements with effectivity attributes matching this element are suppressed
+    element filterout { db.filterout.attlist, empty }
+}
+div {
+  db.filterin.role.attribute = attribute role { text }
+  db.filterin.attlist =
+    db.filterin.role.attribute? & db.common.attributes
+  db.filterin =
+    
+    ## Elements with effectivity attributes matching this element are allowed
+    element filterin { db.filterin.attlist, empty }
+}
+div {
+  db.relationships.role.attribute = attribute role { text }
+  db.relationships.type.attribute =
+    
+    ## Identifies the type of the contained relationships
+    attribute type { xsd:NMTOKENS }
+  db.relationships.attlist =
+    db.relationships.role.attribute?
+    & db.relationships.type.attribute?
+    & db.common.attributes
+  db.relationships.info = db._info
+  db.relationships =
+    
+    ## Groups relationship elements to define associations between resources
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Root must have version" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "/db:relationships"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "@version"
+            "If this element is the root element, it must have a version attribute."
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element relationships {
+      db.relationships.attlist,
+      db.relationships.info,
+      (db.relationship | db.instance)+
+    }
+}
+div {
+  db.relationship.role.attribute = attribute role { text }
+  db.relationship.type.attribute =
+    
+    ## Identifies the type of the relationship
+    attribute type { xsd:NMTOKEN }
+  db.relationship.attlist =
+    db.relationship.role.attribute?
+    & db.relationship.type.attribute?
+    & db.linkend.attribute?
+    & db.common.attributes
+  db.relationship =
+    
+    ## A relationship associates one or more resources
+    element relationship {
+      db.relationship.attlist, db.association, db.instance+
+    }
+}
+div {
+  db.association.role.attribute = attribute role { text }
+  db.association.attlist =
+    db.association.role.attribute?
+    & db.linkend.attribute?
+    & db.common.attributes
+  db.association =
+    
+    ## Identifies the type of relationship between one or more resources
+    element association { db.association.attlist, text? }
+}
+div {
+  db.instance.role.attribute = attribute role { text }
+  db.instance.linking.attribute =
+    
+    ## Specifies the type of link for this instance
+    attribute linking { xsd:NMTOKENS }
+  db.instance.attlist =
+    db.instance.role.attribute?
+    & db.instance.linking.attribute?
+    & db.common.attributes
+  db.instance =
+    
+    ## Identifies a resource that is part of a relationship
+    element instance {
+      db.instance.attlist, db.linkend.attribute, empty
+    }
+}
+div {
+  db.transforms.role.attribute = attribute role { text }
+  db.transforms.attlist =
+    db.transforms.role.attribute? & db.common.attributes
+  db.transforms.info = db._info
+  db.transforms =
+    
+    ## List of transforms for converting from non-DocBook schemas
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Root must have version" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "/db:transforms"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "@version"
+            "If this element is the root element, it must have a version attribute."
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element transforms {
+      db.transforms.attlist, db.transforms.info, db.transform+
+    }
+}
+div {
+  db.transform.role.attribute = attribute role { text }
+  db.transform.grammar.attribute = db.grammar.attribute
+  db.transform.href.attribute =
+    
+    ## Indentifies the location of the data by URI
+    attribute href { xsd:anyURI }
+  db.transform.name.attribute =
+    
+    ## Identifies the location of the data by reference
+    attribute name { xsd:NMTOKEN }
+  db.transform.attlist =
+    db.transform.role.attribute?
+    & (db.transform.grammar.attribute | db.transform.name.attribute)
+    & db.transform.href.attribute
+    & db.common.attributes
+  db.transform =
+    
+    ## Identifies a transform for converting from a non-DocBook schema
+    element transform { db.transform.attlist, empty }
+}
+div {
+  db.description.role.attribute = attribute role { text }
+  db.description.attlist =
+    db.description.role.attribute? & db.common.attributes
+  db.description =
+    
+    ## A description of a resource or resources
+    element description { db.description.attlist, db._text }
+}

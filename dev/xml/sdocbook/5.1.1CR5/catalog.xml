@@ -18,21 +18,18 @@
      http://www.oasis-open.org/committees/entity/ for detailed
      information on supplying and using catalog data.
 -->
-
    <uri name="http://docbook.org/xml/sdocbook/5.1.1CR5/rng/sdocbook.rnc"
         uri="rng/sdocbook.rnc"/>
    <uri name="http://docbook.org/xml/sdocbook/5.1.1CR5/rng/sdocbook.rng"
         uri="rng/sdocbook.rng"/>
    <uri name="http://docbook.org/xml/sdocbook/5.1.1CR5/sch/sdocbook.sch"
         uri="sch/sdocbook.rng"/>
-
-   <uri name="http://docbook.org/xml/sdocbook2/5.1.1CR5/rng/sdocbook.rnc"
+   <uri name="http://www.docbook.org/xml/sdocbook/5.1.1CR5/rng/sdocbook.rnc"
         uri="rng/sdocbook.rnc"/>
-   <uri name="http://docbook.org/xml/sdocbook2/5.1.1CR5/rng/sdocbook.rng"
+   <uri name="http://www.docbook.org/xml/sdocbook/5.1.1CR5/rng/sdocbook.rng"
         uri="rng/sdocbook.rng"/>
-   <uri name="http://docbook.org/xml/sdocbook2/5.1.1CR5/sch/sdocbook.sch"
+   <uri name="http://www.docbook.org/xml/sdocbook/5.1.1CR5/sch/sdocbook.sch"
         uri="sch/sdocbook.rng"/>
-
    <!-- End of XML Catalog for DocBook Simplified .................. -->
    <!-- ............................................................ -->
 </catalog>

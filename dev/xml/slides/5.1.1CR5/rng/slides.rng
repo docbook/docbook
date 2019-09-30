@@ -1,16 +1,16 @@
-<grammar xmlns="http://relaxng.org/ns/structure/1.0"
-         xmlns:rng="http://relaxng.org/ns/structure/1.0"
+<grammar xmlns:rng="http://relaxng.org/ns/structure/1.0"
          xmlns:s="http://purl.oclc.org/dsdl/schematron"
          xmlns:db="http://docbook.org/ns/docbook"
          xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
          xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
          xmlns:html="http://www.w3.org/1999/xhtml"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://docbook.org/ns/docbook">
 
 <!--
-This file is part of Simplified DocBook V5.2-b01
+This file is part of Simplified DocBook V5.2b05
 
 Copyright 1992-2015 HaL Computer Systems, Inc.,
 O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
@@ -37,20 +37,18 @@ information, see http://www.oasis-open.org/docbook/.
 
 ======================================================================
 -->
-
    <s:ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
    <s:ns prefix="s" uri="http://purl.oclc.org/dsdl/schematron"/>
    <s:ns prefix="db" uri="http://docbook.org/ns/docbook"/>
    <s:ns prefix="a" uri="http://relaxng.org/ns/compatibility/annotations/1.0"/>
    <s:ns prefix="ctrl" uri="http://nwalsh.com/xmlns/schema-control/"/>
-   <s:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
    <s:ns prefix="html" uri="http://www.w3.org/1999/xhtml"/>
+   <s:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
    <define name="db.status.attribute">
       <attribute name="status">
          <a:documentation>Identifies the editorial or publication status of the element on which it occurs</a:documentation>
       </attribute>
    </define>
-
    <define name="db.recursive.blocks.or.sections">
       <choice>
          <group>
@@ -64,23 +62,19 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.recursive.sections"/>
       </choice>
    </define>
-
    <define name="db.navigation.components">
       <choice>
          <notAllowed/>
          <ref name="db.bibliography"/>
       </choice>
    </define>
-
    <div>
       <define name="db.section.status.attribute">
          <ref name="db.status.attribute"/>
       </define>
-
       <define name="db.section.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.section.attlist">
          <interleave>
             <optional>
@@ -96,11 +90,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.section.info">
          <ref name="db._info.title.req"/>
       </define>
-
       <define name="db.section">
          <element name="section">
             <a:documentation>A recursive section</a:documentation>
@@ -118,24 +110,20 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.recursive.sections">
       <oneOrMore>
          <ref name="db.section"/>
       </oneOrMore>
    </define>
-
    <define name="db.relation.attribute">
       <attribute name="relation">
          <a:documentation>Identifies the relationship between the bibliographic elemnts</a:documentation>
       </attribute>
    </define>
-
    <div>
       <define name="db.bibliomixed.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.bibliomixed.attlist">
          <interleave>
             <optional>
@@ -145,7 +133,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.bibliomixed">
          <element name="bibliomixed">
             <a:documentation>A cooked entry in a bibliography</a:documentation>
@@ -177,16 +164,13 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.bibliomset.relation.attribute">
          <ref name="db.relation.attribute"/>
       </define>
-
       <define name="db.bibliomset.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.bibliomset.attlist">
          <interleave>
             <optional>
@@ -199,7 +183,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.bibliomset">
          <element name="bibliomset">
             <a:documentation>A cooked container for related bibliographic information</a:documentation>
@@ -231,12 +214,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.bibliomisc.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.bibliomisc.attlist">
          <interleave>
             <optional>
@@ -246,7 +227,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.bibliomisc">
          <element name="bibliomisc">
             <a:documentation>Untyped bibliographic information</a:documentation>
@@ -255,16 +235,13 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.bibliography.status.attrib">
          <ref name="db.status.attribute"/>
       </define>
-
       <define name="db.bibliography.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.bibliography.attlist">
          <interleave>
             <optional>
@@ -280,11 +257,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.bibliography.info">
          <ref name="db._info"/>
       </define>
-
       <define name="db.bibliography">
          <element name="bibliography">
             <a:documentation>A bibliography</a:documentation>
@@ -306,16 +281,13 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.bibliodiv.status.attrib">
          <ref name="db.status.attribute"/>
       </define>
-
       <define name="db.bibliodiv.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.bibliodiv.attlist">
          <interleave>
             <optional>
@@ -331,11 +303,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.bibliodiv.info">
          <ref name="db._info.title.req"/>
       </define>
-
       <define name="db.bibliodiv">
          <element name="bibliodiv">
             <a:documentation>A section of a bibliography</a:documentation>
@@ -352,7 +322,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.char.attribute">
       <attribute name="char">
          <a:documentation>Specifies the alignment character when align
@@ -360,7 +329,6 @@ information, see http://www.oasis-open.org/docbook/.
 .</a:documentation>
       </attribute>
    </define>
-
    <define name="db.charoff.attribute">
       <attribute name="charoff">
          <a:documentation>Specifies the percentage of the column's total width that should appear to the left of the first occurance of the character identified in char
@@ -373,7 +341,6 @@ information, see http://www.oasis-open.org/docbook/.
          </data>
       </attribute>
    </define>
-
    <define name="db.frame.attribute">
       <attribute name="frame">
          <a:documentation>Specifies how the table is to be framed. Note that there is no way to obtain a border on only the starting edge (left, in left-to-right writing systems) of the table.</a:documentation>
@@ -393,7 +360,6 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </attribute>
    </define>
-
    <define name="db.colsep.attribute">
       <attribute name="colsep">
          <a:documentation>Specifies the presence or absence of the column separator</a:documentation>
@@ -405,7 +371,6 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </attribute>
    </define>
-
    <define name="db.rowsep.attribute">
       <attribute name="rowsep">
          <a:documentation>Specifies the presence or absence of the row separator</a:documentation>
@@ -417,7 +382,6 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </attribute>
    </define>
-
    <define name="db.orient.attribute">
       <attribute name="orient">
          <a:documentation>Specifies the orientation of the table</a:documentation>
@@ -429,13 +393,11 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </attribute>
    </define>
-
    <define name="db.tabstyle.attribute">
       <attribute name="tabstyle">
          <a:documentation>Specifies the table style</a:documentation>
       </attribute>
    </define>
-
    <define name="db.rowheader.attribute">
       <attribute name="rowheader">
          <a:documentation>Indicates whether or not the entries in the first column should be considered row headers</a:documentation>
@@ -449,7 +411,6 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </attribute>
    </define>
-
    <define name="db.align.attribute">
       <attribute name="align">
          <a:documentation>Specifies the horizontal alignment of text in an entry.</a:documentation>
@@ -467,7 +428,6 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </attribute>
    </define>
-
    <define name="db.valign.attribute">
       <attribute name="valign">
          <a:documentation>Specifies the vertical alignment of text in an entry.</a:documentation>
@@ -481,25 +441,21 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </attribute>
    </define>
-
    <define name="db.specify-col-by-colname.attributes">
       <attribute name="colname">
          <a:documentation>Specifies a column specification by name.</a:documentation>
       </attribute>
    </define>
-
    <define name="db.specify-col-by-namest.attributes">
       <attribute name="namest">
          <a:documentation>Specifies a starting column by name.</a:documentation>
       </attribute>
    </define>
-
    <define name="db.specify-span-by-spanspec.attributes">
       <attribute name="spanname">
          <a:documentation>Specifies a span by name.</a:documentation>
       </attribute>
    </define>
-
    <define name="db.specify-span-directly.attributes">
       <interleave>
          <attribute name="namest">
@@ -510,7 +466,6 @@ information, see http://www.oasis-open.org/docbook/.
          </attribute>
       </interleave>
    </define>
-
    <define name="db.column-spec.attributes">
       <choice>
          <ref name="db.specify-col-by-colname.attributes"/>
@@ -519,37 +474,31 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.specify-span-directly.attributes"/>
       </choice>
    </define>
-
    <define name="db.colname.attribute">
       <attribute name="colname">
          <a:documentation>Provides a name for a column specification.</a:documentation>
       </attribute>
    </define>
-
    <define name="db.spanname.attribute">
       <attribute name="spanname">
          <a:documentation>Provides a name for a span specification.</a:documentation>
       </attribute>
    </define>
-
    <div>
       <define name="db.tgroup.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.tgroup.tgroupstyle.attribute">
          <attribute name="tgroupstyle">
             <a:documentation>Additional style information for downstream processing; typically the name of a style.</a:documentation>
          </attribute>
       </define>
-
       <define name="db.tgroup.cols.attribute">
          <attribute name="cols">
             <a:documentation>The number of columns in the table. Must be an integer greater than zero.</a:documentation>
             <data type="positiveInteger"/>
          </attribute>
       </define>
-
       <define name="db.tgroup.attlist">
          <interleave>
             <optional>
@@ -578,7 +527,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.tgroup">
          <element name="tgroup">
             <a:documentation>A wrapper for the main content of a table, or part of a table</a:documentation>
@@ -599,25 +547,21 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.colspec.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.colspec.colnum.attribute">
          <attribute name="colnum">
             <a:documentation>The number of the column to which this specification applies. Must be greater than any preceding column number. Defaults to one more than the number of the preceding column, if there is one, or one.</a:documentation>
             <data type="positiveInteger"/>
          </attribute>
       </define>
-
       <define name="db.colspec.colwidth.attribute">
          <attribute name="colwidth">
             <a:documentation>Specifies the width of the column.</a:documentation>
          </attribute>
       </define>
-
       <define name="db.colspec.attlist">
          <interleave>
             <optional>
@@ -654,7 +598,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.colspec">
          <element name="colspec">
             <a:documentation>Specifications for a column in a table</a:documentation>
@@ -663,24 +606,20 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.spanspec.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.spanspec.namest.attribute">
          <attribute name="namest">
             <a:documentation>Specifies a starting column by name.</a:documentation>
          </attribute>
       </define>
-
       <define name="db.spanspec.nameend.attribute">
          <attribute name="nameend">
             <a:documentation>Specifies an ending column by name.</a:documentation>
          </attribute>
       </define>
-
       <define name="db.spanspec.attlist">
          <interleave>
             <optional>
@@ -708,7 +647,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.spanspec">
          <element name="spanspec">
             <a:documentation>Formatting information for a spanned column in a table</a:documentation>
@@ -717,12 +655,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.cals.thead.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.cals.thead.attlist">
          <interleave>
             <optional>
@@ -735,7 +671,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.cals.thead">
          <element name="thead">
             <a:documentation>A table header consisting of one or more rows</a:documentation>
@@ -749,12 +684,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.cals.tfoot.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.cals.tfoot.attlist">
          <interleave>
             <optional>
@@ -767,7 +700,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.cals.tfoot">
          <element name="tfoot">
             <a:documentation>A table footer consisting of one or more rows</a:documentation>
@@ -781,12 +713,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.cals.tbody.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.cals.tbody.attlist">
          <interleave>
             <optional>
@@ -799,7 +729,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.cals.tbody">
          <element name="tbody">
             <a:documentation>A wrapper for the rows of a table or informal table</a:documentation>
@@ -810,12 +739,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.row.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.row.attlist">
          <interleave>
             <optional>
@@ -831,7 +758,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.row">
          <element name="row">
             <a:documentation>A row in a table</a:documentation>
@@ -845,19 +771,16 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.entry.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.entry.morerows.attribute">
          <attribute name="morerows">
             <a:documentation>Specifies the number of additional rows which this entry occupies. Defaults to zero.</a:documentation>
             <data type="integer"/>
          </attribute>
       </define>
-
       <define name="db.entry.rotate.attribute">
          <attribute name="rotate">
             <a:documentation>Specifies the rotation of this entry. A value of 1 (true) rotates the cell 90 degrees counter-clockwise. A value of 0 (false) leaves the cell unrotated.</a:documentation>
@@ -869,7 +792,6 @@ information, see http://www.oasis-open.org/docbook/.
             </choice>
          </attribute>
       </define>
-
       <define name="db.entry.scope.attribute">
          <attribute name="scope">
             <a:documentation>Specifies the scope of a header.</a:documentation>
@@ -885,14 +807,12 @@ information, see http://www.oasis-open.org/docbook/.
             </choice>
          </attribute>
       </define>
-
       <define name="db.entry.headers.attribute">
          <attribute name="headers">
             <a:documentation>Specifies the entry or entries which serve as headers for this element.</a:documentation>
             <data type="IDREFS"/>
          </attribute>
       </define>
-
       <define name="db.entry.attlist">
          <interleave>
             <optional>
@@ -935,7 +855,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.entry">
          <element name="entry">
             <a:documentation>A cell in a table</a:documentation>
@@ -963,25 +882,21 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.entrytbl.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.entrytbl.tgroupstyle.attribute">
          <attribute name="tgroupstyle">
             <a:documentation>Additional style information for downstream processing; typically the name of a style.</a:documentation>
          </attribute>
       </define>
-
       <define name="db.entrytbl.cols.attribute">
          <attribute name="cols">
             <a:documentation>The number of columns in the entry table. Must be an integer greater than zero.</a:documentation>
             <data type="positiveInteger"/>
          </attribute>
       </define>
-
       <define name="db.entrytbl.attlist">
          <interleave>
             <optional>
@@ -1015,7 +930,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.entrytbl">
          <element name="entrytbl">
             <a:documentation>A subtable appearing in place of an entry in a table</a:documentation>
@@ -1033,12 +947,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.cals.entrytbl.thead.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.cals.entrytbl.thead.attlist">
          <interleave>
             <optional>
@@ -1051,7 +963,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.cals.entrytbl.thead">
          <element name="thead">
             <a:documentation>A table header consisting of one or more rows</a:documentation>
@@ -1065,12 +976,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.cals.entrytbl.tbody.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.cals.entrytbl.tbody.attlist">
          <interleave>
             <optional>
@@ -1083,7 +992,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.cals.entrytbl.tbody">
          <element name="tbody">
             <a:documentation>A wrapper for the rows of a table or informal table</a:documentation>
@@ -1094,12 +1002,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.entrytbl.row.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.entrytbl.row.attlist">
          <interleave>
             <optional>
@@ -1115,7 +1021,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.entrytbl.row">
          <element name="row">
             <a:documentation>A row in a table</a:documentation>
@@ -1126,16 +1031,13 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.cals.table.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.cals.table.label.attribute">
          <ref name="db.label.attribute"/>
       </define>
-
       <define name="db.cals.table.attlist">
          <interleave>
             <optional>
@@ -1194,11 +1096,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.cals.table.info">
          <ref name="db._info.title.onlyreq"/>
       </define>
-
       <define name="db.cals.table">
          <element name="table">
             <a:documentation>A formal table in a document</a:documentation>
@@ -1238,12 +1138,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.cals.informaltable.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.cals.informaltable.attlist">
          <interleave>
             <optional>
@@ -1277,11 +1175,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.cals.informaltable.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.cals.informaltable">
          <element name="informaltable">
             <a:documentation>A table without a title</a:documentation>
@@ -1309,7 +1205,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.html.coreattrs">
       <interleave>
          <optional>
@@ -1329,7 +1224,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db.html.i18n">
       <optional>
          <attribute name="lang">
@@ -1337,7 +1231,6 @@ information, see http://www.oasis-open.org/docbook/.
          </attribute>
       </optional>
    </define>
-
    <define name="db.html.events">
       <interleave>
          <optional>
@@ -1392,7 +1285,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db.html.attrs">
       <interleave>
          <ref name="db.common.attributes"/>
@@ -1401,7 +1293,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.html.events"/>
       </interleave>
    </define>
-
    <define name="db.html.cellhalign">
       <interleave>
          <optional>
@@ -1441,7 +1332,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db.html.cellvalign">
       <optional>
          <attribute name="valign">
@@ -1459,7 +1349,6 @@ information, see http://www.oasis-open.org/docbook/.
          </attribute>
       </optional>
    </define>
-
    <define name="db.html.table.attributes">
       <interleave>
          <optional>
@@ -1556,7 +1445,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db.html.tablecell.attributes">
       <interleave>
          <optional>
@@ -1611,11 +1499,9 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db.html.table.info">
       <ref name="db._info.title.forbidden"/>
    </define>
-
    <define name="db.html.table.model">
       <optional>
          <ref name="db.html.table.info"/>
@@ -1644,11 +1530,9 @@ information, see http://www.oasis-open.org/docbook/.
          </oneOrMore>
       </choice>
    </define>
-
    <define name="db.html.informaltable.info">
       <ref name="db._info.title.forbidden"/>
    </define>
-
    <define name="db.html.informaltable.model">
       <optional>
          <ref name="db.html.informaltable.info"/>
@@ -1676,16 +1560,13 @@ information, see http://www.oasis-open.org/docbook/.
          </oneOrMore>
       </choice>
    </define>
-
    <div>
       <define name="db.html.table.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.html.table.label.attribute">
          <ref name="db.label.attribute"/>
       </define>
-
       <define name="db.html.table.attlist">
          <interleave>
             <ref name="db.html.attrs"/>
@@ -1710,7 +1591,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.html.table">
          <element name="table">
             <a:documentation>A formal (captioned) HTML table in a document</a:documentation>
@@ -1731,16 +1611,13 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.html.informaltable.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.html.informaltable.label.attribute">
          <ref name="db.label.attribute"/>
       </define>
-
       <define name="db.html.informaltable.attlist">
          <interleave>
             <ref name="db.html.attrs"/>
@@ -1765,7 +1642,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.html.informaltable">
          <element name="informaltable">
             <a:documentation>An HTML table without a title</a:documentation>
@@ -1774,12 +1650,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.html.caption.attlist">
          <ref name="db.html.attrs"/>
       </define>
-
       <define name="db.html.caption">
          <element name="caption">
             <a:documentation>An HTML table caption</a:documentation>
@@ -1826,7 +1700,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.html.col.attlist">
          <interleave>
@@ -1853,7 +1726,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.html.cellvalign"/>
          </interleave>
       </define>
-
       <define name="db.html.col">
          <element name="col">
             <a:documentation>Specifications for a column in an HTML table</a:documentation>
@@ -1862,7 +1734,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.html.colgroup.attlist">
          <interleave>
@@ -1889,7 +1760,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.html.cellvalign"/>
          </interleave>
       </define>
-
       <define name="db.html.colgroup">
          <element name="colgroup">
             <a:documentation>A group of columns in an HTML table</a:documentation>
@@ -1900,7 +1770,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.html.thead.attlist">
          <interleave>
@@ -1909,7 +1778,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.html.cellvalign"/>
          </interleave>
       </define>
-
       <define name="db.html.thead">
          <element name="thead">
             <a:documentation>A table header consisting of one or more rows in an HTML table</a:documentation>
@@ -1920,7 +1788,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.html.tfoot.attlist">
          <interleave>
@@ -1929,7 +1796,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.html.cellvalign"/>
          </interleave>
       </define>
-
       <define name="db.html.tfoot">
          <element name="tfoot">
             <a:documentation>A table footer consisting of one or more rows in an HTML table</a:documentation>
@@ -1940,7 +1806,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.html.tbody.attlist">
          <interleave>
@@ -1949,7 +1814,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.html.cellvalign"/>
          </interleave>
       </define>
-
       <define name="db.html.tbody">
          <element name="tbody">
             <a:documentation>A wrapper for the rows of an HTML table or informal HTML table</a:documentation>
@@ -1960,7 +1824,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.html.tr.attlist">
          <interleave>
@@ -1969,7 +1832,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.html.cellvalign"/>
          </interleave>
       </define>
-
       <define name="db.html.tr">
          <element name="tr">
             <a:documentation>A row in an HTML table</a:documentation>
@@ -1983,7 +1845,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.html.th.attlist">
          <interleave>
@@ -1993,7 +1854,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.html.cellvalign"/>
          </interleave>
       </define>
-
       <define name="db.html.th">
          <element name="th">
             <a:documentation>A table header entry in an HTML table</a:documentation>
@@ -2009,7 +1869,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.html.td.attlist">
          <interleave>
@@ -2019,7 +1878,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.html.cellvalign"/>
          </interleave>
       </define>
-
       <define name="db.html.td">
          <element name="td">
             <a:documentation>A table entry in an HTML table</a:documentation>
@@ -2035,7 +1893,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.os.inlines">
       <choice>
          <ref name="db.filename"/>
@@ -2044,7 +1901,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.userinput"/>
       </choice>
    </define>
-
    <define name="db.computeroutput.inlines">
       <choice>
          <choice>
@@ -2056,7 +1912,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.markup.inlines"/>
       </choice>
    </define>
-
    <define name="db.userinput.inlines">
       <choice>
          <choice>
@@ -2068,7 +1923,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.markup.inlines"/>
       </choice>
    </define>
-
    <div>
       <define name="db.filename.class.enumeration">
          <choice>
@@ -2088,24 +1942,20 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>A symbolic link</a:documentation>
          </choice>
       </define>
-
       <define name="db.filename.class.attribute">
          <attribute name="class">
             <a:documentation>Identifies the class of filename</a:documentation>
             <ref name="db.filename.class.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.filename.path.attribute">
          <attribute name="path">
             <a:documentation>Specifies the path of the filename</a:documentation>
          </attribute>
       </define>
-
       <define name="db.filename.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.filename.attlist">
          <interleave>
             <optional>
@@ -2121,7 +1971,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.filename">
          <element name="filename">
             <a:documentation>The name of a file</a:documentation>
@@ -2130,12 +1979,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.command.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.command.attlist">
          <interleave>
             <optional>
@@ -2145,7 +1992,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.command">
          <element name="command">
             <a:documentation>The name of an executable program or other software command</a:documentation>
@@ -2154,12 +2000,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.computeroutput.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.computeroutput.attlist">
          <interleave>
             <optional>
@@ -2169,7 +2013,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.computeroutput">
          <element name="computeroutput">
             <a:documentation>Data, generally text, displayed or presented by a computer</a:documentation>
@@ -2180,12 +2023,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.userinput.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.userinput.attlist">
          <interleave>
             <optional>
@@ -2195,7 +2036,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.userinput">
          <element name="userinput">
             <a:documentation>Data entered by the user</a:documentation>
@@ -2206,22 +2046,40 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.programming.inlines">
       <choice>
+         <ref name="db.buildtarget"/>
          <ref name="db.oo.inlines"/>
       </choice>
    </define>
-
+   <div>
+      <define name="db.buildtarget.role.attribute">
+         <attribute name="role"/>
+      </define>
+      <define name="db.buildtarget.attlist">
+         <interleave>
+            <optional>
+               <ref name="db.buildtarget.role.attribute"/>
+            </optional>
+            <ref name="db.common.attributes"/>
+            <ref name="db.common.linking.attributes"/>
+         </interleave>
+      </define>
+      <define name="db.buildtarget">
+         <element name="buildtarget">
+            <a:documentation>Target of a build</a:documentation>
+            <ref name="db.buildtarget.attlist"/>
+            <ref name="db._text"/>
+         </element>
+      </define>
+   </div>
    <div>
       <define name="db.programlisting.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.programlisting.width.attribute">
          <ref name="db.width.characters.attribute"/>
       </define>
-
       <define name="db.programlisting.attlist">
          <interleave>
             <optional>
@@ -2235,7 +2093,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.programlisting">
          <element name="programlisting">
             <a:documentation>A literal listing of all or part of a program</a:documentation>
@@ -2244,11 +2101,9 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.systemitem.inlines">
       <ref name="db._text"/>
    </define>
-
    <div>
       <define name="db.systemitem.class.enumeration">
          <choice>
@@ -2268,6 +2123,8 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>A fully qualified domain name (my.example.com)</a:documentation>
             <value>groupname</value>
             <a:documentation>A group name (wheel)</a:documentation>
+            <value>interface</value>
+            <a:documentation>A network interface (eth0)</a:documentation>
             <value>ipaddress</value>
             <a:documentation>An IP address (127.0.0.1)</a:documentation>
             <value>library</value>
@@ -2298,7 +2155,6 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>A user name (ndw)</a:documentation>
          </choice>
       </define>
-
       <define name="db.systemitem.class-enum.attribute">
          <optional>
             <attribute name="class">
@@ -2307,14 +2163,12 @@ information, see http://www.oasis-open.org/docbook/.
             </attribute>
          </optional>
       </define>
-
       <define name="db.systemitem.class-other.attribute">
          <attribute name="otherclass">
             <a:documentation>Identifies the nature of the non-standard system item</a:documentation>
             <data type="NMTOKEN"/>
          </attribute>
       </define>
-
       <define name="db.systemitem.class-other.attributes">
          <interleave>
             <attribute name="class">
@@ -2325,18 +2179,15 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.systemitem.class-other.attribute"/>
          </interleave>
       </define>
-
       <define name="db.systemitem.class.attribute">
          <choice>
             <ref name="db.systemitem.class-enum.attribute"/>
             <ref name="db.systemitem.class-other.attributes"/>
          </choice>
       </define>
-
       <define name="db.systemitem.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.systemitem.attlist">
          <interleave>
             <optional>
@@ -2349,7 +2200,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.systemitem">
          <element name="systemitem">
             <a:documentation>A system-related item or term</a:documentation>
@@ -2360,12 +2210,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.option.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.option.attlist">
          <interleave>
             <optional>
@@ -2375,7 +2223,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.option">
          <element name="option">
             <a:documentation>An option for a software command</a:documentation>
@@ -2384,19 +2231,16 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.markup.inlines">
       <choice>
          <ref name="db.literal"/>
          <ref name="db.email"/>
       </choice>
    </define>
-
    <div>
       <define name="db.literal.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.literal.attlist">
          <interleave>
             <optional>
@@ -2406,7 +2250,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.literal">
          <element name="literal">
             <a:documentation>Inline text that is some literal value</a:documentation>
@@ -2415,26 +2258,22 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.admonition.blocks">
       <choice>
          <ref name="db.danger"/>
          <ref name="db.note"/>
       </choice>
    </define>
-
    <define name="db.admonition.contentmodel">
       <ref name="db._info.title.only"/>
       <oneOrMore>
          <ref name="db.all.blocks"/>
       </oneOrMore>
    </define>
-
    <div>
       <define name="db.danger.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.danger.attlist">
          <interleave>
             <optional>
@@ -2444,7 +2283,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.danger">
          <element name="danger">
             <a:documentation>An admonition set off from the text indicating hazardous situation</a:documentation>
@@ -2465,12 +2303,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.note.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.note.attlist">
          <interleave>
             <optional>
@@ -2480,7 +2316,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.note">
          <element name="note">
             <a:documentation>A message set off from the text</a:documentation>
@@ -2501,28 +2336,24 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.endterm.attribute">
       <attribute name="endterm">
          <a:documentation>Points to the element whose content is to be used as the text of the link</a:documentation>
          <data type="IDREF"/>
       </attribute>
    </define>
-
    <define name="db.linkend.attribute">
       <attribute name="linkend">
          <a:documentation>Points to an internal link target by identifying the value of its xml:id attribute</a:documentation>
          <data type="IDREF"/>
       </attribute>
    </define>
-
    <define name="db.xlink.href.attribute">
       <attribute name="xlink:href">
          <a:documentation>Identifies a link target with a URI</a:documentation>
          <data type="anyURI"/>
       </attribute>
    </define>
-
    <define name="db.xlink.simple.type.attribute">
       <attribute name="xlink:type">
          <a:documentation>Identifies the XLink link type</a:documentation>
@@ -2530,27 +2361,23 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>An XLink simple link type</a:documentation>
       </attribute>
    </define>
-
    <define name="db.xlink.role.attribute">
       <attribute name="xlink:role">
          <a:documentation>Identifies the XLink role of the link</a:documentation>
          <data type="anyURI"/>
       </attribute>
    </define>
-
    <define name="db.xlink.arcrole.attribute">
       <attribute name="xlink:arcrole">
          <a:documentation>Identifies the XLink arcrole of the link</a:documentation>
          <data type="anyURI"/>
       </attribute>
    </define>
-
    <define name="db.xlink.title.attribute">
       <attribute name="xlink:title">
          <a:documentation>Identifies the XLink title of the link</a:documentation>
       </attribute>
    </define>
-
    <define name="db.xlink.show.enumeration">
       <choice>
          <value>new</value>
@@ -2565,14 +2392,12 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>The behavior of an application traversing to the ending resource is unconstrained by this specification. No other markup is present to help the application determine the appropriate behavior.</a:documentation>
       </choice>
    </define>
-
    <define name="db.xlink.show.attribute">
       <attribute name="xlink:show">
          <a:documentation>Identifies the XLink show behavior of the link</a:documentation>
          <ref name="db.xlink.show.enumeration"/>
       </attribute>
    </define>
-
    <define name="db.xlink.actuate.enumeration">
       <choice>
          <value>onLoad</value>
@@ -2585,14 +2410,12 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>The behavior of an application traversing to the ending resource is unconstrained by this specification. No other markup is present to help the application determine the appropriate behavior.</a:documentation>
       </choice>
    </define>
-
    <define name="db.xlink.actuate.attribute">
       <attribute name="xlink:actuate">
          <a:documentation>Identifies the XLink actuate behavior of the link</a:documentation>
          <ref name="db.xlink.actuate.enumeration"/>
       </attribute>
    </define>
-
    <define name="db.xlink.simple.link.attributes">
       <interleave>
          <optional>
@@ -2618,17 +2441,14 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db.xlink.attributes">
       <ref name="db.xlink.simple.link.attributes"/>
    </define>
-
    <define name="db.xrefstyle.attribute">
       <attribute name="xrefstyle">
          <a:documentation>Specifies a keyword or keywords identifying additional style information</a:documentation>
       </attribute>
    </define>
-
    <define name="db.common.linking.attributes">
       <optional>
          <choice>
@@ -2637,14 +2457,12 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </optional>
    </define>
-
    <define name="db.common.req.linking.attributes">
       <choice>
          <ref name="db.linkend.attribute"/>
          <ref name="db.xlink.attributes"/>
       </choice>
    </define>
-
    <define name="db.common.data.attributes">
       <optional>
          <attribute name="format">
@@ -2662,7 +2480,6 @@ information, see http://www.oasis-open.org/docbook/.
          </attribute>
       </choice>
    </define>
-
    <define name="db.verbatim.continuation.enumeration">
       <choice>
          <value>continues</value>
@@ -2671,14 +2488,12 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>Line numbering restarts (begins at 1, usually).</a:documentation>
       </choice>
    </define>
-
    <define name="db.verbatim.continuation.attribute">
       <attribute name="continuation">
          <a:documentation>Determines whether line numbering continues from the previous element or restarts.</a:documentation>
          <ref name="db.verbatim.continuation.enumeration"/>
       </attribute>
    </define>
-
    <define name="db.verbatim.linenumbering.enumeration">
       <choice>
          <value>numbered</value>
@@ -2687,27 +2502,23 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>Lines are not numbered.</a:documentation>
       </choice>
    </define>
-
    <define name="db.verbatim.linenumbering.attribute">
       <attribute name="linenumbering">
          <a:documentation>Determines whether lines are numbered.</a:documentation>
          <ref name="db.verbatim.linenumbering.enumeration"/>
       </attribute>
    </define>
-
    <define name="db.verbatim.startinglinenumber.attribute">
       <attribute name="startinglinenumber">
          <a:documentation>Specifies the initial line number.</a:documentation>
          <data type="integer"/>
       </attribute>
    </define>
-
    <define name="db.verbatim.language.attribute">
       <attribute name="language">
          <a:documentation>Identifies the language (i.e. programming language) of the verbatim content.</a:documentation>
       </attribute>
    </define>
-
    <define name="db.verbatim.xml.space.attribute">
       <attribute name="xml:space">
          <a:documentation>Can be used to indicate explicitly that whitespace in the verbatim environment is preserved. Whitespace must always be preserved in verbatim environments whether this attribute is specified or not.</a:documentation>
@@ -2715,7 +2526,6 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>Whitespace must be preserved.</a:documentation>
       </attribute>
    </define>
-
    <define name="db.verbatim.common.attributes">
       <interleave>
          <optional>
@@ -2732,7 +2542,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db.verbatim.attributes">
       <interleave>
          <ref name="db.verbatim.common.attributes"/>
@@ -2741,20 +2550,17 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db.label.attribute">
       <attribute name="label">
          <a:documentation>Specifies an identifying string for presentation purposes</a:documentation>
       </attribute>
    </define>
-
    <define name="db.width.characters.attribute">
       <attribute name="width">
          <a:documentation>Specifies the width (in characters) of the element</a:documentation>
          <data type="nonNegativeInteger"/>
       </attribute>
    </define>
-
    <define name="db.spacing.enumeration">
       <choice>
          <value>compact</value>
@@ -2763,14 +2569,12 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>The spacing should be "normal".</a:documentation>
       </choice>
    </define>
-
    <define name="db.spacing.attribute">
       <attribute name="spacing">
          <a:documentation>Specifies (a hint about) the spacing of the content</a:documentation>
          <ref name="db.spacing.enumeration"/>
       </attribute>
    </define>
-
    <define name="db.pgwide.enumeration">
       <choice>
          <value>0</value>
@@ -2779,44 +2583,37 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>The element should be rendered across the full text page.</a:documentation>
       </choice>
    </define>
-
    <define name="db.pgwide.attribute">
       <attribute name="pgwide">
          <a:documentation>Indicates if the element is rendered across the column or the page</a:documentation>
          <ref name="db.pgwide.enumeration"/>
       </attribute>
    </define>
-
    <define name="db.floatstyle.attribute">
       <attribute name="floatstyle">
          <a:documentation>Specifies style information to be used when rendering the float</a:documentation>
       </attribute>
    </define>
-
    <define name="db.width.attribute">
       <attribute name="width">
          <a:documentation>Specifies the width of the element</a:documentation>
       </attribute>
    </define>
-
    <define name="db.depth.attribute">
       <attribute name="depth">
          <a:documentation>Specifies the depth of the element</a:documentation>
       </attribute>
    </define>
-
    <define name="db.contentwidth.attribute">
       <attribute name="contentwidth">
          <a:documentation>Specifies the width of the content rectangle</a:documentation>
       </attribute>
    </define>
-
    <define name="db.contentdepth.attribute">
       <attribute name="contentdepth">
          <a:documentation>Specifies the depth of the content rectangle</a:documentation>
       </attribute>
    </define>
-
    <define name="db.scalefit.enumeration">
       <choice>
          <value>0</value>
@@ -2825,26 +2622,22 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>True (scale-to-fit; anamorphic scaling is forbidden)</a:documentation>
       </choice>
    </define>
-
    <define name="db.scale.attribute">
       <attribute name="scale">
          <a:documentation>Specifies the scaling factor</a:documentation>
          <data type="positiveInteger"/>
       </attribute>
    </define>
-
    <define name="db.classid.attribute">
       <attribute name="classid">
          <a:documentation>Specifies a classid for a media object player</a:documentation>
       </attribute>
    </define>
-
    <define name="db.autoplay.attribute">
       <attribute name="autoplay">
          <a:documentation>Specifies the autoplay setting for a media object player</a:documentation>
       </attribute>
    </define>
-
    <define name="db.halign.enumeration">
       <choice>
          <value>center</value>
@@ -2859,7 +2652,6 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>Right aligned</a:documentation>
       </choice>
    </define>
-
    <define name="db.valign.enumeration">
       <choice>
          <value>bottom</value>
@@ -2870,7 +2662,6 @@ information, see http://www.oasis-open.org/docbook/.
          <a:documentation>Aligned on the top of the region</a:documentation>
       </choice>
    </define>
-
    <define name="db._text">
       <zeroOrMore>
          <choice>
@@ -2881,7 +2672,6 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </zeroOrMore>
    </define>
-
    <define name="db._title">
       <interleave>
          <optional>
@@ -2895,7 +2685,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db._title.req">
       <interleave>
          <ref name="db.title"/>
@@ -2907,7 +2696,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db._title.only">
       <interleave>
          <optional>
@@ -2918,7 +2706,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db._title.onlyreq">
       <interleave>
          <ref name="db.title"/>
@@ -2927,7 +2714,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </interleave>
    </define>
-
    <define name="db._info">
       <choice>
          <group>
@@ -2941,7 +2727,6 @@ information, see http://www.oasis-open.org/docbook/.
          </optional>
       </choice>
    </define>
-
    <define name="db._info.title.req">
       <choice>
          <group>
@@ -2953,7 +2738,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.titlereq.info"/>
       </choice>
    </define>
-
    <define name="db._info.title.only">
       <choice>
          <group>
@@ -2965,7 +2749,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.titleonly.info"/>
       </choice>
    </define>
-
    <define name="db._info.title.onlyreq">
       <choice>
          <group>
@@ -2977,13 +2760,11 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.titleonlyreq.info"/>
       </choice>
    </define>
-
    <define name="db._info.title.forbidden">
       <optional>
          <ref name="db.titleforbidden.info"/>
       </optional>
    </define>
-
    <define name="db.all.inlines">
       <choice>
          <text/>
@@ -2992,7 +2773,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.domain.inlines"/>
       </choice>
    </define>
-
    <define name="db.general.inlines">
       <choice>
          <ref name="db.publishing.inlines"/>
@@ -3002,7 +2782,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.link.inlines"/>
       </choice>
    </define>
-
    <define name="db.domain.inlines">
       <choice>
          <ref name="db.technical.inlines"/>
@@ -3011,11 +2790,9 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.markup.inlines"/>
       </choice>
    </define>
-
    <define name="db.graphic.inlines">
       <ref name="db.inlinemediaobject"/>
    </define>
-
    <define name="db.all.blocks">
       <choice>
          <choice>
@@ -3025,12 +2802,10 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="sl.speakernotes"/>
       </choice>
    </define>
-
    <div>
       <define name="db.title.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.title.attlist">
          <interleave>
             <optional>
@@ -3040,7 +2815,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.title">
          <element name="title">
             <a:documentation>The text of the title of a section of a document or of a formal block-level element</a:documentation>
@@ -3051,12 +2825,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.titleabbrev.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.titleabbrev.attlist">
          <interleave>
             <optional>
@@ -3066,7 +2838,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.titleabbrev">
          <element name="titleabbrev">
             <a:documentation>The abbreviation of a title</a:documentation>
@@ -3077,12 +2848,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.subtitle.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.subtitle.attlist">
          <interleave>
             <optional>
@@ -3092,7 +2861,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.subtitle">
          <element name="subtitle">
             <a:documentation>The subtitle of a document</a:documentation>
@@ -3103,12 +2871,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.info.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.info.attlist">
          <interleave>
             <optional>
@@ -3117,7 +2883,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.attributes"/>
          </interleave>
       </define>
-
       <define name="db.info">
          <element name="info">
             <a:documentation>A wrapper for information about a component or other block</a:documentation>
@@ -3131,12 +2896,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.titlereq.info.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.titlereq.info.attlist">
          <interleave>
             <optional>
@@ -3145,7 +2908,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.attributes"/>
          </interleave>
       </define>
-
       <define name="db.titlereq.info">
          <element name="info">
             <a:documentation>A wrapper for information about a component or other block with a required title</a:documentation>
@@ -3159,12 +2921,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.titleonly.info.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.titleonly.info.attlist">
          <interleave>
             <optional>
@@ -3173,7 +2933,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.attributes"/>
          </interleave>
       </define>
-
       <define name="db.titleonly.info">
          <element name="info">
             <a:documentation>A wrapper for information about a component or other block with only a title</a:documentation>
@@ -3187,12 +2946,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.titleonlyreq.info.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.titleonlyreq.info.attlist">
          <interleave>
             <optional>
@@ -3201,7 +2958,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.attributes"/>
          </interleave>
       </define>
-
       <define name="db.titleonlyreq.info">
          <element name="info">
             <a:documentation>A wrapper for information about a component or other block with only a required title</a:documentation>
@@ -3215,12 +2971,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.titleforbidden.info.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.titleforbidden.info.attlist">
          <interleave>
             <optional>
@@ -3229,7 +2983,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.attributes"/>
          </interleave>
       </define>
-
       <define name="db.titleforbidden.info">
          <element name="info">
             <a:documentation>A wrapper for information about a component or other block without a title</a:documentation>
@@ -3240,19 +2993,16 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.subjectset.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.subjectset.scheme.attribute">
          <attribute name="scheme">
             <a:documentation>Identifies the controlled vocabulary used by this set's terms</a:documentation>
             <data type="NMTOKEN"/>
          </attribute>
       </define>
-
       <define name="db.subjectset.attlist">
          <interleave>
             <optional>
@@ -3265,7 +3015,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.subjectset">
          <element name="subjectset">
             <a:documentation>A set of terms describing the subject matter of a document</a:documentation>
@@ -3276,18 +3025,15 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.subject.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.subject.weight.attribute">
          <attribute name="weight">
             <a:documentation>Specifies a ranking for this subject relative to other subjects in the same set</a:documentation>
          </attribute>
       </define>
-
       <define name="db.subject.attlist">
          <interleave>
             <optional>
@@ -3300,7 +3046,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.subject">
          <element name="subject">
             <a:documentation>One of a group of terms describing the subject matter of a document</a:documentation>
@@ -3311,12 +3056,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.subjectterm.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.subjectterm.attlist">
          <interleave>
             <optional>
@@ -3326,7 +3069,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.subjectterm">
          <element name="subjectterm">
             <a:documentation>A term in a group of terms describing the subject matter of a document</a:documentation>
@@ -3335,12 +3077,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.keywordset.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.keywordset.attlist">
          <interleave>
             <optional>
@@ -3350,7 +3090,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.keywordset">
          <element name="keywordset">
             <a:documentation>A set of keywords describing the content of a document</a:documentation>
@@ -3361,12 +3100,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.keyword.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.keyword.attlist">
          <interleave>
             <optional>
@@ -3376,7 +3113,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.keyword">
          <element name="keyword">
             <a:documentation>One of a set of keywords describing the content of a document</a:documentation>
@@ -3385,7 +3121,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.table.choice">
       <choice>
          <notAllowed/>
@@ -3393,7 +3128,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.html.table"/>
       </choice>
    </define>
-
    <define name="db.informaltable.choice">
       <choice>
          <notAllowed/>
@@ -3401,24 +3135,19 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.html.informaltable"/>
       </choice>
    </define>
-
    <define name="db.table">
       <ref name="db.table.choice"/>
    </define>
-
    <define name="db.informaltable">
       <ref name="db.informaltable.choice"/>
    </define>
-
    <div>
       <define name="db.sidebar.floatstyle.attribute">
          <ref name="db.floatstyle.attribute"/>
       </define>
-
       <define name="db.sidebar.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.sidebar.attlist">
          <interleave>
             <optional>
@@ -3431,11 +3160,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.sidebar.info">
          <ref name="db._info"/>
       </define>
-
       <define name="db.sidebar">
          <element name="sidebar">
             <a:documentation>A portion of a document that is isolated from the main narrative flow</a:documentation>
@@ -3453,12 +3180,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.abstract.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.abstract.attlist">
          <interleave>
             <optional>
@@ -3468,11 +3193,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.abstract.info">
          <ref name="db._info.title.only"/>
       </define>
-
       <define name="db.abstract">
          <element name="abstract">
             <a:documentation>A summary</a:documentation>
@@ -3484,12 +3207,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.personblurb.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.personblurb.attlist">
          <interleave>
             <optional>
@@ -3499,11 +3220,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.personblurb.info">
          <ref name="db._info.title.only"/>
       </define>
-
       <define name="db.personblurb">
          <element name="personblurb">
             <a:documentation>A short description or note about a person</a:documentation>
@@ -3515,12 +3234,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.blockquote.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.blockquote.attlist">
          <interleave>
             <optional>
@@ -3530,11 +3247,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.blockquote.info">
          <ref name="db._info.title.only"/>
       </define>
-
       <define name="db.blockquote">
          <element name="blockquote">
             <a:documentation>A quotation set off from the main text</a:documentation>
@@ -3549,12 +3264,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.attribution.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.attribution.attlist">
          <interleave>
             <optional>
@@ -3564,7 +3277,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.attribution">
          <element name="attribution">
             <a:documentation>The source of a block quote or epigraph</a:documentation>
@@ -3579,12 +3291,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.epigraph.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.epigraph.attlist">
          <interleave>
             <optional>
@@ -3594,11 +3304,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.epigraph.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.epigraph">
          <element name="epigraph">
             <a:documentation>A short inscription at the beginning of a document or component</a:documentation>
@@ -3616,19 +3324,16 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.footnote.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.footnote.label.attribute">
          <attribute name="label">
             <a:documentation>Identifies the desired footnote mark</a:documentation>
             <data type="NMTOKEN"/>
          </attribute>
       </define>
-
       <define name="db.footnote.attlist">
          <interleave>
             <optional>
@@ -3641,7 +3346,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.footnote">
          <element name="footnote">
             <a:documentation>A footnote</a:documentation>
@@ -3700,12 +3404,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.para.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.para.attlist">
          <interleave>
             <optional>
@@ -3715,11 +3417,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.para.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.para">
          <element name="para">
             <a:documentation>A paragraph</a:documentation>
@@ -3734,19 +3434,16 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.itemizedlist.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.itemizedlist.mark.attribute">
          <attribute name="mark">
             <a:documentation>Identifies the type of mark to be used on items in this list</a:documentation>
             <data type="NMTOKEN"/>
          </attribute>
       </define>
-
       <define name="db.itemizedlist.attlist">
          <interleave>
             <optional>
@@ -3762,11 +3459,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.itemizedlist.info">
          <ref name="db._info.title.only"/>
       </define>
-
       <define name="db.itemizedlist">
          <element name="itemizedlist">
             <a:documentation>A list in which each entry is marked with a bullet or other dingbat</a:documentation>
@@ -3781,12 +3476,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.orderedlist.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.orderedlist.continuation.enumeration">
          <choice>
             <value>continues</value>
@@ -3795,21 +3488,18 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>Specifies that numbering should begin again at 1</a:documentation>
          </choice>
       </define>
-
       <define name="db.orderedlist.continuation.attribute">
          <attribute name="continuation">
             <a:documentation>Indicates how list numbering should begin relative to the immediately preceding list</a:documentation>
             <ref name="db.orderedlist.continuation.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.orderedlist.startingnumber.attribute">
          <attribute name="startingnumber">
             <a:documentation>Specifies the initial line number.</a:documentation>
             <data type="integer"/>
          </attribute>
       </define>
-
       <define name="db.orderedlist.inheritnum.enumeration">
          <choice>
             <value>ignore</value>
@@ -3818,14 +3508,12 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>Specifies that numbering should inherit from outer-level lists</a:documentation>
          </choice>
       </define>
-
       <define name="db.orderedlist.inheritnum.attribute">
          <attribute name="inheritnum">
             <a:documentation>Indicates whether or not item numbering should be influenced by list nesting</a:documentation>
             <ref name="db.orderedlist.inheritnum.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.orderedlist.numeration.enumeration">
          <choice>
             <value>arabic</value>
@@ -3840,14 +3528,12 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>Specifies lower-case Roman numeration (i, ii, iii …)</a:documentation>
          </choice>
       </define>
-
       <define name="db.orderedlist.numeration.attribute">
          <attribute name="numeration">
             <a:documentation>Indicates the desired numeration</a:documentation>
             <ref name="db.orderedlist.numeration.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.orderedlist.attlist">
          <interleave>
             <optional>
@@ -3872,11 +3558,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.orderedlist.info">
          <ref name="db._info.title.only"/>
       </define>
-
       <define name="db.orderedlist">
          <element name="orderedlist">
             <a:documentation>A list in which each entry is marked with a sequentially incremented label</a:documentation>
@@ -3891,12 +3575,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.listitem.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.listitem.override.attribute">
          <attribute name="override">
             <a:documentation>Specifies the keyword for the type of mark that should be used on this
@@ -3904,7 +3586,6 @@ information, see http://www.oasis-open.org/docbook/.
             <data type="NMTOKEN"/>
          </attribute>
       </define>
-
       <define name="db.listitem.attlist">
          <interleave>
             <optional>
@@ -3917,7 +3598,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.listitem">
          <element name="listitem">
             <a:documentation>A wrapper for the elements of a list item</a:documentation>
@@ -3928,18 +3608,15 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.variablelist.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.variablelist.termlength.attribute">
          <attribute name="termlength">
             <a:documentation>Indicates a length beyond which the presentation system may consider a term too long and select an alternate presentation for that term, item, or list</a:documentation>
          </attribute>
       </define>
-
       <define name="db.variablelist.attlist">
          <interleave>
             <optional>
@@ -3955,11 +3632,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.variablelist.info">
          <ref name="db._info.title.only"/>
       </define>
-
       <define name="db.variablelist">
          <element name="variablelist">
             <a:documentation>A list in which each entry is composed of a set of one or more terms and an associated description</a:documentation>
@@ -3974,12 +3649,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.varlistentry.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.varlistentry.attlist">
          <interleave>
             <optional>
@@ -3989,7 +3662,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.varlistentry">
          <element name="varlistentry">
             <a:documentation>A wrapper for a set of terms and the associated description in a variable list</a:documentation>
@@ -4001,12 +3673,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.term.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.term.attlist">
          <interleave>
             <optional>
@@ -4016,7 +3686,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.term">
          <element name="term">
             <a:documentation>The word or phrase being defined or described in a variable list</a:documentation>
@@ -4027,28 +3696,22 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.example.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.example.label.attribute">
          <ref name="db.label.attribute"/>
       </define>
-
       <define name="db.example.width.attribute">
          <ref name="db.width.characters.attribute"/>
       </define>
-
       <define name="db.example.pgwide.attribute">
          <ref name="db.pgwide.attribute"/>
       </define>
-
       <define name="db.example.floatstyle.attribute">
          <ref name="db.floatstyle.attribute"/>
       </define>
-
       <define name="db.example.attlist">
          <interleave>
             <optional>
@@ -4070,11 +3733,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.example.info">
          <ref name="db._info.title.onlyreq"/>
       </define>
-
       <define name="db.example">
          <element name="example">
             <a:documentation>A formal example, with a title</a:documentation>
@@ -4107,14 +3768,12 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.verbatim.inlines">
       <choice>
          <ref name="db.all.inlines"/>
          <ref name="db.lineannotation"/>
       </choice>
    </define>
-
    <define name="db.verbatim.contentmodel">
       <ref name="db._info.title.forbidden"/>
       <choice>
@@ -4124,12 +3783,10 @@ information, see http://www.oasis-open.org/docbook/.
          </zeroOrMore>
       </choice>
    </define>
-
    <div>
       <define name="db.literallayout.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.literallayout.class.enumeration">
          <choice>
             <value>monospaced</value>
@@ -4138,14 +3795,12 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>The literal layout should be formatted with the current font</a:documentation>
          </choice>
       </define>
-
       <define name="db.literallayout.class.attribute">
          <attribute name="class">
             <a:documentation>Specifies the class of literal layout</a:documentation>
             <ref name="db.literallayout.class.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.literallayout.attlist">
          <interleave>
             <optional>
@@ -4159,7 +3814,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.literallayout">
          <element name="literallayout">
             <a:documentation>A block of text in which line breaks and white space are to be reproduced faithfully</a:documentation>
@@ -4168,24 +3822,19 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.figure.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.figure.label.attribute">
          <ref name="db.label.attribute"/>
       </define>
-
       <define name="db.figure.pgwide.attribute">
          <ref name="db.pgwide.attribute"/>
       </define>
-
       <define name="db.figure.floatstyle.attribute">
          <ref name="db.floatstyle.attribute"/>
       </define>
-
       <define name="db.figure.attlist">
          <interleave>
             <optional>
@@ -4204,11 +3853,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.figure.info">
          <ref name="db._info.title.onlyreq"/>
       </define>
-
       <define name="db.figure">
          <element name="figure">
             <a:documentation>A formal figure, generally an illustration, with a title</a:documentation>
@@ -4241,7 +3888,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.mediaobject.content">
       <choice>
          <ref name="db.videoobject"/>
@@ -4250,12 +3896,10 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.textobject"/>
       </choice>
    </define>
-
    <div>
       <define name="db.mediaobject.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.mediaobject.attlist">
          <interleave>
             <optional>
@@ -4265,11 +3909,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.mediaobject.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.mediaobject">
          <element name="mediaobject">
             <a:documentation>A displayed media object (video, audio, image, etc.)</a:documentation>
@@ -4287,12 +3929,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.inlinemediaobject.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.inlinemediaobject.attlist">
          <interleave>
             <optional>
@@ -4302,11 +3942,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.inlinemediaobject.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.inlinemediaobject">
          <element name="inlinemediaobject">
             <a:documentation>An inline media object (video, audio, image, and so on)</a:documentation>
@@ -4321,12 +3959,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.videoobject.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.videoobject.attlist">
          <interleave>
             <optional>
@@ -4336,11 +3972,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.videoobject.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.videoobject">
          <element name="videoobject">
             <a:documentation>A wrapper for video data and its associated meta-information</a:documentation>
@@ -4352,12 +3986,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.audioobject.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.audioobject.attlist">
          <interleave>
             <optional>
@@ -4367,11 +3999,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.audioobject.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.audioobject">
          <element name="audioobject">
             <a:documentation>A wrapper for audio data and its associated meta-information</a:documentation>
@@ -4383,18 +4013,15 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.imageobject.content">
       <oneOrMore>
          <ref name="db.imagedata"/>
       </oneOrMore>
    </define>
-
    <div>
       <define name="db.imageobject.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.imageobject.attlist">
          <interleave>
             <optional>
@@ -4404,11 +4031,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.imageobject.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.imageobject">
          <element name="imageobject">
             <a:documentation>A wrapper for image data and its associated meta-information</a:documentation>
@@ -4418,12 +4043,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.textobject.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.textobject.attlist">
          <interleave>
             <optional>
@@ -4433,11 +4056,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.textobject.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.textobject">
          <element name="textobject">
             <a:documentation>A wrapper for a text description of an object and its associated meta-information</a:documentation>
@@ -4453,73 +4074,58 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.videodata.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.videodata.align.enumeration">
          <ref name="db.halign.enumeration"/>
       </define>
-
       <define name="db.videodata.align.attribute">
          <attribute name="align">
             <a:documentation>Specifies the (horizontal) alignment of the video data</a:documentation>
             <ref name="db.videodata.align.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.videodata.autoplay.attribute">
          <ref name="db.autoplay.attribute"/>
       </define>
-
       <define name="db.videodata.classid.attribute">
          <ref name="db.classid.attribute"/>
       </define>
-
       <define name="db.videodata.valign.enumeration">
          <ref name="db.valign.enumeration"/>
       </define>
-
       <define name="db.videodata.valign.attribute">
          <attribute name="valign">
             <a:documentation>Specifies the vertical alignment of the video data</a:documentation>
             <ref name="db.videodata.valign.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.videodata.width.attribute">
          <ref name="db.width.attribute"/>
       </define>
-
       <define name="db.videodata.depth.attribute">
          <ref name="db.depth.attribute"/>
       </define>
-
       <define name="db.videodata.contentwidth.attribute">
          <ref name="db.contentwidth.attribute"/>
       </define>
-
       <define name="db.videodata.contentdepth.attribute">
          <ref name="db.contentdepth.attribute"/>
       </define>
-
       <define name="db.videodata.scalefit.enumeration">
          <ref name="db.scalefit.enumeration"/>
       </define>
-
       <define name="db.videodata.scalefit.attribute">
          <attribute name="scalefit">
             <a:documentation>Determines if anamorphic scaling is forbidden</a:documentation>
             <ref name="db.videodata.scalefit.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.videodata.scale.attribute">
          <ref name="db.scale.attribute"/>
       </define>
-
       <define name="db.videodata.attlist">
          <interleave>
             <optional>
@@ -4559,11 +4165,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.videodata.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.videodata">
          <element name="videodata">
             <a:documentation>Pointer to external video data</a:documentation>
@@ -4575,73 +4179,58 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.audiodata.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.audiodata.align.enumeration">
          <ref name="db.halign.enumeration"/>
       </define>
-
       <define name="db.audiodata.align.attribute">
          <attribute name="align">
             <a:documentation>Specifies the (horizontal) alignment of the video data</a:documentation>
             <ref name="db.audiodata.align.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.audiodata.autoplay.attribute">
          <ref name="db.autoplay.attribute"/>
       </define>
-
       <define name="db.audiodata.classid.attribute">
          <ref name="db.classid.attribute"/>
       </define>
-
       <define name="db.audiodata.contentwidth.attribute">
          <ref name="db.contentwidth.attribute"/>
       </define>
-
       <define name="db.audiodata.contentdepth.attribute">
          <ref name="db.contentdepth.attribute"/>
       </define>
-
       <define name="db.audiodata.depth.attribute">
          <ref name="db.depth.attribute"/>
       </define>
-
       <define name="db.audiodata.scale.attribute">
          <ref name="db.scale.attribute"/>
       </define>
-
       <define name="db.audiodata.scalefit.enumeration">
          <ref name="db.scalefit.enumeration"/>
       </define>
-
       <define name="db.audiodata.scalefit.attribute">
          <attribute name="scalefit">
             <a:documentation>Determines if anamorphic scaling is forbidden</a:documentation>
             <ref name="db.audiodata.scalefit.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.audiodata.valign.enumeration">
          <ref name="db.valign.enumeration"/>
       </define>
-
       <define name="db.audiodata.valign.attribute">
          <attribute name="valign">
             <a:documentation>Specifies the vertical alignment of the video data</a:documentation>
             <ref name="db.audiodata.valign.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.audiodata.width.attribute">
          <ref name="db.width.attribute"/>
       </define>
-
       <define name="db.audiodata.attlist">
          <interleave>
             <optional>
@@ -4681,11 +4270,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.audiodata.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.audiodata">
          <element name="audiodata">
             <a:documentation>Pointer to external audio data</a:documentation>
@@ -4697,65 +4284,52 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.imagedata.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.imagedata.align.enumeration">
          <ref name="db.halign.enumeration"/>
       </define>
-
       <define name="db.imagedata.align.attribute">
          <attribute name="align">
             <a:documentation>Specifies the (horizontal) alignment of the image data</a:documentation>
             <ref name="db.imagedata.align.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.imagedata.valign.enumeration">
          <ref name="db.valign.enumeration"/>
       </define>
-
       <define name="db.imagedata.valign.attribute">
          <attribute name="valign">
             <a:documentation>Specifies the vertical alignment of the image data</a:documentation>
             <ref name="db.imagedata.valign.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.imagedata.width.attribute">
          <ref name="db.width.attribute"/>
       </define>
-
       <define name="db.imagedata.depth.attribute">
          <ref name="db.depth.attribute"/>
       </define>
-
       <define name="db.imagedata.contentwidth.attribute">
          <ref name="db.contentwidth.attribute"/>
       </define>
-
       <define name="db.imagedata.contentdepth.attribute">
          <ref name="db.contentdepth.attribute"/>
       </define>
-
       <define name="db.imagedata.scalefit.enumeration">
          <ref name="db.scalefit.enumeration"/>
       </define>
-
       <define name="db.imagedata.scalefit.attribute">
          <attribute name="scalefit">
             <a:documentation>Determines if anamorphic scaling is forbidden</a:documentation>
             <ref name="db.imagedata.scalefit.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.imagedata.scale.attribute">
          <ref name="db.scale.attribute"/>
       </define>
-
       <define name="db.imagedata.attlist">
          <interleave>
             <optional>
@@ -4789,31 +4363,29 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.imagedata.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.imagedata">
          <element name="imagedata">
             <a:documentation>Pointer to external image data</a:documentation>
             <ref name="db.imagedata.attlist"/>
             <ref name="db.imagedata.info"/>
+            <zeroOrMore>
+               <ref name="db.multimediaparam"/>
+            </zeroOrMore>
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.textdata.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.textdata.encoding.attribute">
          <attribute name="encoding">
             <a:documentation>Identifies the encoding of the text in the external file</a:documentation>
          </attribute>
       </define>
-
       <define name="db.textdata.attlist">
          <interleave>
             <optional>
@@ -4826,11 +4398,9 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.textdata.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.textdata">
          <element name="textdata">
             <a:documentation>Pointer to external text data</a:documentation>
@@ -4839,30 +4409,25 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.multimediaparam.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.multimediaparam.name.attribute">
          <attribute name="name">
             <a:documentation>Specifies the name of the parameter</a:documentation>
          </attribute>
       </define>
-
       <define name="db.multimediaparam.value.attribute">
          <attribute name="value">
             <a:documentation>Specifies the value of the parameter</a:documentation>
          </attribute>
       </define>
-
       <define name="db.multimediaparam.valuetype.attribute">
          <attribute name="valuetype">
             <a:documentation>Specifies the type of the value of the parameter</a:documentation>
          </attribute>
       </define>
-
       <define name="db.multimediaparam.attlist">
          <interleave>
             <optional>
@@ -4876,7 +4441,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.multimediaparam">
          <element name="multimediaparam">
             <a:documentation>Application specific parameters for a media player</a:documentation>
@@ -4885,12 +4449,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.caption.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.caption.attlist">
          <interleave>
             <optional>
@@ -4900,11 +4462,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.caption.info">
          <ref name="db._info.title.forbidden"/>
       </define>
-
       <define name="db.caption">
          <element name="caption">
             <a:documentation>A caption</a:documentation>
@@ -4952,12 +4512,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.affiliation.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.affiliation.attlist">
          <interleave>
             <optional>
@@ -4967,7 +4525,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.affiliation">
          <element name="affiliation">
             <a:documentation>The institutional affiliation of an individual</a:documentation>
@@ -4991,12 +4548,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.jobtitle.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.jobtitle.attlist">
          <interleave>
             <optional>
@@ -5006,7 +4561,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.jobtitle">
          <element name="jobtitle">
             <a:documentation>The title of an individual in an organization</a:documentation>
@@ -5015,7 +4569,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.orgname.class.enumeration">
          <choice>
@@ -5029,14 +4582,12 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>A non-profit organization</a:documentation>
          </choice>
       </define>
-
       <define name="db.orgname.class-enum.attribute">
          <attribute name="class">
             <a:documentation>Specifies the nature of the organization</a:documentation>
             <ref name="db.orgname.class.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.orgname.class-other.attributes">
          <attribute name="class">
             <a:documentation>Specifies the nature of the organization</a:documentation>
@@ -5047,18 +4598,15 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>Identifies the non-standard nature of the organization</a:documentation>
          </attribute>
       </define>
-
       <define name="db.orgname.class.attribute">
          <choice>
             <ref name="db.orgname.class-enum.attribute"/>
             <ref name="db.orgname.class-other.attributes"/>
          </choice>
       </define>
-
       <define name="db.orgname.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.orgname.attlist">
          <interleave>
             <optional>
@@ -5071,7 +4619,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.orgname">
          <element name="orgname">
             <a:documentation>The name of an organization</a:documentation>
@@ -5080,12 +4627,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.orgdiv.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.orgdiv.attlist">
          <interleave>
             <optional>
@@ -5095,7 +4640,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.orgdiv">
          <element name="orgdiv">
             <a:documentation>A division of an organization</a:documentation>
@@ -5106,12 +4650,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.personname.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.personname.attlist">
          <interleave>
             <optional>
@@ -5121,7 +4663,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.personname">
          <element name="personname">
             <a:documentation>The personal name of an individual</a:documentation>
@@ -5150,19 +4691,16 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.credit.contentmodel">
       <choice>
          <ref name="db.person.author.contentmodel"/>
          <ref name="db.org.author.contentmodel"/>
       </choice>
    </define>
-
    <div>
       <define name="db.author.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.author.attlist">
          <interleave>
             <optional>
@@ -5172,7 +4710,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.author">
          <element name="author">
             <a:documentation>The name of an individual author</a:documentation>
@@ -5181,12 +4718,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.authorgroup.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.authorgroup.attlist">
          <interleave>
             <optional>
@@ -5196,7 +4731,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.authorgroup">
          <element name="authorgroup">
             <a:documentation>Wrapper for author information when a document has multiple authors or collaborators</a:documentation>
@@ -5211,12 +4745,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.authorinitials.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.authorinitials.attlist">
          <interleave>
             <optional>
@@ -5226,7 +4758,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.authorinitials">
          <element name="authorinitials">
             <a:documentation>The initials or other short identifier for an author</a:documentation>
@@ -5235,12 +4766,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.org.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.org.attlist">
          <interleave>
             <optional>
@@ -5250,7 +4779,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.org">
          <element name="org">
             <a:documentation>An organization and associated metadata</a:documentation>
@@ -5266,12 +4794,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.copyright.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.copyright.attlist">
          <interleave>
             <optional>
@@ -5281,7 +4807,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.copyright">
          <element name="copyright">
             <a:documentation>Copyright information about a document</a:documentation>
@@ -5295,12 +4820,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.year.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.year.attlist">
          <interleave>
             <optional>
@@ -5310,7 +4833,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.year">
          <element name="year">
             <a:documentation>The year of publication of a document</a:documentation>
@@ -5319,12 +4841,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.holder.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.holder.attlist">
          <interleave>
             <optional>
@@ -5334,7 +4854,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.holder">
          <element name="holder">
             <a:documentation>The name of the individual or organization that holds a copyright</a:documentation>
@@ -5343,7 +4862,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.date.contentmodel">
       <choice>
          <data type="date"/>
@@ -5353,12 +4871,10 @@ information, see http://www.oasis-open.org/docbook/.
          <text/>
       </choice>
    </define>
-
    <div>
       <define name="db.date.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.date.attlist">
          <interleave>
             <optional>
@@ -5368,7 +4884,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.date">
          <element name="date">
             <a:documentation>The date of publication or revision of a document</a:documentation>
@@ -5377,12 +4892,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.edition.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.edition.attlist">
          <interleave>
             <optional>
@@ -5392,7 +4905,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.edition">
          <element name="edition">
             <a:documentation>The name or number of an edition of a document</a:documentation>
@@ -5401,12 +4913,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.editor.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.editor.attlist">
          <interleave>
             <optional>
@@ -5416,7 +4926,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.editor">
          <element name="editor">
             <a:documentation>The name of the editor of a document</a:documentation>
@@ -5425,12 +4934,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.legalnotice.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.legalnotice.attlist">
          <interleave>
             <optional>
@@ -5440,11 +4947,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.legalnotice.info">
          <ref name="db._info.title.only"/>
       </define>
-
       <define name="db.legalnotice">
          <element name="legalnotice">
             <a:documentation>A statement of legal obligations or requirements</a:documentation>
@@ -5456,7 +4961,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.othercredit.class.enumeration">
          <choice>
@@ -5488,7 +4992,6 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>A converter (a persons responsible for conversion, not an application)</a:documentation>
          </choice>
       </define>
-
       <define name="db.othercredit.class-enum.attribute">
          <optional>
             <attribute name="class">
@@ -5497,14 +5000,12 @@ information, see http://www.oasis-open.org/docbook/.
             </attribute>
          </optional>
       </define>
-
       <define name="db.othercredit.class-other.attribute">
          <attribute name="otherclass">
             <a:documentation>Identifies the nature of the non-standard contribution</a:documentation>
             <data type="NMTOKEN"/>
          </attribute>
       </define>
-
       <define name="db.othercredit.class-other.attributes">
          <interleave>
             <attribute name="class">
@@ -5515,18 +5016,15 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.othercredit.class-other.attribute"/>
          </interleave>
       </define>
-
       <define name="db.othercredit.class.attribute">
          <choice>
             <ref name="db.othercredit.class-enum.attribute"/>
             <ref name="db.othercredit.class-other.attributes"/>
          </choice>
       </define>
-
       <define name="db.othercredit.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.othercredit.attlist">
          <interleave>
             <optional>
@@ -5537,7 +5035,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.othercredit.class.attribute"/>
          </interleave>
       </define>
-
       <define name="db.othercredit">
          <element name="othercredit">
             <a:documentation>A person or entity, other than an author or editor, credited in a document</a:documentation>
@@ -5546,12 +5043,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.honorific.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.honorific.attlist">
          <interleave>
             <optional>
@@ -5561,7 +5056,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.honorific">
          <element name="honorific">
             <a:documentation>The title of a person</a:documentation>
@@ -5570,12 +5064,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.firstname.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.firstname.attlist">
          <interleave>
             <optional>
@@ -5585,7 +5077,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.firstname">
          <element name="firstname">
             <a:documentation>A given name of a person</a:documentation>
@@ -5594,12 +5085,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.givenname.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.givenname.attlist">
          <interleave>
             <optional>
@@ -5609,7 +5098,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.givenname">
          <element name="givenname">
             <a:documentation>The given name of a person</a:documentation>
@@ -5618,12 +5106,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.surname.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.surname.attlist">
          <interleave>
             <optional>
@@ -5633,7 +5119,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.surname">
          <element name="surname">
             <a:documentation>An inherited or family name; in western cultures the last name</a:documentation>
@@ -5642,12 +5127,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.lineage.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.lineage.attlist">
          <interleave>
             <optional>
@@ -5657,7 +5140,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.lineage">
          <element name="lineage">
             <a:documentation>The portion of a person's name indicating a relationship to ancestors</a:documentation>
@@ -5666,12 +5148,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.othername.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.othername.attlist">
          <interleave>
             <optional>
@@ -5681,7 +5161,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.othername">
          <element name="othername">
             <a:documentation>A component of a person's name that is not a first name, surname, or lineage</a:documentation>
@@ -5690,12 +5169,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.pubdate.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.pubdate.attlist">
          <interleave>
             <optional>
@@ -5705,7 +5182,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.pubdate">
          <element name="pubdate">
             <a:documentation>The date of publication of a document</a:documentation>
@@ -5714,12 +5190,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.publishername.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.publishername.attlist">
          <interleave>
             <optional>
@@ -5729,7 +5203,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.publishername">
          <element name="publishername">
             <a:documentation>The name of the publisher of a document</a:documentation>
@@ -5738,12 +5211,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.releaseinfo.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.releaseinfo.attlist">
          <interleave>
             <optional>
@@ -5753,7 +5224,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.releaseinfo">
          <element name="releaseinfo">
             <a:documentation>Information about a particular release of a document</a:documentation>
@@ -5762,12 +5232,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.revhistory.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.revhistory.attlist">
          <interleave>
             <optional>
@@ -5777,11 +5245,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.revhistory.info">
          <ref name="db._info.title.only"/>
       </define>
-
       <define name="db.revhistory">
          <element name="revhistory">
             <a:documentation>A history of the revisions to a document</a:documentation>
@@ -5793,12 +5259,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.revision.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.revision.attlist">
          <interleave>
             <optional>
@@ -5808,7 +5272,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.revision">
          <element name="revision">
             <a:documentation>An entry describing a single revision in the history of the revisions to a document</a:documentation>
@@ -5832,12 +5295,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.revnumber.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.revnumber.attlist">
          <interleave>
             <optional>
@@ -5847,7 +5308,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.revnumber">
          <element name="revnumber">
             <a:documentation>A document revision number</a:documentation>
@@ -5856,12 +5316,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.revremark.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.revremark.attlist">
          <interleave>
             <optional>
@@ -5871,7 +5329,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.revremark">
          <element name="revremark">
             <a:documentation>A description of a revision to a document</a:documentation>
@@ -5880,12 +5337,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.revdescription.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.revdescription.attlist">
          <interleave>
             <optional>
@@ -5895,7 +5350,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.revdescription">
          <element name="revdescription">
             <a:documentation>A extended description of a revision to a document</a:documentation>
@@ -5906,12 +5360,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.volumenum.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.volumenum.attlist">
          <interleave>
             <optional>
@@ -5921,7 +5373,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.volumenum">
          <element name="volumenum">
             <a:documentation>The volume number of a document in a set (as of books in a set or articles in a journal)</a:documentation>
@@ -5930,12 +5381,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.issuenum.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.issuenum.attlist">
          <interleave>
             <optional>
@@ -5945,7 +5394,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.issuenum">
          <element name="issuenum">
             <a:documentation>The number of an issue of a journal</a:documentation>
@@ -5954,12 +5402,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.email.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.email.attlist">
          <interleave>
             <optional>
@@ -5969,7 +5415,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.email">
          <element name="email">
             <a:documentation>An email address</a:documentation>
@@ -5978,12 +5423,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.lineannotation.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.lineannotation.attlist">
          <interleave>
             <optional>
@@ -5993,7 +5436,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.lineannotation">
          <element name="lineannotation">
             <a:documentation>A comment on a line in a verbatim listing</a:documentation>
@@ -6002,11 +5444,9 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.replaceable.inlines">
       <ref name="db._text"/>
    </define>
-
    <div>
       <define name="db.replaceable.class.enumeration">
          <choice>
@@ -6020,18 +5460,15 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>A parameter</a:documentation>
          </choice>
       </define>
-
       <define name="db.replaceable.class.attribute">
          <attribute name="class">
             <a:documentation>Identifies the nature of the replaceable text</a:documentation>
             <ref name="db.replaceable.class.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.replaceable.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.replaceable.attlist">
          <interleave>
             <optional>
@@ -6044,7 +5481,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.replaceable">
          <element name="replaceable">
             <a:documentation>Content that may or must be replaced by the user</a:documentation>
@@ -6055,12 +5491,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.abbrev.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.abbrev.attlist">
          <interleave>
             <optional>
@@ -6070,7 +5504,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.abbrev">
          <element name="abbrev">
             <a:documentation>An abbreviation, especially one followed by a period</a:documentation>
@@ -6086,12 +5519,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.acronym.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.acronym.attlist">
          <interleave>
             <optional>
@@ -6101,7 +5532,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.acronym">
          <element name="acronym">
             <a:documentation>An often pronounceable word made from the initial (or selected) letters of a name or phrase</a:documentation>
@@ -6117,7 +5547,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.citetitle.pubwork.enumeration">
          <choice>
@@ -6159,18 +5588,15 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>A wiki page</a:documentation>
          </choice>
       </define>
-
       <define name="db.citetitle.pubwork.attribute">
          <attribute name="pubwork">
             <a:documentation>Identifies the nature of the publication being cited</a:documentation>
             <ref name="db.citetitle.pubwork.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.citetitle.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.citetitle.attlist">
          <interleave>
             <optional>
@@ -6183,7 +5609,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.citetitle">
          <element name="citetitle">
             <a:documentation>The title of a cited work</a:documentation>
@@ -6194,12 +5619,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.emphasis.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.emphasis.attlist">
          <interleave>
             <optional>
@@ -6209,7 +5632,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.emphasis">
          <element name="emphasis">
             <a:documentation>Emphasized text</a:documentation>
@@ -6220,12 +5642,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.phrase.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.phrase.attlist">
          <interleave>
             <optional>
@@ -6235,7 +5655,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.phrase">
          <element name="phrase">
             <a:documentation>A span of text</a:documentation>
@@ -6246,7 +5665,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db._phrase">
          <element name="phrase">
@@ -6256,12 +5674,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.quote.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.quote.attlist">
          <interleave>
             <optional>
@@ -6271,7 +5687,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.quote">
          <element name="quote">
             <a:documentation>An inline quotation</a:documentation>
@@ -6282,12 +5697,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.subscript.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.subscript.attlist">
          <interleave>
             <optional>
@@ -6297,7 +5710,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.subscript">
          <element name="subscript">
             <a:documentation>A subscript (as in H₂O, the molecular formula for water)</a:documentation>
@@ -6306,12 +5718,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.superscript.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.superscript.attlist">
          <interleave>
             <optional>
@@ -6321,7 +5731,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.linking.attributes"/>
          </interleave>
       </define>
-
       <define name="db.superscript">
          <element name="superscript">
             <a:documentation>A superscript (as in x², the mathematical notation for x multiplied by itself)</a:documentation>
@@ -6330,7 +5739,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.trademark.class.enumeration">
          <choice>
@@ -6344,18 +5752,15 @@ information, see http://www.oasis-open.org/docbook/.
             <a:documentation>A trademark</a:documentation>
          </choice>
       </define>
-
       <define name="db.trademark.class.attribute">
          <attribute name="class">
             <a:documentation>Identifies the class of trade mark</a:documentation>
             <ref name="db.trademark.class.enumeration"/>
          </attribute>
       </define>
-
       <define name="db.trademark.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.trademark.attlist">
          <interleave>
             <optional>
@@ -6368,7 +5773,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.trademark">
          <element name="trademark">
             <a:documentation>A trademark</a:documentation>
@@ -6377,16 +5781,13 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.footnoteref.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.footnoteref.label.attribute">
          <ref name="db.label.attribute"/>
       </define>
-
       <define name="db.footnoteref.attlist">
          <interleave>
             <optional>
@@ -6399,7 +5800,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.footnoteref">
          <element name="footnoteref">
             <a:documentation>A cross reference to a footnote (a footnote mark)</a:documentation>
@@ -6414,20 +5814,16 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.xref.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.xref.xrefstyle.attribute">
          <ref name="db.xrefstyle.attribute"/>
       </define>
-
       <define name="db.xref.endterm.attribute">
          <ref name="db.endterm.attribute"/>
       </define>
-
       <define name="db.xref.attlist">
          <interleave>
             <optional>
@@ -6443,7 +5839,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.xref">
          <element name="xref">
             <a:documentation>A cross reference to another part of the document</a:documentation>
@@ -6452,20 +5847,16 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.link.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.link.xrefstyle.attribute">
          <ref name="db.xrefstyle.attribute"/>
       </define>
-
       <define name="db.link.endterm.attribute">
          <ref name="db.endterm.attribute"/>
       </define>
-
       <define name="db.link.attlist">
          <interleave>
             <optional>
@@ -6481,7 +5872,6 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
-
       <define name="db.link">
          <element name="link">
             <a:documentation>A hypertext link</a:documentation>
@@ -6492,12 +5882,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="db.alt.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="db.alt.attlist">
          <interleave>
             <optional>
@@ -6506,7 +5894,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.attributes"/>
          </interleave>
       </define>
-
       <define name="db.alt">
          <element name="alt">
             <a:documentation>A text-only annotation, often used for accessibility</a:documentation>
@@ -6520,7 +5907,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="db.common.attributes">
       <optional>
          <attribute name="xml:id">
@@ -6547,7 +5933,6 @@ information, see http://www.oasis-open.org/docbook/.
          </attribute>
       </optional>
    </define>
-
    <define name="db.info.elements">
       <choice>
          <choice>
@@ -6576,7 +5961,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="sl._any.html"/>
       </choice>
    </define>
-
    <define name="db.bibliographic.elements">
       <choice>
          <ref name="db.info.elements"/>
@@ -6591,7 +5975,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.titleabbrev"/>
       </choice>
    </define>
-
    <define name="db.list.blocks">
       <choice>
          <choice>
@@ -6601,11 +5984,9 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </choice>
    </define>
-
    <define name="db.admonition.blocks">
       <ref name="db.note"/>
    </define>
-
    <define name="db.verbatim.blocks">
       <choice>
          <ref name="db.literallayout"/>
@@ -6614,11 +5995,9 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </choice>
    </define>
-
    <define name="db.para.blocks">
       <ref name="db.para"/>
    </define>
-
    <define name="db.publishing.blocks">
       <choice>
          <ref name="db.blockquote"/>
@@ -6626,15 +6005,12 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.epigraph"/>
       </choice>
    </define>
-
    <define name="db.graphic.blocks">
       <ref name="db.mediaobject"/>
    </define>
-
    <define name="db.informal.blocks">
       <ref name="db.informaltable"/>
    </define>
-
    <define name="db.formal.blocks">
       <choice>
          <ref name="db.example"/>
@@ -6642,17 +6018,14 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.table"/>
       </choice>
    </define>
-
    <define name="db.technical.blocks">
       <empty/>
    </define>
-
    <define name="db.synopsis.blocks">
       <choice>
          <empty/>
       </choice>
    </define>
-
    <define name="db.nopara.blocks">
       <choice>
          <choice>
@@ -6671,7 +6044,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.admonition.blocks"/>
       </choice>
    </define>
-
    <define name="db.ubiq.inlines">
       <choice>
          <ref name="db.inlinemediaobject"/>
@@ -6679,7 +6051,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.subscript"/>
       </choice>
    </define>
-
    <define name="db.publishing.inlines">
       <choice>
          <ref name="db.abbrev"/>
@@ -6691,7 +6062,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.quote"/>
       </choice>
    </define>
-
    <define name="db.os.inlines">
       <choice>
          <ref name="db.filename"/>
@@ -6700,15 +6070,12 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.userinput"/>
       </choice>
    </define>
-
    <define name="db.programming.inlines">
       <empty/>
    </define>
-
    <define name="db.product.inlines">
       <ref name="db.trademark"/>
    </define>
-
    <define name="db.bibliography.inlines">
       <choice>
          <ref name="db.citetitle"/>
@@ -6718,14 +6085,12 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.editor"/>
       </choice>
    </define>
-
    <define name="db.markup.inlines">
       <choice>
          <ref name="db.literal"/>
          <ref name="db.email"/>
       </choice>
    </define>
-
    <define name="db.technical.inlines">
       <choice>
          <ref name="db.replaceable"/>
@@ -6735,11 +6100,9 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </choice>
    </define>
-
    <define name="db.oo.inlines">
       <empty/>
    </define>
-
    <define name="db.link.inlines">
       <choice>
          <choice>
@@ -6748,7 +6111,6 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </choice>
    </define>
-
    <define name="db.person.author.contentmodel">
       <ref name="db.personname"/>
       <zeroOrMore>
@@ -6759,7 +6121,6 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </zeroOrMore>
    </define>
-
    <define name="db.org.author.contentmodel">
       <ref name="db.orgname"/>
       <zeroOrMore>
@@ -6769,7 +6130,6 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </zeroOrMore>
    </define>
-
    <start>
       <ref name="sl.slides"/>
    </start>
@@ -6777,7 +6137,6 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="sl.slides.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="sl.slides.attlist">
          <interleave>
             <optional>
@@ -6786,16 +6145,14 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.attributes"/>
          </interleave>
       </define>
-
       <define name="sl.slides.info">
          <ref name="db._info.title.req"/>
       </define>
-
       <define name="sl.slides">
          <element name="slides">
             <a:documentation>A set of slides (or foils)</a:documentation>
             <s:pattern>
-               <title>Root must have version</title>
+               <s:title>Root must have version</s:title>
                <s:rule context="/db:slides">
                   <s:assert test="@version">If this element is the root element, it must have a version attribute.</s:assert>
                </s:rule>
@@ -6817,12 +6174,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="sl.foilgroup.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="sl.foilgroup.attlist">
          <interleave>
             <optional>
@@ -6834,11 +6189,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.attributes"/>
          </interleave>
       </define>
-
       <define name="sl.foilgroup.info">
          <ref name="db._info.title.req"/>
       </define>
-
       <define name="sl.foilgroup">
          <element name="foilgroup">
             <a:documentation>A group of slides (or foils)</a:documentation>
@@ -6857,12 +6210,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="sl.foil.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="sl.foil.attlist">
          <interleave>
             <optional>
@@ -6874,11 +6225,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.attributes"/>
          </interleave>
       </define>
-
       <define name="sl.foil.info">
          <ref name="db._info.title.req"/>
       </define>
-
       <define name="sl.foil">
          <element name="foil">
             <a:documentation>A slide (or foil)</a:documentation>
@@ -6894,12 +6243,10 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <div>
       <define name="sl.speakernotes.role.attribute">
          <attribute name="role"/>
       </define>
-
       <define name="sl.speakernotes.attlist">
          <interleave>
             <optional>
@@ -6911,7 +6258,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.common.attributes"/>
          </interleave>
       </define>
-
       <define name="sl.speakernotes">
          <element name="speakernotes">
             <a:documentation>Speaker notes</a:documentation>
@@ -6922,7 +6268,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-
    <define name="sl._any.html">
       <element>
          <nsName ns="http://www.w3.org/1999/xhtml"/>
@@ -6936,5 +6281,4 @@ information, see http://www.oasis-open.org/docbook/.
          </zeroOrMore>
       </element>
    </define>
-
 </grammar>

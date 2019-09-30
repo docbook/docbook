@@ -6,7 +6,7 @@ namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# This file is part of Simplified DocBook V5.2-b01
+# This file is part of Simplified DocBook V5.2b05
 # 
 # Copyright 1992-2015 HaL Computer Systems, Inc.,
 # O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
@@ -41,8 +41,8 @@ s:ns [
   uri = "http://relaxng.org/ns/compatibility/annotations/1.0"
 ]
 s:ns [ prefix = "ctrl" uri = "http://nwalsh.com/xmlns/schema-control/" ]
-s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
 s:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
+s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
 db.status.attribute =
   
   ## Identifies the editorial or publication status of the element on which it occurs
@@ -1392,7 +1392,18 @@ div {
     ## Data entered by the user
     element userinput { db.userinput.attlist, db.userinput.inlines* }
 }
-db.programming.inlines = db.oo.inlines
+db.programming.inlines = db.buildtarget | db.oo.inlines
+div {
+  db.buildtarget.role.attribute = attribute role { text }
+  db.buildtarget.attlist =
+    db.buildtarget.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+  db.buildtarget =
+    
+    ## Target of a build
+    element buildtarget { db.buildtarget.attlist, db._text }
+}
 div {
   db.programlisting.role.attribute = attribute role { text }
   db.programlisting.width.attribute = db.width.characters.attribute
@@ -1436,6 +1447,9 @@ div {
     | 
       ## A group name (wheel)
       "groupname"
+    | 
+      ## A network interface (eth0)
+      "interface"
     | 
       ## An IP address (127.0.0.1)
       "ipaddress"
@@ -2942,7 +2956,9 @@ div {
   db.imagedata =
     
     ## Pointer to external image data
-    element imagedata { db.imagedata.attlist, db.imagedata.info }
+    element imagedata {
+      db.imagedata.attlist, db.imagedata.info, db.multimediaparam*
+    }
 }
 div {
   db.textdata.role.attribute = attribute role { text }
@@ -4029,7 +4045,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [

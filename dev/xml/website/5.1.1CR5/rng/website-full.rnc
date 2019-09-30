@@ -9,7 +9,7 @@ namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace svg = "http://www.w3.org/2000/svg"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# This file is part of Simplified DocBook V5.2-b01
+# This file is part of Simplified DocBook V5.2b05
 # 
 # Copyright 1992-2015 HaL Computer Systems, Inc.,
 # O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
@@ -43,9 +43,9 @@ s:ns [
   prefix = "a"
   uri = "http://relaxng.org/ns/compatibility/annotations/1.0"
 ]
-s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
-s:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
 s:ns [ prefix = "ctrl" uri = "http://nwalsh.com/xmlns/schema-control/" ]
+s:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
+s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
 s:ns [ prefix = "rddl" uri = "http://www.rddl.org/" ]
 s:ns [ prefix = "mml" uri = "http://www.w3.org/1998/Math/MathML" ]
 s:ns [ prefix = "svg" uri = "http://www.w3.org/2000/svg" ]
@@ -646,7 +646,8 @@ db.all.blocks =
   (db.nopara.blocks | db.para.blocks | db.extension.blocks)
   | db.annotation
   | ws.webtoc
-db.formal.blocks = (db.example | db.figure | db.table) | db.equation
+db.formal.blocks =
+  (db.example | db.figure | db.table | db.formalgroup) | db.equation
 db.informal.blocks =
   (db.informalexample | db.informalfigure | db.informaltable)
   | db.informalequation
@@ -1228,6 +1229,26 @@ div {
           s:assert [
             test = "not(.//db:table)"
             "table must not occur among the children or descendants of footnote"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:footnote"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of footnote"
           ]
           "\x{a}" ~
           "               "
@@ -1844,6 +1865,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of example"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:example"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:equation)"
             "equation must not occur among the children or descendants of example"
           ]
@@ -2008,6 +2049,26 @@ div {
           s:assert [
             test = "not(.//db:table)"
             "table must not occur among the children or descendants of figure"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:figure"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of figure"
           ]
           "\x{a}" ~
           "               "
@@ -2293,7 +2354,9 @@ div {
   db.imagedata =
     
     ## Pointer to external image data
-    element imagedata { db.imagedata.attlist, db.imagedata.info }
+    element imagedata {
+      db.imagedata.attlist, db.imagedata.info, db.multimediaparam*
+    }
 }
 div {
   db.textdata.role.attribute = attribute role { text }
@@ -2401,6 +2464,26 @@ div {
           s:assert [
             test = "not(.//db:table)"
             "table must not occur among the children or descendants of caption"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caption"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of caption"
           ]
           "\x{a}" ~
           "               "
@@ -4137,6 +4220,133 @@ div {
     
     ## A text-only annotation, often used for accessibility
     element alt { db.alt.attlist, (text | db.inlinemediaobject)* }
+}
+div {
+  db.formalgroup.fgstyle.attribute =
+    
+    ## Holds style of formalgroup - this can be used to specify desired layout and positioning of subfigures
+    attribute fgstyle { text }
+  db.formalgroup.role.attribute = attribute role { text }
+  db.formalgroup.pgwide.attribute = db.pgwide.attribute
+  db.formalgroup.floatstyle.attribute = db.floatstyle.attribute
+  db.formalgroup.attlist =
+    db.formalgroup.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.formalgroup.floatstyle.attribute?
+    & db.formalgroup.pgwide.attribute?
+    & db.formalgroup.fgstyle.attribute?
+  db.formalgroup.info = db._info.title.onlyreq
+  db.formalgroup =
+    
+    ## A group of formal objects, for example subfigures
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:example)"
+            "example must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:figure)"
+            "figure must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:table)"
+            "table must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:formalgroup"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:equation)"
+            "equation must not occur among the children or descendants of formalgroup"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element formalgroup {
+      db.formalgroup.attlist,
+      db.formalgroup.info,
+      (db.figure+ | db.table+ | db.example+ | db.equation+)
+    }
 }
 db.status.attribute =
   
@@ -7084,6 +7294,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of table"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:table"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:equation)"
             "equation must not occur among the children or descendants of table"
           ]
@@ -7425,6 +7655,26 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of table"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:table"
+          "\x{a}" ~
+          "                  "
+          s:assert [
             test = "not(.//db:equation)"
             "equation must not occur among the children or descendants of table"
           ]
@@ -7515,6 +7765,26 @@ div {
           s:assert [
             test = "not(.//db:table)"
             "table must not occur among the children or descendants of caption"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:caption"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of caption"
           ]
           "\x{a}" ~
           "               "
@@ -8155,6 +8425,26 @@ div {
           s:assert [
             test = "not(.//db:table)"
             "table must not occur among the children or descendants of equation"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:equation"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:formalgroup)"
+            "formalgroup must not occur among the children or descendants of equation"
           ]
           "\x{a}" ~
           "               "
@@ -9245,6 +9535,7 @@ db.programming.inlines =
   | db.methodname
   | db.modifier
   | db.initializer
+  | db.buildtarget
   | db.oo.inlines
 db.oo.inlines = db.ooclass | db.ooexception | db.oointerface
 db.synopsis.blocks =
@@ -9579,7 +9870,7 @@ div {
     element fieldsynopsis {
       db.fieldsynopsis.attlist,
       db.modifier*,
-      db.type?,
+      db.type*,
       db.varname,
       db.initializer?
     }
@@ -9647,7 +9938,7 @@ div {
     element methodsynopsis {
       db.methodsynopsis.attlist,
       db.modifier*,
-      (db.type | db.void)?,
+      (db.type+ | db.void)?,
       db.methodname,
       ((db.methodparam | db.group.methodparam)+ | db.void),
       db.exceptionname*,
@@ -9681,7 +9972,7 @@ div {
     element methodparam {
       db.methodparam.attlist,
       db.modifier*,
-      db.type?,
+      db.type*,
       ((db.modifier*, db.parameter, db.initializer?) | db.funcparams),
       db.modifier*
     }
@@ -9714,6 +10005,17 @@ div {
     element varname { db.varname.attlist, db._text }
 }
 div {
+  db.buildtarget.role.attribute = attribute role { text }
+  db.buildtarget.attlist =
+    db.buildtarget.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+  db.buildtarget =
+    
+    ## Target of a build
+    element buildtarget { db.buildtarget.attlist, db._text }
+}
+div {
   db.returnvalue.role.attribute = attribute role { text }
   db.returnvalue.attlist =
     db.returnvalue.role.attribute?
@@ -9726,14 +10028,26 @@ div {
 }
 div {
   db.type.role.attribute = attribute role { text }
+  db.type.class.enumeration =
+    
+    ## Combined type is union of nested types
+    "union"
+    | 
+      ## Combined type is intersection of nested types
+      "intersection"
+  db.type.class.attribute =
+    
+    ## Specifies the way how are nested types combined together
+    attribute class { db.type.class.enumeration }
   db.type.attlist =
     db.type.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
+    & db.type.class.attribute?
   db.type =
     
     ## The classification of a value
-    element type { db.type.attlist, db._text }
+    element type { db.type.attlist, (db._text | db.type)* }
 }
 div {
   db.classname.role.attribute = attribute role { text }
@@ -10639,6 +10953,9 @@ div {
       ## A group name (wheel)
       "groupname"
     | 
+      ## A network interface (eth0)
+      "interface"
+    | 
       ## An IP address (127.0.0.1)
       "ipaddress"
     | 
@@ -10787,7 +11104,7 @@ div {
       s:pattern [
         "\x{a}" ~
         "               "
-        rng:title [ "Root must have version" ]
+        s:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
