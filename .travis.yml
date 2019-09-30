@@ -2,12 +2,5 @@ language: java
 script: make
 sudo: false
 
-env:
-  global:
-  - secure: HcjQhFsgYSBn2Dkhu8kUr9F6KWpD3J0tzk8Bs9tF+NwoukEL+nB8mKUcap/1ge0uWU4E98XFoue1JaGV8uEV4sKyOCouxZF20VOpGI48sLcrvjfF1ZIuhxmxdGObaE4W8nfD4hlkzbF93N8efH4TIEwPKZZuzaKJqxPBSngr+8o=
-  - secure: XQTAWHbIsxzT6gdjcbkAns0CpUgfumqXWZJmhSZS5grHSKfTlQyjyKBUX5boOm+lGryJ/I7g0nl0klJE/VMiWsW1XPGRqHGFjfGsK7zbF5Wy6ZN+lRLPZhC8w3VwfyDAhvrn+Z4+TKhcd93BHYCX81LmoPaFtgkyxuQjuhvzKiA=
-  - secure: fWqiKIe5gIWBIFhbOMHy6OCHXRmGvn8gOQBSYyMafjjZIaYXkwj/aieK0GYfR/XqtA8L+SizpbZKpiXsPlmk2mWlQTrSlk4Y8CNND2bPXqCQizgjTpfRE8NEQymC42/NX4Xu+hB6Hx+JGrlflmpGWZBIknBxv6t80ixJhkLoU/c=
-  - secure: fipC3fV2HbuJubvGIsUo3VaaLHMQeyDQoX2X1OilcDVzbyNJTTPyNDo6nWBWMd7g3CvXQlwzmA/zcNH5LXOSYOHoKCezL+G/ruaVj5GetSKQ4YLlze1IdzznSY1cXKHq7uAJzuRPMA7nzufFQhz5NWFcdgoqb1BKGm8AFMvouuk=
-
 after_success:
   - ".travis/publish-results.sh"
