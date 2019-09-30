@@ -77,7 +77,7 @@ start =
      | db.simpara
      | db.step
      | db.stepalternatives)
-  | (db.partintro | db.simplesect)
+  | (db.partintro | db.simplesect | db.legalsection)
   | db.annotation
   | (db.sect1 | db.sect2 | db.sect3 | db.sect4 | db.sect5)
   | (db.refentry | db.refsection | db.refsynopsisdiv)
@@ -4151,7 +4151,10 @@ div {
       ]
     ]
     element legalnotice {
-      db.legalnotice.attlist, db.legalnotice.info, db.all.blocks+
+      db.legalnotice.attlist,
+      db.legalnotice.info,
+      db.all.blocks+,
+      db.legalsection*
     }
 }
 div {
@@ -5053,13 +5056,15 @@ db.status.attribute =
   ## Identifies the editorial or publication status of the element on which it occurs
   attribute status { text }
 db.toplevel.sections =
-  ((db.section+, db.simplesect*) | db.simplesect+)
+  (((db.section | db.legalsection)+, db.simplesect*)
+   | db.simplesect+)
   | (db.sect1+, db.simplesect*)
   | db.refentry+
 db.toplevel.blocks.or.sections =
   (db.all.blocks+, db.toplevel.sections?) | db.toplevel.sections
 db.recursive.sections =
-  ((db.section+, db.simplesect*) | db.simplesect+)
+  (((db.section | db.legalsection)+, db.simplesect*)
+   | db.simplesect+)
   | db.refentry+
 db.recursive.blocks.or.sections =
   (db.all.blocks+, db.recursive.sections?) | db.recursive.sections
@@ -5571,6 +5576,46 @@ div {
     ]
     element simplesect {
       db.simplesect.attlist, db.simplesect.info, db.all.blocks*
+    }
+}
+div {
+  db.legalsection.role.attribute = attribute role { text }
+  db.legalsection.attlist =
+    db.legalsection.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.label.attribute?
+  db.legalsection.info = db._info.title.req
+  db.legalsection =
+    
+    ## A recursive section of legal obligations or requirements.
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Root must have version" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "/db:legalsection"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "@version"
+            "If this element is the root element, it must have a version attribute."
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element legalsection {
+      db.legalsection.attlist,
+      db.legalsection.info,
+      db.all.blocks*,
+      db.legalsection*
     }
 }
 db.article.components = db.toplevel.sections

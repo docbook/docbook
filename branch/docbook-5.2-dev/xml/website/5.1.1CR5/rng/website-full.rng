@@ -4903,6 +4903,9 @@ information, see http://www.oasis-open.org/docbook/.
             <oneOrMore>
                <ref name="db.all.blocks"/>
             </oneOrMore>
+            <zeroOrMore>
+               <ref name="db.legalsection"/>
+            </zeroOrMore>
          </element>
       </define>
    </div>
@@ -6395,7 +6398,10 @@ information, see http://www.oasis-open.org/docbook/.
          <choice>
             <group>
                <oneOrMore>
-                  <ref name="db.section"/>
+                  <choice>
+                     <ref name="db.section"/>
+                     <ref name="db.legalsection"/>
+                  </choice>
                </oneOrMore>
                <zeroOrMore>
                   <ref name="db.simplesect"/>
@@ -6436,7 +6442,10 @@ information, see http://www.oasis-open.org/docbook/.
          <choice>
             <group>
                <oneOrMore>
-                  <ref name="db.section"/>
+                  <choice>
+                     <ref name="db.section"/>
+                     <ref name="db.legalsection"/>
+                  </choice>
                </oneOrMore>
                <zeroOrMore>
                   <ref name="db.simplesect"/>
@@ -7026,6 +7035,39 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.simplesect.info"/>
             <zeroOrMore>
                <ref name="db.all.blocks"/>
+            </zeroOrMore>
+         </element>
+      </define>
+   </div>
+   <div>
+      <define name="db.legalsection.role.attribute">
+         <attribute name="role"/>
+      </define>
+      <define name="db.legalsection.attlist">
+         <interleave>
+            <optional>
+               <ref name="db.legalsection.role.attribute"/>
+            </optional>
+            <ref name="db.common.attributes"/>
+            <ref name="db.common.linking.attributes"/>
+            <optional>
+               <ref name="db.label.attribute"/>
+            </optional>
+         </interleave>
+      </define>
+      <define name="db.legalsection.info">
+         <ref name="db._info.title.req"/>
+      </define>
+      <define name="db.legalsection">
+         <element name="legalsection">
+            <a:documentation>A recursive section of legal obligations or requirements.</a:documentation>
+            <ref name="db.legalsection.attlist"/>
+            <ref name="db.legalsection.info"/>
+            <zeroOrMore>
+               <ref name="db.all.blocks"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <ref name="db.legalsection"/>
             </zeroOrMore>
          </element>
       </define>
