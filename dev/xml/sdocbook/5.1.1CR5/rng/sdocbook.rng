@@ -10,7 +10,7 @@
          ns="http://docbook.org/ns/docbook">
 
 <!--
-This file is part of Simplified DocBook V5.2b05
+This file is part of Simplified DocBook V5.2b07
 
 Copyright 1992-2015 HaL Computer Systems, Inc.,
 O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
@@ -179,6 +179,39 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
             <zeroOrMore>
                <ref name="db.navigation.components"/>
+            </zeroOrMore>
+         </element>
+      </define>
+   </div>
+   <div>
+      <define name="db.legalsection.role.attribute">
+         <attribute name="role"/>
+      </define>
+      <define name="db.legalsection.attlist">
+         <interleave>
+            <optional>
+               <ref name="db.legalsection.role.attribute"/>
+            </optional>
+            <ref name="db.common.attributes"/>
+            <ref name="db.common.linking.attributes"/>
+            <optional>
+               <ref name="db.label.attribute"/>
+            </optional>
+         </interleave>
+      </define>
+      <define name="db.legalsection.info">
+         <ref name="db._info.title.req"/>
+      </define>
+      <define name="db.legalsection">
+         <element name="legalsection">
+            <a:documentation>A recursive section of legal obligations or requirements.</a:documentation>
+            <ref name="db.legalsection.attlist"/>
+            <ref name="db.legalsection.info"/>
+            <zeroOrMore>
+               <ref name="db.all.blocks"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <ref name="db.legalsection"/>
             </zeroOrMore>
          </element>
       </define>
@@ -5189,6 +5222,9 @@ information, see http://www.oasis-open.org/docbook/.
             <oneOrMore>
                <ref name="db.all.blocks"/>
             </oneOrMore>
+            <zeroOrMore>
+               <ref name="db.legalsection"/>
+            </zeroOrMore>
          </element>
       </define>
    </div>

@@ -14,7 +14,7 @@
          ns="http://docbook.org/ns/docbook">
 
 <!--
-This file is part of DocBook Publishers V5.2b05-1
+This file is part of DocBook Publishers V5.2b07-1
 
 This file is a customization of DocBook V5.x created by the OASIS
 DocBook Publishers Subcommittee.
@@ -894,7 +894,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.technical.inlines"/>
          <ref name="db.math.inlines"/>
          <ref name="db.markup.inlines"/>
-         <ref name="db.programming.inlines"/>
       </choice>
    </define>
    <define name="db.technical.inlines">
@@ -972,6 +971,7 @@ information, see http://www.oasis-open.org/docbook/.
       <choice>
          <choice>
             <ref name="db.list.blocks"/>
+            <ref name="db.wrapper.blocks"/>
             <ref name="db.formal.blocks"/>
             <ref name="db.informal.blocks"/>
             <ref name="db.publishing.blocks"/>
@@ -1003,13 +1003,15 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
       </choice>
    </define>
+   <define name="db.wrapper.blocks">
+      <ref name="db.formalgroup"/>
+   </define>
    <define name="db.formal.blocks">
       <choice>
          <choice>
             <ref name="db.example"/>
             <ref name="db.figure"/>
             <ref name="db.table"/>
-            <ref name="db.formalgroup"/>
          </choice>
          <ref name="db.equation"/>
       </choice>
@@ -1968,12 +1970,6 @@ information, see http://www.oasis-open.org/docbook/.
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of footnote</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:footnote">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
@@ -2529,12 +2525,6 @@ information, see http://www.oasis-open.org/docbook/.
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:example">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of example</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:example">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of example</s:assert>
                </s:rule>
             </s:pattern>
@@ -2706,12 +2696,6 @@ information, see http://www.oasis-open.org/docbook/.
                <s:title>Element exclusion</s:title>
                <s:rule context="db:figure">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of figure</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:figure">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of figure</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -3384,12 +3368,6 @@ information, see http://www.oasis-open.org/docbook/.
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of caption</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:caption">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -5981,36 +5959,6 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.formalgroup">
          <element name="formalgroup">
             <a:documentation>A group of formal objects, for example subfigures</a:documentation>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:formalgroup">
-                  <s:assert test="not(.//db:example)">example must not occur among the children or descendants of formalgroup</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:formalgroup">
-                  <s:assert test="not(.//db:figure)">figure must not occur among the children or descendants of formalgroup</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:formalgroup">
-                  <s:assert test="not(.//db:table)">table must not occur among the children or descendants of formalgroup</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:formalgroup">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of formalgroup</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:formalgroup">
-                  <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of formalgroup</s:assert>
-               </s:rule>
-            </s:pattern>
             <ref name="db.formalgroup.attlist"/>
             <ref name="db.formalgroup.info"/>
             <choice>
@@ -9494,12 +9442,6 @@ s which refer to this area. (This provides bidirectional linking which may be us
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:table">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of table</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:table">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of table</s:assert>
                </s:rule>
             </s:pattern>
@@ -9875,12 +9817,6 @@ s which refer to this area. (This provides bidirectional linking which may be us
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:equation">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of equation</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:equation">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of equation</s:assert>
                </s:rule>
             </s:pattern>
@@ -10221,32 +10157,6 @@ s which refer to this area. (This provides bidirectional linking which may be us
          <element name="productnumber">
             <a:documentation>A number assigned to a product</a:documentation>
             <ref name="db.productnumber.attlist"/>
-            <ref name="db._text"/>
-         </element>
-      </define>
-   </div>
-   <define name="db.programming.inlines">
-      <choice>
-         <ref name="db.buildtarget"/>
-      </choice>
-   </define>
-   <div>
-      <define name="db.buildtarget.role.attribute">
-         <attribute name="role"/>
-      </define>
-      <define name="db.buildtarget.attlist">
-         <interleave>
-            <optional>
-               <ref name="db.buildtarget.role.attribute"/>
-            </optional>
-            <ref name="db.common.attributes"/>
-            <ref name="db.common.linking.attributes"/>
-         </interleave>
-      </define>
-      <define name="db.buildtarget">
-         <element name="buildtarget">
-            <a:documentation>Target of a build</a:documentation>
-            <ref name="db.buildtarget.attlist"/>
             <ref name="db._text"/>
          </element>
       </define>

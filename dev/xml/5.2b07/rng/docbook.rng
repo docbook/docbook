@@ -5,7 +5,6 @@
          xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
          xmlns:html="http://www.w3.org/1999/xhtml"
          xmlns:xlink="http://www.w3.org/1999/xlink"
-         xmlns:xi="http://www.w3.org/2001/XInclude"
          xmlns:mml="http://www.w3.org/1998/Math/MathML"
          xmlns:svg="http://www.w3.org/2000/svg"
          xmlns="http://relaxng.org/ns/structure/1.0"
@@ -13,7 +12,7 @@
          ns="http://docbook.org/ns/docbook">
 
 <!--
-This file is part of DocBook XInclude V5.2b05
+This file is part of DocBook V5.2b07
 
 Copyright 1992-2015 HaL Computer Systems, Inc.,
 O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
@@ -47,7 +46,6 @@ information, see http://www.oasis-open.org/docbook/.
    <s:ns prefix="ctrl" uri="http://nwalsh.com/xmlns/schema-control/"/>
    <s:ns prefix="html" uri="http://www.w3.org/1999/xhtml"/>
    <s:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
-   <s:ns prefix="xi" uri="http://www.w3.org/2001/XInclude"/>
    <s:ns prefix="mml" uri="http://www.w3.org/1998/Math/MathML"/>
    <s:ns prefix="svg" uri="http://www.w3.org/2000/svg"/>
    <start>
@@ -70,6 +68,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.videodata"/>
             <ref name="db.caption"/>
             <ref name="db.publishing.blocks"/>
+            <ref name="db.wrapper.blocks"/>
             <ref name="db.formal.blocks"/>
             <ref name="db.informal.blocks"/>
             <ref name="db.formalpara"/>
@@ -87,6 +86,7 @@ information, see http://www.oasis-open.org/docbook/.
          <choice>
             <ref name="db.partintro"/>
             <ref name="db.simplesect"/>
+            <ref name="db.legalsection"/>
          </choice>
          <ref name="db.annotation"/>
          <choice>
@@ -991,14 +991,11 @@ information, see http://www.oasis-open.org/docbook/.
    </define>
    <define name="db.all.inlines">
       <choice>
-         <choice>
-            <text/>
-            <ref name="db.ubiq.inlines"/>
-            <ref name="db.general.inlines"/>
-            <ref name="db.domain.inlines"/>
-            <ref name="db.extension.inlines"/>
-         </choice>
-         <ref name="db.xi.include"/>
+         <text/>
+         <ref name="db.ubiq.inlines"/>
+         <ref name="db.general.inlines"/>
+         <ref name="db.domain.inlines"/>
+         <ref name="db.extension.inlines"/>
       </choice>
    </define>
    <define name="db.general.inlines">
@@ -1114,6 +1111,7 @@ information, see http://www.oasis-open.org/docbook/.
       <choice>
          <choice>
             <ref name="db.list.blocks"/>
+            <ref name="db.wrapper.blocks"/>
             <ref name="db.formal.blocks"/>
             <ref name="db.informal.blocks"/>
             <ref name="db.publishing.blocks"/>
@@ -1145,8 +1143,10 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.extension.blocks"/>
          </choice>
          <ref name="db.annotation"/>
-         <ref name="db.xi.include"/>
       </choice>
+   </define>
+   <define name="db.wrapper.blocks">
+      <ref name="db.formalgroup"/>
    </define>
    <define name="db.formal.blocks">
       <choice>
@@ -1154,7 +1154,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.example"/>
             <ref name="db.figure"/>
             <ref name="db.table"/>
-            <ref name="db.formalgroup"/>
          </choice>
          <ref name="db.equation"/>
       </choice>
@@ -1285,7 +1284,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.productname"/>
             <ref name="db.productnumber"/>
          </choice>
-         <ref name="db.xi.include"/>
       </choice>
    </define>
    <define name="db.bibliographic.elements">
@@ -2194,12 +2192,6 @@ information, see http://www.oasis-open.org/docbook/.
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of footnote</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:footnote">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
@@ -2902,12 +2894,6 @@ information, see http://www.oasis-open.org/docbook/.
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:example">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of example</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:example">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of example</s:assert>
                </s:rule>
             </s:pattern>
@@ -3168,12 +3154,6 @@ information, see http://www.oasis-open.org/docbook/.
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:figure">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of figure</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:figure">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of figure</s:assert>
                </s:rule>
             </s:pattern>
@@ -3409,7 +3389,6 @@ information, see http://www.oasis-open.org/docbook/.
          <oneOrMore>
             <ref name="db.imagedata.svg"/>
          </oneOrMore>
-         <ref name="db.xi.include"/>
       </choice>
    </define>
    <div>
@@ -3914,12 +3893,6 @@ information, see http://www.oasis-open.org/docbook/.
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of caption</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:caption">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -5255,6 +5228,9 @@ information, see http://www.oasis-open.org/docbook/.
             <oneOrMore>
                <ref name="db.all.blocks"/>
             </oneOrMore>
+            <zeroOrMore>
+               <ref name="db.legalsection"/>
+            </zeroOrMore>
          </element>
       </define>
    </div>
@@ -6725,36 +6701,6 @@ information, see http://www.oasis-open.org/docbook/.
          <element name="formalgroup">
             <a:documentation>A group of formal objects, for example subfigures</a:documentation>
             <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:formalgroup">
-                  <s:assert test="not(.//db:example)">example must not occur among the children or descendants of formalgroup</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:formalgroup">
-                  <s:assert test="not(.//db:figure)">figure must not occur among the children or descendants of formalgroup</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:formalgroup">
-                  <s:assert test="not(.//db:table)">table must not occur among the children or descendants of formalgroup</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:formalgroup">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of formalgroup</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:formalgroup">
-                  <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of formalgroup</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
                <s:title>Root must have version</s:title>
                <s:rule context="/db:formalgroup">
                   <s:assert test="@version">If this element is the root element, it must have a version attribute.</s:assert>
@@ -6789,7 +6735,10 @@ information, see http://www.oasis-open.org/docbook/.
          <choice>
             <group>
                <oneOrMore>
-                  <ref name="db.section"/>
+                  <choice>
+                     <ref name="db.section"/>
+                     <ref name="db.legalsection"/>
+                  </choice>
                </oneOrMore>
                <zeroOrMore>
                   <ref name="db.simplesect"/>
@@ -6809,38 +6758,6 @@ information, see http://www.oasis-open.org/docbook/.
          </group>
          <oneOrMore>
             <ref name="db.refentry"/>
-         </oneOrMore>
-         <choice>
-            <oneOrMore>
-               <choice>
-                  <ref name="db.section"/>
-                  <ref name="db.xi.include"/>
-               </choice>
-            </oneOrMore>
-            <oneOrMore>
-               <choice>
-                  <ref name="db.simplesect"/>
-                  <ref name="db.xi.include"/>
-               </choice>
-            </oneOrMore>
-         </choice>
-         <oneOrMore>
-            <choice>
-               <ref name="db.refentry"/>
-               <ref name="db.xi.include"/>
-            </choice>
-         </oneOrMore>
-         <oneOrMore>
-            <choice>
-               <ref name="db.refsect1"/>
-               <ref name="db.xi.include"/>
-            </choice>
-         </oneOrMore>
-         <oneOrMore>
-            <choice>
-               <ref name="db.sect1"/>
-               <ref name="db.xi.include"/>
-            </choice>
          </oneOrMore>
       </choice>
    </define>
@@ -6862,7 +6779,10 @@ information, see http://www.oasis-open.org/docbook/.
          <choice>
             <group>
                <oneOrMore>
-                  <ref name="db.section"/>
+                  <choice>
+                     <ref name="db.section"/>
+                     <ref name="db.legalsection"/>
+                  </choice>
                </oneOrMore>
                <zeroOrMore>
                   <ref name="db.simplesect"/>
@@ -6874,32 +6794,6 @@ information, see http://www.oasis-open.org/docbook/.
          </choice>
          <oneOrMore>
             <ref name="db.refentry"/>
-         </oneOrMore>
-         <choice>
-            <oneOrMore>
-               <choice>
-                  <ref name="db.section"/>
-                  <ref name="db.xi.include"/>
-               </choice>
-            </oneOrMore>
-            <oneOrMore>
-               <choice>
-                  <ref name="db.simplesect"/>
-                  <ref name="db.xi.include"/>
-               </choice>
-            </oneOrMore>
-         </choice>
-         <oneOrMore>
-            <choice>
-               <ref name="db.refentry"/>
-               <ref name="db.xi.include"/>
-            </choice>
-         </oneOrMore>
-         <oneOrMore>
-            <choice>
-               <ref name="db.refsect1"/>
-               <ref name="db.xi.include"/>
-            </choice>
          </oneOrMore>
       </choice>
    </define>
@@ -6920,21 +6814,17 @@ information, see http://www.oasis-open.org/docbook/.
       <choice>
          <ref name="db.part"/>
          <ref name="db.reference"/>
-         <ref name="db.xi.include"/>
       </choice>
    </define>
    <define name="db.components">
       <choice>
-         <choice>
-            <ref name="db.dedication"/>
-            <ref name="db.acknowledgements"/>
-            <ref name="db.preface"/>
-            <ref name="db.chapter"/>
-            <ref name="db.appendix"/>
-            <ref name="db.article"/>
-            <ref name="db.colophon"/>
-         </choice>
-         <ref name="db.xi.include"/>
+         <ref name="db.dedication"/>
+         <ref name="db.acknowledgements"/>
+         <ref name="db.preface"/>
+         <ref name="db.chapter"/>
+         <ref name="db.appendix"/>
+         <ref name="db.article"/>
+         <ref name="db.colophon"/>
       </choice>
    </define>
    <define name="db.navigation.components">
@@ -6969,12 +6859,9 @@ information, see http://www.oasis-open.org/docbook/.
    </define>
    <define name="db.set.components">
       <choice>
-         <choice>
-            <ref name="db.set"/>
-            <ref name="db.book"/>
-            <ref name="db.article"/>
-         </choice>
-         <ref name="db.xi.include"/>
+         <ref name="db.set"/>
+         <ref name="db.book"/>
+         <ref name="db.article"/>
       </choice>
    </define>
    <div>
@@ -7330,7 +7217,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.refentry"/>
             <ref name="db.reference"/>
          </choice>
-         <ref name="db.xi.include"/>
       </choice>
    </define>
    <define name="db.part.contentmodel">
@@ -7558,6 +7444,45 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.simplesect.info"/>
             <zeroOrMore>
                <ref name="db.all.blocks"/>
+            </zeroOrMore>
+         </element>
+      </define>
+   </div>
+   <div>
+      <define name="db.legalsection.role.attribute">
+         <attribute name="role"/>
+      </define>
+      <define name="db.legalsection.attlist">
+         <interleave>
+            <optional>
+               <ref name="db.legalsection.role.attribute"/>
+            </optional>
+            <ref name="db.common.attributes"/>
+            <ref name="db.common.linking.attributes"/>
+            <optional>
+               <ref name="db.label.attribute"/>
+            </optional>
+         </interleave>
+      </define>
+      <define name="db.legalsection.info">
+         <ref name="db._info.title.req"/>
+      </define>
+      <define name="db.legalsection">
+         <element name="legalsection">
+            <a:documentation>A recursive section of legal obligations or requirements.</a:documentation>
+            <s:pattern>
+               <s:title>Root must have version</s:title>
+               <s:rule context="/db:legalsection">
+                  <s:assert test="@version">If this element is the root element, it must have a version attribute.</s:assert>
+               </s:rule>
+            </s:pattern>
+            <ref name="db.legalsection.attlist"/>
+            <ref name="db.legalsection.info"/>
+            <zeroOrMore>
+               <ref name="db.all.blocks"/>
+            </zeroOrMore>
+            <zeroOrMore>
+               <ref name="db.legalsection"/>
             </zeroOrMore>
          </element>
       </define>
@@ -8014,10 +7939,7 @@ information, see http://www.oasis-open.org/docbook/.
             </oneOrMore>
          </choice>
          <oneOrMore>
-            <choice>
-               <ref name="db.sect2"/>
-               <ref name="db.xi.include"/>
-            </choice>
+            <ref name="db.refentry"/>
          </oneOrMore>
       </choice>
    </define>
@@ -8095,10 +8017,7 @@ information, see http://www.oasis-open.org/docbook/.
             </oneOrMore>
          </choice>
          <oneOrMore>
-            <choice>
-               <ref name="db.sect3"/>
-               <ref name="db.xi.include"/>
-            </choice>
+            <ref name="db.refentry"/>
          </oneOrMore>
       </choice>
    </define>
@@ -8176,10 +8095,7 @@ information, see http://www.oasis-open.org/docbook/.
             </oneOrMore>
          </choice>
          <oneOrMore>
-            <choice>
-               <ref name="db.sect4"/>
-               <ref name="db.xi.include"/>
-            </choice>
+            <ref name="db.refentry"/>
          </oneOrMore>
       </choice>
    </define>
@@ -8257,10 +8173,7 @@ information, see http://www.oasis-open.org/docbook/.
             </oneOrMore>
          </choice>
          <oneOrMore>
-            <choice>
-               <ref name="db.sect5"/>
-               <ref name="db.xi.include"/>
-            </choice>
+            <ref name="db.refentry"/>
          </oneOrMore>
       </choice>
    </define>
@@ -8328,10 +8241,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.simplesect"/>
          </oneOrMore>
          <oneOrMore>
-            <choice>
-               <ref name="db.simplesect"/>
-               <ref name="db.xi.include"/>
-            </choice>
+            <ref name="db.refentry"/>
          </oneOrMore>
       </choice>
    </define>
@@ -8401,18 +8311,6 @@ information, see http://www.oasis-open.org/docbook/.
          <oneOrMore>
             <ref name="db.refsect1"/>
          </oneOrMore>
-         <oneOrMore>
-            <choice>
-               <ref name="db.refentry"/>
-               <ref name="db.xi.include"/>
-            </choice>
-         </oneOrMore>
-         <oneOrMore>
-            <choice>
-               <ref name="db.refsect1"/>
-               <ref name="db.xi.include"/>
-            </choice>
-         </oneOrMore>
       </choice>
    </define>
    <define name="db.secondlevel.refsection">
@@ -8423,25 +8321,10 @@ information, see http://www.oasis-open.org/docbook/.
          <oneOrMore>
             <ref name="db.refsect2"/>
          </oneOrMore>
-         <oneOrMore>
-            <choice>
-               <ref name="db.refentry"/>
-               <ref name="db.xi.include"/>
-            </choice>
-         </oneOrMore>
-         <oneOrMore>
-            <choice>
-               <ref name="db.refsect2"/>
-               <ref name="db.xi.include"/>
-            </choice>
-         </oneOrMore>
       </choice>
    </define>
    <define name="db.reference.components">
-      <choice>
-         <ref name="db.refentry"/>
-         <ref name="db.xi.include"/>
-      </choice>
+      <ref name="db.refentry"/>
    </define>
    <div>
       <define name="db.reference.status.attribute">
@@ -12273,12 +12156,6 @@ where the nonterminal
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:table">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of table</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:table">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of table</s:assert>
                </s:rule>
             </s:pattern>
@@ -12795,12 +12672,6 @@ where the nonterminal
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:table">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of table</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:table">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of table</s:assert>
                </s:rule>
             </s:pattern>
@@ -12883,12 +12754,6 @@ where the nonterminal
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of caption</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:caption">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -13766,9 +13631,6 @@ where the nonterminal
          <oneOrMore>
             <ref name="db._any.mml"/>
          </oneOrMore>
-         <oneOrMore>
-            <ref name="db.xi.include"/>
-         </oneOrMore>
       </choice>
    </define>
    <define name="db.inlineequation.content">
@@ -13783,9 +13645,6 @@ where the nonterminal
          </choice>
          <oneOrMore>
             <ref name="db._any.mml"/>
-         </oneOrMore>
-         <oneOrMore>
-            <ref name="db.xi.include"/>
          </oneOrMore>
       </choice>
    </define>
@@ -13836,12 +13695,6 @@ where the nonterminal
                <s:title>Element exclusion</s:title>
                <s:rule context="db:equation">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of equation</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:equation">
-                  <s:assert test="not(.//db:formalgroup)">formalgroup must not occur among the children or descendants of equation</s:assert>
                </s:rule>
             </s:pattern>
             <s:pattern>
@@ -13963,10 +13816,7 @@ where the nonterminal
       </define>
    </div>
    <define name="db.imagedata.mathml.content">
-      <choice>
-         <ref name="db._any.mml"/>
-         <ref name="db.xi.include"/>
-      </choice>
+      <ref name="db._any.mml"/>
    </define>
    <div>
       <define name="db.imagedata.mathml.role.attribute">
@@ -14047,10 +13897,7 @@ where the nonterminal
       </define>
    </div>
    <define name="db.imagedata.svg.content">
-      <choice>
-         <ref name="db._any.svg"/>
-         <ref name="db.xi.include"/>
-      </choice>
+      <ref name="db._any.svg"/>
    </define>
    <div>
       <define name="db.imagedata.svg.role.attribute">
@@ -17369,76 +17216,6 @@ where the nonterminal
             <zeroOrMore>
                <ref name="db.navigation.components"/>
             </zeroOrMore>
-         </element>
-      </define>
-   </div>
-   <div>
-      <define name="db.any.other.attribute">
-         <attribute>
-            <anyName>
-               <except>
-                  <nsName ns=""/>
-               </except>
-            </anyName>
-         </attribute>
-      </define>
-      <define name="db.xi.include.attlist">
-         <optional>
-            <attribute name="href">
-               <data type="anyURI">
-                  <param name="pattern">[^#]+</param>
-               </data>
-            </attribute>
-         </optional>
-         <optional>
-            <attribute name="parse" a:defaultValue="xml">
-               <choice>
-                  <value>xml</value>
-                  <value>text</value>
-               </choice>
-            </attribute>
-         </optional>
-         <optional>
-            <attribute name="xpointer"/>
-         </optional>
-         <optional>
-            <attribute name="encoding"/>
-         </optional>
-         <optional>
-            <attribute name="accept"/>
-         </optional>
-         <optional>
-            <attribute name="accept-language"/>
-         </optional>
-         <zeroOrMore>
-            <ref name="db.any.other.attribute"/>
-         </zeroOrMore>
-      </define>
-      <define name="db.xi.include">
-         <element name="xi:include" ns="">
-            <a:documentation>An XInclude</a:documentation>
-            <ref name="db.xi.include.attlist"/>
-            <optional>
-               <ref name="db.xi.fallback"/>
-            </optional>
-         </element>
-      </define>
-   </div>
-   <div><!-- The fallback element has no attributes -->
-      <define name="db.xi.fallback">
-         <element name="xi:fallback" ns="">
-            <a:documentation>An XInclude fallback</a:documentation>
-            <choice>
-               <oneOrMore>
-                  <ref name="db.all.blocks"/>
-               </oneOrMore>
-               <oneOrMore>
-                  <ref name="db.all.inlines"/>
-               </oneOrMore>
-               <zeroOrMore>
-                  <ref name="db._any"/>
-               </zeroOrMore>
-            </choice>
          </element>
       </define>
    </div>
