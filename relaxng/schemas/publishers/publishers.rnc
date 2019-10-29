@@ -162,6 +162,7 @@ include "../docbook/docbook.rnc" {
   db.constraint = notAllowed
   db.constraintdef = notAllowed
   db.constructorsynopsis = notAllowed
+  db.danger = notAllowed
   db.database = notAllowed
   db.destructorsynopsis = notAllowed
   db.envar = notAllowed
@@ -198,6 +199,7 @@ include "../docbook/docbook.rnc" {
   db.keycode = notAllowed
   db.keycombo = notAllowed
   db.keysym = notAllowed
+  db.legalsection = notAllowed
   db.lhs = notAllowed
   db.lineannotation = notAllowed
   db.locator = notAllowed
