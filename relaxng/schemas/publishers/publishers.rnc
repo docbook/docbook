@@ -56,6 +56,8 @@ include "../docbook/docbook.rnc" {
         }
   }
 
+  db.parameter = notAllowed
+
   [
      db:refname [ "info" ]
      db:refpurpose [ "A wrapper for information about a component or other block" ]
@@ -122,31 +124,6 @@ include "../docbook/docbook.rnc" {
         )
      }
   }
-  
-# https://sourceforge.net/p/docbook/publishers-rfe/3/
-[
-   db:refname [ "epigraph" ]
-   db:refpurpose [ "A short inscription at the beginning of a document or component" ]
-]
-div {
-
-   db.epigraph.role.attribute = attribute role { text }
-
-   db.epigraph.attlist =
-      db.epigraph.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-
-   db.epigraph.info = db._info.title.forbidden
-
-   db.epigraph =
-      element epigraph {
-         db.epigraph.attlist,
-         db.epigraph.info,
-         db.attribution?,
-         (db.para.blocks | db.literallayout | db.extension.blocks | db.linegroup)+
-      }
-}
 
   db.bibliographic.elements =
      (db.info.elements*|db.dublincore.elements*)
@@ -161,26 +138,24 @@ div {
    | db.title
    | db.titleabbrev
 
-  db.extension.blocks = db.dialogue | db.poetry | db.drama | db.stagedir
-  
-  db.extension.inlines = db.inlinestagedir
+  db.extension.blocks = db.dialogue | db.poetry | db.drama
 
   # Excluded by Publishers:
-  # Updated for v1.1 per https://sourceforge.net/p/docbook/publishers-rfe/7/
 
   db.accel = notAllowed
   db.annotation = notAllowed
   db.application = notAllowed
   db.arc = notAllowed
   db.arg = notAllowed
+  db.caution = notAllowed
   db.citerefentry = notAllowed
   db.classname = notAllowed
   db.classsynopsis = notAllowed
   db.classsynopsisinfo = notAllowed
   db.cmdsynopsis = notAllowed
   db.code = notAllowed
-  db.html.col = notAllowed
-  db.html.colgroup = notAllowed
+  db.col = notAllowed
+  db.colgroup = notAllowed
   db.command = notAllowed
   db.computeroutput = notAllowed
   db.constant = notAllowed
@@ -214,6 +189,7 @@ div {
   db.guimenuitem = notAllowed
   db.guisubmenu = notAllowed
   db.hardware = notAllowed
+  db.important = notAllowed
   db.indexdiv = notAllowed
   db.indexentry = notAllowed
   db.initializer = notAllowed
@@ -302,18 +278,20 @@ div {
   db.synopsis = notAllowed
   db.systemitem = notAllowed
   db.tag = notAllowed
-  db.html.td = notAllowed
+  db.td = notAllowed
   db.tertiaryie = notAllowed
-  db.html.th = notAllowed
+  db.th = notAllowed
+  db.tip = notAllowed
   db.tocdiv = notAllowed
   db.tocentry = notAllowed
   db.token = notAllowed
-  db.html.tr = notAllowed
+  db.tr = notAllowed
   db.type = notAllowed
   db.userinput = notAllowed
   db.varargs = notAllowed
   db.varname = notAllowed
   db.void = notAllowed
+  db.warning = notAllowed
   db.topic = notAllowed
 
   db.html.table = notAllowed
@@ -405,9 +383,6 @@ db.dublincore.elements =
  | dcterms.license
  | dcterms.bibliographicCitation
 
-
-ctrl:exclude [ from="db.speaker" exclude="db.speaker" ]
-
 [
    db:refname [ "speaker" ]
    db:refpurpose [ "Designates a person who is giving a speech or lecture" ]
@@ -459,8 +434,7 @@ div {
 
    db.linegroup = element linegroup {
       db.linegroup.attlist,
-      db.speaker*, 
-      (db.line|db.all.blocks)+
+      db.speaker*, (db.line|db.all.blocks)+
    }
 }
 
@@ -530,44 +504,3 @@ div {
     & db.common.linking.attributes
 }
 
-# Publishers 1.1
-ctrl:exclude [ from="db.stagedir" exclude="db.stagedir" ]
-
-# https://sourceforge.net/p/docbook/publishers-rfe/8/
-[
-   db:refname [ "stagedir" ]
-   db:refpurpose [ "A stage direction" ]
-]
-div {
-   db.stagedir = element db:stagedir {
-       db.stagedir.attlist, 
-       db.stagedir.content
-   }
-   
-db.stagedir.attlist = 
-   db.common.attributes
-   
-db.stagedir.content = 
-   (db.para+)
-}
-
-ctrl:exclude [ from="db.inlinestagedir" exclude="db.inlinestagedir" ]
-
-# https://sourceforge.net/p/docbook/publishers-rfe/8/
-[
-   db:refname [ "inlinestagedir" ]
-   db:refpurpose [ "An inline stage direction" ]
-]
-div {
-   db.inlinestagedir = element db:inlinestagedir {
-       db.inlinestagedir.attlist, 
-       db.inlinestagedir.content 
-   }
-   
-   db.inlinestagedir.attlist = 
-       db.common.attributes
-       
-   db.inlinestagedir.content = 
-       (db.all.inlines+)
-
-}
