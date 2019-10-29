@@ -10,7 +10,7 @@ namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace svg = "http://www.w3.org/2000/svg"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# This file is part of Simplified DocBook V5.2b07
+# This file is part of DocBook Publishers V5.2b07-1
 # 
 # This file is a customization of DocBook V5.x created by the OASIS
 # DocBook Publishers Subcommittee.
