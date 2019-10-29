@@ -541,7 +541,7 @@ ctrl:exclude [ from="db.stagedir" exclude="db.stagedir" ]
    db:refpurpose [ "A stage direction" ]
 ]
 div {
-   db.stagedir = element db:stagedir {
+   db.stagedir = element stagedir {
        db.stagedir.attlist,
        db.stagedir.content
    }
@@ -561,7 +561,7 @@ ctrl:exclude [ from="db.inlinestagedir" exclude="db.inlinestagedir" ]
    db:refpurpose [ "An inline stage direction" ]
 ]
 div {
-   db.inlinestagedir = element db:inlinestagedir {
+   db.inlinestagedir = element inlinestagedir {
        db.inlinestagedir.attlist,
        db.inlinestagedir.content
    }
