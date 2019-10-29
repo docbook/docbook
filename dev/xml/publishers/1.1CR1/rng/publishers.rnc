@@ -8538,7 +8538,29 @@ div {
   db.stagedir =
     
     ## A stage direction
-    element db:stagedir { db.stagedir.attlist, db.stagedir.content }
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:stagedir"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:stagedir)"
+            "stagedir must not occur among the children or descendants of stagedir"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element stagedir { db.stagedir.attlist, db.stagedir.content }
   db.stagedir.attlist = db.common.attributes
   db.stagedir.content = db.para+
 }
@@ -8547,7 +8569,29 @@ div {
   db.inlinestagedir =
     
     ## An inline stage direction
-    element db:inlinestagedir {
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:inlinestagedir"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:inlinestagedir)"
+            "inlinestagedir must not occur among the children or descendants of inlinestagedir"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element inlinestagedir {
       db.inlinestagedir.attlist, db.inlinestagedir.content
     }
   db.inlinestagedir.attlist = db.common.attributes

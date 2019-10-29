@@ -11562,8 +11562,14 @@ s which refer to this area. (This provides bidirectional linking which may be us
    <!-- https://sourceforge.net/p/docbook/publishers-rfe/8/ -->
    <div>
       <define name="db.stagedir">
-         <element name="db:stagedir">
+         <element name="stagedir">
             <a:documentation>A stage direction</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:stagedir">
+                  <s:assert test="not(.//db:stagedir)">stagedir must not occur among the children or descendants of stagedir</s:assert>
+               </s:rule>
+            </s:pattern>
             <ref name="db.stagedir.attlist"/>
             <ref name="db.stagedir.content"/>
          </element>
@@ -11580,8 +11586,14 @@ s which refer to this area. (This provides bidirectional linking which may be us
    <!-- https://sourceforge.net/p/docbook/publishers-rfe/8/ -->
    <div>
       <define name="db.inlinestagedir">
-         <element name="db:inlinestagedir">
+         <element name="inlinestagedir">
             <a:documentation>An inline stage direction</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:inlinestagedir">
+                  <s:assert test="not(.//db:inlinestagedir)">inlinestagedir must not occur among the children or descendants of inlinestagedir</s:assert>
+               </s:rule>
+            </s:pattern>
             <ref name="db.inlinestagedir.attlist"/>
             <ref name="db.inlinestagedir.content"/>
          </element>
