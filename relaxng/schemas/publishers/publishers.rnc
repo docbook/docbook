@@ -173,6 +173,7 @@ div {
   db.application = notAllowed
   db.arc = notAllowed
   db.arg = notAllowed
+  db.buildtarget = notAllowed
   db.citerefentry = notAllowed
   db.classname = notAllowed
   db.classsynopsis = notAllowed
@@ -222,6 +223,7 @@ div {
   db.keycode = notAllowed
   db.keycombo = notAllowed
   db.keysym = notAllowed
+  db.legalsection = notAllowed
   db.lhs = notAllowed
   db.lineannotation = notAllowed
   db.locator = notAllowed
