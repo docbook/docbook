@@ -31,7 +31,9 @@ project.ext.formrel="DocBook Forms " + dbver
 project.ext.itsrel="DocBook ITS " + dbver
 project.ext.pubrel="DocBook Publishers " + dbver + "-1"
 project.ext.slirel="DocBook Slides " + dbver + "-1"
+project.ext.slifullrel="DocBook Slides Full " + dbver + "-1"
 project.ext.webrel="DocBook Wesite " + dbver + "-1"
+project.ext.webfullrel="DocBook Wesite Full " + dbver + "-1"
 
 task docbook_rnc(type: XMLCalabashTask) {
   inputs.files fileTree(dir: 'docbook', exclude: "test/**")
@@ -234,7 +236,7 @@ task publishers_rnc(type: XMLCalabashTask) {
 
   pipeline mkschema
   option("schema","publishers")
-  option("release",sdbrel)
+  option("release",pubrel)
   option("remove-schematron",removesch)
 
   doFirst {
@@ -267,7 +269,7 @@ task slides_rnc(type: XMLCalabashTask) {
 
   pipeline mkschema
   option("schema","slides")
-  option("release",sdbrel)
+  option("release",slirel)
   option("remove-schematron",removesch)
 
   doFirst {
@@ -300,7 +302,7 @@ task slides_full_rnc(type: XMLCalabashTask) {
 
   pipeline mkschema
   option("schema","slides-full")
-  option("release",sdbrel)
+  option("release",slifullrel)
   option("remove-schematron",removesch)
 
   doFirst {
@@ -325,7 +327,7 @@ task website_rnc(type: XMLCalabashTask) {
 
   pipeline mkschema
   option("schema","website")
-  option("release",sdbrel)
+  option("release",webrel)
   option("remove-schematron",removesch)
 
   doFirst {
@@ -358,7 +360,7 @@ task website_full_rnc(type: XMLCalabashTask) {
 
   pipeline mkschema
   option("schema","website-full")
-  option("release",sdbrel)
+  option("release",webfullrel)
   option("remove-schematron",removesch)
 
   doFirst {
