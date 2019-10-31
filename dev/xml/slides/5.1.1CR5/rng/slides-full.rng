@@ -879,6 +879,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.ubiq.inlines"/>
             <ref name="db.general.inlines"/>
             <ref name="db.domain.inlines"/>
+            <ref name="db.extension.inlines"/>
          </choice>
          <ref name="db.xi.include"/>
       </choice>
@@ -989,6 +990,9 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.biblioref"/>
       </choice>
    </define>
+   <define name="db.extension.inlines">
+      <notAllowed/>
+   </define>
    <define name="db.nopara.blocks">
       <choice>
          <choice>
@@ -1022,6 +1026,7 @@ information, see http://www.oasis-open.org/docbook/.
          <choice>
             <ref name="db.nopara.blocks"/>
             <ref name="db.para.blocks"/>
+            <ref name="db.extension.blocks"/>
          </choice>
          <ref name="db.annotation"/>
          <ref name="db.xi.include"/>
@@ -1107,6 +1112,9 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.synopsis"/>
          </choice>
       </choice>
+   </define>
+   <define name="db.extension.blocks">
+      <notAllowed/>
    </define>
    <define name="db.info.extension">
       <ref name="db._any"/>
@@ -4516,6 +4524,7 @@ information, see http://www.oasis-open.org/docbook/.
       <choice>
          <choice>
             <ref name="db.para.blocks"/>
+            <ref name="db.extension.blocks"/>
             <ref name="db.list.blocks"/>
             <ref name="db.informal.blocks"/>
             <ref name="db.publishing.blocks"/>
@@ -16712,17 +16721,25 @@ where the nonterminal
          </element>
       </define>
    </div>
-   <define name="sl._any.html">
-      <element>
-         <nsName ns="http://www.w3.org/1999/xhtml"/>
-         <zeroOrMore>
-            <choice>
-               <attribute>
-                  <anyName/>
-               </attribute>
-               <text/>
-            </choice>
-         </zeroOrMore>
-      </element>
-   </define>
+   <div>
+      <define name="sl._any.attribute">
+         <attribute>
+            <a:documentation>Any attribute, including any attribute in any namespace.</a:documentation>
+            <anyName/>
+         </attribute>
+      </define>
+      <define name="sl._any.html">
+         <element>
+            <a:documentation>Any element from the HTML namespace</a:documentation>
+            <nsName ns="http://www.w3.org/1999/xhtml"/>
+            <zeroOrMore>
+               <choice>
+                  <ref name="sl._any.attribute"/>
+                  <text/>
+                  <ref name="sl._any.html"/>
+               </choice>
+            </zeroOrMore>
+         </element>
+      </define>
+   </div>
 </grammar>

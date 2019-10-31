@@ -562,7 +562,11 @@ db._info.title.onlyreq =
   (db._title.onlyreq, db.titleforbidden.info?) | db.titleonlyreq.info
 db._info.title.forbidden = db.titleforbidden.info?
 db.all.inlines =
-  (text | db.ubiq.inlines | db.general.inlines | db.domain.inlines)
+  (text
+   | db.ubiq.inlines
+   | db.general.inlines
+   | db.domain.inlines
+   | db.extension.inlines)
   | db.xi.include
 db.general.inlines =
   db.publishing.inlines
@@ -623,6 +627,7 @@ db.graphic.inlines = db.inlinemediaobject
 db.indexing.inlines = notAllowed | db.indexterm
 db.link.inlines =
   (db.xref | db.link | db.olink | db.anchor) | db.biblioref
+db.extension.inlines = notAllowed
 db.nopara.blocks =
   (db.list.blocks
    | db.wrapper.blocks
@@ -640,7 +645,7 @@ db.nopara.blocks =
   | db.admonition.blocks
 db.para.blocks = db.anchor | db.para | db.formalpara | db.simpara
 db.all.blocks =
-  (db.nopara.blocks | db.para.blocks)
+  (db.nopara.blocks | db.para.blocks | db.extension.blocks)
   | db.annotation
   | db.xi.include
   | sl.speakernotes
@@ -672,6 +677,7 @@ db.verbatim.blocks =
   (db.screen | db.literallayout)
   | (db.programlistingco | db.screenco)
   | (db.programlisting | db.synopsis)
+db.extension.blocks = notAllowed
 db.info.extension = db._any
 db.info.elements =
   (db.abstract
@@ -3072,6 +3078,7 @@ div {
 }
 db.cover.contentmodel =
   (db.para.blocks
+   | db.extension.blocks
    | db.list.blocks
    | db.informal.blocks
    | db.publishing.blocks
@@ -10987,8 +10994,13 @@ div {
     ## Speaker notes
     element speakernotes { sl.speakernotes.attlist, db.all.blocks+ }
 }
-sl._any.html =
-  element html:* {
-    (attribute * { text }
-     | text)*
-  }
+div {
+  sl._any.attribute =
+    
+    ## Any attribute, including any attribute in any namespace.
+    attribute * { text }
+  sl._any.html =
+    
+    ## Any element from the HTML namespace
+    element html:* { (sl._any.attribute | text | sl._any.html)* }
+}

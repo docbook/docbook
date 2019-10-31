@@ -16385,12 +16385,18 @@ where the nonterminal
       <define name="ws.webpage.role.attribute">
          <attribute name="role"/>
       </define>
+      <define name="ws.webpage.navto.enumeration">
+         <choice>
+            <value>yes</value>
+            <a:documentation>This page should appear in tables of contents, site maps, etc.</a:documentation>
+            <value>no</value>
+            <a:documentation>The page can only be reached from pages that directly link to it.</a:documentation>
+         </choice>
+      </define>
       <define name="ws.webpage.navto.attribute">
          <attribute name="navto">
-            <choice>
-               <value>yes</value>
-               <value>no</value>
-            </choice>
+            <a:documentation>Does this page appear in the navigation flow?</a:documentation>
+            <ref name="ws.webpage.navto.enumeration"/>
          </attribute>
       </define>
       <define name="ws.webpage.optional.components">
@@ -16499,13 +16505,19 @@ where the nonterminal
          <attribute name="role"/>
       </define>
       <define name="ws.meta.http-equiv.attribute">
-         <attribute name="http-equiv"/>
+         <attribute name="http-equiv">
+            <a:documentation>The name of the equivalent HTTP header</a:documentation>
+         </attribute>
       </define>
       <define name="ws.meta.name.attribute">
-         <attribute name="name"/>
+         <attribute name="name">
+            <a:documentation>The name of the metadata property</a:documentation>
+         </attribute>
       </define>
       <define name="ws.meta.content.attribute">
-         <attribute name="content"/>
+         <attribute name="content">
+            <a:documentation>The value of the metadata property</a:documentation>
+         </attribute>
       </define>
       <define name="ws.meta.attlist">
          <interleave>
@@ -16533,28 +16545,44 @@ where the nonterminal
          <attribute name="role"/>
       </define>
       <define name="ws.headlink.href.attribute">
-         <attribute name="href"/>
+         <attribute name="href">
+            <a:documentation>The link href</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.media.attribute">
-         <attribute name="media"/>
+         <attribute name="media">
+            <a:documentation>The media type of the link</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.name.attribute">
-         <attribute name="name"/>
+         <attribute name="name">
+            <a:documentation>The link name</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.rel.attribute">
-         <attribute name="rel"/>
+         <attribute name="rel">
+            <a:documentation>The link rel</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.rev.attribute">
-         <attribute name="rev"/>
+         <attribute name="rev">
+            <a:documentation>The link rev</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.src.attribute">
-         <attribute name="src"/>
+         <attribute name="src">
+            <a:documentation>The link src</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.title.attribute">
-         <attribute name="title"/>
+         <attribute name="title">
+            <a:documentation>The link title</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.type.attribute">
-         <attribute name="type"/>
+         <attribute name="type">
+            <a:documentation>The link type</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.attlist">
          <interleave>
@@ -16601,13 +16629,19 @@ where the nonterminal
          <attribute name="role"/>
       </define>
       <define name="ws.script.src.attribute">
-         <attribute name="src"/>
+         <attribute name="src">
+            <a:documentation>The script src</a:documentation>
+         </attribute>
       </define>
       <define name="ws.script.language.attribute">
-         <attribute name="language"/>
+         <attribute name="language">
+            <a:documentation>The script language</a:documentation>
+         </attribute>
       </define>
       <define name="ws.script.type.attribute">
-         <attribute name="type"/>
+         <attribute name="type">
+            <a:documentation>The script type</a:documentation>
+         </attribute>
       </define>
       <define name="ws.script.attlist">
          <interleave>
@@ -16644,10 +16678,14 @@ where the nonterminal
          <attribute name="role"/>
       </define>
       <define name="ws.style.src.attribute">
-         <attribute name="src"/>
+         <attribute name="src">
+            <a:documentation>The style src</a:documentation>
+         </attribute>
       </define>
       <define name="ws.style.type.attribute">
-         <attribute name="type"/>
+         <attribute name="type">
+            <a:documentation>The style type</a:documentation>
+         </attribute>
       </define>
       <define name="ws.style.attlist">
          <interleave>
@@ -16681,13 +16719,19 @@ where the nonterminal
          <attribute name="role"/>
       </define>
       <define name="ws.config.param.attribute">
-         <attribute name="param"/>
+         <attribute name="param">
+            <a:documentation>Configuration parameter name</a:documentation>
+         </attribute>
       </define>
       <define name="ws.config.value.attribute">
-         <attribute name="value"/>
+         <attribute name="value">
+            <a:documentation>Configuration parameter value</a:documentation>
+         </attribute>
       </define>
       <define name="ws.config.altvalue.attribute">
-         <attribute name="altvalue"/>
+         <attribute name="altvalue">
+            <a:documentation>Configuration parameter alternative value</a:documentation>
+         </attribute>
       </define>
       <define name="ws.config.attlist">
          <interleave>
@@ -16708,7 +16752,7 @@ where the nonterminal
       </define>
       <define name="ws.config">
          <element name="config">
-            <a:documentation>A style section in the head of a webpage</a:documentation>
+            <a:documentation>A website configuration parameter</a:documentation>
             <ref name="ws.config.attlist"/>
             <empty/>
          </element>

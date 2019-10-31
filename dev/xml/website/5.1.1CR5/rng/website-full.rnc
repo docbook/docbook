@@ -10860,7 +10860,17 @@ div {
 start = ws.webpage
 div {
   ws.webpage.role.attribute = attribute role { text }
-  ws.webpage.navto.attribute = attribute navto { "yes" | "no" }
+  ws.webpage.navto.enumeration =
+    
+    ## This page should appear in tables of contents, site maps, etc.
+    "yes"
+    | 
+      ## The page can only be reached from pages that directly link to it.
+      "no"
+  ws.webpage.navto.attribute =
+    
+    ## Does this page appear in the navigation flow?
+    attribute navto { ws.webpage.navto.enumeration }
   ws.webpage.optional.components = db.section*
   ws.webpage.required.components = db.section+
   ws.webpage.attlist =
@@ -10930,9 +10940,18 @@ div {
 }
 div {
   ws.meta.role.attribute = attribute role { text }
-  ws.meta.http-equiv.attribute = attribute http-equiv { text }
-  ws.meta.name.attribute = attribute name { text }
-  ws.meta.content.attribute = attribute content { text }
+  ws.meta.http-equiv.attribute =
+    
+    ## The name of the equivalent HTTP header
+    attribute http-equiv { text }
+  ws.meta.name.attribute =
+    
+    ## The name of the metadata property
+    attribute name { text }
+  ws.meta.content.attribute =
+    
+    ## The value of the metadata property
+    attribute content { text }
   ws.meta.attlist =
     ws.meta.role.attribute?
     & (ws.meta.http-equiv.attribute | ws.meta.name.attribute)
@@ -10945,14 +10964,38 @@ div {
 }
 div {
   ws.headlink.role.attribute = attribute role { text }
-  ws.headlink.href.attribute = attribute href { text }
-  ws.headlink.media.attribute = attribute media { text }
-  ws.headlink.name.attribute = attribute name { text }
-  ws.headlink.rel.attribute = attribute rel { text }
-  ws.headlink.rev.attribute = attribute rev { text }
-  ws.headlink.src.attribute = attribute src { text }
-  ws.headlink.title.attribute = attribute title { text }
-  ws.headlink.type.attribute = attribute type { text }
+  ws.headlink.href.attribute =
+    
+    ## The link href
+    attribute href { text }
+  ws.headlink.media.attribute =
+    
+    ## The media type of the link
+    attribute media { text }
+  ws.headlink.name.attribute =
+    
+    ## The link name
+    attribute name { text }
+  ws.headlink.rel.attribute =
+    
+    ## The link rel
+    attribute rel { text }
+  ws.headlink.rev.attribute =
+    
+    ## The link rev
+    attribute rev { text }
+  ws.headlink.src.attribute =
+    
+    ## The link src
+    attribute src { text }
+  ws.headlink.title.attribute =
+    
+    ## The link title
+    attribute title { text }
+  ws.headlink.type.attribute =
+    
+    ## The link type
+    attribute type { text }
   ws.headlink.attlist =
     ws.headlink.role.attribute?
     & ws.headlink.href.attribute?
@@ -10971,9 +11014,18 @@ div {
 }
 div {
   ws.script.role.attribute = attribute role { text }
-  ws.script.src.attribute = attribute src { text }
-  ws.script.language.attribute = attribute language { text }
-  ws.script.type.attribute = attribute type { text }
+  ws.script.src.attribute =
+    
+    ## The script src
+    attribute src { text }
+  ws.script.language.attribute =
+    
+    ## The script language
+    attribute language { text }
+  ws.script.type.attribute =
+    
+    ## The script type
+    attribute type { text }
   ws.script.attlist =
     ws.script.role.attribute?
     & ws.script.language.attribute?
@@ -10989,8 +11041,14 @@ div {
 }
 div {
   ws.style.role.attribute = attribute role { text }
-  ws.style.src.attribute = attribute src { text }
-  ws.style.type.attribute = attribute type { text }
+  ws.style.src.attribute =
+    
+    ## The style src
+    attribute src { text }
+  ws.style.type.attribute =
+    
+    ## The style type
+    attribute type { text }
   ws.style.attlist =
     ws.style.role.attribute?
     & ws.style.type.attribute?
@@ -11005,9 +11063,18 @@ div {
 }
 div {
   ws.config.role.attribute = attribute role { text }
-  ws.config.param.attribute = attribute param { text }
-  ws.config.value.attribute = attribute value { text }
-  ws.config.altvalue.attribute = attribute altvalue { text }
+  ws.config.param.attribute =
+    
+    ## Configuration parameter name
+    attribute param { text }
+  ws.config.value.attribute =
+    
+    ## Configuration parameter value
+    attribute value { text }
+  ws.config.altvalue.attribute =
+    
+    ## Configuration parameter alternative value
+    attribute altvalue { text }
   ws.config.attlist =
     ws.config.role.attribute?
     & ws.config.param.attribute?
@@ -11016,7 +11083,7 @@ div {
     & db.common.attributes
   ws.config =
     
-    ## A style section in the head of a webpage
+    ## A website configuration parameter
     element config { ws.config.attlist, empty }
 }
 div {
