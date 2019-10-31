@@ -103,6 +103,18 @@ div {
 
 # ======================================================================
 
-sl._any.html =
-   element html:* { (attribute * { text } | text | db._any.html)* }
+[
+   db:refname [ "html:*" ]
+   db:refpurpose [ "Any element from the HTML namespace" ]
+]
+div {
+     sl._any.attribute =
+         [
+             db:refpurpose [ "Any attribute, including any attribute in any namespace." ]
+         ]
+             attribute * { text }
+
+     sl._any.html =
+         element html:* { (sl._any.attribute | text | sl._any.html)* }
+}
 
