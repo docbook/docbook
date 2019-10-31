@@ -13,6 +13,7 @@
   <xsl:key name="defs" match="rng:define" use="@name"/>
 
   <xsl:param name="debug" select="0"/>
+  <xsl:param name="buildhash" select="'UNKNOWN'"/>
 
   <xsl:template match="/">
     <xsl:if test="$debug != 0">
@@ -51,6 +52,13 @@
   </xsl:template>
 
   <!-- ====================================================================== -->
+  <xsl:template match="rng:grammar" mode="group">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:attribute name="buildhash" select="$buildhash"/>
+      <xsl:apply-templates mode="group"/>
+    </xsl:copy>
+  </xsl:template>
 
   <xsl:template match="rng:define[count(*) &gt; 1]
 		       |rng:zeroOrMore[count(*) &gt; 1]
