@@ -18,6 +18,15 @@
 
 <p:sink/>
 
+<p:exec command="git" source-is-xml='false' result-is-xml='false' name="rev-parse">
+  <p:input port="source">
+    <p:empty/>
+  </p:input>
+  <p:with-option name="args" select="'rev-parse HEAD'"/>
+</p:exec>
+
+<p:sink/>
+
 <p:load cx:depends-on="trang">
   <p:with-option name="href" select="concat('../schemas/build/', $schema, '/', $schema, '.rng')"/>
 </p:load>
@@ -44,6 +53,9 @@
   <p:input port="stylesheet">
     <p:document href="rngdocxml.xsl"/>
   </p:input>
+  <p:with-param name="buildhash" select="normalize-space(/)">
+    <p:pipe step="rev-parse" port="result"/>
+  </p:with-param>
 </p:xslt>
 
 <p:store name="store" method="xml" indent="true">
