@@ -574,10 +574,7 @@ db.general.inlines =
   | db.indexing.inlines
   | db.link.inlines
 db.domain.inlines =
-  db.technical.inlines
-  | db.math.inlines
-  | db.markup.inlines
-  | db.programming.inlines
+  db.technical.inlines | db.math.inlines | db.markup.inlines
 db.technical.inlines = db.termdef | (db.optional)
 db.product.inlines = db.trademark | (db.productnumber | db.productname)
 db.bibliography.inlines =
@@ -3277,10 +3274,7 @@ div {
     
     ## A statement of legal obligations or requirements
     element legalnotice {
-      db.legalnotice.attlist,
-      db.legalnotice.info,
-      db.all.blocks+,
-      db.legalsection*
+      db.legalnotice.attlist, db.legalnotice.info, db.all.blocks+
     }
 }
 div {
@@ -4501,24 +4495,6 @@ div {
     ## A section of a document with no subdivisions
     element simplesect {
       db.simplesect.attlist, db.simplesect.info, db.all.blocks*
-    }
-}
-div {
-  db.legalsection.role.attribute = attribute role { text }
-  db.legalsection.attlist =
-    db.legalsection.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    & db.label.attribute?
-  db.legalsection.info = db._info.title.req
-  db.legalsection =
-    
-    ## A recursive section of legal obligations or requirements.
-    element legalsection {
-      db.legalsection.attlist,
-      db.legalsection.info,
-      db.all.blocks*,
-      db.legalsection*
     }
 }
 db.article.components = db.toplevel.sections
@@ -6967,18 +6943,6 @@ div {
     ## A number assigned to a product
     element productnumber { db.productnumber.attlist, db._text }
 }
-db.programming.inlines = db.buildtarget
-div {
-  db.buildtarget.role.attribute = attribute role { text }
-  db.buildtarget.attlist =
-    db.buildtarget.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-  db.buildtarget =
-    
-    ## Target of a build
-    element buildtarget { db.buildtarget.attlist, db._text }
-}
 db.admonition.blocks =
   db.caution | db.danger | db.important | db.note | db.tip | db.warning
 db.admonition.contentmodel = db._info.title.only, db.all.blocks+
@@ -8574,7 +8538,29 @@ div {
   db.stagedir =
     
     ## A stage direction
-    element db:stagedir { db.stagedir.attlist, db.stagedir.content }
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:stagedir"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:stagedir)"
+            "stagedir must not occur among the children or descendants of stagedir"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element stagedir { db.stagedir.attlist, db.stagedir.content }
   db.stagedir.attlist = db.common.attributes
   db.stagedir.content = db.para+
 }
@@ -8583,7 +8569,29 @@ div {
   db.inlinestagedir =
     
     ## An inline stage direction
-    element db:inlinestagedir {
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:inlinestagedir"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test = "not(.//db:inlinestagedir)"
+            "inlinestagedir must not occur among the children or descendants of inlinestagedir"
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
+    element inlinestagedir {
       db.inlinestagedir.attlist, db.inlinestagedir.content
     }
   db.inlinestagedir.attlist = db.common.attributes

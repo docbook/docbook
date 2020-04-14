@@ -97,24 +97,6 @@ div {
       db.navigation.components*
     }
 }
-div {
-  db.legalsection.role.attribute = attribute role { text }
-  db.legalsection.attlist =
-    db.legalsection.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    & db.label.attribute?
-  db.legalsection.info = db._info.title.req
-  db.legalsection =
-    
-    ## A recursive section of legal obligations or requirements.
-    element legalsection {
-      db.legalsection.attlist,
-      db.legalsection.info,
-      db.all.blocks*,
-      db.legalsection*
-    }
-}
 db.toplevel.sections = db.section+
 db.recursive.sections = db.section+
 db.relation.attribute =
@@ -1135,26 +1117,6 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "not(.//db:danger)"
-            "danger must not occur among the children or descendants of caption"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:caption"
-          "\x{a}" ~
-          "                  "
-          s:assert [
             test = "not(.//db:note)"
             "note must not occur among the children or descendants of caption"
           ]
@@ -1437,18 +1399,7 @@ div {
     ## Data entered by the user
     element userinput { db.userinput.attlist, db.userinput.inlines* }
 }
-db.programming.inlines = db.buildtarget | db.oo.inlines
-div {
-  db.buildtarget.role.attribute = attribute role { text }
-  db.buildtarget.attlist =
-    db.buildtarget.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-  db.buildtarget =
-    
-    ## Target of a build
-    element buildtarget { db.buildtarget.attlist, db._text }
-}
+db.programming.inlines = db.oo.inlines
 div {
   db.programlisting.role.attribute = attribute role { text }
   db.programlisting.width.attribute = db.width.characters.attribute
@@ -1591,61 +1542,8 @@ div {
     ## Inline text that is some literal value
     element literal { db.literal.attlist, db._text }
 }
-db.admonition.blocks = db.danger | db.note
+db.admonition.blocks = db.note
 db.admonition.contentmodel = db._info.title.only, db.all.blocks+
-div {
-  db.danger.role.attribute = attribute role { text }
-  db.danger.attlist =
-    db.danger.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-  db.danger =
-    
-    ## An admonition set off from the text indicating hazardous situation
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:danger"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "not(.//db:danger)"
-            "danger must not occur among the children or descendants of danger"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:danger"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "not(.//db:note)"
-            "note must not occur among the children or descendants of danger"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
-    element danger { db.danger.attlist, db.admonition.contentmodel }
-}
 div {
   db.note.role.attribute = attribute role { text }
   db.note.attlist =
@@ -1656,26 +1554,6 @@ div {
     
     ## A message set off from the text
     [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:note"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "not(.//db:danger)"
-            "danger must not occur among the children or descendants of note"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
       s:pattern [
         "\x{a}" ~
         "               "
@@ -2252,26 +2130,6 @@ div {
     
     ## A footnote
     [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:footnote"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "not(.//db:danger)"
-            "danger must not occur among the children or descendants of footnote"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
       s:pattern [
         "\x{a}" ~
         "               "
@@ -3076,26 +2934,6 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "not(.//db:danger)"
-            "danger must not occur among the children or descendants of caption"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:caption"
-          "\x{a}" ~
-          "                  "
-          s:assert [
             test = "not(.//db:note)"
             "note must not occur among the children or descendants of caption"
           ]
@@ -3424,10 +3262,7 @@ div {
     
     ## A statement of legal obligations or requirements
     element legalnotice {
-      db.legalnotice.attlist,
-      db.legalnotice.info,
-      db.all.blocks+,
-      db.legalsection*
+      db.legalnotice.attlist, db.legalnotice.info, db.all.blocks+
     }
 }
 div {
@@ -4097,7 +3932,17 @@ db.org.author.contentmodel = db.orgname, (db.affiliation | db.email)*
 start = ws.webpage
 div {
   ws.webpage.role.attribute = attribute role { text }
-  ws.webpage.navto.attribute = attribute navto { "yes" | "no" }
+  ws.webpage.navto.enumeration =
+    
+    ## This page should appear in tables of contents, site maps, etc.
+    "yes"
+    | 
+      ## The page can only be reached from pages that directly link to it.
+      "no"
+  ws.webpage.navto.attribute =
+    
+    ## Does this page appear in the navigation flow?
+    attribute navto { ws.webpage.navto.enumeration }
   ws.webpage.optional.components = db.section*
   ws.webpage.required.components = db.section+
   ws.webpage.attlist =
@@ -4167,9 +4012,18 @@ div {
 }
 div {
   ws.meta.role.attribute = attribute role { text }
-  ws.meta.http-equiv.attribute = attribute http-equiv { text }
-  ws.meta.name.attribute = attribute name { text }
-  ws.meta.content.attribute = attribute content { text }
+  ws.meta.http-equiv.attribute =
+    
+    ## The name of the equivalent HTTP header
+    attribute http-equiv { text }
+  ws.meta.name.attribute =
+    
+    ## The name of the metadata property
+    attribute name { text }
+  ws.meta.content.attribute =
+    
+    ## The value of the metadata property
+    attribute content { text }
   ws.meta.attlist =
     ws.meta.role.attribute?
     & (ws.meta.http-equiv.attribute | ws.meta.name.attribute)
@@ -4182,14 +4036,38 @@ div {
 }
 div {
   ws.headlink.role.attribute = attribute role { text }
-  ws.headlink.href.attribute = attribute href { text }
-  ws.headlink.media.attribute = attribute media { text }
-  ws.headlink.name.attribute = attribute name { text }
-  ws.headlink.rel.attribute = attribute rel { text }
-  ws.headlink.rev.attribute = attribute rev { text }
-  ws.headlink.src.attribute = attribute src { text }
-  ws.headlink.title.attribute = attribute title { text }
-  ws.headlink.type.attribute = attribute type { text }
+  ws.headlink.href.attribute =
+    
+    ## The link href
+    attribute href { text }
+  ws.headlink.media.attribute =
+    
+    ## The media type of the link
+    attribute media { text }
+  ws.headlink.name.attribute =
+    
+    ## The link name
+    attribute name { text }
+  ws.headlink.rel.attribute =
+    
+    ## The link rel
+    attribute rel { text }
+  ws.headlink.rev.attribute =
+    
+    ## The link rev
+    attribute rev { text }
+  ws.headlink.src.attribute =
+    
+    ## The link src
+    attribute src { text }
+  ws.headlink.title.attribute =
+    
+    ## The link title
+    attribute title { text }
+  ws.headlink.type.attribute =
+    
+    ## The link type
+    attribute type { text }
   ws.headlink.attlist =
     ws.headlink.role.attribute?
     & ws.headlink.href.attribute?
@@ -4208,9 +4086,18 @@ div {
 }
 div {
   ws.script.role.attribute = attribute role { text }
-  ws.script.src.attribute = attribute src { text }
-  ws.script.language.attribute = attribute language { text }
-  ws.script.type.attribute = attribute type { text }
+  ws.script.src.attribute =
+    
+    ## The script src
+    attribute src { text }
+  ws.script.language.attribute =
+    
+    ## The script language
+    attribute language { text }
+  ws.script.type.attribute =
+    
+    ## The script type
+    attribute type { text }
   ws.script.attlist =
     ws.script.role.attribute?
     & ws.script.language.attribute?
@@ -4226,8 +4113,14 @@ div {
 }
 div {
   ws.style.role.attribute = attribute role { text }
-  ws.style.src.attribute = attribute src { text }
-  ws.style.type.attribute = attribute type { text }
+  ws.style.src.attribute =
+    
+    ## The style src
+    attribute src { text }
+  ws.style.type.attribute =
+    
+    ## The style type
+    attribute type { text }
   ws.style.attlist =
     ws.style.role.attribute?
     & ws.style.type.attribute?
@@ -4242,9 +4135,18 @@ div {
 }
 div {
   ws.config.role.attribute = attribute role { text }
-  ws.config.param.attribute = attribute param { text }
-  ws.config.value.attribute = attribute value { text }
-  ws.config.altvalue.attribute = attribute altvalue { text }
+  ws.config.param.attribute =
+    
+    ## Configuration parameter name
+    attribute param { text }
+  ws.config.value.attribute =
+    
+    ## Configuration parameter value
+    attribute value { text }
+  ws.config.altvalue.attribute =
+    
+    ## Configuration parameter alternative value
+    attribute altvalue { text }
   ws.config.attlist =
     ws.config.role.attribute?
     & ws.config.param.attribute?
@@ -4253,7 +4155,7 @@ div {
     & db.common.attributes
   ws.config =
     
-    ## A style section in the head of a webpage
+    ## A website configuration parameter
     element config { ws.config.attlist, empty }
 }
 div {

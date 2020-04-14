@@ -100,24 +100,6 @@ div {
       db.navigation.components*
     }
 }
-div {
-  db.legalsection.role.attribute = attribute role { text }
-  db.legalsection.attlist =
-    db.legalsection.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    & db.label.attribute?
-  db.legalsection.info = db._info.title.req
-  db.legalsection =
-    
-    ## A recursive section of legal obligations or requirements.
-    element legalsection {
-      db.legalsection.attlist,
-      db.legalsection.info,
-      db.all.blocks*,
-      db.legalsection*
-    }
-}
 db.article.navcomponents = db.navigation.components | db.appendix
 div {
   db.article.status.attribute = db.status.attribute
@@ -1247,26 +1229,6 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "not(.//db:danger)"
-            "danger must not occur among the children or descendants of caption"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:caption"
-          "\x{a}" ~
-          "                  "
-          s:assert [
             test = "not(.//db:note)"
             "note must not occur among the children or descendants of caption"
           ]
@@ -1551,18 +1513,7 @@ div {
 }
 start =
   empty | (db.bibliodiv) | (db.synopsis.blocks) | db.admonition.blocks
-db.programming.inlines = db.buildtarget | db.oo.inlines
-div {
-  db.buildtarget.role.attribute = attribute role { text }
-  db.buildtarget.attlist =
-    db.buildtarget.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-  db.buildtarget =
-    
-    ## Target of a build
-    element buildtarget { db.buildtarget.attlist, db._text }
-}
+db.programming.inlines = db.oo.inlines
 div {
   db.programlisting.role.attribute = attribute role { text }
   db.programlisting.width.attribute = db.width.characters.attribute
@@ -1705,81 +1656,8 @@ div {
     ## Inline text that is some literal value
     element literal { db.literal.attlist, db._text }
 }
-db.admonition.blocks = db.danger | db.note
+db.admonition.blocks = db.note
 db.admonition.contentmodel = db._info.title.only, db.all.blocks+
-div {
-  db.danger.role.attribute = attribute role { text }
-  db.danger.attlist =
-    db.danger.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-  db.danger =
-    
-    ## An admonition set off from the text indicating hazardous situation
-    [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:danger"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "not(.//db:danger)"
-            "danger must not occur among the children or descendants of danger"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:danger"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "not(.//db:note)"
-            "note must not occur among the children or descendants of danger"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Root must have version" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "/db:danger"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "@version"
-            "If this element is the root element, it must have a version attribute."
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-    ]
-    element danger { db.danger.attlist, db.admonition.contentmodel }
-}
 div {
   db.note.role.attribute = attribute role { text }
   db.note.attlist =
@@ -1790,26 +1668,6 @@ div {
     
     ## A message set off from the text
     [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:note"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "not(.//db:danger)"
-            "danger must not occur among the children or descendants of note"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
       s:pattern [
         "\x{a}" ~
         "               "
@@ -2399,26 +2257,6 @@ div {
     
     ## A footnote
     [
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:footnote"
-          "\x{a}" ~
-          "                  "
-          s:assert [
-            test = "not(.//db:danger)"
-            "danger must not occur among the children or descendants of footnote"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
       s:pattern [
         "\x{a}" ~
         "               "
@@ -3223,26 +3061,6 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "not(.//db:danger)"
-            "danger must not occur among the children or descendants of caption"
-          ]
-          "\x{a}" ~
-          "               "
-        ]
-        "\x{a}" ~
-        "            "
-      ]
-      s:pattern [
-        "\x{a}" ~
-        "               "
-        s:title [ "Element exclusion" ]
-        "\x{a}" ~
-        "               "
-        s:rule [
-          context = "db:caption"
-          "\x{a}" ~
-          "                  "
-          s:assert [
             test = "not(.//db:note)"
             "note must not occur among the children or descendants of caption"
           ]
@@ -3571,10 +3389,7 @@ div {
     
     ## A statement of legal obligations or requirements
     element legalnotice {
-      db.legalnotice.attlist,
-      db.legalnotice.info,
-      db.all.blocks+,
-      db.legalsection*
+      db.legalnotice.attlist, db.legalnotice.info, db.all.blocks+
     }
 }
 div {

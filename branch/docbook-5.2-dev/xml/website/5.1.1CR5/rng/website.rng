@@ -173,39 +173,6 @@ information, see http://www.oasis-open.org/docbook/.
          </element>
       </define>
    </div>
-   <div>
-      <define name="db.legalsection.role.attribute">
-         <attribute name="role"/>
-      </define>
-      <define name="db.legalsection.attlist">
-         <interleave>
-            <optional>
-               <ref name="db.legalsection.role.attribute"/>
-            </optional>
-            <ref name="db.common.attributes"/>
-            <ref name="db.common.linking.attributes"/>
-            <optional>
-               <ref name="db.label.attribute"/>
-            </optional>
-         </interleave>
-      </define>
-      <define name="db.legalsection.info">
-         <ref name="db._info.title.req"/>
-      </define>
-      <define name="db.legalsection">
-         <element name="legalsection">
-            <a:documentation>A recursive section of legal obligations or requirements.</a:documentation>
-            <ref name="db.legalsection.attlist"/>
-            <ref name="db.legalsection.info"/>
-            <zeroOrMore>
-               <ref name="db.all.blocks"/>
-            </zeroOrMore>
-            <zeroOrMore>
-               <ref name="db.legalsection"/>
-            </zeroOrMore>
-         </element>
-      </define>
-   </div>
    <define name="db.toplevel.sections">
       <oneOrMore>
          <ref name="db.section"/>
@@ -1761,12 +1728,6 @@ information, see http://www.oasis-open.org/docbook/.
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
-                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caption</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:caption">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
@@ -2149,31 +2110,9 @@ information, see http://www.oasis-open.org/docbook/.
    </div>
    <define name="db.programming.inlines">
       <choice>
-         <ref name="db.buildtarget"/>
          <ref name="db.oo.inlines"/>
       </choice>
    </define>
-   <div>
-      <define name="db.buildtarget.role.attribute">
-         <attribute name="role"/>
-      </define>
-      <define name="db.buildtarget.attlist">
-         <interleave>
-            <optional>
-               <ref name="db.buildtarget.role.attribute"/>
-            </optional>
-            <ref name="db.common.attributes"/>
-            <ref name="db.common.linking.attributes"/>
-         </interleave>
-      </define>
-      <define name="db.buildtarget">
-         <element name="buildtarget">
-            <a:documentation>Target of a build</a:documentation>
-            <ref name="db.buildtarget.attlist"/>
-            <ref name="db._text"/>
-         </element>
-      </define>
-   </div>
    <div>
       <define name="db.programlisting.role.attribute">
          <attribute name="role"/>
@@ -2361,7 +2300,6 @@ information, see http://www.oasis-open.org/docbook/.
    </div>
    <define name="db.admonition.blocks">
       <choice>
-         <ref name="db.danger"/>
          <ref name="db.note"/>
       </choice>
    </define>
@@ -2371,39 +2309,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.all.blocks"/>
       </oneOrMore>
    </define>
-   <div>
-      <define name="db.danger.role.attribute">
-         <attribute name="role"/>
-      </define>
-      <define name="db.danger.attlist">
-         <interleave>
-            <optional>
-               <ref name="db.danger.role.attribute"/>
-            </optional>
-            <ref name="db.common.attributes"/>
-            <ref name="db.common.linking.attributes"/>
-         </interleave>
-      </define>
-      <define name="db.danger">
-         <element name="danger">
-            <a:documentation>An admonition set off from the text indicating hazardous situation</a:documentation>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:danger">
-                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of danger</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:danger">
-                  <s:assert test="not(.//db:note)">note must not occur among the children or descendants of danger</s:assert>
-               </s:rule>
-            </s:pattern>
-            <ref name="db.danger.attlist"/>
-            <ref name="db.admonition.contentmodel"/>
-         </element>
-      </define>
-   </div>
    <div>
       <define name="db.note.role.attribute">
          <attribute name="role"/>
@@ -2420,12 +2325,6 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.note">
          <element name="note">
             <a:documentation>A message set off from the text</a:documentation>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:note">
-                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of note</s:assert>
-               </s:rule>
-            </s:pattern>
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:note">
@@ -3464,12 +3363,6 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.footnote">
          <element name="footnote">
             <a:documentation>A footnote</a:documentation>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:footnote">
-                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of footnote</s:assert>
-               </s:rule>
-            </s:pattern>
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
@@ -4586,12 +4479,6 @@ information, see http://www.oasis-open.org/docbook/.
             <s:pattern>
                <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
-                  <s:assert test="not(.//db:danger)">danger must not occur among the children or descendants of caption</s:assert>
-               </s:rule>
-            </s:pattern>
-            <s:pattern>
-               <s:title>Element exclusion</s:title>
-               <s:rule context="db:caption">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
@@ -5073,9 +4960,6 @@ information, see http://www.oasis-open.org/docbook/.
             <oneOrMore>
                <ref name="db.all.blocks"/>
             </oneOrMore>
-            <zeroOrMore>
-               <ref name="db.legalsection"/>
-            </zeroOrMore>
          </element>
       </define>
    </div>
@@ -6279,12 +6163,18 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="ws.webpage.role.attribute">
          <attribute name="role"/>
       </define>
+      <define name="ws.webpage.navto.enumeration">
+         <choice>
+            <value>yes</value>
+            <a:documentation>This page should appear in tables of contents, site maps, etc.</a:documentation>
+            <value>no</value>
+            <a:documentation>The page can only be reached from pages that directly link to it.</a:documentation>
+         </choice>
+      </define>
       <define name="ws.webpage.navto.attribute">
          <attribute name="navto">
-            <choice>
-               <value>yes</value>
-               <value>no</value>
-            </choice>
+            <a:documentation>Does this page appear in the navigation flow?</a:documentation>
+            <ref name="ws.webpage.navto.enumeration"/>
          </attribute>
       </define>
       <define name="ws.webpage.optional.components">
@@ -6393,13 +6283,19 @@ information, see http://www.oasis-open.org/docbook/.
          <attribute name="role"/>
       </define>
       <define name="ws.meta.http-equiv.attribute">
-         <attribute name="http-equiv"/>
+         <attribute name="http-equiv">
+            <a:documentation>The name of the equivalent HTTP header</a:documentation>
+         </attribute>
       </define>
       <define name="ws.meta.name.attribute">
-         <attribute name="name"/>
+         <attribute name="name">
+            <a:documentation>The name of the metadata property</a:documentation>
+         </attribute>
       </define>
       <define name="ws.meta.content.attribute">
-         <attribute name="content"/>
+         <attribute name="content">
+            <a:documentation>The value of the metadata property</a:documentation>
+         </attribute>
       </define>
       <define name="ws.meta.attlist">
          <interleave>
@@ -6427,28 +6323,44 @@ information, see http://www.oasis-open.org/docbook/.
          <attribute name="role"/>
       </define>
       <define name="ws.headlink.href.attribute">
-         <attribute name="href"/>
+         <attribute name="href">
+            <a:documentation>The link href</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.media.attribute">
-         <attribute name="media"/>
+         <attribute name="media">
+            <a:documentation>The media type of the link</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.name.attribute">
-         <attribute name="name"/>
+         <attribute name="name">
+            <a:documentation>The link name</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.rel.attribute">
-         <attribute name="rel"/>
+         <attribute name="rel">
+            <a:documentation>The link rel</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.rev.attribute">
-         <attribute name="rev"/>
+         <attribute name="rev">
+            <a:documentation>The link rev</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.src.attribute">
-         <attribute name="src"/>
+         <attribute name="src">
+            <a:documentation>The link src</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.title.attribute">
-         <attribute name="title"/>
+         <attribute name="title">
+            <a:documentation>The link title</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.type.attribute">
-         <attribute name="type"/>
+         <attribute name="type">
+            <a:documentation>The link type</a:documentation>
+         </attribute>
       </define>
       <define name="ws.headlink.attlist">
          <interleave>
@@ -6495,13 +6407,19 @@ information, see http://www.oasis-open.org/docbook/.
          <attribute name="role"/>
       </define>
       <define name="ws.script.src.attribute">
-         <attribute name="src"/>
+         <attribute name="src">
+            <a:documentation>The script src</a:documentation>
+         </attribute>
       </define>
       <define name="ws.script.language.attribute">
-         <attribute name="language"/>
+         <attribute name="language">
+            <a:documentation>The script language</a:documentation>
+         </attribute>
       </define>
       <define name="ws.script.type.attribute">
-         <attribute name="type"/>
+         <attribute name="type">
+            <a:documentation>The script type</a:documentation>
+         </attribute>
       </define>
       <define name="ws.script.attlist">
          <interleave>
@@ -6538,10 +6456,14 @@ information, see http://www.oasis-open.org/docbook/.
          <attribute name="role"/>
       </define>
       <define name="ws.style.src.attribute">
-         <attribute name="src"/>
+         <attribute name="src">
+            <a:documentation>The style src</a:documentation>
+         </attribute>
       </define>
       <define name="ws.style.type.attribute">
-         <attribute name="type"/>
+         <attribute name="type">
+            <a:documentation>The style type</a:documentation>
+         </attribute>
       </define>
       <define name="ws.style.attlist">
          <interleave>
@@ -6575,13 +6497,19 @@ information, see http://www.oasis-open.org/docbook/.
          <attribute name="role"/>
       </define>
       <define name="ws.config.param.attribute">
-         <attribute name="param"/>
+         <attribute name="param">
+            <a:documentation>Configuration parameter name</a:documentation>
+         </attribute>
       </define>
       <define name="ws.config.value.attribute">
-         <attribute name="value"/>
+         <attribute name="value">
+            <a:documentation>Configuration parameter value</a:documentation>
+         </attribute>
       </define>
       <define name="ws.config.altvalue.attribute">
-         <attribute name="altvalue"/>
+         <attribute name="altvalue">
+            <a:documentation>Configuration parameter alternative value</a:documentation>
+         </attribute>
       </define>
       <define name="ws.config.attlist">
          <interleave>
@@ -6602,7 +6530,7 @@ information, see http://www.oasis-open.org/docbook/.
       </define>
       <define name="ws.config">
          <element name="config">
-            <a:documentation>A style section in the head of a webpage</a:documentation>
+            <a:documentation>A website configuration parameter</a:documentation>
             <ref name="ws.config.attlist"/>
             <empty/>
          </element>

@@ -894,7 +894,6 @@ information, see http://www.oasis-open.org/docbook/.
          <ref name="db.technical.inlines"/>
          <ref name="db.math.inlines"/>
          <ref name="db.markup.inlines"/>
-         <ref name="db.programming.inlines"/>
       </choice>
    </define>
    <define name="db.technical.inlines">
@@ -4691,9 +4690,6 @@ information, see http://www.oasis-open.org/docbook/.
             <oneOrMore>
                <ref name="db.all.blocks"/>
             </oneOrMore>
-            <zeroOrMore>
-               <ref name="db.legalsection"/>
-            </zeroOrMore>
          </element>
       </define>
    </div>
@@ -6581,39 +6577,6 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.simplesect.info"/>
             <zeroOrMore>
                <ref name="db.all.blocks"/>
-            </zeroOrMore>
-         </element>
-      </define>
-   </div>
-   <div>
-      <define name="db.legalsection.role.attribute">
-         <attribute name="role"/>
-      </define>
-      <define name="db.legalsection.attlist">
-         <interleave>
-            <optional>
-               <ref name="db.legalsection.role.attribute"/>
-            </optional>
-            <ref name="db.common.attributes"/>
-            <ref name="db.common.linking.attributes"/>
-            <optional>
-               <ref name="db.label.attribute"/>
-            </optional>
-         </interleave>
-      </define>
-      <define name="db.legalsection.info">
-         <ref name="db._info.title.req"/>
-      </define>
-      <define name="db.legalsection">
-         <element name="legalsection">
-            <a:documentation>A recursive section of legal obligations or requirements.</a:documentation>
-            <ref name="db.legalsection.attlist"/>
-            <ref name="db.legalsection.info"/>
-            <zeroOrMore>
-               <ref name="db.all.blocks"/>
-            </zeroOrMore>
-            <zeroOrMore>
-               <ref name="db.legalsection"/>
             </zeroOrMore>
          </element>
       </define>
@@ -10198,32 +10161,6 @@ s which refer to this area. (This provides bidirectional linking which may be us
          </element>
       </define>
    </div>
-   <define name="db.programming.inlines">
-      <choice>
-         <ref name="db.buildtarget"/>
-      </choice>
-   </define>
-   <div>
-      <define name="db.buildtarget.role.attribute">
-         <attribute name="role"/>
-      </define>
-      <define name="db.buildtarget.attlist">
-         <interleave>
-            <optional>
-               <ref name="db.buildtarget.role.attribute"/>
-            </optional>
-            <ref name="db.common.attributes"/>
-            <ref name="db.common.linking.attributes"/>
-         </interleave>
-      </define>
-      <define name="db.buildtarget">
-         <element name="buildtarget">
-            <a:documentation>Target of a build</a:documentation>
-            <ref name="db.buildtarget.attlist"/>
-            <ref name="db._text"/>
-         </element>
-      </define>
-   </div>
    <define name="db.admonition.blocks">
       <choice>
          <ref name="db.caution"/>
@@ -11625,8 +11562,14 @@ s which refer to this area. (This provides bidirectional linking which may be us
    <!-- https://sourceforge.net/p/docbook/publishers-rfe/8/ -->
    <div>
       <define name="db.stagedir">
-         <element name="db:stagedir">
+         <element name="stagedir">
             <a:documentation>A stage direction</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:stagedir">
+                  <s:assert test="not(.//db:stagedir)">stagedir must not occur among the children or descendants of stagedir</s:assert>
+               </s:rule>
+            </s:pattern>
             <ref name="db.stagedir.attlist"/>
             <ref name="db.stagedir.content"/>
          </element>
@@ -11643,8 +11586,14 @@ s which refer to this area. (This provides bidirectional linking which may be us
    <!-- https://sourceforge.net/p/docbook/publishers-rfe/8/ -->
    <div>
       <define name="db.inlinestagedir">
-         <element name="db:inlinestagedir">
+         <element name="inlinestagedir">
             <a:documentation>An inline stage direction</a:documentation>
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
+               <s:rule context="db:inlinestagedir">
+                  <s:assert test="not(.//db:inlinestagedir)">inlinestagedir must not occur among the children or descendants of inlinestagedir</s:assert>
+               </s:rule>
+            </s:pattern>
             <ref name="db.inlinestagedir.attlist"/>
             <ref name="db.inlinestagedir.content"/>
          </element>
