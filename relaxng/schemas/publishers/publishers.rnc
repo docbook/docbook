@@ -122,7 +122,7 @@ include "../docbook/docbook.rnc" {
         )
      }
   }
-  
+
 # https://sourceforge.net/p/docbook/publishers-rfe/3/
 [
    db:refname [ "epigraph" ]
@@ -162,7 +162,7 @@ div {
    | db.titleabbrev
 
   db.extension.blocks = db.dialogue | db.poetry | db.drama | db.stagedir
-  
+
   db.extension.inlines = db.inlinestagedir
 
   # Excluded by Publishers:
@@ -173,6 +173,7 @@ div {
   db.application = notAllowed
   db.arc = notAllowed
   db.arg = notAllowed
+  db.buildtarget = notAllowed
   db.citerefentry = notAllowed
   db.classname = notAllowed
   db.classsynopsis = notAllowed
@@ -222,6 +223,7 @@ div {
   db.keycode = notAllowed
   db.keycombo = notAllowed
   db.keysym = notAllowed
+  db.legalsection = notAllowed
   db.lhs = notAllowed
   db.lineannotation = notAllowed
   db.locator = notAllowed
@@ -459,7 +461,7 @@ div {
 
    db.linegroup = element linegroup {
       db.linegroup.attlist,
-      db.speaker*, 
+      db.speaker*,
       (db.line|db.all.blocks)+
    }
 }
@@ -539,15 +541,15 @@ ctrl:exclude [ from="db.stagedir" exclude="db.stagedir" ]
    db:refpurpose [ "A stage direction" ]
 ]
 div {
-   db.stagedir = element db:stagedir {
-       db.stagedir.attlist, 
+   db.stagedir = element stagedir {
+       db.stagedir.attlist,
        db.stagedir.content
    }
-   
-db.stagedir.attlist = 
+
+db.stagedir.attlist =
    db.common.attributes
-   
-db.stagedir.content = 
+
+db.stagedir.content =
    (db.para+)
 }
 
@@ -559,15 +561,15 @@ ctrl:exclude [ from="db.inlinestagedir" exclude="db.inlinestagedir" ]
    db:refpurpose [ "An inline stage direction" ]
 ]
 div {
-   db.inlinestagedir = element db:inlinestagedir {
-       db.inlinestagedir.attlist, 
-       db.inlinestagedir.content 
+   db.inlinestagedir = element inlinestagedir {
+       db.inlinestagedir.attlist,
+       db.inlinestagedir.content
    }
-   
-   db.inlinestagedir.attlist = 
+
+   db.inlinestagedir.attlist =
        db.common.attributes
-       
-   db.inlinestagedir.content = 
+
+   db.inlinestagedir.content =
        (db.all.inlines+)
 
 }
