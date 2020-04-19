@@ -5,7 +5,7 @@ namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 
-start |= db.synopsis.blocks | db.funcsynopsisinfo | db.classsynopsisinfo
+start |= db.synopsis.blocks | db.funcsynopsisinfo | db.classsynopsisinfo | db.programmingsynopsis
 
 db.domain.inlines |= db.programming.inlines
 
@@ -31,6 +31,15 @@ db.programming.inlines =
  | db.initializer
  | db.buildtarget
  | db.oo.inlines
+ | db.templateid
+ | db.namespace
+ | db.namespacename
+ | db.macroname
+ | db.unionname
+ | db.enumname
+ | db.enumvalue
+ | db.enumidentifier
+ | db.typedefname
 
 db.oo.inlines =
    db.ooclass
@@ -44,6 +53,20 @@ db.synopsis.blocks =
  | db.constructorsynopsis
  | db.destructorsynopsis
  | db.fieldsynopsis
+ | db.enumsynopsis
+ | db.typedefsynopsis
+ | db.namespacesynopsis
+ | db.macrosynopsis
+ | db.unionsynopsis
+ | db.enumsynopsis
+ | db.typedefsynopsis
+
+db.programmingsynopsis =
+   db.namespacesynopsis
+ | db.macrosynopsis
+ | db.typedefsynopsis
+ | db.enumsynopsis
+
 
 # ======================================================================
 
@@ -67,6 +90,29 @@ div {
       element synopsis {
          db.synopsis.attlist,
          db.verbatim.contentmodel
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "synopsisinfo" ]
+   db:refpurpose [ "Information supplementing synopsis" ]
+]
+div {
+
+   db.synopsisinfo.role.attribute = attribute role { text }
+
+   db.synopsisinfo.attlist =
+      db.synopsisinfo.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.verbatim.attributes
+
+   db.synopsisinfo =
+      element synopsisinfo {
+         db.synopsisinfo.attlist,
+        (db.verbatim.contentmodel | (db.programming.inlines?, db.all.blocks*))
       }
 }
 
@@ -162,7 +208,7 @@ div {
    db.funcdef =
       element funcdef {
          db.funcdef.attlist,
-         (db._text | db.type | db.void | db.function)*
+         (db._text | db.type | db.templateid | db.void | db.function)*
       }
 }
 
@@ -289,7 +335,7 @@ div {
    db.paramdef =
       element paramdef {
          db.paramdef.attlist,
-         (db._text | db.initializer | db.modifier | db.type | db.parameter | db.funcparams)*
+         (db._text | db.initializer | db.modifier | db.type | db.templateid | db.parameter | db.funcparams)*
       }
 }
 
@@ -347,12 +393,16 @@ div {
    db.classsynopsis =
       element classsynopsis {
          db.classsynopsis.attlist,
-         db.oo.inlines+,
+         db.template*,
+         (db.oo.inlines | db.classname)+,
+         db.template*,
          (db.classsynopsisinfo
+          | db.synopsisinfo
           | db.methodsynopsis
           | db.constructorsynopsis
           | db.destructorsynopsis
-          | db.fieldsynopsis)*
+          | db.fieldsynopsis)*,
+         db.recursive.blocks.or.sections?
       }
 }
 
@@ -554,7 +604,7 @@ div {
       element fieldsynopsis {
          db.fieldsynopsis.attlist,
          db.modifier*,
-         db.type*,
+         (db.type | db.templateid)*,
          db.varname,
          db.initializer?
       }
@@ -655,12 +705,17 @@ div {
    db.methodsynopsis =
       element methodsynopsis {
          db.methodsynopsis.attlist,
+         db.template*,
          db.modifier*,
-         (db.type+ | db.void)?,
+         (db.type+ | db.templateid+ | db.void)?,
          db.methodname,
+         db.template*,
          ((db.methodparam|db.group.methodparam)+ | db.void),
          db.exceptionname*,
-         db.modifier*
+         db.modifier*,
+         db.template*,
+         db.synopsisinfo*,
+         db.recursive.blocks.or.sections?
       }
 }
 
@@ -709,10 +764,11 @@ div {
       element methodparam {
          db.methodparam.attlist,
          db.modifier*,
-         db.type*,
+         (db.type | db.templateid)*,
          ((db.modifier*, db.parameter, db.initializer?)
           | db.funcparams),
-         db.modifier*
+         db.modifier*,
+         db.recursive.blocks.or.sections?
       }
 }
 
@@ -836,7 +892,7 @@ div {
    db.type =
       element type {
          db.type.attlist,
-         (db._text | db.type)*
+         (db._text | db.type | db.templateid | db.programming.inlines)*
       }
 }
 
@@ -865,6 +921,526 @@ div {
 # ======================================================================
 
 [
+   db:refname [ "templateid" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+  db.templateid.role.attribute = attribute role { text }
+
+  db.templateid.attlist =
+     db.templateid.role.attribute?
+   & db.common.attributes
+   & db.common.linking.attributes
+  
+  db.templateid =
+     element templateid {
+        db.templateid.attlist,
+        db._text
+     }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "template" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+  db.template.role.attribute = attribute role { text }
+
+  db.template.attlist =
+     db.template.role.attribute?
+   & db.common.attributes
+   & db.common.linking.attributes
+  
+  db.template =
+     element template {
+        db.template.attlist,
+        (((db.modifier | db.type | db._text)*,
+         db.templateid,
+         (db.modifier | db.type | db._text)*) 
+         | db.specializedtemplate)
+     }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "specializedtemplate" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+  db.specializedtemplate.role.attribute = attribute role { text }
+
+  db.specializedtemplate.attlist =
+     db.specializedtemplate.role.attribute?
+   & db.common.attributes
+   & db.common.linking.attributes
+  
+  db.specializedtemplate =
+     element specializedtemplate {
+        db.specializedtemplate.attlist,
+        (db.modifier | db.type | db._text)*
+     }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "namespace" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.namespace.role.attribute = attribute role { text }
+
+   db.namespace.attlist =
+      db.namespace.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.namespace =
+      element namespace {
+         db.namespace.attlist,
+         db.modifier*, db.namespacename, db.modifier*
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "namespacename" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.namespacename.role.attribute = attribute role { text }
+   
+   db.namespacename.attlist =
+      db.namespacename.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.namespacename =
+      element namespacename {
+         db.namespacename.attlist,
+         db._text
+      }
+
+}
+
+# ======================================================================
+
+[
+   db:refname [ "namespacesynopsis" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.namespacesynopsis.role.attribute = attribute role { text }
+   
+   db.namespacesynopsis.attlist =
+      db.namespacesynopsis.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.language.attribute?
+   
+   db.namespacesynopsis = 
+      element namespacesynopsis { 
+         db.namespacesynopsis.attlist,
+         (db.namespace | db.namespacename),
+         db.recursive.blocks.or.sections?, 
+         (db.synopsisinfo
+          | db.classsynopsis
+          | db.funcsynopsis
+          | db.fieldsynopsis
+          | db.typedefsynopsis
+          | db.macrosynopsis
+          | db.enumsynopsis
+          | db.namespacesynopsis)*, 
+         db.recursive.blocks.or.sections?
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "macroname" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.macroname.role.attribute = attribute role { text }
+   
+   db.macroname.attlist =
+      db.macroname.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.macroname =
+      element macroname {
+         db.macroname.attlist,
+         db._text
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "macrosynopsis" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.macrosynopsis.role.attribute = attribute role { text }
+   
+   db.macrosynopsis.attlist =
+      db.macrosynopsis.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.language.attribute?
+   
+   db.macrosynopsis =
+      element macrosynopsis {
+         db.macrosynopsis.attlist,
+         db.macroname,
+         db.synopsisinfo*,
+         db.macroprototype+,
+         db.synopsisinfo*, 
+         db.recursive.blocks.or.sections?
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "macroprototype" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.macroprototype.role.attribute = attribute role { text }
+   
+   db.macroprototype.attlist =
+      db.macroprototype.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.macroprototype =
+      element macroprototype {
+         db.macroprototype.attlist,
+         db.modifier*,
+         db.macrodef,
+         (db.void
+          | db.varargs
+          | ((db.paramdef | db.group.paramdef)+, db.varargs?)),
+         db.modifier*
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "macrodef" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.macrodef.role.attribute = attribute role { text }
+   
+   db.macrodef.attlist =
+      db.macrodef.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.macrodef =
+      element macrodef {
+         db.macrodef.attlist,
+         (db.type | db.templateid)*, db.macroname
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "unionname" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.unionname.role.attribute = attribute role { text }
+   
+   db.unionname.attlist =
+      db.unionname.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.unionname =
+      element unionname {
+         db.unionname.attlist,
+         db._text
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "union" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.union.role.attribute = attribute role { text }
+   
+   db.union.attlist =
+      db.union.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.union =
+      element union {
+         db.union.attlist,
+         db.unionname?,
+         db.programming.inlines*
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "unionsynopsis" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.unionsynopsis.role.attribute = attribute role { text }
+       
+   db.unionsynopsis.attlist =
+      db.unionsynopsis.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.language.attribute?
+    & db.enumitem.ordered.attribute?
+   
+   db.unionsynopsis = 
+      element unionsynopsis {
+         db.unionsynopsis.attlist, 
+         db.unionname?,
+         db.union?, 
+         db.synopsisinfo*,
+         db.recursive.blocks.or.sections?
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "enumname" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.enumname.role.attribute = attribute role { text }
+   
+   db.enumname.attlist =
+      db.enumname.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.enumname =
+      element enumname {
+         db.enumname.attlist,
+         db._text
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "enumvalue" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.enumvalue.role.attribute = attribute role { text }
+   
+   db.enumvalue.attlist =      
+      db.enumvalue.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.enumvalue =
+      element enumvalue {
+         db.enumvalue.attlist,
+         db._text
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "enumitemdescription" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.enumitemdescription.role.attribute = attribute role { text }
+   
+   db.enumitemdescription.attlist =
+      db.enumitemdescription.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.enumitemdescription =
+      element enumitemdescription {
+         db.enumitemdescription.attlist,
+         db.all.inlines*
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "enumidentifier" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.enumidentifier.role.attribute = attribute role { text }
+   
+   db.enumidentifier.attlist =
+      db.enumidentifier.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.enumidentifier =
+      element enumidentifier {
+         db.enumidentifier.attlist,
+         db._text
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "enumitem" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.enumitem.role.attribute = attribute role { text }
+   
+   db.enumitem.attlist =
+      db.enumitem.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.enumitem =
+      element enumitem {
+         db.enumvalue.attlist,
+         db.enumidentifier,
+         db.enumvalue?,
+         db.enumitemdescription?
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "enumsynopsis" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.enumsynopsis.role.attribute = attribute role { text }
+   db.enumitem.ordered.attribute = attribute ordered { text }
+   
+   db.enumsynopsis.attlist =
+      db.enumsynopsis.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.language.attribute?
+    & db.enumitem.ordered.attribute?
+   
+   db.enumsynopsis = 
+      element enumsynopsis {
+         db.enumsynopsis.attlist, 
+         db.enumname?, 
+         db.synopsisinfo*,
+         db.enumitem+, 
+         db.recursive.blocks.or.sections?
+      }
+   
+}
+
+# ======================================================================
+
+[
+   db:refname [ "typedefname" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.typedefname.role.attribute = attribute role { text }
+   
+   db.typedefname.attlist =
+      db.typedefname.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+   
+   db.typedefname =
+      element typedefname {
+         db.typedefname.attlist,
+         db._text
+      }
+
+}
+
+# ======================================================================
+
+[
+   db:refname [ "typedefsynopsis" ]
+   db:refpurpose [ "FIXME:" ]
+]
+div {
+
+   db.typedefsynopsis.role.attribute = attribute role { text }
+
+   db.typedefsynopsis.attlist =
+      db.typedefsynopsis.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.language.attribute?
+   
+   db.typedefsynopsis = 
+      element typedefsynopsis {
+         db.typedefsynopsis.attlist, 
+         db.typedefname, 
+         db.programming.inlines*, 
+         db.recursive.blocks.or.sections?
+      }
+   
+}
+
+# ======================================================================
+
+[
    db:refname [ "programlisting" ]
    db:refpurpose [ "A literal listing of all or part of a program" ]
 ]
@@ -887,4 +1463,3 @@ div {
          db.verbatim.contentmodel
       }
 }
-
