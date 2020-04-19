@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="5.2">
+   <db:info>
+      <db:title>Java throws</db:title>
+      <db:abstract>
+         <db:para>Simplified version of the class <db:classname>Files</db:classname>, limited to its <db:methodname>write</db:methodname> method. </db:para>
+      </db:abstract>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass><db:package>java.nio.file</db:package><db:classname>Files</db:classname></db:ooclass>
+      <db:methodsynopsis>
+         <db:methodname>write</db:methodname>
+         <db:methodparam>
+            <db:type>Path</db:type>
+            <db:parameter>path</db:parameter>
+            <db:para>the path to the file</db:para>
+         </db:methodparam>
+         <db:methodparam>
+            <db:type>byte[]</db:type>
+            <db:parameter>bytes</db:parameter>
+            <db:para>the byte array with the bytes to write</db:para>
+         </db:methodparam>
+         <db:synopsisinfo role="throws">
+            <db:exceptionname>IllegalArgumentException</db:exceptionname>
+            <db:para>if options contains an invalid combination of options</db:para>
+         </db:synopsisinfo>
+         <db:para>Writes bytes to a file. […]</db:para>
+      </db:methodsynopsis>
+   </db:classsynopsis>
+</db:article>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.2">
+    <db:title>Java generics</db:title>
+    <db:para>An example inspired by <db:link xlink:href="https://docs.julialang.org/en/v1/manual/types/index.html#Parametric-Types-1">Julia's documentation</db:link>.</db:para>
+    
+    <db:classsynopsis>
+        <db:classname>Point</db:classname>
+        <db:template>
+            <db:templateid>T</db:templateid>
+        </db:template>
+        
+        <db:fieldsynopsis>
+            <db:templateid>T</db:templateid>
+            <db:varname>x</db:varname>
+        </db:fieldsynopsis>
+        
+        <db:fieldsynopsis>
+            <db:templateid>T</db:templateid>
+            <db:varname>y</db:varname>
+        </db:fieldsynopsis>
+        
+        <db:para>Class Point.</db:para>
+    </db:classsynopsis>
+    
+    <db:classsynopsis>
+        <db:classname>Point</db:classname>
+        <db:template>
+            <db:specializedtemplate>Float64</db:specializedtemplate>
+        </db:template>
+        
+        <db:fieldsynopsis>
+            <db:type>Float64</db:type>
+            <db:varname>x</db:varname>
+        </db:fieldsynopsis>
+        
+        <db:fieldsynopsis>
+            <db:type>Float64</db:type>
+            <db:varname>y</db:varname>
+        </db:fieldsynopsis>
+        
+        <db:para>Specialized class Point.</db:para>
+    </db:classsynopsis>
+    
+    <db:methodsynopsis>
+        <db:methodname>translate_point</db:methodname>
+        <db:methodparam>
+            <db:type>
+                <db:classname>Point</db:classname>{<db:templateid>T</db:templateid>}
+            </db:type>
+            <db:parameter>p</db:parameter>
+        </db:methodparam>
+        <db:template>
+            where <db:templateid>T</db:templateid>
+        </db:template>
+    </db:methodsynopsis>
+</db:article>

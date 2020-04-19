@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.2">
+    <db:title>Java generics</db:title>
+    <db:para>An example inspired by <db:link xlink:href="https://en.wikipedia.org/wiki/Generics_in_Java#Generic_class_definitions">Wikipedia</db:link>.</db:para>
+    <db:classsynopsis>
+        <db:classname>Entry</db:classname>
+        <db:template>
+            <db:templateid>KeyType</db:templateid>
+        </db:template>
+        <db:template>
+            <!-- Show how to model type wildcards. -->
+            <db:templateid>ValueType</db:templateid>
+            <db:modifier>extends</db:modifier>
+            <db:type>Number</db:type>
+        </db:template>
+        <db:para>Class Entry.</db:para>
+    </db:classsynopsis>
+</db:article>
