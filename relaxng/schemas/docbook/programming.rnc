@@ -1230,7 +1230,7 @@ div {
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
-    & db.enumitem.ordered.attribute?
+    & db.enumsynopsis.ordered.attribute?
    
    db.unionsynopsis = 
       element unionsynopsis {
@@ -1369,14 +1369,23 @@ div {
 div {
 
    db.enumsynopsis.role.attribute = attribute role { text }
-   db.enumitem.ordered.attribute = attribute ordered { text }
+
+   db.enumsynopsis.ordered.enumeration =
+  
+      ## Value of enum is specified explicitly using enumvalue
+   "0"
+    | 
+      ## Value of enum is inferred from its position
+   "1"
+
+   db.enumsynopsis.ordered.attribute = attribute ordered { db.enumsynopsis.ordered.enumeration }
    
    db.enumsynopsis.attlist =
       db.enumsynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
-    & db.enumitem.ordered.attribute?
+    & db.enumsynopsis.ordered.attribute?
    
    db.enumsynopsis = 
       element enumsynopsis {
