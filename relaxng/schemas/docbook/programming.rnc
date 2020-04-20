@@ -922,7 +922,7 @@ div {
 
 [
    db:refname [ "templateid" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The identifier for a template, in the generic programming sense" ]
 ]
 div {
 
@@ -944,7 +944,7 @@ div {
 
 [
    db:refname [ "template" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The definition of a template, in the generic programming sense" ]
 ]
 div {
 
@@ -969,7 +969,7 @@ div {
 
 [
    db:refname [ "specializedtemplate" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The specialization of a template identifier, in the generic programming sense" ]
 ]
 div {
 
@@ -991,7 +991,7 @@ div {
 
 [
    db:refname [ "namespace" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The definition of a name space, which may be more than a name" ]
 ]
 div {
 
@@ -1013,7 +1013,7 @@ div {
 
 [
    db:refname [ "namespacename" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The name of a name space" ]
 ]
 div {
 
@@ -1036,7 +1036,7 @@ div {
 
 [
    db:refname [ "namespacesynopsis" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The syntax summary for a name space definition" ]
 ]
 div {
 
@@ -1070,7 +1070,7 @@ div {
 
 [
    db:refname [ "macroname" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The name of a macro (a code-generating function)" ]
 ]
 div {
 
@@ -1093,7 +1093,7 @@ div {
 
 [
    db:refname [ "macrosynopsis" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The syntax summary for a macro definition (code-generating function)" ]
 ]
 div {
 
@@ -1121,7 +1121,7 @@ div {
 
 [
    db:refname [ "macroprototype" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The prototype of a macro (code-generating function)" ]
 ]
 div {
 
@@ -1149,7 +1149,7 @@ div {
 
 [
    db:refname [ "macrodef" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "A macro name and its return type" ]
 ]
 div {
 
@@ -1172,7 +1172,7 @@ div {
 
 [
    db:refname [ "unionname" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The name of a union of types" ]
 ]
 div {
 
@@ -1195,7 +1195,7 @@ div {
 
 [
    db:refname [ "union" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The definition of a union of types, which may be more than a name" ]
 ]
 div {
 
@@ -1219,7 +1219,7 @@ div {
 
 [
    db:refname [ "unionsynopsis" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The syntax summary for a union-of-types definition" ]
 ]
 div {
 
@@ -1247,7 +1247,7 @@ div {
 
 [
    db:refname [ "enumname" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The name of a union of types" ]
 ]
 div {
 
@@ -1270,7 +1270,7 @@ div {
 
 [
    db:refname [ "enumvalue" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The value an enumerated type can take" ]
 ]
 div {
 
@@ -1293,7 +1293,7 @@ div {
 
 [
    db:refname [ "enumitemdescription" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The description of a value an enumerated type can take" ]
 ]
 div {
 
@@ -1316,7 +1316,7 @@ div {
 
 [
    db:refname [ "enumidentifier" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The identifier of a value an enumerated type can take" ]
 ]
 div {
 
@@ -1339,7 +1339,7 @@ div {
 
 [
    db:refname [ "enumitem" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "A value an enumerated type can take and its description" ]
 ]
 div {
 
@@ -1364,7 +1364,7 @@ div {
 
 [
    db:refname [ "enumsynopsis" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The syntax summary for an enumerated-type definition" ]
 ]
 div {
 
@@ -1393,7 +1393,7 @@ div {
 
 [
    db:refname [ "typedefname" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The name of a type alias" ]
 ]
 div {
 
@@ -1416,7 +1416,7 @@ div {
 
 [
    db:refname [ "typedefsynopsis" ]
-   db:refpurpose [ "FIXME:" ]
+   db:refpurpose [ "The syntax summary for a type-alias definition" ]
 ]
 div {
 
