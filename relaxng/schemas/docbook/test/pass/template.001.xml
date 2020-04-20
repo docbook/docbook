@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.2">
+    <db:title>C++ template</db:title>
+    <db:para>An example inspired by <db:link xlink:href="https://en.cppreference.com/w/cpp/language/templates">CppReference</db:link>.</db:para>
+    <db:classsynopsis>
+        <db:classname>X</db:classname>
+        <db:template>
+            <db:modifier>class</db:modifier>
+            <db:templateid>T</db:templateid>
+        </db:template>
+        <db:para>Class X.</db:para>
+    </db:classsynopsis>
+</db:article>

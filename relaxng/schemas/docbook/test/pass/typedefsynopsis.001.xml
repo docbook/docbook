@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="5.2">
+   <db:info>
+      <db:title>QFileInfo</db:title>
+      <db:abstract>
+         <db:para>System-independent file information</db:para>
+      </db:abstract>
+      <db:pubdate>2018-09-08+02:00</db:pubdate>
+      <db:date>2018-09-08+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QFileInfo</db:classname>
+      </db:ooclass>
+      <db:synopsisinfo role="threadsafety">reentrant</db:synopsisinfo>
+      <db:synopsisinfo role="module">QtCore</db:synopsisinfo>
+      <db:synopsisinfo role="headers">#include &lt;qfileinfo.h&gt;</db:synopsisinfo>
+      <db:synopsisinfo role="group">io</db:synopsisinfo>
+      <db:synopsisinfo role="group">shared</db:synopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> class provides system-independent file information.</db:para>
+   </db:section>
+   <db:section>
+      <db:title>Member Types Documentation</db:title>
+      <db:section>
+         <db:title>typedef QFileInfoList</db:title>
+         <db:typedefsynopsis>
+            <db:typedefname>QFileInfoList</db:typedefname>
+         </db:typedefsynopsis>
+         <db:para>Synonym for <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code>&gt;.</db:para>
+      </db:section>
+   </db:section>
+</db:article>
