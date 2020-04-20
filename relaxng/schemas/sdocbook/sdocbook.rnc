@@ -120,6 +120,28 @@ include "../docbook/programming.rnc" {
    db.returnvalue = notAllowed
    db.varname = notAllowed
    db.type = notAllowed
+  db.synopsisinfo = notAllowed
+  db.templateid = notAllowed
+  db.specializedtemplate = notAllowed
+  db.template = notAllowed
+  db.namespace = notAllowed
+  db.namespacename = notAllowed
+  db.namespacesynopsis = notAllowed
+  db.macroname = notAllowed
+  db.macrosynopsis = notAllowed
+  db.macroprototype = notAllowed
+  db.macrodef = notAllowed
+  db.unionname = notAllowed
+  db.union = notAllowed
+  db.unionsynopsis = notAllowed
+  db.enumname = notAllowed
+  db.enumvalue = notAllowed
+  db.enumitemdescription = notAllowed
+  db.enumidentifier = notAllowed
+  db.enumitem = notAllowed
+  db.enumsynopsis = notAllowed
+  db.typedefname = notAllowed
+  db.typedefsynopsis = notAllowed
 }
 
 include "../docbook/technical.rnc" {
