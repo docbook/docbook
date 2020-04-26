@@ -24,12 +24,12 @@
 
 <xsl:template match="attribute()">
   <xsl:attribute name="{node-name(.)}"
-                 select="replace(replace(replace(replace(.,'ROOT',$ROOT), 'ROOT2', $ROOT2), 'VERSION', $VERSION), 'RELEASE', $RELEASE)"/>
+                 select="replace(replace(replace(replace(.,'ROOT2',$ROOT2), 'ROOT', $ROOT), 'VERSION', $VERSION), 'RELEASE', $RELEASE)"/>
 </xsl:template>
 
 <xsl:template match="text()">
   <xsl:value-of
-      select="replace(replace(replace(replace(.,'ROOT',$ROOT), 'ROOT2', $ROOT2), 'VERSION', $VERSION), 'RELEASE', $RELEASE)"/>
+      select="replace(replace(replace(replace(.,'ROOT2',$ROOT2), 'ROOT', $ROOT), 'VERSION', $VERSION), 'RELEASE', $RELEASE)"/>
 </xsl:template>
 
 </xsl:stylesheet>
