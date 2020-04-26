@@ -290,6 +290,7 @@ div {
   db.sect3 = notAllowed
   db.sect4 = notAllowed
   db.sect5 = notAllowed
+  db.legalsection = notAllowed
   db.seealsoie = notAllowed
   db.seeie = notAllowed
   db.seg = notAllowed
@@ -303,6 +304,7 @@ div {
   db.synopfragmentref = notAllowed
   db.synopsis = notAllowed
   db.systemitem = notAllowed
+  db.buildtarget = notAllowed
   db.tag = notAllowed
   db.html.td = notAllowed
   db.tertiaryie = notAllowed
