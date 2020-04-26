@@ -6,9 +6,7 @@
 
 all:
 	cd relaxng/schemas && gradle dist
-	cd xmlschema/schemas && gradle
 
 clean:
 	cd relaxng/schemas && gradle clean
-	cd xmlschema/schemas && gradle clean
 
