@@ -1247,7 +1247,7 @@ div {
 
 [
    db:refname [ "enumname" ]
-   db:refpurpose [ "The name of a union of types" ]
+   db:refpurpose [ "The name of an enumerated type" ]
 ]
 div {
 
