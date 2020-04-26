@@ -10,10 +10,6 @@
 <p:option name="remove-schematron" select="0"/>
 <p:option name="make-rnc" select="'1'"/>
 
-<!--
-TRANG=java -cp $(CLASSPATH) com.thaiopensource.relaxng.translate.Driver
--->
-
 <p:exec command="java" source-is-xml='false' result-is-xml='false' name="trang">
   <p:input port="source">
     <p:empty/>
@@ -65,7 +61,7 @@ TRANG=java -cp $(CLASSPATH) com.thaiopensource.relaxng.translate.Driver
   <p:with-param name="release" select="$release"/>
 </p:template>
 
-<p:xslt>
+<p:xslt name="final">
   <p:input port="source">
     <p:pipe step="schema" port="result"/>
   </p:input>
@@ -81,13 +77,25 @@ TRANG=java -cp $(CLASSPATH) com.thaiopensource.relaxng.translate.Driver
   <p:with-option name="href" select="concat(exf:cwd(), '/', $schema, '.rng')"/>
 </p:store>
 
+<!-- Store it without indentation so that trang doesn't put a whole bunch
+     of ugly, spurious whitespace nodes in the Schematron rules. -->
+<p:store name="store-fixws" method="xml" indent="false">
+  <p:input port="source">
+    <p:pipe step="final" port="result"/>
+  </p:input>
+  <p:with-option name="href"
+                 select="concat(exf:cwd(), '/build/', $schema, '-ws.rng')"/>
+</p:store>
+
 <p:choose>
   <p:when test="$make-rnc != '0'">
-    <p:exec command="java" source-is-xml='false' result-is-xml='false' cx:depends-on="store">
+    <p:exec command="java" source-is-xml='false' result-is-xml='false'
+            cx:depends-on="store-fixws">
       <p:input port="source">
         <p:empty/>
       </p:input>
-      <p:with-option name="args" select="concat('-jar ../../lib/trang-2009-11-11.jar ', $schema,'.rng ',$schema,'.rnc')">
+      <p:with-option name="args"
+         select="concat('-jar ../../lib/trang-2009-11-11.jar build/', $schema,'-ws.rng ',$schema,'.rnc')">
         <p:empty/>
       </p:with-option>
     </p:exec>
