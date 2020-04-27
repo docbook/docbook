@@ -1224,13 +1224,21 @@ div {
 div {
 
    db.unionsynopsis.role.attribute = attribute role { text }
+
+   # N.B. the enumeration is explicitly identical to the enumeration
+   # on enumsynopsis by default.
+   db.unionsynopsis.ordered.attribute =
+      [
+         db:refpurpose [ "Indicates how the value of a union is specified." ]
+      ]
+      attribute ordered { db.enumsynopsis.ordered.enumeration }
        
    db.unionsynopsis.attlist =
       db.unionsynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
-    & db.enumsynopsis.ordered.attribute?
+    & db.unionsynopsis.ordered.attribute?
    
    db.unionsynopsis = 
       element unionsynopsis {
@@ -1247,7 +1255,7 @@ div {
 
 [
    db:refname [ "enumname" ]
-   db:refpurpose [ "The name of a union of types" ]
+   db:refpurpose [ "The name of an enumeration" ]
 ]
 div {
 
@@ -1371,14 +1379,17 @@ div {
    db.enumsynopsis.role.attribute = attribute role { text }
 
    db.enumsynopsis.ordered.enumeration =
-  
       ## Value of enum is specified explicitly using enumvalue
    "0"
     | 
       ## Value of enum is inferred from its position
    "1"
 
-   db.enumsynopsis.ordered.attribute = attribute ordered { db.enumsynopsis.ordered.enumeration }
+   db.enumsynopsis.ordered.attribute =
+      [
+         db:refpurpose [ "Indicates how the value of an enumeration is specified." ]
+      ]
+      attribute ordered { db.enumsynopsis.ordered.enumeration }
    
    db.enumsynopsis.attlist =
       db.enumsynopsis.role.attribute?
