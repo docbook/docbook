@@ -2330,10 +2330,14 @@ information, see http://www.oasis-open.org/docbook/.
             </optional>
          </interleave>
       </define>
+      <define name="db.listitem.info">
+         <ref name="db._info.title.forbidden"/>
+      </define>
       <define name="db.listitem">
          <element name="listitem">
             <a:documentation>A wrapper for the elements of a list item</a:documentation>
             <ref name="db.listitem.attlist"/>
+            <ref name="db.listitem.info"/>
             <oneOrMore>
                <ref name="db.all.blocks"/>
             </oneOrMore>
