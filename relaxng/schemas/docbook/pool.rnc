@@ -1812,8 +1812,11 @@ div {
     & db.common.linking.attributes
     & db.listitem.override.attribute?
 
+   db.listitem.info = db._info.title.forbidden
+
    db.listitem = element listitem {
       db.listitem.attlist,
+      db.listitem.info,
       db.all.blocks+
    }
 }
