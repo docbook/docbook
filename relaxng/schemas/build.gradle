@@ -104,6 +104,32 @@ task assembly_sch(dependsOn: assembly_rnc, type: XMLCalabashTask) {
   output("result", "assembly.sch")
 }
 
+task assemblyxi_rnc(type: XMLCalabashTask) {
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'assembly').exclude("test/**")
+  inputs.files fileTree(dir: 'assemblyxi').exclude("test/**")
+  inputs.file mkschema
+  outputs.dir "build/assemblyxi"
+  outputs.file "assemblyxi.rnc"
+
+  pipeline mkschema
+  option("schema","assemblyxi")
+  option("release",xirel)
+  option("remove-schematron",removesch)
+
+  doFirst {
+    mkdir("build/assemblyxi")
+  }
+}
+
+task assemblyxi_sch(dependsOn: assemblyxi_rnc, type: XMLCalabashTask) {
+  inputs.file "assemblyxi.rng"
+  outputs.file "assemblyxi.sch"
+  pipeline mkschematron
+  input("source", "assemblyxi.rng")
+  output("result", "assemblyxi.sch")
+}
+
 task docbookxi_rnc(type: XMLCalabashTask) {
   inputs.files fileTree(dir: 'docbook').exclude("test/**")
   inputs.files fileTree(dir: 'docbookxi').exclude("test/**")
@@ -386,6 +412,8 @@ task schemas(dependsOn: ['assembly_rnc',
                          'docbook_sch',
                          'docbookxi_rnc',
                          'docbookxi_sch',
+                         'assemblyxi_rnc',
+                         'assemblyxi_sch',
                          'publishers_rnc',
                          'publishers_sch',
                          'sdocbook_rnc',
@@ -575,13 +603,14 @@ task test(dependsOn: ['testDocBook', 'testAssembly', 'testPublishers']) {
 
 // ============================================================
 
-task distDocBook1(dependsOn: ['docbook_rnc','docbookxi_rnc',
+task distDocBook1(dependsOn: ['docbook_rnc','docbookxi_rnc', 'assemblyxi_rnc',
                               'assembly_rnc','dbits_rnc'],
                   type: Copy) {
   from('.') {
     include 'docbook.rn*'
     include 'docbookxi.rn*'
     include 'assembly.rn*'
+    include 'assemblyxi.rn*'
     include 'dbits.rn*'
   }
   into "build/dist/xml/${docbook_version}/rng"
@@ -590,13 +619,14 @@ task distDocBook1(dependsOn: ['docbook_rnc','docbookxi_rnc',
   }
 }
 
-task distDocBook2(dependsOn: ['docbook_sch','docbookxi_sch',
+task distDocBook2(dependsOn: ['docbook_sch','docbookxi_sch', 'assemblyxi_sch',
                               'assembly_sch','dbits_sch'],
                   type: Copy) {
   from('.') {
     include 'docbook.sch'
     include 'docbookxi.sch'
     include 'assembly.sch'
+    include 'assemblyxi.sch'
     include 'dbits.sch'
   }
   into "build/dist/xml/${docbook_version}/sch"
@@ -664,13 +694,14 @@ task distDocBook(dependsOn: ['distDocBook1', 'distDocBook2',
 
 // ============================================================
 
-task distDocBookOASIS1(dependsOn: ['docbook_rnc','docbookxi_rnc',
+task distDocBookOASIS1(dependsOn: ['docbook_rnc','docbookxi_rnc', 'assemblyxi_rnc',
                                    'assembly_rnc','dbits_rnc'],
                        type: Copy) {
   from('.') {
     include 'docbook.rn*'
     include 'docbookxi.rn*'
     include 'assembly.rn*'
+    include 'assemblyxi.rn*'
     include 'dbits.rn*'
   }
   into "build/dist/docbook/docbook/${oasis_version}/${oasis_release}/rng"
@@ -679,13 +710,14 @@ task distDocBookOASIS1(dependsOn: ['docbook_rnc','docbookxi_rnc',
   }
 }
 
-task distDocBookOASIS2(dependsOn: ['docbook_sch','docbookxi_sch',
+task distDocBookOASIS2(dependsOn: ['docbook_sch','docbookxi_sch', 'assemblyxi_rnc',
                                    'assembly_sch','dbits_sch'],
                        type: Copy) {
   from('.') {
     include 'docbook.sch'
     include 'docbookxi.sch'
     include 'assembly.sch'
+    include 'assemblyxi.sch'
     include 'dbits.sch'
   }
   into "build/dist/docbook/docbook/${oasis_version}/${oasis_release}/sch"
