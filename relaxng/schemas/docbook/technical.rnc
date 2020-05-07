@@ -150,7 +150,7 @@ div {
    db.optional =
       element optional {
          db.optional.attlist,
-         db._text
+         (db._text | db.optional)*
       }
 }
 
