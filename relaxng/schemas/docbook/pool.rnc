@@ -762,6 +762,7 @@ db.publishing.inlines =
  | db.foreignphrase
  | db.phrase
  | db.quote
+ | db.revnumber
  | db.subscript
  | db.superscript
  | db.wordasword

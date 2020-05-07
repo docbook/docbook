@@ -1,0 +1,17 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.2"
+         xml:id="article">
+<info>
+<title>Unit Test: revnumber.005.xml</title>
+<revhistory>
+  <revision>
+    <revnumber>1.0</revnumber>
+    <date>2020-05-07</date>
+    <revremark>Just a test.</revremark>
+  </revision>
+</revhistory>
+</info>
+
+<para>As of <revnumber>5.2</revnumber>, DocBook allows <tag>revnumber</tag>
+in prose.</para>
+
+</article>
