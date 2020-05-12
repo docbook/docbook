@@ -1081,6 +1081,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.foreignphrase"/>
             <ref name="db.phrase"/>
             <ref name="db.quote"/>
+            <ref name="db.revnumber"/>
             <ref name="db.subscript"/>
             <ref name="db.superscript"/>
             <ref name="db.wordasword"/>
@@ -18015,7 +18016,12 @@ where the nonterminal
          <element name="optional">
             <a:documentation>Optional information</a:documentation>
             <ref name="db.optional.attlist"/>
-            <ref name="db._text"/>
+            <zeroOrMore>
+               <choice>
+                  <ref name="db._text"/>
+                  <ref name="db.optional"/>
+               </choice>
+            </zeroOrMore>
          </element>
       </define>
    </div>

@@ -617,6 +617,7 @@ db.publishing.inlines =
    | db.foreignphrase
    | db.phrase
    | db.quote
+   | db.revnumber
    | db.subscript
    | db.superscript
    | db.wordasword)
@@ -10063,7 +10064,7 @@ div {
   db.optional =
     
     ## Optional information
-    element optional { db.optional.attlist, db._text }
+    element optional { db.optional.attlist, (db._text | db.optional)* }
 }
 div {
   db.property.role.attribute = attribute role { text }
