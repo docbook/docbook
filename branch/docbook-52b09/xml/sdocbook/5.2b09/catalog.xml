@@ -1,0 +1,35 @@
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">
+
+<!-- ............................................................ -->
+<!-- XML Catalog for DocBook Simplified ......................... -->
+<!-- File catalog.xml ........................................... -->
+
+<!-- Please direct all questions, bug reports, or suggestions for
+     changes to the docbook-comment@lists.oasis-open.org mailing list.
+     For more information, see http://www.oasis-open.org/.
+-->
+
+<!-- This is a catalog data file for DocBook Simplified. It is
+     provided as a convenience in building your own catalog files. You
+     need not use the filenames listed here, and need not use the
+     filename method of identifying storage objects at all. See the
+     documentation for detailed information on the files associated
+     with the DocBook DTD. See XML Catalogs at
+     http://www.oasis-open.org/committees/entity/ for detailed
+     information on supplying and using catalog data.
+-->
+   <uri name="https://docbook.org/xml/sdocbook/5.2b09/rng/sdocbook.rnc"
+        uri="rng/sdocbook.rnc"/>
+   <uri name="https://docbook.org/xml/sdocbook/5.2b09/rng/sdocbook.rng"
+        uri="rng/sdocbook.rng"/>
+   <uri name="https://docbook.org/xml/sdocbook/5.2b09/sch/sdocbook.sch"
+        uri="sch/sdocbook.rng"/>
+   <uri name="https://www.docbook.org/xml/sdocbook/5.2b09/rng/sdocbook.rnc"
+        uri="rng/sdocbook.rnc"/>
+   <uri name="https://www.docbook.org/xml/sdocbook/5.2b09/rng/sdocbook.rng"
+        uri="rng/sdocbook.rng"/>
+   <uri name="https://www.docbook.org/xml/sdocbook/5.2b09/sch/sdocbook.sch"
+        uri="sch/sdocbook.rng"/>
+   <!-- End of XML Catalog for DocBook Simplified .................. -->
+   <!-- ............................................................ -->
+</catalog>
