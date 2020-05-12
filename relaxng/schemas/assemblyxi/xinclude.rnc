@@ -1,0 +1,52 @@
+namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
+namespace rng  = "http://relaxng.org/ns/structure/1.0"
+namespace xi = "http://www.w3.org/2001/XInclude"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+default namespace db = "http://docbook.org/ns/docbook"
+namespace local = ""
+
+db.assembly |= db.xi.include
+db.resources |= db.xi.include
+db.relationships |= db.xi.include
+db.transforms |= db.xi.include
+db.module |= db.xi.include
+
+# ======================================================================
+
+[
+   db:refname [ "xi:include" ]
+   db:refpurpose [ "An XInclude" ]
+]
+div {
+   db.any.other.attribute = attribute * - local:* { text }
+
+   db.xi.include.attlist =
+      attribute href { xsd:anyURI { pattern = "[^#]+" } }?,
+      [ a:defaultValue="xml" ] attribute parse { "xml" | "text" }?,
+      attribute xpointer { text }?,
+      attribute encoding { text }?,
+      attribute accept { text }?,
+      attribute accept-language { text }?,
+      db.any.other.attribute*
+
+   db.xi.include =
+      element xi:include {
+         db.xi.include.attlist,
+         db.xi.fallback?
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "xi:fallback" ]
+   db:refpurpose [ "An XInclude fallback" ]
+]
+div {
+  # The fallback element has no attributes
+
+  db.xi.fallback =
+      element xi:fallback {
+        db.all.blocks+ | db.all.inlines+ | db._any*
+      }
+}
