@@ -53,8 +53,10 @@ div {
       attribute * { text }
 
    db._any =
-      element * - (db:* | html:*) { (db._any.attribute | text | db._any)* }
+      element * { (db._any.attribute | text | db._any)* }
 
+   db._notdb =
+      element * - db:* { (db._any.attribute | text | db._any)* }
 }
 
 # ======================================================================
@@ -848,7 +850,7 @@ db.extension.blocks = notAllowed
 
 # ======================================================================
 
-db.info.extension = db._any
+db.info.extension = db._notdb
 
 db.info.elements =
    db.abstract
