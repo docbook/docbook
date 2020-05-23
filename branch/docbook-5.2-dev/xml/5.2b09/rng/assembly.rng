@@ -58,10 +58,22 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db._any">
          <element>
             <a:documentation>Any element from almost any namespace</a:documentation>
+            <anyName/>
+            <zeroOrMore>
+               <choice>
+                  <ref name="db._any.attribute"/>
+                  <text/>
+                  <ref name="db._any"/>
+               </choice>
+            </zeroOrMore>
+         </element>
+      </define>
+      <define name="db._notdb">
+         <element>
+            <a:documentation>Any element from almost any namespace</a:documentation>
             <anyName>
                <except>
                   <nsName/>
-                  <nsName ns="http://www.w3.org/1999/xhtml"/>
                </except>
             </anyName>
             <zeroOrMore>
@@ -1103,7 +1115,7 @@ information, see http://www.oasis-open.org/docbook/.
       </choice>
    </define>
    <define name="db.info.extension">
-      <ref name="db._any"/>
+      <ref name="db._notdb"/>
    </define>
    <define name="db.info.elements">
       <choice>

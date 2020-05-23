@@ -118,9 +118,11 @@ div {
   db._any =
     
     ## Any element from almost any namespace
-    element * - (db:* | html:*) {
-      (db._any.attribute | text | db._any)*
-    }
+    element * { (db._any.attribute | text | db._any)* }
+  db._notdb =
+    
+    ## Any element from almost any namespace
+    element * - db:* { (db._any.attribute | text | db._any)* }
 }
 db.arch.attribute =
   
@@ -730,7 +732,7 @@ db.verbatim.blocks =
   (db.screen | db.literallayout)
   | (db.programlistingco | db.screenco)
   | (db.programlisting | db.synopsis)
-db.info.extension = db._any
+db.info.extension = db._notdb
 db.info.elements =
   (db.abstract
    | db.address

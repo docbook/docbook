@@ -177,6 +177,23 @@ information, see http://www.oasis-open.org/docbook/.
             <anyName/>
          </attribute>
       </define>
+      <define name="db._notdb">
+         <element>
+            <a:documentation>Any element from almost any namespace</a:documentation>
+            <anyName>
+               <except>
+                  <nsName/>
+               </except>
+            </anyName>
+            <zeroOrMore>
+               <choice>
+                  <ref name="db._any.attribute"/>
+                  <text/>
+                  <ref name="db._any"/>
+               </choice>
+            </zeroOrMore>
+         </element>
+      </define>
    </div>
    <define name="db.arch.attribute">
       <attribute name="arch">
@@ -1214,7 +1231,7 @@ information, see http://www.oasis-open.org/docbook/.
    </define>
    <define name="db.info.extension">
       <choice>
-         <ref name="db._any"/>
+         <ref name="db._notdb"/>
          <choice>
             <ref name="its-rules"/>
             <ref name="its-standoff"/>
