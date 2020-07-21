@@ -9,24 +9,32 @@
       </db:abstract>
    </db:info>
    <db:classsynopsis>
-      <db:ooclass><db:package>java.nio.file</db:package><db:classname>Files</db:classname></db:ooclass>
+      <db:ooclass>
+        <db:package>java.nio.file</db:package>
+        <db:classname>Files</db:classname>
+      </db:ooclass>
+      <db:ooexception xml:id='iae'>
+        <db:exceptionname>IllegalArgumentException</db:exceptionname>
+      </db:ooexception>
       <db:methodsynopsis>
          <db:methodname>write</db:methodname>
-         <db:methodparam>
+         <db:methodparam xml:id="fp">
             <db:type>Path</db:type>
             <db:parameter>path</db:parameter>
-            <db:para>the path to the file</db:para>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam xml:id="fb">
             <db:type>byte[]</db:type>
             <db:parameter>bytes</db:parameter>
-            <db:para>the byte array with the bytes to write</db:para>
          </db:methodparam>
-         <db:synopsisinfo role="throws">
-            <db:exceptionname>IllegalArgumentException</db:exceptionname>
-            <db:para>if options contains an invalid combination of options</db:para>
-         </db:synopsisinfo>
-         <db:para>Writes bytes to a file. […]</db:para>
       </db:methodsynopsis>
    </db:classsynopsis>
+
+<db:para>This class defines methods to operation on files.</db:para>
+
+<db:para>The <db:classname>write</db:classname> method writes bytes to
+a file. The <db:link linkend="fp">path</db:link>specifies the path to the
+file, <db:link linkend="fb">bytes</db:link> specifies the data to be written.
+An <db:exceptionname linkend="iae">IllegalArguementException</db:exceptionname> is throw
+if some circumstance arises.</db:para>
+
 </db:article>

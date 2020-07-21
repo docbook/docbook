@@ -54,7 +54,11 @@
             </db:enumitem>
             <db:enumitem>
                <db:enumidentifier>AlignHorizontal_Mask</db:enumidentifier>
-               <db:enumvalue>AlignLeft | AlignRight | AlignHCenter | AlignJustify | AlignAbsolute</db:enumvalue>
+               <db:enumvalue>AlignLeft</db:enumvalue>
+               <db:enumvalue>AlignRight</db:enumvalue>
+               <db:enumvalue>AlignHCenter</db:enumvalue>
+               <db:enumvalue>AlignJustify</db:enumvalue>
+               <db:enumvalue>AlignAbsolute</db:enumvalue>
             </db:enumitem>
             <db:enumitem>
                <db:enumidentifier>AlignTop</db:enumidentifier>
@@ -74,11 +78,15 @@
             </db:enumitem>
             <db:enumitem>
                <db:enumidentifier>AlignVertical_Mask</db:enumidentifier>
-               <db:enumvalue>AlignTop | AlignBottom | AlignVCenter | AlignBaseline</db:enumvalue>
+               <db:enumvalue>AlignTop</db:enumvalue>
+               <db:enumvalue>AlignBottom</db:enumvalue>
+               <db:enumvalue>AlignVCenter</db:enumvalue>
+               <db:enumvalue>AlignBaseline</db:enumvalue>
             </db:enumitem>
             <db:enumitem>
                <db:enumidentifier>AlignCenter</db:enumidentifier>
-               <db:enumvalue>AlignVCenter | AlignHCenter</db:enumvalue>
+               <db:enumvalue>AlignVCenter</db:enumvalue>
+               <db:enumvalue>AlignHCenter</db:enumvalue>
             </db:enumitem>
          </db:enumsynopsis>
          <db:typedefsynopsis>
