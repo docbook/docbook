@@ -1,5 +1,5 @@
 language: java
-script: make
+script: ./gradlew
 sudo: false
 
 after_success:
