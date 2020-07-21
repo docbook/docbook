@@ -1121,6 +1121,7 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.seriesvolnums"/>
             <ref name="db.subjectset"/>
             <ref name="db.volumenum"/>
+            <ref name="db.meta"/>
             <ref name="db.info.extension"/>
          </choice>
          <choice>
@@ -5267,6 +5268,53 @@ information, see http://www.oasis-open.org/docbook/.
             <ref name="db.issuenum.attlist"/>
             <ref name="db._text"/>
          </element>
+      </define>
+   </div>
+   <div>
+      <define name="db.meta.role.attribute">
+         <attribute name="role"/>
+      </define>
+      <define name="db.meta.name.attribute">
+         <attribute name="name"/>
+      </define>
+      <define name="db.meta.content.attribute">
+         <attribute name="content"/>
+      </define>
+      <define name="db.meta.attlist">
+         <interleave>
+            <ref name="db.meta.name.attribute"/>
+            <optional>
+               <ref name="db.meta.role.attribute"/>
+            </optional>
+            <ref name="db.common.attributes"/>
+            <ref name="db.common.linking.attributes"/>
+         </interleave>
+      </define>
+      <define name="db.meta.empty">
+         <element name="meta">
+            <a:documentation>A generic metadata element</a:documentation>
+            <ref name="db.meta.attlist"/>
+            <ref name="db.meta.content.attribute"/>
+            <empty/>
+         </element>
+      </define>
+      <define name="db.meta.content">
+         <element name="meta">
+            <a:documentation>A generic metadata element</a:documentation>
+            <ref name="db.meta.attlist"/>
+            <zeroOrMore>
+               <choice>
+                  <text/>
+                  <ref name="db._any"/>
+               </choice>
+            </zeroOrMore>
+         </element>
+      </define>
+      <define name="db.meta">
+         <choice>
+            <ref name="db.meta.empty"/>
+            <ref name="db.meta.content"/>
+         </choice>
       </define>
    </div>
    <div>

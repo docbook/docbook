@@ -716,6 +716,7 @@ db.info.elements =
    | db.seriesvolnums
    | db.subjectset
    | db.volumenum
+   | db.meta
    | db.info.extension)
   | db.annotation
   | db.extendedlink
@@ -3281,6 +3282,25 @@ div {
     
     ## The number of an issue of a journal
     element issuenum { db.issuenum.attlist, db._text }
+}
+div {
+  db.meta.role.attribute = attribute role { text }
+  db.meta.name.attribute = attribute name { text }
+  db.meta.content.attribute = attribute content { text }
+  db.meta.attlist =
+    db.meta.name.attribute
+    & db.meta.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+  db.meta.empty =
+    
+    ## A generic metadata element
+    element meta { db.meta.attlist, db.meta.content.attribute, empty }
+  db.meta.content =
+    
+    ## A generic metadata element
+    element meta { db.meta.attlist, (text | db._any)* }
+  db.meta = db.meta.empty | db.meta.content
 }
 div {
   db.package.role.attribute = attribute role { text }
