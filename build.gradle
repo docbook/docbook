@@ -32,6 +32,8 @@ dependencies {
   )
 }
 
+defaultTasks 'distribution'
+
 def gitRef() {
   def ref = ""
   def proc = "git rev-parse --short --verify HEAD".execute()
@@ -63,19 +65,19 @@ def captureOutput = new OutputStream() {
 }
 
 def version = [
-  "assembly": "DocBook Assembly " + dbver,
-  "assemblyxi": "DocBook Assembly XInclude" + dbver,
-  "dbforms": "DocBook Forms " + dbver,
-  "dbits": "DocBook ITS " + dbver,
-  "defguide": "DocBook Def. Guide" + dbver,
-  "docbook": "DocBook " + dbver,
-  "docbookxi": "DocBook XInclude " + dbver,
-  "publishers": "DocBook Publishers " + dbver + "-1",
-  "sdocbook": "Simplified DocBook " + dbver,
-  "slides": "DocBook Slides " + dbver + "-1",
-  "slides-full": "DocBook Slides Full " + dbver + "-1",
-  "website": "DocBook Wesite " + dbver + "-1",
-  "website-full": "DocBook Wesite Full " + dbver + "-1"
+  "assembly": "DocBook Assembly V${dbver}",
+  "assemblyxi": "DocBook Assembly XIncludeV${dbver}",
+  "dbforms": "DocBook Forms V${dbver}",
+  "dbits": "DocBook ITS V${dbver}",
+  "defguide": "DocBook Def. GuideV${dbver}",
+  "docbook": "DocBook V${dbver}",
+  "docbookxi": "DocBook XInclude V${dbver}",
+  "publishers": "DocBook Publishers V${dbver}",
+  "sdocbook": "Simplified DocBook V${dbver}",
+  "slides": "DocBook Slides V${dbver}-1",
+  "slides-full": "DocBook Slides Full V${dbver}",
+  "website": "DocBook Wesite V${dbver}-1",
+  "website-full": "DocBook Wesite Full V${dbver}"
 ]
 
 task makeSchemas() {
@@ -249,8 +251,8 @@ task defguide_rnd(type: SaxonXsltTask,
 }
 
 // ============================================================
-
 // Create tasks to run all of the tests
+def baseTests = [:]
 fileTree(dir: "src/test").each { testfile ->
   def pos = projectDir.toString().length() + "/src/test/".length()
   def fn = testfile.toString().substring(pos)
@@ -260,6 +262,11 @@ fileTree(dir: "src/test").each { testfile ->
     def schema = parts[0]
     def passfail = parts[1]
     def document = testfile.toString()
+
+    if (!baseTests.containsKey(schema)) {
+      baseTests[schema] = task "${schema}_tests"() { }
+    }
+
     if (passfail == "pass") {
       Task t = task "test_${taskName}"(type: JavaExec,
                                   dependsOn: ["${schema}_rng"]) {
@@ -268,6 +275,7 @@ fileTree(dir: "src/test").each { testfile ->
         args "-i", "build/${schema}.rng", document
       }
       pass_tests.dependsOn t
+      baseTests[schema].dependsOn t
     } else if (passfail == "fail") {
       Task t = task "test_${taskName}"(type: JavaExec,
                                   dependsOn: ["${schema}_rng"]) {
@@ -284,6 +292,7 @@ fileTree(dir: "src/test").each { testfile ->
         }
       }
       fail_tests.dependsOn t
+      baseTests[schema].dependsOn t
     } else {
       println("Ignoring test file: ${fn}")
     }
@@ -297,12 +306,12 @@ task copyDocBookRNG(type: Copy,
                                 "assembly_rng", "assemblyxi_rng",
                                 "dbits_rng"]) {
   from "build"
-  into "build/dist/docbook-${dbver}/rng"
+  into "build/stage/docbook-${dbver}/rng"
   include "docbook.rnc", "docbook.rng", "docbookxi.rng", "docbookxi.rnc",
     "assembly.rnc", "assembly.rng", "assemblyxi.rnc", "assemblyxi.rng",
     "dbits.rnc", "dbits.rng"
   doFirst {
-    mkdir "build/dist/docbook-${dbver}/rng"
+    mkdir "build/stage/docbook-${dbver}/rng"
   }
 }
 
@@ -311,11 +320,11 @@ task copyDocBookSCH(type: Copy,
                                 "assembly_sch", "assemblyxi_sch",
                                 "dbits_sch"]) {
   from "build"
-  into "build/dist/docbook-${dbver}/sch"
+  into "build/stage/docbook-${dbver}/sch"
   include "docbook.sch", "docbookxi.sch",
     "assembly.sch", "assemblyxi.sch", "dbits.sch"
   doFirst {
-    mkdir "build/dist/docbook-${dbver}/sch"
+    mkdir "build/stage/docbook-${dbver}/sch"
   }
 }
 
@@ -325,12 +334,12 @@ task docbookDistSchemas(dependsOn: ["copyDocBookRNG", "copyDocBookSCH"]) {
 ["docbook", "assembly", "dbits"].each { schema ->
   Task t = task "copy_${schema}_nvdl"(type: Copy) {
     inputs.file("src/main/nvdl/${schema}/${schema}.nvdl")
-    outputs.file("build/dist/docbook-${dbver}/${schema}.nvdl")
+    outputs.file("build/stage/docbook-${dbver}/${schema}.nvdl")
     from "src/main/nvdl/${schema}"
-    into "build/dist/docbook-${dbver}"
+    into "build/stage/docbook-${dbver}"
     include "${schema}.nvdl"
     doFirst {
-      mkdir "build/dist/docbook-${dbver}"
+      mkdir "build/stage/docbook-${dbver}"
     }
   }
   docbookDistSchemas.dependsOn t
@@ -342,7 +351,7 @@ task docbookDistSchemas(dependsOn: ["copyDocBookRNG", "copyDocBookSCH"]) {
 task docbookDistFiles(dependsOn: ["docbookDistSchemas"]) {
   doLast {
     def list = new PrintStream(new File("build/docbook.uris"))
-    def path = "${buildDir}/dist/docbook-${dbver}"
+    def path = "${buildDir}/stage/docbook-${dbver}"
     new File(path).traverse([maxDepth: 2, type: FILES]) { schema ->
       list.println(schema.toString().substring(path.length()+1))
     }
@@ -351,21 +360,114 @@ task docbookDistFiles(dependsOn: ["docbookDistSchemas"]) {
 }
 
 task docbookCatalog(type: SaxonXsltTask, dependsOn: ["docbookDistFiles"]) {
-  def path = "${buildDir}/dist/docbook-${dbver}"
+  def path = "${buildDir}/stage/docbook-${dbver}"
   inputs.file("tools/catalog.xsl")
   input "tools/catalog.xsl"
   output "${path}/catalog.xml"
   stylesheet "tools/catalog.xsl"
   parameters (
-    "version": docbook_version,
+    "version": dbver,
     "uris": "${buildDir}/docbook.uris"
   )
   doFirst {
-    mkdir("build/dist/docbook-${dbver}")
+    mkdir("build/stage/docbook-${dbver}")
   }
 }
 
-task docbook_dist(dependsOn: docbookCatalog) {
+task docbook_dist(dependsOn: ["docbookCatalog", "docbook_tests", "assembly_tests"]) {
+}
+
+task docbook_zipDist(type: Zip, dependsOn: ["docbook_dist"]) {
+  from("${buildDir}/stage/docbook-${dbver}")
+  into "docbook-${dbver}"
+  archiveFileName = "docbook-${dbver}.zip"
+  doFirst {
+    mkdir "${buildDir}/distributions"
+  }
+}
+
+// ============================================================
+
+task copyPublishersRNG(type: Copy,
+                       dependsOn: ["publishers_rng"]) {
+  from "build"
+  into "build/stage/publishers-${dbver}/rng"
+  include "publishers.rnc", "publishers.rng"
+  doFirst {
+    mkdir "build/stage/publishers-${dbver}/rng"
+  }
+}
+
+task copyPublishersSCH(type: Copy,
+                    dependsOn: ["publishers_sch"]) {
+  from "build"
+  into "build/stage/publishers-${dbver}/sch"
+  include "publishers.sch"
+  doFirst {
+    mkdir "build/stage/publishers-${dbver}/sch"
+  }
+}
+
+task publishersDistSchemas(dependsOn: ["copyPublishersRNG", "copyPublishersSCH"]) {
+  // nop
+}
+["publishers"].each { schema ->
+  Task t = task "copy_${schema}_nvdl"(type: Copy) {
+    inputs.file("src/main/nvdl/${schema}/${schema}.nvdl")
+    outputs.file("build/stage/publishers-${dbver}/${schema}.nvdl")
+    from "src/main/nvdl/${schema}"
+    into "build/stage/publishers-${dbver}"
+    include "${schema}.nvdl"
+    doFirst {
+      mkdir "build/stage/publishers-${dbver}"
+    }
+  }
+  publishersDistSchemas.dependsOn t
+}
+
+// It shouldn't be necessary to write this to a file, but I can't figure
+// out any other way to get the sequence correct. I need the URIs to
+// to build the catalog.
+task publishersDistFiles(dependsOn: ["publishersDistSchemas"]) {
+  doLast {
+    def list = new PrintStream(new File("build/publishers.uris"))
+    def path = "${buildDir}/stage/publishers-${dbver}"
+    new File(path).traverse([maxDepth: 2, type: FILES]) { schema ->
+      list.println(schema.toString().substring(path.length()+1))
+    }
+    list.close()
+  }
+}
+
+task publishersCatalog(type: SaxonXsltTask, dependsOn: ["publishersDistFiles"]) {
+  def path = "${buildDir}/stage/publishers-${dbver}"
+  inputs.file("tools/catalog.xsl")
+  input "tools/catalog.xsl"
+  output "${path}/catalog.xml"
+  stylesheet "tools/catalog.xsl"
+  parameters (
+    "version": dbver,
+    "uris": "${buildDir}/publishers.uris"
+  )
+  doFirst {
+    mkdir("build/stage/publishers-${dbver}")
+  }
+}
+
+task publishers_dist(dependsOn: ["publishersCatalog", "publishers_tests"]) {
+}
+
+task publishers_zipDist(type: Zip, dependsOn: ["publishers_dist"]) {
+  from("${buildDir}/stage/publishers-${dbver}")
+  into "publishers-${dbver}"
+  archiveFileName = "publishers-${dbver}.zip"
+  doFirst {
+    mkdir "${buildDir}/distributions"
+  }
+}
+
+task distribution(dependsOn: ["docbook_zipDist", "publishers_zipDist"]) {
+  // nop 
 }
 
 // ============================================================
