@@ -1,0 +1,386 @@
+plugins {
+  id "maven-publish"
+  id "signing"
+  id 'com.github.eerohele.saxon-gradle' version '0.9.0-beta1'
+}
+
+import static groovy.io.FileType.FILES
+import static groovy.io.FileType.DIRECTORIES
+import com.github.eerohele.SaxonXsltTask
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+configurations.all {
+  resolutionStrategy {
+    force 'xml-apis:xml-apis:1.4.01'
+  }
+}
+
+configurations {
+  validateRuntime.extendsFrom(implementation)
+}
+
+dependencies {
+  implementation (
+    [group: 'net.sf.saxon', name: 'Saxon-HE', version: "10.1"],
+    [group: 'org.relaxng', name: 'jing', version: "20181222" ],
+    [group: 'org.relaxng', name: 'trang', version: "20181222" ],
+    [group: 'org.xmlresolver', name: 'xmlresolver', version: "1.0.8"],
+  )
+}
+
+def gitRef() {
+  def ref = ""
+  def proc = "git rev-parse --short --verify HEAD".execute()
+  proc.in.eachLine { line ->
+    ref = line
+  }
+  proc.err.eachLine { line ->
+    println(line)
+  }
+  proc.waitFor()
+  ref
+}
+
+def captureOutput = new OutputStream() {
+  // This is a hack. We need to check if a failing test actually fails.
+  // But if we let the JavaExec call fail, then the gradle script fails.
+  // So instead, we ignore the JavaExec exit value and capture the error
+  // output with this class. If the error output isn't empty, then we
+  // assume the validation failed, which for a test that's supposed to
+  // fail, is a pass!
+  int count = 0
+  @Override
+  public void write(int b) {
+    count += 1
+  }
+  public int byteCount() {
+    return count
+  }
+}
+
+def version = [
+  "assembly": "DocBook Assembly " + dbver,
+  "assemblyxi": "DocBook Assembly XInclude" + dbver,
+  "dbforms": "DocBook Forms " + dbver,
+  "dbits": "DocBook ITS " + dbver,
+  "defguide": "DocBook Def. Guide" + dbver,
+  "docbook": "DocBook " + dbver,
+  "docbookxi": "DocBook XInclude " + dbver,
+  "publishers": "DocBook Publishers " + dbver + "-1",
+  "sdocbook": "Simplified DocBook " + dbver,
+  "slides": "DocBook Slides " + dbver + "-1",
+  "slides-full": "DocBook Slides Full " + dbver + "-1",
+  "website": "DocBook Wesite " + dbver + "-1",
+  "website-full": "DocBook Wesite Full " + dbver + "-1"
+]
+
+task makeSchemas() {
+  // nop, just something to hang dependencies on
+}
+
+task pass_tests() {
+  // nop, just something to hang dependencies on
+}
+
+task fail_tests() {
+  // nop, just something to hang dependencies on
+}
+
+task test(dependsOn: ["pass_tests", "fail_tests"]) {
+  // nop, just something to hang dependencies on
+}
+
+// For every schema, create a task to transform it from RNC to RNG.
+new File("src/main/relaxng").traverse([maxDepth: 0, type: DIRECTORIES]) { schema ->
+  def dirname = schema.toString()
+  def pos = dirname.indexOf("/main/relaxng/")
+  def basename = dirname.substring(pos+14)
+  Task t = null
+  if (basename != "defguide") {
+    t = task "${basename}_rng_src"(type: JavaExec) {
+      inputs.files fileTree(dir: dirname)
+      outputs.file "build/${basename}/${basename}.rng"
+      classpath = configurations.validateRuntime
+      main = "com.thaiopensource.relaxng.translate.Driver"
+      args "${dirname}/${basename}.rnc", "build/${basename}/${basename}.rng"
+      doFirst {
+        mkdir "build/${basename}"
+      }
+    }
+  }
+
+  t = task "${basename}_rng_include"(type: SaxonXsltTask,
+                                     dependsOn: [ "${basename}_rng_src" ]) {
+    inputs.file("tools/include.xsl")
+    input "build/${basename}/${basename}.rng"
+    output "build/${basename}_rng_include.xml"
+    stylesheet "tools/include.xsl"
+  }
+
+  t = task "${basename}_rng_augment"(type: SaxonXsltTask,
+                                     dependsOn: [ "${basename}_rng_include" ]) {
+    inputs.file("tools/augment.xsl")
+    input "build/${basename}_rng_include.xml"
+    output "build/${basename}_rng_augment.xml"
+    stylesheet "tools/augment.xsl"
+  }
+
+  t = task "${basename}_rng_cleanup"(type: SaxonXsltTask,
+                                     dependsOn: [ "${basename}_rng_augment" ]) {
+    inputs.file("tools/cleanup.xsl")
+    input "build/${basename}_rng_augment.xml"
+    output "build/${basename}_rng_cleanup.xml"
+    stylesheet "tools/cleanup.xsl"
+  }
+
+  t = task "${basename}_rng_nodoc"(type: SaxonXsltTask,
+                                   dependsOn: [ "${basename}_rng_cleanup" ]) {
+    inputs.file("tools/removedoc.xsl")
+    input "build/${basename}_rng_cleanup.xml"
+    output "build/${basename}_rng_nodoc.xml"
+    stylesheet "tools/removedoc.xsl"
+    parameters (
+      "remove-schematron": "0"
+    )
+  }
+
+  t = task "${basename}_sch"(type: SaxonXsltTask,
+                             dependsOn: [ "${basename}_rng_cleanup" ]) {
+    inputs.file("tools/schematron.xsl")
+    input "build/${basename}_rng_cleanup.xml"
+    output "build/${basename}.sch"
+    stylesheet "tools/schematron.xsl"
+  }
+
+  t = task "${basename}_copyright"(type: Copy) {
+    from "src/main/relaxng/${basename}"
+    include "copyright.xml"
+    into "build/${basename}"
+    filter { String line ->
+      if (line.indexOf("{\$release}") >= 0) {
+        line = line
+          .replace("{\$release}", version[basename])
+      }
+      line
+    }
+    doFirst {
+      mkdir "build/${basename}"
+    }
+  }
+
+  t = task "${basename}_compiled"(type: SaxonXsltTask,
+                                  dependsOn: ["${basename}_rng_nodoc",
+                                              "${basename}_copyright"]) {
+    input "build/${basename}_rng_nodoc.xml"
+    output "build/${basename}_compiled.rng"
+    stylesheet "tools/attach-copyright.xsl"
+    parameters (
+      "copyright": "${buildDir}/${basename}/copyright.xml"
+    )
+  }
+
+  t = task "${basename}_rnc"(type: JavaExec,
+                             dependsOn: ["${basename}_compiled"]) {
+    inputs.file("build/${basename}_compiled.rng")
+    outputs.file("build/${basename}.rnc")
+    classpath = configurations.validateRuntime
+    main = "com.thaiopensource.relaxng.translate.Driver"
+    args "build/${basename}_compiled.rng", "build/${basename}.rnc"
+  }
+
+  t = task "${basename}_rng"(type: JavaExec,
+                             dependsOn: ["${basename}_rnc"]) {
+    inputs.file("build/${basename}.rnc")
+    outputs.file("build/${basename}.rng")
+    classpath = configurations.validateRuntime
+    main = "com.thaiopensource.relaxng.translate.Driver"
+    args "build/${basename}.rnc", "build/${basename}.rng"
+  }
+  if (basename != "defguide") {
+    makeSchemas.dependsOn t
+    test.dependsOn t
+  }
+}
+
+task any_docbook_rng(type: SaxonXsltTask,
+                     dependsOn: [ "docbook_compiled" ]) {
+  input "build/docbook_compiled.rng"
+  output "build/docbook/any.docbook.rng"
+  stylesheet "tools/all-patterns.xsl"
+}
+
+task defguide_rng_src(dependsOn: ["any_docbook_rng", "assembly_rng", "docbook_rng"]) {
+  doLast {
+    // The defguide.rng file is just a driver that combines 
+    // a few schemas together for documentation purposes.
+    // it doesn't exist to perform validation of any sort.
+    def rng = new PrintStream(new File("build/defguide/defguide.rng"))
+    rng.println("<?xml version='1.0' encoding='UTF-8'?>")
+    rng.println("<grammar ns='http://docbook.org/ns/docbook'")
+    rng.println("         xmlns='http://relaxng.org/ns/structure/1.0'>")
+    rng.println("  <include href='../docbook/docbook.rng'>")
+    rng.println("    <start combine='choice'>")
+    rng.println("      <ref name='db.assembly'/>")
+    rng.println("    </start>")
+    rng.println("  </include>")
+    rng.println("  <include href='../docbook/any.docbook.rng'/>")
+    rng.println("  <include href='../assembly/core.rng'/>")
+    rng.println("</grammar>")
+    rng.close()
+  }
+  doFirst {
+    mkdir "build/defguide"
+  }
+}
+
+task defguide_rnd(type: SaxonXsltTask,
+                  dependsOn: [ "defguide_rng_cleanup" ]) {
+  inputs.file("tools/rngdocxml.xsl")
+  input "build/defguide_rng_cleanup.xml"
+  output "build/defguide.rnd"
+  stylesheet "tools/rngdocxml.xsl"
+  parameters (
+    "buildhash": gitRef()
+  )
+}
+
+// ============================================================
+
+// Create tasks to run all of the tests
+fileTree(dir: "src/test").each { testfile ->
+  def pos = projectDir.toString().length() + "/src/test/".length()
+  def fn = testfile.toString().substring(pos)
+  if (fn.endsWith(".xml")) {
+    def taskName = fn.replace("/", "_").replace(".", "_").replace("-","_")
+    def parts = fn.split("/") // e.g., docbook/pass/testname.xml
+    def schema = parts[0]
+    def passfail = parts[1]
+    def document = testfile.toString()
+    if (passfail == "pass") {
+      Task t = task "test_${taskName}"(type: JavaExec,
+                                  dependsOn: ["${schema}_rng"]) {
+        classpath = configurations.validateRuntime
+        main = "com.thaiopensource.relaxng.util.Driver"
+        args "-i", "build/${schema}.rng", document
+      }
+      pass_tests.dependsOn t
+    } else if (passfail == "fail") {
+      Task t = task "test_${taskName}"(type: JavaExec,
+                                  dependsOn: ["${schema}_rng"]) {
+        classpath = configurations.validateRuntime
+        main = "com.thaiopensource.relaxng.util.Driver"
+        ignoreExitValue = true
+        standardOutput = captureOutput
+        errorOutput = captureOutput
+        args "-i", "build/${schema}.rng", document
+        doLast {
+          if (errorOutput.byteCount() == 0) {
+            raise GradleException("Test should not have passed")
+          }
+        }
+      }
+      fail_tests.dependsOn t
+    } else {
+      println("Ignoring test file: ${fn}")
+    }
+  }
+}
+
+// ============================================================
+
+task copyDocBookRNG(type: Copy,
+                    dependsOn: ["docbook_rng", "docbookxi_rng",
+                                "assembly_rng", "assemblyxi_rng",
+                                "dbits_rng"]) {
+  from "build"
+  into "build/dist/docbook-${dbver}/rng"
+  include "docbook.rnc", "docbook.rng", "docbookxi.rng", "docbookxi.rnc",
+    "assembly.rnc", "assembly.rng", "assemblyxi.rnc", "assemblyxi.rng",
+    "dbits.rnc", "dbits.rng"
+  doFirst {
+    mkdir "build/dist/docbook-${dbver}/rng"
+  }
+}
+
+task copyDocBookSCH(type: Copy,
+                    dependsOn: ["docbook_sch", "docbookxi_sch",
+                                "assembly_sch", "assemblyxi_sch",
+                                "dbits_sch"]) {
+  from "build"
+  into "build/dist/docbook-${dbver}/sch"
+  include "docbook.sch", "docbookxi.sch",
+    "assembly.sch", "assemblyxi.sch", "dbits.sch"
+  doFirst {
+    mkdir "build/dist/docbook-${dbver}/sch"
+  }
+}
+
+task docbookDistSchemas(dependsOn: ["copyDocBookRNG", "copyDocBookSCH"]) {
+  // nop
+}
+["docbook", "assembly", "dbits"].each { schema ->
+  Task t = task "copy_${schema}_nvdl"(type: Copy) {
+    inputs.file("src/main/nvdl/${schema}/${schema}.nvdl")
+    outputs.file("build/dist/docbook-${dbver}/${schema}.nvdl")
+    from "src/main/nvdl/${schema}"
+    into "build/dist/docbook-${dbver}"
+    include "${schema}.nvdl"
+    doFirst {
+      mkdir "build/dist/docbook-${dbver}"
+    }
+  }
+  docbookDistSchemas.dependsOn t
+}
+
+// It shouldn't be necessary to write this to a file, but I can't figure
+// out any other way to get the sequence correct. I need the URIs to
+// to build the catalog.
+task docbookDistFiles(dependsOn: ["docbookDistSchemas"]) {
+  doLast {
+    def list = new PrintStream(new File("build/docbook.uris"))
+    def path = "${buildDir}/dist/docbook-${dbver}"
+    new File(path).traverse([maxDepth: 2, type: FILES]) { schema ->
+      list.println(schema.toString().substring(path.length()+1))
+    }
+    list.close()
+  }
+}
+
+task docbookCatalog(type: SaxonXsltTask, dependsOn: ["docbookDistFiles"]) {
+  def path = "${buildDir}/dist/docbook-${dbver}"
+  inputs.file("tools/catalog.xsl")
+  input "tools/catalog.xsl"
+  output "${path}/catalog.xml"
+  stylesheet "tools/catalog.xsl"
+  parameters (
+    "version": docbook_version,
+    "uris": "${buildDir}/docbook.uris"
+  )
+  doFirst {
+    mkdir("build/dist/docbook-${dbver}")
+  }
+}
+
+task docbook_dist(dependsOn: docbookCatalog) {
+}
+
+// ============================================================
+
+task helloWorld() {
+  doLast {
+    println("Hello.")
+  }
+}
+
+/*
+def EXCP="${projectDir}/build/classes/java/main"
+configurations.compileClasspath.each { it ->
+  EXCP += ":" + it
+}
+println(EXCP)
+*/
+

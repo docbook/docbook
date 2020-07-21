@@ -1,4 +1,0 @@
-The UPA rule in XSD makes it almost impossible to create an XInclude
-version of docbook.xsd. Simply allowing xi:include as an alternative
-to divisions and components violates the UPA because a book can start
-with either.
