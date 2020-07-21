@@ -44,9 +44,11 @@
       <xsl:variable name="root" select="."/>
       <xsl:for-each select="('http', 'https')">
         <xsl:variable name="scheme" select="."/>
-        <xsl:for-each select="tokenize(unparsed-text('../build/docbook.uris'), '\s+')">
-          <uri name="{$scheme}://{$root}/{$version}/{.}"
-               uri="{.}"/>
+        <xsl:for-each select="tokenize(unparsed-text($uris), '\s+')">
+          <xsl:if test="normalize-space(.) != ''">
+            <uri name="{$scheme}://{$root}/{$version}/{.}"
+                 uri="{.}"/>
+          </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:for-each>

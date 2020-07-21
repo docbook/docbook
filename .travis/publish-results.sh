@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set | grep TRAVIS
+# Disabled by ndw on 21 July 2020
+exit
 
 if [ "$TRAVIS_REPO_SLUG" == "$GIT_PUB_REPO" ]; then
     echo -e "Setting up for publication...\n"
