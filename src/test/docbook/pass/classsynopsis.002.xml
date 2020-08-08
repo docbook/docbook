@@ -13,9 +13,6 @@
         <db:package>java.nio.file</db:package>
         <db:classname>Files</db:classname>
       </db:ooclass>
-      <db:ooexception xml:id='iae'>
-        <db:exceptionname>IllegalArgumentException</db:exceptionname>
-      </db:ooexception>
       <db:methodsynopsis>
          <db:methodname>write</db:methodname>
          <db:methodparam xml:id="fp">
@@ -26,6 +23,7 @@
             <db:type>byte[]</db:type>
             <db:parameter>bytes</db:parameter>
          </db:methodparam>
+         <db:exceptionname xml:id='iae'>IllegalArgumentException</db:exceptionname>
       </db:methodsynopsis>
    </db:classsynopsis>
 
