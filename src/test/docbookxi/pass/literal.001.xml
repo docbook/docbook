@@ -6,7 +6,7 @@
 
 <para>This is an XInclude literal test:
 <literal><xi:include xmlns:xi='http://www.w3.org/2001/XInclude'
-                     href="doc.xml" xpointer="xpath(id(^(foo^)/text^(^))"/></literal>
+                     href="doc.xml" fragid="xpath(id(^(foo^)/text^(^))"/></literal>
 </para>
 
 </article>
