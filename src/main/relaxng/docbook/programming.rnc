@@ -1209,7 +1209,7 @@ div {
    db.union =
       element union {
          db.union.attlist,
-         db.unionname+
+         db.unionname
       }
    
 }
