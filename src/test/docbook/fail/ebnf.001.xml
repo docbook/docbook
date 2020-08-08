@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<article xmlns='http://docbook.org/ns/docbook'>
+<title>Example productionset</title>
+
+<para>This example fails because the <tag>productionrecap</tag> doesn’t point to
+a <tag>production</tag>.</para>
+
+<productionset xml:id="set1">
+<info/>
+<production xml:id="ebnf.mult">
+  <lhs>MultExpression</lhs>
+  <rhs><nonterminal def="#ebnf.mult">MultExpression</nonterminal>
+       '*'
+       <nonterminal def="#ebnf.mult">MultExpression</nonterminal> <sbr/>|
+       <nonterminal def="#ebnf.mult">MultExpression</nonterminal>
+       '/'
+       <nonterminal def="#ebnf.mult">MultExpression</nonterminal> <sbr/>|
+       <nonterminal def="#ebnf.number">Number</nonterminal>
+  </rhs>
+  <constraint linkend="div0"/>
+</production>
+</productionset>
+
+<para>The full grammar follows:</para>
+
+<productionset xml:id="set2"><title>Arithemetic Expressions</title>
+<info/>
+<production xml:id="ebnf.expression">
+  <lhs>Expression</lhs>
+  <rhs><nonterminal def="#ebnf.arith">ArithExpression</nonterminal> |
+       <nonterminal def="#ebnf.mult">MultExpression</nonterminal>
+  </rhs>
+  <rhs>Second RHS for testing.
+  <lineannotation>/* This isn’t grammatical! */</lineannotation></rhs>
+</production>
+<production xml:id="ebnf.arith">
+  <lhs>ArithExpression</lhs>
+  <rhs><nonterminal def="#ebnf.expression">Expression</nonterminal>
+       '+'
+       <nonterminal def="#ebnf.mult">MultExpression</nonterminal> |
+       <nonterminal def="#ebnf.expression">Expression</nonterminal>
+       '-'
+       <nonterminal def="#ebnf.mult">MultExpression</nonterminal>
+  </rhs>
+</production>
+<productionrecap linkend="div0"/>
+<production xml:id="ebnf.number">
+  <lhs>Number</lhs>
+  <rhs>[0-9]+</rhs>
+</production>
+</productionset>
+
+<constraintdef xml:id="div0">
+<title>Division by Zero</title>
+<para>Division by zero is an error.</para>
+</constraintdef>
+
+</article>

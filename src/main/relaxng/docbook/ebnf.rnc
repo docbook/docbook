@@ -146,6 +146,18 @@ div {
     & db.common.req.linking.attributes
 
    db.constraint =
+      [
+         s:pattern [
+            s:title [ "Constraint cross reference constraint" ]
+            s:rule [
+               context = "db:constraint[@linkend]"
+               s:assert [
+                  test = "local-name(//*[@xml:id=current()/@linkend]) = 'constraintdef' and namespace-uri(//*[@xml:id=current()/@linkend]) = 'http://docbook.org/ns/docbook'"
+                  "@linkend on constraint must point to a constraintdef."
+               ]
+            ]
+         ]
+      ]
       element constraint {
          db.constraint.attlist,
          empty
@@ -168,6 +180,18 @@ div {
     & db.common.req.linking.attributes
 
    db.productionrecap =
+      [
+         s:pattern [
+            s:title [ "Production recap cross reference constraint" ]
+            s:rule [
+               context = "db:productionrecap[@linkend]"
+               s:assert [
+                  test = "local-name(//*[@xml:id=current()/@linkend]) = 'production' and namespace-uri(//*[@xml:id=current()/@linkend]) = 'http://docbook.org/ns/docbook'"
+                  "@linkend on productionrecap must point to a production."
+               ]
+            ]
+         ]
+      ]
       element productionrecap {
          db.productionrecap.attlist,
          empty
