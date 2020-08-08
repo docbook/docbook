@@ -9,11 +9,9 @@
     <co xml:id="dl4"/>#t
     (<co xml:id="dl5"/>loopvar <co xml:id="dl6"/>(+ count 1))))</screen>
 
-<calloutlist>
-<callout arearefs="dl1">
-<para>This variable controls the loop. It is declared without an
-initial value, immediately after the <literal>let</literal>
-operand.</para>
+<calloutlist xml:id="list">
+<callout arearefs="dl1 dl2 dl3">
+<para>This callout points to several <tag>co</tag> elements.</para>
 </callout>
 <callout arearefs="dl2">
 <para>Any number of additional local variables can be defined after
