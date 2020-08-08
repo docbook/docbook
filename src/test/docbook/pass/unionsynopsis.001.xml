@@ -10,15 +10,15 @@
    </db:info>
    <db:unionsynopsis>
      <db:union>
-       <db:unionname>Int</db:unionname>
-       <db:unionname>AbstractString</db:unionname>
+       <db:type>Int</db:type>
+       <db:type>AbstractString</db:type>
      </db:union>
    </db:unionsynopsis>
    <db:unionsynopsis>
       <db:unionname>IntOrString</db:unionname>
       <db:union>
-         <db:unionname>Int</db:unionname>
-         <db:unionname>AbstractString</db:unionname>
+         <db:type>Int</db:type>
+         <db:type>AbstractString</db:type>
       </db:union>
    </db:unionsynopsis>
 </db:article>
