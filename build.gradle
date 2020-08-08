@@ -25,7 +25,7 @@ configurations {
 
 dependencies {
   implementation (
-    [group: 'net.sf.saxon', name: 'Saxon-HE', version: "10.1"],
+    [group: 'net.sf.saxon', name: 'Saxon-HE', version: saxonVersion],
     [group: 'org.relaxng', name: 'jing', version: "20181222" ],
     [group: 'org.relaxng', name: 'trang', version: "20181222" ],
     [group: 'org.xmlresolver', name: 'xmlresolver', version: "1.0.8"],
@@ -253,6 +253,7 @@ task defguide_rnd(type: SaxonXsltTask,
 // ============================================================
 // Create tasks to run all of the tests
 def baseTests = [:]
+def failResults = [:]
 fileTree(dir: "src/test").each { testfile ->
   def pos = projectDir.toString().length() + "/src/test/".length()
   def fn = testfile.toString().substring(pos)
@@ -268,17 +269,26 @@ fileTree(dir: "src/test").each { testfile ->
     }
 
     if (passfail == "pass") {
-      Task t = task "test_${taskName}"(type: JavaExec,
-                                  dependsOn: ["${schema}_rng"]) {
+      Task t = task "test_${taskName}_rng"(type: JavaExec,
+                                           dependsOn: ["${schema}_rng"]) {
         classpath = configurations.validateRuntime
         main = "com.thaiopensource.relaxng.util.Driver"
         args "-i", "build/${schema}.rng", document
       }
       pass_tests.dependsOn t
       baseTests[schema].dependsOn t
+
+      t = task "test_${taskName}_sch"(type: JavaExec,
+                                      dependsOn: ["${schema}_sch"]) {
+        classpath = configurations.validateRuntime
+        main = "com.thaiopensource.relaxng.util.Driver"
+        args "-i", "build/${schema}.sch", document
+      }
+      pass_tests.dependsOn t
+      baseTests[schema].dependsOn t
     } else if (passfail == "fail") {
-      Task t = task "test_${taskName}"(type: JavaExec,
-                                  dependsOn: ["${schema}_rng"]) {
+      Task t_rng = task "test_${taskName}_rng"(type: JavaExec,
+                                               dependsOn: ["${schema}_rng"]) {
         classpath = configurations.validateRuntime
         main = "com.thaiopensource.relaxng.util.Driver"
         ignoreExitValue = true
@@ -286,11 +296,33 @@ fileTree(dir: "src/test").each { testfile ->
         errorOutput = captureOutput
         args "-i", "build/${schema}.rng", document
         doLast {
-          if (errorOutput.byteCount() == 0) {
+          failResults["${taskName}_rng"] = errorOutput.byteCount() == 0
+        }
+      }
+
+      Task t_sch = task "test_${taskName}_sch"(type: JavaExec,
+                                               dependsOn: ["${schema}_sch"]) {
+        classpath = configurations.validateRuntime
+        main = "com.thaiopensource.relaxng.util.Driver"
+        ignoreExitValue = true
+        standardOutput = captureOutput
+        errorOutput = captureOutput
+        args "-i", "build/${schema}.sch", document
+        doLast {
+          failResults["${taskName}_sch"] = errorOutput.byteCount() == 0
+        }
+      }
+
+      Task t = task "test_${taskName}"(dependsOn: ["test_${taskName}_rng",
+                                                   "test_${taskName}_sch"]) {
+        doLast {
+          // If both the Schematron test and the RELAX NG test passed, then fail!
+          if (failResults["{$taskName}_sch"] && failResults["{$taskName}_rng"]) {
             raise GradleException("Test should not have passed")
           }
         }
       }
+
       fail_tests.dependsOn t
       baseTests[schema].dependsOn t
     } else {
