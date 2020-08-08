@@ -1,6 +1,0 @@
-language: java
-script: make
-sudo: false
-
-after_success:
-  - ".travis/publish-results.sh"
