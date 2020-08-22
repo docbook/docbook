@@ -4,7 +4,7 @@
 <para>Callouts using <tag>co</tag>:</para>
 
 <screenco>
-<areaspec>
+<areaspec xml:id="aspec">
 <areaset xml:id="aset">
   <area xml:id="area" coords="1 1"/>
 </areaset>
@@ -21,7 +21,7 @@
 initial value, immediately after the <literal>let</literal>
 operand.</para>
 </callout>
-<callout arearefs="area">
+<callout arearefs="spec">
 <para>Any number of additional local variables can be defined after
 the loop variable, just as they can in any other
 <literal>let</literal> expression.</para>

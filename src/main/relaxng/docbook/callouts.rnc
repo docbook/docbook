@@ -103,6 +103,18 @@ div {
     & db.callout.arearefs.attribute
 
    db.callout =
+      [
+         s:pattern [
+            s:title [ "Callout cross reference constraint" ]
+            s:rule [
+               context = "db:callout[@arearefs]"
+               s:assert [
+                  test = "every $id in tokenize(current()/@arearefs) satisfies (every $ar in //*[@xml:id = $id] satisfies (local-name($ar) = ('areaset', 'area', 'co') and namespace-uri($ar) = 'http://docbook.org/ns/docbook'))"
+                  "@arearefs on callout must point to a areaset, area, or co."
+               ]
+            ]
+         ]
+      ]
       element callout {
          db.callout.attlist,
          db.all.blocks+
