@@ -21,6 +21,7 @@ db.reference.components |= db.xi.include
 
 db.all.blocks |= db.xi.include
 db.all.inlines |= db.xi.include
+db._text |= db.xi.include
 
 db.info.elements |= db.xi.include
 
@@ -207,9 +208,10 @@ div {
    db.any.other.attribute = attribute * - local:* { text }
 
    db.xi.include.attlist =
-      attribute href { xsd:anyURI { pattern = "[^#]+" } }?,
+      attribute href { xsd:anyURI }?,
       [ a:defaultValue="xml" ] attribute parse { "xml" | "text" }?,
       attribute xpointer { text }?,
+      attribute fragid { text }?,
       attribute encoding { text }?,
       attribute accept { text }?,
       attribute accept-language { text }?,
