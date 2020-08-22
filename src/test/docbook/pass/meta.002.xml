@@ -1,0 +1,14 @@
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+  <title>Chapter Title</title>
+  <abstract>
+    <para>This is my abstract.</para>
+  </abstract>
+  <meta name="one" content="something"/>
+  <meta name="two">content</meta>
+  <meta name="three"><phrase/></meta>
+  <meta name="four"><a xmlns="http://www.w3.org/1999/xhtml"/></meta>
+  <meta name="five"/>
+</info>
+<para>Some text.</para>
+</chapter>
