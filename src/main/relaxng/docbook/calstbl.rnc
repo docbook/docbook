@@ -612,8 +612,15 @@ div {
    db.cals.table.role.attribute = attribute role { text }
    db.cals.table.label.attribute = db.label.attribute
 
+   db.cals.table.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of table" ]
+      ]
+      attribute type { text }?
+
    db.cals.table.attlist =
       db.cals.table.role.attribute?
+    & db.cals.table.type.attribute?
     & db.cals.table.label.attribute?
     & db.common.attributes
     & db.common.linking.attributes
@@ -663,8 +670,15 @@ div {
 
    db.cals.informaltable.role.attribute = attribute role { text }
 
+   db.cals.informaltable.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of table" ]
+      ]
+      attribute type { text }?
+
    db.cals.informaltable.attlist =
       db.cals.informaltable.role.attribute?
+    & db.cals.informaltable.type.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.tabstyle.attribute?

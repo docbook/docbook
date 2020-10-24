@@ -1210,8 +1210,15 @@ div {
 
    db.procedure.role.attribute = attribute role { text }
 
+   db.procedure.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of procedure" ]
+      ]
+      attribute type { text }?
+
    db.procedure.attlist =
       db.procedure.role.attribute?
+    & db.procedure.type.attribute?
     & db.common.attributes
     & db.common.linking.attributes
 
@@ -2086,8 +2093,15 @@ div {
    db.example.pgwide.attribute = db.pgwide.attribute
    db.example.floatstyle.attribute = db.floatstyle.attribute
 
+   db.example.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of example" ]
+      ]
+      attribute type { text }?
+
    db.example.attlist =
       db.example.role.attribute?
+    & db.example.type.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.example.label.attribute?
@@ -2119,8 +2133,15 @@ div {
    db.informalexample.pgwide.attribute = db.pgwide.attribute
    db.informalexample.floatstyle.attribute = db.floatstyle.attribute
 
+   db.informalexample.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of example" ]
+      ]
+      attribute type { text }?
+
    db.informalexample.attlist =
       db.informalexample.role.attribute?
+    & db.informalexample.type.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.informalexample.floatstyle.attribute?
@@ -2244,8 +2265,15 @@ div {
    db.figure.pgwide.attribute = db.pgwide.attribute
    db.figure.floatstyle.attribute = db.floatstyle.attribute
 
+   db.figure.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of figure" ]
+      ]
+      attribute type { text }?
+
    db.figure.attlist =
       db.figure.role.attribute?
+    & db.figure.type.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.figure.label.attribute?
@@ -2276,8 +2304,15 @@ div {
    db.informalfigure.pgwide.attribute = db.pgwide.attribute
    db.informalfigure.floatstyle.attribute = db.floatstyle.attribute
 
+   db.informalfigure.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of figure" ]
+      ]
+      attribute type { text }?
+
    db.informalfigure.attlist =
       db.informalfigure.role.attribute?
+    & db.informalfigure.type.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.informalfigure.label.attribute?
