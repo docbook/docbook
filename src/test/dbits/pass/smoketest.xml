@@ -1,0 +1,15 @@
+<article xmlns="http://docbook.org/ns/docbook"
+         xmlns:its="http://www.w3.org/2005/11/its"
+         version="5.0-its"
+         xml:id="article">
+<info>
+<title>Unit Test: article.001.xml</title>
+<abstract>
+<para>This is a smoke test for the DocBook ITS schema.</para>
+</abstract>
+</info>
+
+<para its:translate="yes">Hello, <phrase its:translate="no">world</phrase>.
+</para>
+
+</article>

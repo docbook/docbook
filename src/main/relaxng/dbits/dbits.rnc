@@ -77,7 +77,7 @@ include "../docbook/docbook.rnc"
 {
    # Exclude ITS markup from "wildcard" element
    db._any =
-      element * - (db:* | html:* | its:*) {
+      element * - (db:* | its:*) {
          (attribute * { text }
           | text
           | db._any)*
