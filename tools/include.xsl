@@ -2,7 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
-                exclude-result-prefixes="ctrl"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                exclude-result-prefixes="ctrl xs"
                 version="2.0">
 
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
@@ -49,6 +50,24 @@
 
   <!-- ====================================================================== -->
 
+  <xsl:template match="rng:grammar[@ns]" mode="include">
+    <xsl:copy>
+      <xsl:copy-of select="@* except @ns"/>
+      <xsl:attribute name="ns">
+        <xsl:choose>
+          <xsl:when test="@ns = 'http://docbook.org/ns/docbook'
+                          or @ns = 'http://www.w3.org/2005/11/its'">
+            <xsl:sequence select="'http://docbook.org/ns/docbook'"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:sequence select="error((), concat('Unexpected @ns: ', @ns))"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
+      <xsl:apply-templates mode="include"/>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="rng:include" mode="include">
     <xsl:variable name="doc" select="document(@href,.)"/>
     <xsl:variable name="nestedGrammar">
@@ -75,12 +94,40 @@
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="rng:element" mode="include">
+    <xsl:variable name="ns"
+                  select="ancestor::*[@ns][1]/@ns[. != 'http://docbook.org/ns/docbook']
+                          /string()"/>
+    <xsl:variable name="name" as="xs:string?">
+      <xsl:choose>
+        <xsl:when test="empty(@name)"/>
+        <xsl:when test="empty($ns) or contains(@name, ':')">
+          <xsl:sequence select="@name/string()"/>
+        </xsl:when>
+        <xsl:when test="$ns = 'http://www.w3.org/2005/11/its'">
+          <xsl:sequence select="concat('its:', @name/string())"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="error((), concat('Unexpected ns: ', $ns))"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:copy>
+      <xsl:if test="exists($name)">
+        <xsl:attribute name="name" select="$name"/>
+      </xsl:if>
+      <xsl:if test="exists($ns)">
+        <xsl:attribute name="ns" select="$ns"/>
+      </xsl:if>
+      <xsl:copy-of select="@* except (@ns | @name)"/>
+      <xsl:apply-templates mode="include"/>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="*" mode="include">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <xsl:if test="self::rng:element">
-        <xsl:copy-of select="ancestor::*[@ns][1]/@ns[. != 'http://docbook.org/ns/docbook']"/>
-      </xsl:if>
       <xsl:apply-templates mode="include"/>
     </xsl:copy>
   </xsl:template>

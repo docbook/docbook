@@ -1,4 +1,3 @@
-default namespace = "http://purl.org/dc/terms/"
 namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 namespace xlink = "http://www.w3.org/1999/xlink"
