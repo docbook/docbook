@@ -32,8 +32,11 @@ div {
 
    db.biblioentry.role.attribute = attribute role { text }
 
+   db.biblioentry.pubwork.attribute = db.biblio.pubwork.attribute
+
    db.biblioentry.attlist =
       db.biblioentry.role.attribute?
+    & db.biblioentry.pubwork.attribute?
     & db.common.attributes
     & db.common.linking.attributes
 
@@ -54,8 +57,11 @@ div {
 
    db.bibliomixed.role.attribute = attribute role { text }
 
+   db.bibliomixed.pubwork.attribute = db.biblio.pubwork.attribute
+
    db.bibliomixed.attlist =
       db.bibliomixed.role.attribute?
+    & db.bibliomixed.pubwork.attribute?
     & db.common.attributes
     & db.common.linking.attributes
 
