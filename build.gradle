@@ -69,6 +69,7 @@ def version = [
   "assemblyxi": "DocBook Assembly XIncludeV${dbver}",
   "dbforms": "DocBook Forms V${dbver}",
   "dbits": "DocBook ITS V${dbver}",
+  "dbitsxi": "DocBook ITS XInclude V${dbver}",
   "defguide": "DocBook Def. GuideV${dbver}",
   "docbook": "DocBook V${dbver}",
   "docbookxi": "DocBook XInclude V${dbver}",
@@ -336,12 +337,12 @@ fileTree(dir: "src/test").each { testfile ->
 task copyDocBookRNG(type: Copy,
                     dependsOn: ["docbook_rng", "docbookxi_rng",
                                 "assembly_rng", "assemblyxi_rng",
-                                "dbits_rng"]) {
+                                "dbits_rng", "dbitsxi_rng"]) {
   from "build"
   into "build/stage/docbook-${dbver}/rng"
   include "docbook.rnc", "docbook.rng", "docbookxi.rng", "docbookxi.rnc",
     "assembly.rnc", "assembly.rng", "assemblyxi.rnc", "assemblyxi.rng",
-    "dbits.rnc", "dbits.rng"
+    "dbits.rnc", "dbits.rng", "dbitsxi.rnc"
   doFirst {
     mkdir "build/stage/docbook-${dbver}/rng"
   }
@@ -350,11 +351,11 @@ task copyDocBookRNG(type: Copy,
 task copyDocBookSCH(type: Copy,
                     dependsOn: ["docbook_sch", "docbookxi_sch",
                                 "assembly_sch", "assemblyxi_sch",
-                                "dbits_sch"]) {
+                                "dbits_sch", "dbitsxi_sch"]) {
   from "build"
   into "build/stage/docbook-${dbver}/sch"
   include "docbook.sch", "docbookxi.sch",
-    "assembly.sch", "assemblyxi.sch", "dbits.sch"
+    "assembly.sch", "assemblyxi.sch", "dbits.sch", "dbitsxi.sch"
   doFirst {
     mkdir "build/stage/docbook-${dbver}/sch"
   }
@@ -363,7 +364,7 @@ task copyDocBookSCH(type: Copy,
 task docbookDistSchemas(dependsOn: ["copyDocBookRNG", "copyDocBookSCH"]) {
   // nop
 }
-["docbook", "assembly", "dbits"].each { schema ->
+["docbook", "assembly", "dbits", "dbitsxi"].each { schema ->
   Task t = task "copy_${schema}_nvdl"(type: Copy) {
     inputs.file("src/main/nvdl/${schema}/${schema}.nvdl")
     outputs.file("build/stage/docbook-${dbver}/${schema}.nvdl")
