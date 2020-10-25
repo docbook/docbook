@@ -250,10 +250,17 @@ div {
    db.html.table.role.attribute = attribute role { text }
    db.html.table.label.attribute = db.label.attribute
 
+   db.html.table.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of table" ]
+      ]
+      attribute type { text }?
+
    db.html.table.attlist =
       db.html.attrs
     & db.html.table.attributes
     & db.html.table.role.attribute?
+    & db.html.table.type.attribute?
     & db.html.table.label.attribute?
     & db.orient.attribute?
     & db.pgwide.attribute?
@@ -277,10 +284,17 @@ div {
    db.html.informaltable.role.attribute = attribute role { text }
    db.html.informaltable.label.attribute = db.label.attribute
 
+   db.html.informaltable.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of table" ]
+      ]
+      attribute type { text }?
+
    db.html.informaltable.attlist =
       db.html.attrs
     & db.html.table.attributes
     & db.html.informaltable.role.attribute?
+    & db.html.informaltable.type.attribute?
     & db.html.informaltable.label.attribute?
     & db.orient.attribute?
     & db.pgwide.attribute?

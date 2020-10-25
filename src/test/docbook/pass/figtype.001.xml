@@ -1,0 +1,176 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<figure xml:id="figduck" type="alpha">
+  <title>The Duck</title>
+  <mediaobject>
+    <imageobject>
+      <imagedata
+        align="center"
+        fileref="../graphics/duck-small.eps"
+        format="EPS">
+        <info>
+          <othercredit>
+            <orgname>O'Reilly &amp; Associates/Dover Archives</orgname>
+          </othercredit>
+        </info>
+      </imagedata>
+    </imageobject>
+    <textobject><phrase>The DocBook: TDG Duck</phrase></textobject>
+  </mediaobject>
+</figure>
+
+<informalfigure type="beta">
+  <mediaobject>
+    <imageobject>
+      <imagedata
+        align="center"
+        fileref="../graphics/duck-small.eps"
+        format="EPS">
+        <info>
+          <othercredit>
+            <orgname>O'Reilly &amp; Associates/Dover Archives</orgname>
+          </othercredit>
+        </info>
+      </imagedata>
+    </imageobject>
+    <textobject><phrase>The DocBook: TDG Duck</phrase></textobject>
+  </mediaobject>
+</informalfigure>
+
+<example type="gamma"><title>An Example</title>
+<programlisting>
+This is a programlisting in an example.
+</programlisting>
+</example>
+
+<informalexample type="delta">
+<programlisting>
+This is a programlisting in an example.
+</programlisting>
+</informalexample>
+
+<para>CALS:</para>
+
+<table frame="all" type="epsilon">
+<title>TFoot Test</title>
+<tgroup cols="2">
+<tfoot>
+<row>
+<entry>Foot Left</entry>
+<entry>Foot Right</entry>
+</row>
+</tfoot>
+<tbody>
+<row>
+<entry>Body Left</entry>
+<entry>Body Right</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+<informaltable frame="all" type="zeta">
+<tgroup cols="2">
+<tfoot>
+<row>
+<entry>Foot Left</entry>
+<entry>Foot Right</entry>
+</row>
+</tfoot>
+<tbody>
+<row>
+<entry>Body Left</entry>
+<entry>Body Right</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para>HTML:</para>
+
+<table border="1" type="eta">
+<caption>TFoot Test</caption>
+<tfoot>
+<tr>
+<td>Foot Left</td>
+<td>Foot Right</td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td>Body Left</td>
+<td>Body Right</td>
+</tr>
+</tbody>
+</table>
+
+<informaltable border="1" type="theta">
+<tfoot>
+<tr>
+<td>Foot Left</td>
+<td>Foot Right</td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td>Body Left</td>
+<td>Body Right</td>
+</tr>
+</tbody>
+</informaltable>
+
+<equation type="iota"><title>First Equation</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../graphics/emc2.png"/>
+</imageobject>
+<textobject>
+<phrase>E=mc^2</phrase>
+</textobject>
+</mediaobject>
+</equation>
+
+<informalequation type="kappa">
+<mediaobject>
+<imageobject>
+<imagedata fileref="../graphics/emc2.png"/>
+</imageobject>
+<textobject>
+<phrase>E=mc^2</phrase>
+</textobject>
+</mediaobject>
+</informalequation>
+
+<procedure xml:id="notitle" type="lambda">
+<step><para>Press MENUS.</para>
+</step>
+<step xml:id="step-x-1"><para>Press MENUS.</para>
+</step>
+<step><para>Press MENUS.</para>
+</step>
+<step><para>Press MENUS.</para>
+</step>
+<step><para>Select SETUP.</para>
+<substeps>
+<step><para>Should be an <quote>a</quote></para>
+</step>
+<step xml:id="step-y-1"><para>Should be a <quote>b</quote></para>
+</step>
+<step><para>Should be a <quote>c</quote></para>
+</step>
+<step><para>Should be a <quote>d</quote></para>
+</step>
+<step><para>should be an <quote>e</quote></para>
+<substeps>
+<step><para>should be an <quote>i</quote></para>
+</step>
+<step xml:id="step-z-1"><para>should be an <quote>ii</quote></para>
+</step>
+</substeps>
+</step>
+</substeps>
+</step>
+</procedure>
+
+</article>

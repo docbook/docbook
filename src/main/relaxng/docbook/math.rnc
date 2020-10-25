@@ -30,8 +30,15 @@ div {
    db.equation.role.attribute = attribute role { text }
    db.equation.label.attribute = db.label.attribute
 
+   db.equation.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of equation" ]
+      ]
+      attribute type { text }?
+
    db.equation.attlist =
       db.equation.role.attribute?
+    & db.equation.type.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.equation.label.attribute?
@@ -60,8 +67,15 @@ div {
 
    db.informalequation.role.attribute = attribute role { text }
 
+   db.informalequation.type.attribute =
+      [
+         db:refpurpose [ "Identifies the type of equation" ]
+      ]
+      attribute type { text }?
+
    db.informalequation.attlist =
       db.informalequation.role.attribute?
+    & db.informalequation.type.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.pgwide.attribute?
