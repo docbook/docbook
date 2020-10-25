@@ -669,6 +669,81 @@ db.biblio.class.attribute =
 
 # ======================================================================
 
+db.pubwork.enumeration =
+      ## An article
+      "article"
+    | ## A bulletin board system
+      "bbs"
+    | ## A book
+      "book"
+    | ## A CD-ROM
+      "cdrom"
+    | ## A chapter (as of a book)
+      "chapter"
+    | ## A DVD
+      "dvd"
+    | ## An email message
+      "emailmessage"
+    | ## A gopher page
+      "gopher"
+    | ## A journal
+      "journal"
+    | ## A manuscript
+      "manuscript"
+    | ## A posting to a newsgroup
+      "newsposting"
+    | ## A part (as of a book)
+      "part"
+    | ## A reference entry
+      "refentry"
+    | ## A section (as of a book or article)
+      "section"
+    | ## A series
+      "series"
+    | ## A set (as of books)
+      "set"
+    | ## A web page
+      "webpage"
+    | ## A wiki page
+      "wiki"
+    | ## Some other kind of work
+      "other"
+
+# ======================================================================
+
+ctrl:other-attribute [ name="db.biblio.pubwork.attribute"
+                       enum-name="db.biblio.pubwork-enum.attribute"
+                       other-name="db.biblio.pubwork-other.attributes" ]
+
+db.biblio.pubwork.enumeration = db.pubwork.enumeration
+
+db.biblio.pubwork-enum.attribute =
+   [
+      db:refpurpose [ "Identifies the nature of the published work" ]
+   ]
+   attribute pubwork { db.biblio.pubwork.enumeration } ?
+
+db.biblio.pubwork-other.attribute =
+   [
+      db:refpurpose [ "Identifies the nature of some other kind of published work" ]
+   ]
+   attribute otherpubwork { xsd:NMTOKEN }
+
+db.biblio.pubwork-other.attributes =
+   [
+      db:refpurpose [ "Identifies that this is some other kind of published work" ]
+   ]
+   attribute pubwork {
+      ## Indicates that the published work is some 'other' kind.
+      "other"
+   }
+ & db.biblio.pubwork-other.attribute
+
+db.biblio.pubwork.attribute =
+  (db.biblio.pubwork-enum.attribute | db.biblio.pubwork-other.attributes)
+
+# ======================================================================
+
 db.ubiq.inlines =
    db.inlinemediaobject
  | db.remark
@@ -4879,43 +4954,7 @@ div {
 ]
 div {
 
-   db.citetitle.pubwork.enumeration =
-      ## An article
-      "article"
-    | ## A bulletin board system
-      "bbs"
-    | ## A book
-      "book"
-    | ## A CD-ROM
-      "cdrom"
-    | ## A chapter (as of a book)
-      "chapter"
-    | ## A DVD
-      "dvd"
-    | ## An email message
-      "emailmessage"
-    | ## A gopher page
-      "gopher"
-    | ## A journal
-      "journal"
-    | ## A manuscript
-      "manuscript"
-    | ## A posting to a newsgroup
-      "newsposting"
-    | ## A part (as of a book)
-      "part"
-    | ## A reference entry
-      "refentry"
-    | ## A section (as of a book or article)
-      "section"
-    | ## A series
-      "series"
-    | ## A set (as of books)
-      "set"
-    | ## A web page
-      "webpage"
-    | ## A wiki page
-      "wiki"
+   db.citetitle.pubwork.enumeration = db.pubwork.enumeration
 
    db.citetitle.pubwork.attribute =
       [

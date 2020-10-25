@@ -1,0 +1,11 @@
+<bibliography xmlns="http://docbook.org/ns/docbook" version="5.2">
+<info>
+<title>Unit Test: bibliography.001</title>
+</info>
+
+<biblioentry pubwork='book' otherpubwork="app">
+  <title>Some App</title>
+</biblioentry>
+
+</bibliography>
+
