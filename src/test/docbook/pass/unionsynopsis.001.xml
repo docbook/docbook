@@ -9,11 +9,10 @@
       </db:abstract>
    </db:info>
    <db:unionsynopsis>
-      <db:union>
-         <db:unionname>IntOrString</db:unionname>
-         <db:type>Int</db:type>
-         <db:type>AbstractString</db:type>
-      </db:union>
+     <db:union>
+       <db:type>Int</db:type>
+       <db:type>AbstractString</db:type>
+     </db:union>
    </db:unionsynopsis>
    <db:unionsynopsis>
       <db:unionname>IntOrString</db:unionname>

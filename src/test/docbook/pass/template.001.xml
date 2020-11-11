@@ -5,11 +5,13 @@
     <db:title>C++ template</db:title>
     <db:para>An example inspired by <db:link xlink:href="https://en.cppreference.com/w/cpp/language/templates">CppReference</db:link>.</db:para>
     <db:classsynopsis>
+      <db:ooclass>
         <db:classname>X</db:classname>
+      </db:ooclass>
         <db:template>
             <db:modifier>class</db:modifier>
-            <db:templateid>T</db:templateid>
+            <db:templatename>T</db:templatename>
         </db:template>
-        <db:para>Class X.</db:para>
     </db:classsynopsis>
+    <db:para>Class X.</db:para>
 </db:article>

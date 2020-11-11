@@ -13,14 +13,16 @@
       <db:productnumber>1.2</db:productnumber>
    </db:info>
    <db:classsynopsis>
+     <db:info>
+      <db:releaseinfo role="threadsafety">reentrant</db:releaseinfo>
+      <db:releaseinfo role="module">QtCore</db:releaseinfo>
+      <db:releaseinfo role="group">io</db:releaseinfo>
+      <db:releaseinfo role="group">shared</db:releaseinfo>
+     </db:info>
+      <db:classsynopsisinfo role="headers">#include &lt;qfileinfo.h&gt;</db:classsynopsisinfo>
       <db:ooclass>
          <db:classname>QFileInfo</db:classname>
       </db:ooclass>
-      <db:synopsisinfo role="threadsafety">reentrant</db:synopsisinfo>
-      <db:synopsisinfo role="module">QtCore</db:synopsisinfo>
-      <db:synopsisinfo role="headers">#include &lt;qfileinfo.h&gt;</db:synopsisinfo>
-      <db:synopsisinfo role="group">io</db:synopsisinfo>
-      <db:synopsisinfo role="group">shared</db:synopsisinfo>
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
