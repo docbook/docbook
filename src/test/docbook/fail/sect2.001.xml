@@ -1,0 +1,13 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Unspecified other class</title>
+
+<sect1>
+<title>This is a top-level section</title>
+
+<sect2 class="other">
+<title>Other class</title>
+<para>This section fails to identify its other class.</para>
+</sect2>
+</sect1>
+
+</article>

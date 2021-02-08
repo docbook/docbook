@@ -19,6 +19,7 @@ db.sect1.sections = (db.sect2+, db.simplesect*) | db.simplesect+
 div {
 
    db.sect1.status.attribute = db.status.attribute
+   db.sect1.class.attribute = db.section.class.attribute
 
    db.sect1.role.attribute = attribute role { text }
 
@@ -28,6 +29,7 @@ div {
     & db.common.linking.attributes
     & db.label.attribute?
     & db.sect1.status.attribute?
+    & db.sect1.class.attribute?
 
    db.sect1.info = db._info.title.req
 
@@ -53,6 +55,7 @@ db.sect2.sections = (db.sect3+, db.simplesect*) | db.simplesect+
 div {
 
    db.sect2.status.attribute = db.status.attribute
+   db.sect2.class.attribute = db.section.class.attribute
 
    db.sect2.role.attribute = attribute role { text }
 
@@ -62,6 +65,7 @@ div {
     & db.common.linking.attributes
     & db.label.attribute?
     & db.sect2.status.attribute?
+    & db.sect2.class.attribute?
 
    db.sect2.info = db._info.title.req
 
@@ -87,6 +91,7 @@ db.sect3.sections = (db.sect4+, db.simplesect*) | db.simplesect+
 div {
 
    db.sect3.status.attribute = db.status.attribute
+   db.sect3.class.attribute = db.section.class.attribute
 
    db.sect3.role.attribute = attribute role { text }
 
@@ -96,6 +101,7 @@ div {
     & db.common.linking.attributes
     & db.label.attribute?
     & db.sect3.status.attribute?
+    & db.sect3.class.attribute?
 
    db.sect3.info = db._info.title.req
 
@@ -121,6 +127,7 @@ db.sect4.sections = (db.sect5+, db.simplesect*) | db.simplesect+
 div {
 
    db.sect4.status.attribute = db.status.attribute
+   db.sect4.class.attribute = db.section.class.attribute
 
    db.sect4.role.attribute = attribute role { text }
 
@@ -130,6 +137,7 @@ div {
     & db.common.linking.attributes
     & db.label.attribute?
     & db.sect4.status.attribute?
+    & db.sect4.class.attribute?
 
    db.sect4.info = db._info.title.req
 
@@ -155,6 +163,7 @@ db.sect5.sections = db.simplesect+
 div {
 
    db.sect5.status.attribute = db.status.attribute
+   db.sect5.class.attribute = db.section.class.attribute
 
    db.sect5.role.attribute = attribute role { text }
 
@@ -164,6 +173,7 @@ div {
     & db.common.linking.attributes
     & db.label.attribute?
     & db.sect5.status.attribute?
+    & db.sect5.class.attribute?
 
    db.sect5.info = db._info.title.req
 
