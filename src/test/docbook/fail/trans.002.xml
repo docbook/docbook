@@ -1,0 +1,9 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:trans="http://docbook.org/ns/transclusion">
+<info>
+<title>Unit Test: trans.001.xml</title>
+</info>
+
+<para trans:linkscope="wrong">The trans:linkscope value is invalid.</para>
+
+</article>
