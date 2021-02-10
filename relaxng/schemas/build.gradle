@@ -3,12 +3,12 @@ defaultTasks 'schemas', 'test'
 buildscript {
   repositories {
     mavenCentral()
-    maven { url "http://maven.restlet.org" }
+    maven { url "https://maven.restlet.org" }
   }
 
   dependencies {
-    classpath group: 'org.docbook', name: 'docbook-xslt2', version: '2.0.16'
-    classpath group: 'com.xmlcalabash', name: 'xmlcalabash1-gradle', version: '1.0.0'
+    classpath group: 'org.docbook', name: 'docbook-xslt2', version: '2.5.0'
+    classpath group: 'com.xmlcalabash', name: 'xmlcalabash1-gradle', version: '1.4.0'
   }
 }
 
@@ -31,11 +31,12 @@ project.ext.formrel="DocBook Forms " + dbver
 project.ext.itsrel="DocBook ITS " + dbver
 project.ext.pubrel="DocBook Publishers " + dbver + "-1"
 project.ext.slirel="DocBook Slides " + dbver + "-1"
+project.ext.slifullrel="DocBook Slides Full " + dbver + "-1"
 project.ext.webrel="DocBook Wesite " + dbver + "-1"
+project.ext.webfullrel="DocBook Wesite Full " + dbver + "-1"
 
 task docbook_rnc(type: XMLCalabashTask) {
-  FileCollection sources = fileTree(dir: 'docbook').exclude("test/**")
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook', exclude: "test/**")
   inputs.file mkschema
   outputs.dir "build/docbook"
   outputs.file "docbook.rnc"
@@ -63,7 +64,7 @@ task any_docbook_rng(dependsOn: docbook_rnc, type: XMLCalabashTask) {
   inputs.file "../tools/all-patterns.xsl"
   outputs.file "build/docbook/any.docbook.rng"
 
-  step "xslt"
+  pipeline "../tools/xslt.xpl"
   input("source", "docbook.rng")
   input("stylesheet", "../tools/all-patterns.xsl")
   output("result", "build/docbook/any.docbook.rng")
@@ -79,10 +80,8 @@ task any_docbook_rnc(dependsOn: any_docbook_rng, type: XMLCalabashTask) {
 }
 
 task assembly_rnc(dependsOn: any_docbook_rnc, type: XMLCalabashTask) {
-  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
-  FileCollection sources = fileTree(dir: 'assembly').exclude("test/**")
-  inputs.file dbsources
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'assembly').exclude("test/**")
   inputs.file mkschema
   outputs.dir "build/assembly"
   outputs.file "assembly.rnc"
@@ -106,10 +105,8 @@ task assembly_sch(dependsOn: assembly_rnc, type: XMLCalabashTask) {
 }
 
 task docbookxi_rnc(type: XMLCalabashTask) {
-  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
-  FileCollection sources = fileTree(dir: 'docbookxi').exclude("test/**")
-  inputs.file dbsources
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'docbookxi').exclude("test/**")
   inputs.file mkschema
   outputs.dir "build/docbookxi"
   outputs.file "docbookxi.rnc"
@@ -134,8 +131,7 @@ task docbookxi_sch(dependsOn: docbookxi_rnc, type: XMLCalabashTask) {
 
 task defguide_rnd(dependsOn: ['docbook_rnc', 'assembly_rnc', 'any_docbook_rnc'],
                   type: XMLCalabashTask) {
-  FileCollection sources = fileTree(dir: 'defguide').exclude("test/**")
-  inputs.file sources
+  inputs.files fileTree(dir: 'defguide').exclude("test/**")
   inputs.file mkdoc
   outputs.dir "build/defguide"
   outputs.file "defguide.rnd"
@@ -149,10 +145,8 @@ task defguide_rnd(dependsOn: ['docbook_rnc', 'assembly_rnc', 'any_docbook_rnc'],
 }
 
 task sdocbook_rnc(type: XMLCalabashTask) {
-  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
-  FileCollection sources = fileTree(dir: 'sdocbook').exclude("test/**")
-  inputs.file dbsources
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'sdocbook').exclude("test/**")
   inputs.file mkschema
   outputs.dir "build/sdocbook"
   outputs.file "sdocbook.rnc"
@@ -184,10 +178,8 @@ task sdocbook_rnd(dependsOn: ['sdocbook_rnc'], type: XMLCalabashTask) {
 }
 
 task dbforms_rnc(type: XMLCalabashTask) {
-  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
-  FileCollection sources = fileTree(dir: 'dbforms').exclude("test/**")
-  inputs.file dbsources
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'dbforms').exclude("test/**")
   inputs.file mkschema
   outputs.dir "build/dbforms"
   outputs.file "dbforms.rnc"
@@ -211,10 +203,8 @@ task dbforms_sch(dependsOn: dbforms_rnc, type: XMLCalabashTask) {
 }
 
 task dbits_rnc(type: XMLCalabashTask) {
-  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
-  FileCollection sources = fileTree(dir: 'dbits').exclude("test/**")
-  inputs.file dbsources
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'dbits').exclude("test/**")
   inputs.file mkschema
   outputs.dir "build/dbits"
   outputs.file "dbits.rnc"
@@ -238,17 +228,15 @@ task dbits_sch(dependsOn: dbits_rnc, type: XMLCalabashTask) {
 }
 
 task publishers_rnc(type: XMLCalabashTask) {
-  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
-  FileCollection sources = fileTree(dir: 'publishers').exclude("test/**")
-  inputs.file dbsources
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'publishers').exclude("test/**")
   inputs.file mkschema
   outputs.dir "build/publishers"
   outputs.file "publishers.rnc"
 
   pipeline mkschema
   option("schema","publishers")
-  option("release",sdbrel)
+  option("release",pubrel)
   option("remove-schematron",removesch)
 
   doFirst {
@@ -273,17 +261,15 @@ task publishers_rnd(dependsOn: ['publishers_rnc'], type: XMLCalabashTask) {
 }
 
 task slides_rnc(type: XMLCalabashTask) {
-  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
-  FileCollection sources = fileTree(dir: 'slides').exclude("test/**")
-  inputs.file dbsources
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'slides').exclude("test/**")
   inputs.file mkschema
   outputs.dir "build/slides"
   outputs.file "slides.rnc"
 
   pipeline mkschema
   option("schema","slides")
-  option("release",sdbrel)
+  option("release",slirel)
   option("remove-schematron",removesch)
 
   doFirst {
@@ -308,17 +294,15 @@ task slides_rnd(dependsOn: ['slides_rnc'], type: XMLCalabashTask) {
 }
 
 task slides_full_rnc(type: XMLCalabashTask) {
-  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
-  FileCollection sources = fileTree(dir: 'slides-full').exclude("test/**")
-  inputs.file dbsources
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'slides-full').exclude("test/**")
   inputs.file mkschema
   outputs.dir "build/slides-full"
   outputs.file "slides-full.rnc"
 
   pipeline mkschema
   option("schema","slides-full")
-  option("release",sdbrel)
+  option("release",slifullrel)
   option("remove-schematron",removesch)
 
   doFirst {
@@ -335,17 +319,15 @@ task slides_full_sch(dependsOn: slides_full_rnc, type: XMLCalabashTask) {
 }
 
 task website_rnc(type: XMLCalabashTask) {
-  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
-  FileCollection sources = fileTree(dir: 'website').exclude("test/**")
-  inputs.file dbsources
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'website').exclude("test/**")
   inputs.file mkschema
   outputs.dir "build/website"
   outputs.file "website.rnc"
 
   pipeline mkschema
   option("schema","website")
-  option("release",sdbrel)
+  option("release",webrel)
   option("remove-schematron",removesch)
 
   doFirst {
@@ -370,17 +352,15 @@ task website_rnd(dependsOn: ['website_rnc'], type: XMLCalabashTask) {
 }
 
 task website_full_rnc(type: XMLCalabashTask) {
-  FileCollection dbsources = fileTree(dir: 'docbook').exclude("test/**")
-  FileCollection sources = fileTree(dir: 'website-full').exclude("test/**")
-  inputs.file dbsources
-  inputs.file sources
+  inputs.files fileTree(dir: 'docbook').exclude("test/**")
+  inputs.files fileTree(dir: 'website-full').exclude("test/**")
   inputs.file mkschema
   outputs.dir "build/website-full"
   outputs.file "website-full.rnc"
 
   pipeline mkschema
   option("schema","website-full")
-  option("release",sdbrel)
+  option("release",webfullrel)
   option("remove-schematron",removesch)
 
   doFirst {
@@ -433,13 +413,14 @@ task docs(dependsOn: ['defguide_rnd',
   }
 }
 
-task clean
-task clean.doFirst {
-  delete "build"
-  delete fileTree(dir: '.').include("*.rnc")
-  delete fileTree(dir: '.').include("*.rng")
-  delete fileTree(dir: '.').include("*.rnd")
-  delete fileTree(dir: '.').include("*.sch")
+task clean {
+  doFirst {
+    delete "build"
+    delete fileTree(dir: '.').include("*.rnc")
+    delete fileTree(dir: '.').include("*.rng")
+    delete fileTree(dir: '.').include("*.rnd")
+    delete fileTree(dir: '.').include("*.sch")
+  }
 }
 
 // DocBook Tests
@@ -468,24 +449,36 @@ task testDocBook(dependsOn: ['positiveDocBookTests','negativeDocBookTests']) {
   // nothing to see here
 }
 
+Random random = new Random()
+Boolean travis = (System.getenv("RUNNING_ON_TRAVIS") != null)
+int threshold = 90
+
+if (travis) {
+  print("Skipping roughly " + threshold + "% of tests to avoid memory problems on Travis\n")
+}
+
 fileTree(dir: "docbook/test/pass").each { file ->
-  task "testDocBookPass_$file.name"(type: XMLCalabashTask) {
-    input("source", "docbook/test/pass/$file.name")
-    output("result", "build/test/docbook/pass/$file.name")
-    option("schema", "docbook")
-    pipeline "../tools/validate-pass.xpl"
+  if (!travis || random.nextInt(100) > threshold) {
+    task "testDocBookPass_$file.name"(type: XMLCalabashTask) {
+      input("source", "docbook/test/pass/$file.name")
+      output("result", "build/test/docbook/pass/$file.name")
+      option("schema", "docbook")
+      pipeline "../tools/validate-pass.xpl"
+    }
+    positiveDocBookTests.dependsOn "testDocBookPass_$file.name"
   }
-  positiveDocBookTests.dependsOn "testDocBookPass_$file.name"
 }
 
 fileTree(dir: "docbook/test/fail").each { file ->
-  task "testDocBookFail_$file.name"(type: XMLCalabashTask) {
-    input("source", "docbook/test/fail/$file.name")
-    output("result", "build/test/docbook/fail/$file.name")
-    option("schema", "docbook")
-    pipeline "../tools/validate-fail.xpl"
+  if (!travis || random.nextInt(100) > threshold) {
+    task "testDocBookFail_$file.name"(type: XMLCalabashTask) {
+      input("source", "docbook/test/fail/$file.name")
+      output("result", "build/test/docbook/fail/$file.name")
+      option("schema", "docbook")
+      pipeline "../tools/validate-fail.xpl"
+    }
+    negativeDocBookTests.dependsOn "testDocBookFail_$file.name"
   }
-  negativeDocBookTests.dependsOn "testDocBookFail_$file.name"
 }
 
 // Assembly Tests
@@ -642,7 +635,7 @@ task distDocBook5(type: XMLCalabashTask) {
   input("source", "docbook/index.xhtml")
   output("result", "build/dist/xml/${docbook_version}/index.html")
   option("version", "${docbook_version}")
-  option("tdg", "http://docbook.org/tdg51/en/html/")
+  option("tdg", "https://docbook.org/tdg51/en/html/")
   option("tdgtitle", "DocBook 5.1: The Definitive Guide")
 }
 
@@ -654,8 +647,8 @@ task distCatalog(type: XMLCalabashTask) {
   pipeline "../tools/catalog.xpl"
   input("source", "docbook/docbook-catalog.xml")
   output("result", "build/dist/xml/${docbook_version}/catalog.xml")
-  option("ROOT", "http://docbook.org/xml")
-  option("ROOT2", "http://www.docbook.org/xml")
+  option("ROOT", "https://docbook.org/xml")
+  option("ROOT2", "https://www.docbook.org/xml")
   option("VERSION", "${docbook_version}")
   doFirst {
     mkdir("build/dist/xml/${docbook_version}")
@@ -730,7 +723,7 @@ task distCatalogOASIS(type: XMLCalabashTask) {
   pipeline "../tools/catalog.xpl"
   input("source", "docbook/oasis-catalog.xml")
   output("result", "build/dist/docbook/docbook/${oasis_version}/${oasis_release}/catalog.xml")
-  option("ROOT", "http://docs.oasis-open.org/docbook/docbook")
+  option("ROOT", "https://docs.oasis-open.org/docbook/docbook")
   option("VERSION", "${oasis_version}")
   option("RELEASE", "${oasis_release}")
   doFirst {
@@ -786,7 +779,7 @@ task distPub4(type: XMLCalabashTask) {
   input("source", "publishers/index.xhtml")
   output("result", "build/dist/xml/publishers/${publishers_version}/index.html")
   option("version", "${publishers_version}")
-  option("tdg", "http://docbook.org/tdg51/publishers/en/html/")
+  option("tdg", "https://docbook.org/tdg51/publishers/en/html/")
   option("tdgtitle", "DocBook Publishers 5.1: The Definitive Guide")
 }
 
@@ -798,8 +791,8 @@ task distPubCatalog(type: XMLCalabashTask) {
   pipeline "../tools/catalog.xpl"
   input("source", "publishers/catalog.xml")
   output("result", "build/dist/xml/publishers/${publishers_version}/catalog.xml")
-  option("ROOT", "http://docbook.org/xml/publishers")
-  option("ROOT2", "http://www.docbook.org/xml/publishers")
+  option("ROOT", "https://docbook.org/xml/publishers")
+  option("ROOT2", "https://www.docbook.org/xml/publishers")
   option("VERSION", "${publishers_version}")
   doFirst {
     mkdir("build/dist/xml/publishers/${publishers_version}")
@@ -854,7 +847,7 @@ task distSimple4(type: XMLCalabashTask) {
   input("source", "sdocbook/index.xhtml")
   output("result", "build/dist/xml/sdocbook/${sdocbook_version}/index.html")
   option("version", "${sdocbook_version}")
-  option("tdg", "http://docbook.org/tdg51/sdocbook/en/html/")
+  option("tdg", "https://docbook.org/tdg51/sdocbook/en/html/")
   option("tdgtitle", "Simplified DocBook 5.1: The Definitive Guide")
 }
 
@@ -866,8 +859,8 @@ task distSimpleCatalog(type: XMLCalabashTask) {
   pipeline "../tools/catalog.xpl"
   input("source", "sdocbook/catalog.xml")
   output("result", "build/dist/xml/sdocbook/${sdocbook_version}/catalog.xml")
-  option("ROOT", "http://docbook.org/xml/sdocbook")
-  option("ROOT2", "http://www.docbook.org/xml/sdocbook")
+  option("ROOT", "https://docbook.org/xml/sdocbook")
+  option("ROOT2", "https://www.docbook.org/xml/sdocbook")
   option("VERSION", "${sdocbook_version}")
   doFirst {
     mkdir("build/dist/xml/sdocbook/${sdocbook_version}")
@@ -925,7 +918,7 @@ task distSlides4(type: XMLCalabashTask) {
   input("source", "slides/index.xhtml")
   output("result", "build/dist/xml/slides/${slides_version}/index.html")
   option("version", "${slides_version}")
-  option("tdg", "http://docbook.org/tdg51/slides/en/html/")
+  option("tdg", "https://docbook.org/tdg51/slides/en/html/")
   option("tdgtitle", "DocBook Slides 5.1: The Definitive Guide")
 }
 
@@ -937,8 +930,8 @@ task distSlidesCatalog(type: XMLCalabashTask) {
   pipeline "../tools/catalog.xpl"
   input("source", "slides/catalog.xml")
   output("result", "build/dist/xml/slides/${slides_version}/catalog.xml")
-  option("ROOT", "http://docbook.org/xml/slides")
-  option("ROOT2", "http://www.docbook.org/xml/slides")
+  option("ROOT", "https://docbook.org/xml/slides")
+  option("ROOT2", "https://www.docbook.org/xml/slides")
   option("VERSION", "${slides_version}")
   doFirst {
     mkdir("build/dist/xml/slides/${slides_version}")
@@ -996,7 +989,7 @@ task distWebsite4(type: XMLCalabashTask) {
   input("source", "website/index.xhtml")
   output("result", "build/dist/xml/website/${website_version}/index.html")
   option("version", "${website_version}")
-  option("tdg", "http://docbook.org/tdg51/website/en/html/")
+  option("tdg", "https://docbook.org/tdg51/website/en/html/")
   option("tdgtitle", "DocBook Website 5.1: The Definitive Guide")
 }
 
@@ -1008,8 +1001,8 @@ task distWebsiteCatalog(type: XMLCalabashTask) {
   pipeline "../tools/catalog.xpl"
   input("source", "website/catalog.xml")
   output("result", "build/dist/xml/website/${website_version}/catalog.xml")
-  option("ROOT", "http://docbook.org/xml/website")
-  option("ROOT2", "http://www.docbook.org/xml/website")
+  option("ROOT", "https://docbook.org/xml/website")
+  option("ROOT2", "https://www.docbook.org/xml/website")
   option("VERSION", "${website_version}")
   doFirst {
     mkdir("build/dist/xml/website/${website_version}")

@@ -103,7 +103,7 @@
 
       <xsl:if test="$isStart &gt; 0">
 	<s:pattern xmlns="http://relaxng.org/ns/structure/1.0">
-          <title>Root must have version</title>
+          <s:title>Root must have version</s:title>
 	  <s:rule context="/db:{$name}">
 	    <s:assert test="@version">
 	      <xsl:text>If this element is the root element, it must have a version attribute.</xsl:text>

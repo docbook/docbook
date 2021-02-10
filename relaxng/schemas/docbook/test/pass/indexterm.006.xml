@@ -1,5 +1,5 @@
 <book xmlns="http://docbook.org/ns/docbook"
-      xml:lang="cs">
+      xml:lang="cs" version="5.1">
   <info><title>Pokusná kniha s rejstříkem</title></info>
   <chapter>
     <info><title>A Chapter</title></info>

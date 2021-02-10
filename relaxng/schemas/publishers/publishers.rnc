@@ -316,6 +316,24 @@ div {
   db.void = notAllowed
   db.topic = notAllowed
 
+  # ============================================================
+  # This section was added by Norman Walsh to make this schema
+  # consistent with the previously published "5.1CR3" version. It's
+  # unclear to Norm how these changes come to be "lost" with respect
+  # to the published schema.
+  
+  db.set.components = (db.set | db.book)+ | db.article+
+  db.set =
+      element set {
+          db.set.attlist,
+         db.set.info,
+         db.toc.components?,
+         db.set.components,
+         db.setindex.components?
+      }
+
+  # ============================================================
+
   db.html.table = notAllowed
 
   # Patterns that need to be patched after the exclusions
