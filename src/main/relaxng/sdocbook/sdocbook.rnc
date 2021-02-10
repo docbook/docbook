@@ -20,8 +20,6 @@ include "../docbook/hier.rnc" {
    db.colophon = notAllowed
    db.dedication = notAllowed
 
-   db.legalsection = notAllowed
-
    [
       db:refname [ "article" ]
       db:refpurpose [ "An article" ]

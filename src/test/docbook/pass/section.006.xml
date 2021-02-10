@@ -1,0 +1,22 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<info>
+  <title>Unit Test: section.006</title>
+  <subtitle>Sections with a class attribute</subtitle>
+</info>
+
+<section class="legal">
+  <title>This is a “legal” section.</title>
+  <para>So sue me. (No, I’m just kidding, please don’t.)</para>
+</section>
+
+<section>
+  <title>A “normal” section</title>
+  <para>What, me normal?</para>
+</section>
+
+<section class="other" otherclass="sparkly">
+  <title>This section sparkles</title>
+  <para>Scintillating!</para>
+</section>
+
+</article>

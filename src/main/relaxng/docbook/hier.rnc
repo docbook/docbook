@@ -5,7 +5,7 @@ namespace db = "http://docbook.org/ns/docbook"
 namespace dbx = "http://sourceforge.net/projects/docbook/defguide/schema/extra-markup"
 default namespace = "http://docbook.org/ns/docbook"
 
-start |= db.partintro | db.simplesect | db.legalsection
+start |= db.partintro | db.simplesect
 
 db.status.attribute =
    [
@@ -18,12 +18,12 @@ db.status.attribute =
 
 # ======================================================================
 
-db.toplevel.sections = ((db.section|db.legalsection)+, db.simplesect*) | db.simplesect+
+db.toplevel.sections = (db.section+, db.simplesect*) | db.simplesect+
 
 db.toplevel.blocks.or.sections =
   (db.all.blocks+, db.toplevel.sections?) | db.toplevel.sections
 
-db.recursive.sections = ((db.section|db.legalsection)+, db.simplesect*) | db.simplesect+
+db.recursive.sections = (db.section+, db.simplesect*) | db.simplesect+
 
 db.recursive.blocks.or.sections =
   (db.all.blocks+, db.recursive.sections?) | db.recursive.sections
@@ -374,6 +374,39 @@ div {
 
    db.section.status.attribute = db.status.attribute
 
+   ctrl:other-attribute [ name="db.section.class.attribute"
+                          enum-name="db.section.class-enum.attribute"
+                          other-name="db.section.class-other.attributes" ]
+   
+   db.section.class.enumeration =
+      ## A section of legal obligations or requirements
+      "legal"
+
+   db.section.class-enum.attribute =
+      [
+         db:refpurpose [ "Identifies the nature of the section" ]
+      ]
+      attribute class { db.section.class.enumeration }
+
+    db.section.class-other.attribute =
+      [
+         db:refpurpose [ "Identifies a non-standard section class" ]
+      ]
+      attribute otherclass { xsd:NMTOKEN }
+
+   db.section.class-other.attributes =
+      [
+         db:refpurpose [ "Indicates that a non-standard section class is applied" ]
+      ]
+      attribute class {
+         ## Indicates that the identifier is some 'other' kind.
+         "other"
+      }
+      & db.section.class-other.attribute
+
+   db.section.class.attribute =
+     (db.section.class-enum.attribute | db.section.class-other.attributes)
+
    db.section.role.attribute = attribute role { text }
 
    db.section.attlist =
@@ -382,6 +415,7 @@ div {
     & db.common.linking.attributes
     & db.label.attribute?
     & db.section.status.attribute?
+    & db.section.class.attribute?
 
    db.section.info = db._info.title.req
 
@@ -423,32 +457,6 @@ div {
          db.all.blocks*
       }
 
-}
-# ======================================================================
-
-[
-   db:refname [ "legalsection" ]
-   db:refpurpose [ "A recursive section of legal obligations or requirements." ]
-]
-div {
-   db.legalsection.role.attribute = attribute role { text }
-
-   db.legalsection.attlist =
-      db.legalsection.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-    & db.label.attribute?
-
-   db.legalsection.info = db._info.title.req
-
-   db.legalsection =
-      element legalsection {
-         db.legalsection.attlist,
-         db.legalsection.info,
-         db.all.blocks*,
-         db.legalsection*
-      }
-    
 }
 # ======================================================================
 
