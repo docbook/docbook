@@ -4,6 +4,7 @@ namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 namespace dbx = "http://sourceforge.net/projects/docbook/defguide/schema/extra-markup"
 namespace xlink = "http://www.w3.org/1999/xlink"
+namespace trans = "http://docbook.org/ns/transclusion"
 namespace html = "http://www.w3.org/1999/xhtml"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 default namespace = "http://docbook.org/ns/docbook"
@@ -389,6 +390,57 @@ db.rdfalite.attributes =
  & db.rdfalite.resource?
  & db.rdfalite.prefix?
 
+db.trans.idfixup.enumeration =
+   ## No ID fixup strategy
+   "none"
+ | ## ID fixup by concatenating suffixes
+   "suffix"
+ | ## ID fixup by creating unique values
+   "auto"
+
+db.trans.idfixup.attribute =
+   [
+      db:refpurpose [ "The transclusion ID fixup strategy" ]
+   ]
+   attribute trans:idfixup { db.trans.idfixup.enumeration }
+
+db.trans.suffix.attribute =
+   [
+      db:refpurpose [ "The transclusion suffix to use when the suffix ID fixup strategy is employed" ]
+      s:pattern [
+         s:title [ "Suffix fixup must be specified" ]
+         s:rule [
+            context = "db:*[@trans:suffix]"
+            s:assert [
+               test = "@trans:idfixup = 'suffix'"
+               "If a suffix is specified, suffix ID fixup must also be specified."
+            ]
+         ]
+      ]
+   ]
+   attribute trans:suffix { text }
+
+db.trans.linkscope.enumeration =
+   ## No link scope adjustments are made
+   "user"
+ | ## The link scopes are adjusted with the suffix property
+   "local"
+ | ## The link scopes are adjusted based on proximity
+   "near"
+ | ## The link scopes are adjusted based on document order
+   "global"
+
+db.trans.linkscope.attribute =
+   [
+      db:refpurpose [ "The transclusion link scope adjustment" ]
+   ]
+   attribute trans:linkscope { db.trans.linkscope.enumeration }
+
+db.common.transclusion.attributes =
+   db.trans.idfixup.attribute?
+ & db.trans.suffix.attribute?
+ & db.trans.linkscope.attribute?
+
 db.common.base.attributes =
    db.version.attribute?
  & db.xml.lang.attribute?
@@ -399,6 +451,7 @@ db.common.base.attributes =
  & db.dir.attribute?
  & db.effectivity.attributes
  & db.rdfalite.attributes
+ & db.common.transclusion.attributes
 
 db.common.attributes =
    db.xml.id.attribute?
