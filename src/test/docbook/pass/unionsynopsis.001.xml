@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="5.2">
+   <db:info>
+      <db:title>Julia unions</db:title>
+      <db:abstract>
+         <db:para>Model the following construct: <db:code>IntOrString = Union{Int,AbstractString}</db:code></db:para>
+      </db:abstract>
+   </db:info>
+   <db:unionsynopsis>
+     <db:union>
+       <db:type>Int</db:type>
+       <db:type>AbstractString</db:type>
+     </db:union>
+   </db:unionsynopsis>
+   <db:unionsynopsis>
+      <db:unionname>IntOrString</db:unionname>
+      <db:union>
+         <db:type>Int</db:type>
+         <db:type>AbstractString</db:type>
+      </db:union>
+   </db:unionsynopsis>
+</db:article>

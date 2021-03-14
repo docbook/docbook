@@ -1,0 +1,178 @@
+default namespace = "http://docbook.org/ns/docbook"
+namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
+namespace rng  = "http://relaxng.org/ns/structure/1.0"
+namespace s = "http://purl.oclc.org/dsdl/schematron"
+namespace db = "http://docbook.org/ns/docbook"
+
+db.technical.inlines |=
+   db.systemitem
+ | db.option
+ | db.optional
+ | db.property
+
+# ======================================================================
+
+db.systemitem.inlines = db._text
+
+# ======================================================================
+
+[
+   db:refname [ "systemitem" ]
+   db:refpurpose [ "A system-related item or term" ]
+]
+div {
+
+   db.systemitem.class.enumeration =
+      ## A daemon or other system process (syslogd)
+      "daemon"
+    | ## A domain name (example.com)
+      "domainname"
+    | ## An ethernet address (00:05:4E:49:FD:8E)
+      "etheraddress"
+    | ## An event of some sort (SIGHUP)
+      "event"
+    | ## An event handler of some sort (hangup)
+      "eventhandler"
+    | ## A filesystem (ext3)
+      "filesystem"
+    | ## A fully qualified domain name (my.example.com)
+      "fqdomainname"
+    | ## A group name (wheel)
+      "groupname"
+    | ## A network interface (eth0)
+      "interface"
+    | ## An IP address (127.0.0.1)
+      "ipaddress"
+    | ## A library (libncurses)
+      "library"
+    | ## A macro
+      "macro"
+    | ## A netmask (255.255.255.192)
+      "netmask"
+    | ## A newsgroup (comp.text.xml)
+      "newsgroup"
+    | ## An operating system name (Hurd)
+      "osname"
+    | ## A process (gnome-cups-icon)
+      "process"
+    | ## A protocol (ftp)
+      "protocol"
+    | ## A resource
+      "resource"
+    | ## A security context (a role, permission, or security token, for example)
+      "securitycontext"
+    | ## A server (mail.example.com)
+      "server"
+    | ## A service (ppp)
+      "service"
+    | ## A system name (hephaistos)
+      "systemname"
+    | ## A user name (ndw)
+      "username"
+
+   db.systemitem.class-enum.attribute =
+      [
+         db:refpurpose [ "Identifies the nature of the system item" ]
+      ]
+   attribute class { db.systemitem.class.enumeration } ?
+
+   db.systemitem.class-other.attribute =
+      [
+         db:refpurpose [ "Identifies the nature of the non-standard system item" ]
+      ]
+      attribute otherclass { xsd:NMTOKEN }
+
+   db.systemitem.class-other.attributes =
+      [
+         db:refpurpose [ "Identifies the kind of systemitemgraphic identifier" ]
+      ]
+      attribute class {
+         ## Indicates that the system item is some 'other' kind.
+         "other"
+      }
+    & db.systemitem.class-other.attribute
+
+   db.systemitem.class.attribute =
+      (db.systemitem.class-enum.attribute | db.systemitem.class-other.attributes)
+
+   db.systemitem.role.attribute = attribute role { text }
+
+   db.systemitem.attlist =
+      db.systemitem.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.systemitem.class.attribute?
+
+   db.systemitem =
+      element systemitem {
+         db.systemitem.attlist,
+         db.systemitem.inlines*
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "option" ]
+   db:refpurpose [ "An option for a software command" ]
+]
+div {
+
+   db.option.role.attribute = attribute role { text }
+
+   db.option.attlist =
+      db.option.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.option =
+      element option {
+         db.option.attlist,
+         db._text
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "optional" ]
+   db:refpurpose [ "Optional information" ]
+]
+div {
+
+   db.optional.role.attribute = attribute role { text }
+
+   db.optional.attlist =
+      db.optional.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.optional =
+      element optional {
+         db.optional.attlist,
+         (db._text | db.optional)*
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "property" ]
+   db:refpurpose [ "A unit of data associated with some part of a computer system" ]
+]
+div {
+
+   db.property.role.attribute = attribute role { text }
+
+   db.property.attlist =
+      db.property.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.property =
+      element property {
+         db.property.attlist,
+         db._text
+      }
+}
+

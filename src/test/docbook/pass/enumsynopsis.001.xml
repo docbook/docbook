@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="5.2">
+   <db:info>
+      <db:title>Qt</db:title>
+      <db:abstract>
+         <db:para>Contains miscellaneous identifiers used throughout the Qt library</db:para>
+      </db:abstract>
+   </db:info>
+   <db:namespacesynopsis>
+      <db:namespace>
+         <db:namespacename>Qt</db:namespacename>
+      </db:namespace>
+      <db:synopsisinfo role="module">QtCore</db:synopsisinfo>
+      <db:synopsisinfo role="headers">#include &lt;qnamespace.h&gt;</db:synopsisinfo>
+   </db:namespacesynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+   </db:section>
+   <db:section>
+      <db:title>Member Type Documentation</db:title>
+      <db:section>
+         <db:title>enum Qt::AlignmentFlag, flags Qt::Alignment</db:title>
+         <db:enumsynopsis>
+            <db:enumname>Qt::AlignmentFlag</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>AlignLeft</db:enumidentifier>
+               <db:enumvalue>0x0001</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignLeading</db:enumidentifier>
+               <db:enumvalue>AlignLeft</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignRight</db:enumidentifier>
+               <db:enumvalue>0x0002</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignTrailing</db:enumidentifier>
+               <db:enumvalue>AlignRight</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignHCenter</db:enumidentifier>
+               <db:enumvalue>0x0004</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignJustify</db:enumidentifier>
+               <db:enumvalue>0x0008</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignAbsolute</db:enumidentifier>
+               <db:enumvalue>0x0010</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignHorizontal_Mask</db:enumidentifier>
+               <db:enumvalue>AlignLeft</db:enumvalue>
+               <db:enumvalue>AlignRight</db:enumvalue>
+               <db:enumvalue>AlignHCenter</db:enumvalue>
+               <db:enumvalue>AlignJustify</db:enumvalue>
+               <db:enumvalue>AlignAbsolute</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignTop</db:enumidentifier>
+               <db:enumvalue>0x0020</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignBottom</db:enumidentifier>
+               <db:enumvalue>0x0040</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignVCenter</db:enumidentifier>
+               <db:enumvalue>0x0080</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignBaseline</db:enumidentifier>
+               <db:enumvalue>0x0100</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignVertical_Mask</db:enumidentifier>
+               <db:enumvalue>AlignTop</db:enumvalue>
+               <db:enumvalue>AlignBottom</db:enumvalue>
+               <db:enumvalue>AlignVCenter</db:enumvalue>
+               <db:enumvalue>AlignBaseline</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AlignCenter</db:enumidentifier>
+               <db:enumvalue>AlignVCenter</db:enumvalue>
+               <db:enumvalue>AlignHCenter</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:typedefsynopsis>
+            <db:typedefname>Qt::Alignment</db:typedefname>
+         </db:typedefsynopsis>
+         <db:para>This enum type is used to describe alignment. It contains horizontal and vertical flags that can be combined to produce the required effect.</db:para>
+         <db:para>The horizontal flags are:</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>Qt::AlignLeft</db:td>
+                  <db:td>0x0001</db:td>
+                  <db:td>
+                     <db:para>Aligns with the left edge.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>Qt::AlignRight</db:td>
+                  <db:td>0x0002</db:td>
+                  <db:td>
+                     <db:para>Aligns with the right edge.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>Qt::AlignHCenter</db:td>
+                  <db:td>0x0004</db:td>
+                  <db:td>
+                     <db:para>Centers horizontally in the available space.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>Qt::AlignJustify</db:td>
+                  <db:td>0x0008</db:td>
+                  <db:td>
+                     <db:para>Justifies the text in the available space.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>The <db:code>Alignment</db:code> type is a typedef for <db:code>QFlags&lt;AlignmentFlag&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      </db:section>
+   </db:section>
+</db:article>

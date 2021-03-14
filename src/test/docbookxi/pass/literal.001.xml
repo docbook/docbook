@@ -1,0 +1,12 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xml:id="article">
+<info>
+<title>Unit Test: literal.001.xml</title>
+</info>
+
+<para>This is an XInclude literal test:
+<literal><xi:include xmlns:xi='http://www.w3.org/2001/XInclude'
+                     href="doc.xml" fragid="xpath(id(^(foo^)/text^(^))"/></literal>
+</para>
+
+</article>

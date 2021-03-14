@@ -1,0 +1,225 @@
+namespace ctrl = "http://nwalsh.com/xmlns/schema-control/"
+namespace rng  = "http://relaxng.org/ns/structure/1.0"
+namespace s = "http://purl.oclc.org/dsdl/schematron"
+namespace db = "http://docbook.org/ns/docbook"
+default namespace = "http://docbook.org/ns/docbook"
+
+start |= db.productionset | db.constraintdef
+
+db.technical.inlines |= db.nonterminal
+db.technical.blocks |= db.productionset | db.constraintdef
+
+# ======================================================================
+
+[
+   db:refname [ "productionset" ]
+   db:refpurpose [ "A set of EBNF productions" ]
+]
+div {
+
+   db.productionset.role.attribute = attribute role { text }
+
+   db.productionset.attlist =
+      db.productionset.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.productionset.info = db._info.title.only
+
+   db.productionset =
+      element productionset {
+         db.productionset.attlist,
+         db.productionset.info,
+         (db.production|db.productionrecap)+
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "production" ]
+   db:refpurpose [ "A production in a set of EBNF productions" ]
+]
+div {
+
+   db.production.role.attribute = attribute role { text }
+
+   db.production.attlist =
+      db.production.role.attribute?
+    & db.common.idreq.attributes
+    & db.common.linking.attributes
+
+   db.production =
+      element production {
+         db.production.attlist,
+         db.lhs,
+         db.rhs+,
+         db.constraint*
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "lhs" ]
+   db:refpurpose [ "The left-hand side of an EBNF production" ]
+]
+div {
+
+   db.lhs.role.attribute = attribute role { text }
+
+   db.lhs.attlist =
+      db.lhs.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.lhs =
+      element lhs {
+         db.lhs.attlist,
+         text
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "rhs" ]
+   db:refpurpose [ "The right-hand side of an EBNF production" ]
+]
+div {
+
+   db.rhs.role.attribute = attribute role { text }
+
+   db.rhs.attlist =
+      db.rhs.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.rhs =
+      element rhs {
+         db.rhs.attlist,
+         (text|db.nonterminal|db.lineannotation|db.sbr)*
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "nonterminal" ]
+   db:refpurpose [ "A non-terminal in an EBNF production" ]
+]
+div {
+
+   db.nonterminal.role.attribute = attribute role { text }
+   db.nonterminal.def.attribute =
+      [
+         db:refpurpose [ "Specifies a URI that points to a " db:tag [ "production" ] "where the " db:tag [ "nonterminal" ] " is defined" ]
+      ]
+      attribute def { xsd:anyURI }
+
+   db.nonterminal.attlist =
+      db.nonterminal.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+    & db.nonterminal.def.attribute
+
+   db.nonterminal =
+      element nonterminal {
+         db.nonterminal.attlist,
+         text
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "constraint" ]
+   db:refpurpose [ "A constraint in an EBNF production" ]
+]
+div {
+
+   db.constraint.role.attribute = attribute role { text }
+
+   db.constraint.attlist =
+      db.constraint.role.attribute?
+    & db.common.attributes
+    & db.common.req.linking.attributes
+
+   db.constraint =
+      [
+         s:pattern [
+            s:title [ "Constraint cross reference constraint" ]
+            s:rule [
+               context = "db:constraint[@linkend]"
+               s:assert [
+                  test = "local-name(//*[@xml:id=current()/@linkend]) = 'constraintdef' and namespace-uri(//*[@xml:id=current()/@linkend]) = 'http://docbook.org/ns/docbook'"
+                  "@linkend on constraint must point to a constraintdef."
+               ]
+            ]
+         ]
+      ]
+      element constraint {
+         db.constraint.attlist,
+         empty
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "productionrecap" ]
+   db:refpurpose [ "A cross-reference to an EBNF production" ]
+]
+div {
+
+   db.productionrecap.role.attribute = attribute role { text }
+
+   db.productionrecap.attlist =
+      db.productionrecap.role.attribute?
+    & db.common.attributes
+    & db.common.req.linking.attributes
+
+   db.productionrecap =
+      [
+         s:pattern [
+            s:title [ "Production recap cross reference constraint" ]
+            s:rule [
+               context = "db:productionrecap[@linkend]"
+               s:assert [
+                  test = "local-name(//*[@xml:id=current()/@linkend]) = 'production' and namespace-uri(//*[@xml:id=current()/@linkend]) = 'http://docbook.org/ns/docbook'"
+                  "@linkend on productionrecap must point to a production."
+               ]
+            ]
+         ]
+      ]
+      element productionrecap {
+         db.productionrecap.attlist,
+         empty
+      }
+}
+
+# ======================================================================
+
+[
+   db:refname [ "constraintdef" ]
+   db:refpurpose [ "The definition of a constraint in an EBNF production" ]
+]
+div {
+
+   db.constraintdef.role.attribute = attribute role { text }
+
+   db.constraintdef.attlist =
+      db.constraintdef.role.attribute?
+    & db.common.attributes
+    & db.common.linking.attributes
+
+   db.constraintdef.info = db._info.title.only
+
+   db.constraintdef =
+      element constraintdef {
+         db.constraintdef.attlist,
+         db.constraintdef.info,
+         db.all.blocks+
+      }
+}
+

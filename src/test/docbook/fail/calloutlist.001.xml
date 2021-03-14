@@ -1,0 +1,18 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<title>Article wrapper</title>
+
+<para>Callouts using <tag>co</tag>:</para>
+
+<screen>
+(let <co xml:id="dl1"/>loopvar <co xml:id="dl2"/>((count 1))
+  <co xml:id="dl3"/>(if (> count 10)
+    <co xml:id="dl4"/>#t
+    (<co xml:id="dl5"/>loopvar <co xml:id="dl6"/>(+ count 1))))</screen>
+
+<calloutlist xml:id="list">
+<callout arearefs="dl1 dl2 list dl3">
+<para>This callout points to something that isn’t an area.</para>
+</callout>
+</calloutlist>
+
+</article>

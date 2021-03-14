@@ -1,0 +1,25 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:trans="http://docbook.org/ns/transclusion">
+<info>
+<title>Unit Test: trans.001.xml</title>
+</info>
+
+<para>This article tests transclusion attributes.</para>
+
+<para trans:idfixup="none"/>
+
+<para trans:idfixup="suffix"/>
+
+<para trans:idfixup="auto"/>
+
+<para trans:idfixup="suffix" trans:suffix="sfx"/>
+
+<para trans:linkscope="user"/>
+
+<para trans:linkscope="local"/>
+
+<para trans:linkscope="near"/>
+
+<para trans:linkscope="global"/>
+
+</article>

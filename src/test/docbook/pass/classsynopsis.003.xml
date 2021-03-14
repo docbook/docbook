@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.2">
+    <db:title>Java generics</db:title>
+    <db:para>An example inspired by <db:link xlink:href="https://docs.julialang.org/en/v1/manual/types/index.html#Parametric-Types-1">Julia's documentation</db:link>.</db:para>
+
+<db:section>
+<db:title>Point</db:title>
+    
+    <db:classsynopsis>
+      <db:ooclass>
+        <db:classname>Point</db:classname>
+      </db:ooclass>
+        <db:template>
+            <db:templatename>T</db:templatename>
+        </db:template>
+        
+        <db:fieldsynopsis>
+            <db:templatename>T</db:templatename>
+            <db:varname>x</db:varname>
+        </db:fieldsynopsis>
+        
+        <db:fieldsynopsis>
+            <db:templatename>T</db:templatename>
+            <db:varname>y</db:varname>
+        </db:fieldsynopsis>
+    </db:classsynopsis>
+
+<db:para>A point.</db:para>
+</db:section>
+
+<db:section>
+<db:title>Specialized point</db:title>
+    
+    <db:classsynopsis>
+      <db:ooclass>
+        <db:classname>Point</db:classname>
+      </db:ooclass>
+        <db:template>
+            <db:specializedtemplate>Float64</db:specializedtemplate>
+        </db:template>
+        
+        <db:fieldsynopsis>
+            <db:type>Float64</db:type>
+            <db:varname>x</db:varname>
+        </db:fieldsynopsis>
+        
+        <db:fieldsynopsis>
+            <db:type>Float64</db:type>
+            <db:varname>y</db:varname>
+        </db:fieldsynopsis>
+    </db:classsynopsis>
+
+<db:para>A specialized point.</db:para>
+</db:section>
+
+<db:section>
+<db:title>Translation</db:title>
+    
+    <db:methodsynopsis>
+        <db:methodname>translate_point</db:methodname>
+        <db:methodparam>
+            <db:type>
+                <db:classname>Point</db:classname>{<db:templatename>T</db:templatename>}
+            </db:type>
+            <db:parameter>p</db:parameter>
+        </db:methodparam>
+        <db:templatename>T</db:templatename>
+    </db:methodsynopsis>
+
+</db:section>
+</db:article>
