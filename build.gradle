@@ -182,7 +182,7 @@ new File("src/main/relaxng").traverse([maxDepth: 0, type: DIRECTORIES]) { schema
     output "build/${basename}_compiled.rng"
     stylesheet "tools/attach-copyright.xsl"
     parameters (
-      "copyright": "${buildDir}/${basename}/copyright.xml"
+      "copyright": "../build/${basename}/copyright.xml"
     )
   }
 
@@ -400,7 +400,7 @@ task docbookCatalog(type: SaxonXsltTask, dependsOn: ["docbookDistFiles"]) {
   stylesheet "tools/catalog.xsl"
   parameters (
     "version": dbver,
-    "uris": "${buildDir}/docbook.uris"
+    "uris": "../build/docbook.uris"
   )
   doFirst {
     mkdir("build/stage/docbook-${dbver}")
@@ -480,7 +480,7 @@ task publishersCatalog(type: SaxonXsltTask, dependsOn: ["publishersDistFiles"]) 
   stylesheet "tools/catalog.xsl"
   parameters (
     "version": dbver,
-    "uris": "${buildDir}/publishers.uris"
+    "uris": "../build/publishers.uris"
   )
   doFirst {
     mkdir("build/stage/publishers-${dbver}")
