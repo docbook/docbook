@@ -100,7 +100,7 @@ task test(dependsOn: ["pass_tests", "fail_tests"]) {
 // For every schema, create a task to transform it from RNC to RNG.
 new File("src/main/relaxng").traverse([maxDepth: 0, type: DIRECTORIES]) { schema ->
   def dirname = schema.toString()
-  def pos = dirname.indexOf("/main/relaxng/")
+  def pos = dirname.indexOf("${File.separator}main${File.separator}relaxng${File.separator}")
   def basename = dirname.substring(pos+14)
   Task t = null
   if (basename != "defguide") {
@@ -259,8 +259,8 @@ fileTree(dir: "src/test").each { testfile ->
   def pos = projectDir.toString().length() + "/src/test/".length()
   def fn = testfile.toString().substring(pos)
   if (fn.endsWith(".xml")) {
-    def taskName = fn.replace("/", "_").replace(".", "_").replace("-","_")
-    def parts = fn.split("/") // e.g., docbook/pass/testname.xml
+    def taskName = fn.replace("${File.separator}", "_").replace(".", "_").replace("-","_")    
+    def parts = fn.split("[/\\\\]") // e.g., docbook/pass/testname.xml
     def schema = parts[0]
     def passfail = parts[1]
     def document = testfile.toString()
