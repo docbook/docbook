@@ -302,7 +302,6 @@ div {
   db.synopfragmentref = notAllowed
   db.synopsis = notAllowed
   db.systemitem = notAllowed
-  db.buildtarget = notAllowed
   db.tag = notAllowed
   db.html.td = notAllowed
   db.tertiaryie = notAllowed
