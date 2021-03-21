@@ -3,6 +3,7 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:db="http://docbook.org/ns/docbook"
                 exclude-result-prefixes="ctrl xs"
                 version="2.0">
 
@@ -141,14 +142,14 @@
   <xsl:template match="rng:div" mode="markOverride">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <xsl:apply-templates select="markOverride"/>
+      <xsl:apply-templates mode="markOverride"/>
     </xsl:copy>
   </xsl:template>
 
   <xsl:template match="*" mode="markOverride">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <xsl:if test="parent::rng:include">
+      <xsl:if test="(.|parent::rng:div)/parent::rng:include">
 	<xsl:if test="not(self::rng:define) and not(self::rng:start)">
 	  <xsl:message>
 	    <xsl:text>Warning: only expecting rng:define children </xsl:text>
@@ -164,7 +165,7 @@
             <xsl:message>Adding override to <xsl:value-of select="@name"/></xsl:message>
           </xsl:if>
 	  <xsl:attribute name="override">
-	    <xsl:value-of select="parent::rng:include/@href"/>
+	    <xsl:value-of select="ancestor::rng:include[1]/@href"/>
 	  </xsl:attribute>
 	</xsl:if>
       </xsl:if>
@@ -176,6 +177,14 @@
     <xsl:copy/>
   </xsl:template>
 
+  <!-- Copy over documentation elements in DocBook namespace -->
+  <xsl:template match="db:*" mode="markOverride">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates mode="markOverride"/>
+    </xsl:copy>
+  </xsl:template>
+  
   <!-- ====================================================================== -->
 
   <xsl:template match="rng:define" mode="combine">
