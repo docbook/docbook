@@ -1,3 +1,0 @@
-The 'defguide' schema isn't a schema in any real sense. It is an input
-to the reference guide documentation process. This directory only
-exists for the build process.
