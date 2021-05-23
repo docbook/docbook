@@ -4659,8 +4659,18 @@ div {
 div {
 
    db.meta.role.attribute = attribute role { text }
-   db.meta.name.attribute = attribute name { text }
-   db.meta.content.attribute = attribute content { text }
+
+   db.meta.name.attribute = 
+      [
+         db:refpurpose [ "A name for the metadata element" ]
+      ]
+      attribute name { text }
+
+   db.meta.content.attribute =
+      [
+         db:refpurpose [ "The metadata content" ]
+      ]
+      attribute content { text }
 
    db.meta.attlist =
       db.meta.name.attribute
