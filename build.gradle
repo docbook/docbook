@@ -1,12 +1,14 @@
 plugins {
   id "maven-publish"
   id "signing"
-  id 'com.github.eerohele.saxon-gradle' version '0.9.0-beta1'
+  //id 'com.github.eerohele.saxon-gradle' version '0.9.0-beta1'
+  id 'com.nwalsh.saxon-gradle' version '0.9.1-beta3'
 }
 
 import static groovy.io.FileType.FILES
 import static groovy.io.FileType.DIRECTORIES
-import com.github.eerohele.SaxonXsltTask
+//import com.github.eerohele.SaxonXsltTask
+import com.nwalsh.SaxonXsltTask
 
 repositories {
   mavenLocal()
@@ -85,6 +87,10 @@ task makeSchemas() {
   // nop, just something to hang dependencies on
 }
 
+task make_rnd() {
+  // nop, just something to hang dependencies on
+}
+
 task pass_tests() {
   // nop, just something to hang dependencies on
 }
@@ -117,7 +123,8 @@ new File("src/main/relaxng").traverse([maxDepth: 0, type: DIRECTORIES]) { schema
   }
 
   t = task "${basename}_rng_include"(type: SaxonXsltTask,
-                                     dependsOn: [ "${basename}_rng_src" ]) {
+                                     dependsOn: ["${basename}_rng_src",
+                                                 "${basename}_copyright"]) {
     inputs.file("tools/include.xsl")
     input "build/${basename}/${basename}.rng"
     output "build/${basename}_rng_include.xml"
@@ -207,6 +214,17 @@ new File("src/main/relaxng").traverse([maxDepth: 0, type: DIRECTORIES]) { schema
     makeSchemas.dependsOn t
     test.dependsOn t
   }
+
+  t = task "${basename}_rnd"(type: SaxonXsltTask,
+                             dependsOn: ["${basename}_rng_cleanup"]) {
+    input "build/${basename}_rng_cleanup.xml"
+    output "build/${basename}.rnd"
+    stylesheet "tools/rngdocxml.xsl"
+    parameters (
+      "buildhash": gitRef()
+    )
+  }
+  make_rnd.dependsOn t
 }
 
 task any_docbook_rng(type: SaxonXsltTask,
@@ -231,24 +249,13 @@ task defguide_rng_src(dependsOn: ["any_docbook_rng", "assembly_rng", "docbook_rn
     rng.println("    </start>")
     rng.println("  </include>")
     rng.println("  <include href='../docbook/any.docbook.rng'/>")
-    rng.println("  <include href='../assembly/core.rng'/>")
+    rng.println("  <include href='../assembly/assembly-core.rng'/>")
     rng.println("</grammar>")
     rng.close()
   }
   doFirst {
     mkdir "build/defguide"
   }
-}
-
-task defguide_rnd(type: SaxonXsltTask,
-                  dependsOn: [ "defguide_rng_cleanup" ]) {
-  inputs.file("tools/rngdocxml.xsl")
-  input "build/defguide_rng_cleanup.xml"
-  output "build/defguide.rnd"
-  stylesheet "tools/rngdocxml.xsl"
-  parameters (
-    "buildhash": gitRef()
-  )
 }
 
 // ============================================================
