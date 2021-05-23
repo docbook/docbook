@@ -104,8 +104,14 @@ task test(dependsOn: ["pass_tests", "fail_tests"]) {
 }
 
 // For every schema, create a task to transform it from RNC to RNG.
+// There's no 'defguide' directory anymore because we can manufacture
+// it entirely in the build. But we still need some of the tasks
+// created in this loop, so fake it.
+def schemaDirectories = ["src/main/relaxng/defguide"]
 new File("src/main/relaxng").traverse([maxDepth: 0, type: DIRECTORIES]) { schema ->
-  def dirname = schema.toString()
+  schemaDirectories.add(schema.toString())
+}
+schemaDirectories.each { dirname ->
   def pos = dirname.indexOf("${File.separator}main${File.separator}relaxng${File.separator}")
   def basename = dirname.substring(pos+14)
   Task t = null
