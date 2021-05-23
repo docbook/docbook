@@ -120,6 +120,7 @@ include "../docbook/programming.rnc" {
    db.type = notAllowed
   db.synopsisinfo = notAllowed
   db.templateid = notAllowed
+  db.templatename = notAllowed
   db.specializedtemplate = notAllowed
   db.template = notAllowed
   db.namespace = notAllowed
