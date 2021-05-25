@@ -514,8 +514,13 @@
   </xsl:template>
 
   <xsl:template match="rng:ref[@name]" mode="remove-unused">
+    <xsl:variable name="keep-regardless" as="xs:boolean"
+                  select="@name = 'db.extension.inlines'
+                          or @name = 'db.extension.blocks'"/>
     <xsl:choose>
-      <xsl:when test="key('defs',@name)/rng:notAllowed or count(key('defs',@name)) = 0">
+      <xsl:when test="not($keep-regardless) 
+                      and (key('defs',@name)/rng:notAllowed
+                           or count(key('defs',@name)) = 0)">
         <xsl:if test="$debug != 0">
           <xsl:message>
             <xsl:text>   Removing ref to notAllowed element: </xsl:text>
