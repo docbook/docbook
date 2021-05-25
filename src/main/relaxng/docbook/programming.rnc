@@ -605,10 +605,12 @@ div {
       element fieldsynopsis {
          db.fieldsynopsis.attlist,
          db.fieldsynopsis.info,
+         db.synopsisinfo*,
          db.modifier*,
          (db.type | db.templatename)*,
          db.varname,
-         db.initializer?
+         db.initializer?,
+         db.synopsisinfo*
       }
 }
 
@@ -657,10 +659,12 @@ div {
       element constructorsynopsis {
          db.constructorsynopsis.attlist,
          db.constructorsynopsis.info,
+         db.synopsisinfo*,
          db.modifier*,
          db.methodname?,
          ((db.methodparam|db.group.methodparam)+ | db.void?),
-         db.exceptionname*
+         db.exceptionname*,
+         db.synopsisinfo*
       }
 }
 
@@ -685,10 +689,12 @@ div {
       element destructorsynopsis {
          db.destructorsynopsis.attlist,
          db.destructorsynopsis.info,
+         db.synopsisinfo*,
          db.modifier*,
          db.methodname?,
          ((db.methodparam|db.group.methodparam)+ | db.void?),
-         db.exceptionname*
+         db.exceptionname*,
+         db.synopsisinfo*
       }
 }
 
