@@ -3,7 +3,7 @@ defaultTasks 'schemas', 'test'
 buildscript {
   repositories {
     mavenCentral()
-    maven { url "https://maven.restlet.org" }
+    maven { url "https://maven.restlet.talend.com" }
   }
 
   dependencies {
