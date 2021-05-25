@@ -412,7 +412,6 @@ div {
    db.relationships.attlist =
       db.relationships.role.attribute?
     & db.relationships.type.attribute?
-    & db.relationships.instance.attribute?
     & db.common.attributes
 
    db.relationships.info = db._info
