@@ -412,7 +412,10 @@ task docbookCatalog(type: SaxonXsltTask, dependsOn: ["docbookDistFiles"]) {
   output "${path}/catalog.xml"
   stylesheet "tools/catalog.xsl"
   parameters (
+    "title": "XML Catalog for DocBook",
     "version": dbver,
+    "oasisVersion": oasisDocBookVersion,
+    "oasisRelease": oasisDocBookRelease,
     "uris": "../build/docbook.uris"
   )
   doFirst {
@@ -492,7 +495,10 @@ task publishersCatalog(type: SaxonXsltTask, dependsOn: ["publishersDistFiles"]) 
   output "${path}/catalog.xml"
   stylesheet "tools/catalog.xsl"
   parameters (
+    "title": "XML Catalog for DocBook Publishers",
     "version": dbver,
+    "oasisVersion": oasisPublishersVersion,
+    "oasisRelease": oasisPublishersRelease,
     "uris": "../build/publishers.uris"
   )
   doFirst {
