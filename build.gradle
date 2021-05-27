@@ -1,4 +1,5 @@
 plugins {
+  id "java"
   id "maven-publish"
   id "signing"
   //id 'com.github.eerohele.saxon-gradle' version '0.9.0-beta1'
@@ -66,7 +67,7 @@ def captureOutput = new OutputStream() {
   }
 }
 
-def version = [
+def titles = [
   "assembly": "DocBook Assembly V${dbver}",
   "assemblyxi": "DocBook Assembly XIncludeV${dbver}",
   "dbforms": "DocBook Forms V${dbver}",
@@ -99,9 +100,8 @@ task fail_tests() {
   // nop, just something to hang dependencies on
 }
 
-task test(dependsOn: ["pass_tests", "fail_tests"]) {
-  // nop, just something to hang dependencies on
-}
+test.dependsOn "pass_tests"
+test.dependsOn "fail_tests"
 
 // For every schema, create a task to transform it from RNC to RNG.
 // There's no 'defguide' directory anymore because we can manufacture
@@ -179,7 +179,7 @@ schemaDirectories.each { dirname ->
     filter { String line ->
       if (line.indexOf("{\$release}") >= 0) {
         line = line
-          .replace("{\$release}", version[basename])
+          .replace("{\$release}", titles[basename])
       }
       line
     }
@@ -391,9 +391,6 @@ task docbookDistSchemas(dependsOn: ["copyDocBookRNG", "copyDocBookSCH"]) {
   docbookDistSchemas.dependsOn t
 }
 
-// It shouldn't be necessary to write this to a file, but I can't figure
-// out any other way to get the sequence correct. I need the URIs to
-// to build the catalog.
 task docbookDistFiles(dependsOn: ["docbookDistSchemas"]) {
   doLast {
     def list = new PrintStream(new File("build/docbook.uris"))
@@ -514,6 +511,139 @@ task publishers_zipDist(type: Zip, dependsOn: ["publishers_dist"]) {
 
 task distribution(dependsOn: ["docbook_zipDist", "publishers_zipDist"]) {
   // nop 
+}
+
+// ============================================================
+
+task javaSource(type: Copy) {
+  inputs.file "${projectDir}/src/main/java/org/docbook/schemas/DocBook.src"
+  outputs.file "${projectDir}/src/main/java/org/docbook/schemas/DocBook.java"
+  into "${projectDir}/src/main/java/org/docbook/schemas"
+  from "${projectDir}/src/main/java/org/docbook/schemas"
+  include "DocBook.src"
+  rename { fn -> "DocBook.java" }
+  filter { String line ->
+    line.replace("@@DBVER@@", dbver)
+  }
+}
+compileJava.dependsOn "javaSource"
+javadoc.dependsOn compileJava
+
+task jarCatalog(type: Copy) {
+  inputs.file "${projectDir}/src/main/resources/org/docbook/schemas/catalog.src"
+  outputs.file "${projectDir}/src/main/resources/org/docbook/schemas/catalog.xml"
+  into "${projectDir}/src/main/resources/org/docbook/schemas"
+  from "${projectDir}/src/main/resources/org/docbook/schemas"
+  include "catalog.src"
+  rename { fn -> "catalog.xml" }
+  filter { String line ->
+    line.replace("@@DBVER@@", dbver)
+  }
+}
+compileJava.dependsOn "javaSource"
+javadoc.dependsOn compileJava
+
+task jarSetup(dependsOn: ["docbookDistSchemas", "docbookCatalog"]) {
+  doLast {
+    copy {
+      into "${buildDir}/stage/jar/docbook-${dbver}"
+      from ("${projectDir}/src/main/resources") {
+        exclude "org/docbook/schemas/catalog.src"
+      }
+    }
+  }
+  doLast {
+    copy {
+      into "${buildDir}/stage/jar/docbook-${dbver}/org/docbook/schemas/${dbver}"
+      from "${buildDir}/stage/docbook-${dbver}"
+    }
+  }
+}
+
+task docbookJar(type: Jar, dependsOn: ["jarSetup"]) {
+  from ("${buildDir}/stage/jar/docbook-${dbver}")
+  include("*/**")
+  archiveBaseName = "docbook-${dbver}"
+  manifest {
+    attributes "Built-By": "Norman Walsh"
+    attributes "Implementation-Vendor": "Norman Walsh"
+    attributes "Implementation-Title": "DocBook Schemas"
+    attributes "Implementation-Version": dbver
+  }
+}
+
+task addSchemasToJar(dependsOn: ["jar"]) {
+  doLast {
+    println("augment")
+  }
+}
+
+task javadocJar(type: Jar, dependsOn: ["javadoc"]) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar, dependsOn: ["javaSource"]) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+
+signing {
+  sign publishing.publications
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      pom {
+        name = 'DocBook Schemas'
+        packaging = 'jar'
+        description = 'The DocBook schemas'
+        url = 'https://github.com/docbook/docbook'
+
+        scm {
+          url = 'scm:git@github.com:docbook/docbook.git'
+          connection = 'scm:git@github.com:docbook/docbook.git'
+          developerConnection = 'scm:git@github.com:docbook/docbook.git'
+        }
+
+        licenses {
+          license {
+            name = 'Apache License version 2.0'
+            url = 'https://www.apache.org/licenses/LICENSE-2.0'
+            distribution = 'repo'
+          }
+        }
+
+        developers {
+          developer {
+            id = 'ndw'
+            name = 'Norman Walsh'
+          }
+        }
+      }
+
+      groupId = "org.docbook"
+      artifactId = "docbook-schemas"
+      version = dbver
+      artifact docbookJar
+      artifact javadocJar
+      artifact sourcesJar
+    }
+  }
+
+  repositories {
+    maven {
+      url = dbver.contains("SNAPSHOT") ?
+        "https://oss.sonatype.org/content/repositories/snapshots/" :
+        "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+      credentials {
+        username = findProperty("sonatypeUsername") ?: ""
+        password = findProperty("sonatypePassword") ?: ""
+      }
+    }
+  }
 }
 
 // ============================================================

@@ -1,2 +1,4 @@
 /build/
 /.gradle/
+/src/main/java/org/docbook/schemas/DocBook.java
+/src/main/resources/org/docbook/schemas/catalog.xml

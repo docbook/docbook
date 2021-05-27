@@ -1,0 +1,115 @@
+<?xml version='1.0'?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">
+
+  <group xml:base="@@DBVER@@/">
+    <delegateURI
+        uriStartString="https://docs.oasis-open.org/docbook/docbook/v@@DBVER@@/"
+        catalog="catalog.xml"/>
+
+    <delegateURI
+        uriStartString="http://docs.oasis-open.org/docbook/docbook/v@@DBVER@@/"
+        catalog="catalog.xml"/>
+
+    <delegateURI
+        uriStartString="https://docbook.org/xml/@@DBVER@@/"
+        catalog="catalog.xml"/>
+
+    <delegateURI
+        uriStartString="http://docbook.org/xml/@@DBVER@@/"
+        catalog="catalog.xml"/>
+  </group>
+
+  <group xml:base="5.1/">
+    <rewriteURI
+        uriStartString="https://docs.oasis-open.org/docbook/docbook/v5.1/os/schemas/"
+        rewritePrefix="./"/>
+
+    <rewriteURI
+        uriStartString="http://docs.oasis-open.org/docbook/docbook/v5.1/os/schemas/"
+        rewritePrefix="./"/>
+
+    <rewriteURI
+        uriStartString="http://www.oasis-open.org/docbook/xml/5.1/"
+        rewritePrefix="./"/>
+
+    <rewriteURI
+        uriStartString="https://www.oasis-open.org/docbook/xml/5.1/"
+        rewritePrefix="./"/>
+
+    <rewriteURI
+        uriStartString="http://docbook.org/xml/5.1/"
+        rewritePrefix="./"/>
+
+    <rewriteURI
+        uriStartString="https://docbook.org/xml/5.1/"
+        rewritePrefix="./"/>
+  </group>
+
+  <group xml:base="5.0/">
+    <public publicId="-//OASIS//DTD DocBook XML V5.0//EN"
+            uri="dtd/docbookx.dtd"/>
+
+    <delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/5.0/"
+                    catalog="catalog.xml"/>
+
+    <delegateSystem systemIdStartString="http://docbook.org/xml/5.0/"
+                    catalog="catalog.xml"/>
+  </group>
+
+  <group xml:base="4.5/">
+    <public publicId="-//OASIS//DTD DocBook XML V4.5//EN"
+            uri="dtd/docbookx.dtd"/>
+
+    <public publicId="-//OASIS//DTD DocBook CALS Table Model V4.5//EN"
+            uri="dtd/calstblx.dtd"/>
+
+    <public publicId="-//OASIS//ELEMENTS DocBook XML HTML Tables V4.5//EN"
+	    uri="dtd/htmltblx.mod"/>
+
+    <public publicId="-//OASIS//DTD XML Exchange Table Model 19990315//EN"
+            uri="dtd/soextblx.dtd"/>
+
+    <public publicId="-//OASIS//ELEMENTS DocBook Information Pool V4.5//EN"
+            uri="dtd/dbpoolx.mod"/>
+
+    <public publicId="-//OASIS//ELEMENTS DocBook Document Hierarchy V4.5//EN"
+            uri="dtd/dbhierx.mod"/>
+
+    <public publicId="-//OASIS//ENTITIES DocBook Additional General Entities V4.5//EN"
+            uri="dtd/dbgenent.mod"/>
+
+    <public publicId="-//OASIS//ENTITIES DocBook Notations V4.5//EN"
+            uri="dtd/dbnotnx.mod"/>
+
+    <public publicId="-//OASIS//ENTITIES DocBook Character Entities V4.5//EN"
+            uri="dtd/dbcentx.mod"/>
+
+    <delegatePublic publicIdStartString="-//ISO 8879:1986//ENTITIES "
+                    catalog="dtd/catalog.xml"/>
+
+    <system systemId="http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+	    uri="dtd/docbookx.dtd"/>
+
+    <system systemId="http://docbook.org/xml/4.5/docbookx.dtd"
+	    uri="dtd/docbookx.dtd"/>
+
+    <delegateURI uriStartString="https://docs.oasis-open.org/docbook/rng/4.5/"
+                 catalog="rng/catalog.xml"/>
+
+    <delegateURI uriStartString="http://docs.oasis-open.org/docbook/rng/4.5/"
+                 catalog="rng/catalog.xml"/>
+
+    <delegateURI uriStartString="https://docbook.org/rng/4.5/"
+                 catalog="rng/catalog.xml"/>
+
+    <delegateURI uriStartString="http://docbook.org/rng/4.5/"
+                 catalog="rng/catalog.xml"/>
+
+    <delegateURI uriStartString="https://docbook.org/xsd/4.5/"
+                 catalog="xsd/catalog.xml"/>
+
+    <delegateURI uriStartString="http://docbook.org/xsd/4.5/"
+                 catalog="xsd/catalog.xml"/>
+  </group>
+
+</catalog>

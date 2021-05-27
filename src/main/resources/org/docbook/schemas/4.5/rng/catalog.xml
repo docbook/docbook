@@ -1,0 +1,14 @@
+<?xml version='1.0'?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+  <rewriteURI uriStartString="https://docs.oasis-open.org/docbook/rng/4.5/"
+              rewritePrefix="./"/>
+  <rewriteURI uriStartString="http://docs.oasis-open.org/docbook/rng/4.5/"
+              rewritePrefix="./"/>
+
+  <rewriteURI uriStartString="https://docbook.org/rng/4.5/"
+              rewritePrefix="./"/>
+  <rewriteURI uriStartString="http://docbook.org/rng/4.5/"
+              rewritePrefix="./"/>
+
+</catalog>
