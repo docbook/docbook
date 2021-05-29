@@ -633,6 +633,7 @@ publishing {
       groupId = "org.docbook"
       artifactId = "schemas"
       version = dbver
+      artifact jar
       artifact javadocJar
       artifact sourcesJar
     }

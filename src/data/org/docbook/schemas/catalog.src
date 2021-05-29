@@ -7,15 +7,11 @@
         catalog="catalog.xml"/>
 
     <delegateURI
-        uriStartString="http://docs.oasis-open.org/docbook/docbook/v@@DBVER@@/"
-        catalog="catalog.xml"/>
-
-    <delegateURI
         uriStartString="https://docbook.org/xml/@@DBVER@@/"
         catalog="catalog.xml"/>
 
     <delegateURI
-        uriStartString="http://docbook.org/xml/@@DBVER@@/"
+        uriStartString="https://cdn.docbook.org/schema/@@DBVER@@/"
         catalog="catalog.xml"/>
   </group>
 
@@ -25,23 +21,15 @@
         rewritePrefix="./"/>
 
     <rewriteURI
-        uriStartString="http://docs.oasis-open.org/docbook/docbook/v5.1/os/schemas/"
-        rewritePrefix="./"/>
-
-    <rewriteURI
-        uriStartString="http://www.oasis-open.org/docbook/xml/5.1/"
-        rewritePrefix="./"/>
-
-    <rewriteURI
         uriStartString="https://www.oasis-open.org/docbook/xml/5.1/"
         rewritePrefix="./"/>
 
     <rewriteURI
-        uriStartString="http://docbook.org/xml/5.1/"
+        uriStartString="https://docbook.org/xml/5.1/"
         rewritePrefix="./"/>
 
     <rewriteURI
-        uriStartString="https://docbook.org/xml/5.1/"
+        uriStartString="https://cdn.docbook.org/schema/5.1/"
         rewritePrefix="./"/>
   </group>
 
@@ -49,11 +37,21 @@
     <public publicId="-//OASIS//DTD DocBook XML V5.0//EN"
             uri="dtd/docbookx.dtd"/>
 
-    <delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/5.0/"
-                    catalog="catalog.xml"/>
+    <rewriteURI
+        uriStartString="https://docs.oasis-open.org/docbook/docbook/v5.0/os/schemas/"
+        rewritePrefix="./"/>
 
-    <delegateSystem systemIdStartString="http://docbook.org/xml/5.0/"
-                    catalog="catalog.xml"/>
+    <rewriteURI
+        uriStartString="https://www.oasis-open.org/docbook/xml/5.0/"
+        rewritePrefix="./"/>
+
+    <rewriteURI
+        uriStartString="https://docbook.org/xml/5.0/"
+        rewritePrefix="./"/>
+
+    <rewriteURI
+        uriStartString="https://cdn.docbook.org/schema/5.0/"
+        rewritePrefix="./"/>
   </group>
 
   <group xml:base="4.5/">
@@ -87,29 +85,20 @@
     <delegatePublic publicIdStartString="-//ISO 8879:1986//ENTITIES "
                     catalog="dtd/catalog.xml"/>
 
-    <system systemId="http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
-	    uri="dtd/docbookx.dtd"/>
+    <rewriteURI
+        uriStartString="https://www.oasis-open.org/docbook/xml/4.5/"
+        rewritePrefix="dtd/"/>
 
-    <system systemId="http://docbook.org/xml/4.5/docbookx.dtd"
-	    uri="dtd/docbookx.dtd"/>
+    <rewriteURI
+        uriStartString="https://docbook.org/xml/4.5/"
+        rewritePrefix="dtd/"/>
 
-    <delegateURI uriStartString="https://docs.oasis-open.org/docbook/rng/4.5/"
-                 catalog="rng/catalog.xml"/>
+    <rewriteURI
+        uriStartString="https://docbook.org/rng/4.5/"
+        rewritePrefix="rng/"/>
 
-    <delegateURI uriStartString="http://docs.oasis-open.org/docbook/rng/4.5/"
-                 catalog="rng/catalog.xml"/>
-
-    <delegateURI uriStartString="https://docbook.org/rng/4.5/"
-                 catalog="rng/catalog.xml"/>
-
-    <delegateURI uriStartString="http://docbook.org/rng/4.5/"
-                 catalog="rng/catalog.xml"/>
-
-    <delegateURI uriStartString="https://docbook.org/xsd/4.5/"
-                 catalog="xsd/catalog.xml"/>
-
-    <delegateURI uriStartString="http://docbook.org/xsd/4.5/"
-                 catalog="xsd/catalog.xml"/>
+    <rewriteURI
+        uriStartString="https://docbook.org/xsd/4.5/"
+        rewritePrefix="xsd/"/>
   </group>
-
 </catalog>

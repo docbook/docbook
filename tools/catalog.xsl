@@ -40,7 +40,8 @@
     <xsl:text>&#10;</xsl:text>
 
     <xsl:for-each select="('www.oasis-open.org/docbook/xml',
-                           'docbook.org/xml', 'www.docbook.org/xml')">
+                           'docbook.org/xml', 'www.docbook.org/xml',
+                           'cdn.docbook.org/schema')">
       <xsl:variable name="root" select="."/>
       <xsl:for-each select="tokenize(unparsed-text($uris), '\s+')">
         <xsl:if test="normalize-space(.) != ''">
