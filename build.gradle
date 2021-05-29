@@ -625,7 +625,7 @@ publishing {
       }
 
       groupId = "org.docbook"
-      artifactId = "docbook-schemas"
+      artifactId = "schemas"
       version = dbver
       artifact docbookJar
       artifact javadocJar
