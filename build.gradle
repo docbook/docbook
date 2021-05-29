@@ -35,6 +35,14 @@ dependencies {
   )
 }
 
+sourceSets {
+  main {
+    java {
+      exclude 'org/docbook/schemas/DocBook.src'
+    }
+  }
+}
+
 defaultTasks 'distribution'
 
 def gitRef() {
@@ -530,10 +538,10 @@ compileJava.dependsOn "javaSource"
 javadoc.dependsOn compileJava
 
 task jarCatalog(type: Copy) {
-  inputs.file "${projectDir}/src/main/resources/org/docbook/schemas/catalog.src"
-  outputs.file "${projectDir}/src/main/resources/org/docbook/schemas/catalog.xml"
-  into "${projectDir}/src/main/resources/org/docbook/schemas"
-  from "${projectDir}/src/main/resources/org/docbook/schemas"
+  inputs.file "${projectDir}/src/data/org/docbook/schemas/catalog.src"
+  outputs.file "${projectDir}/src/data/org/docbook/schemas/catalog.xml"
+  into "${projectDir}/src/data/org/docbook/schemas"
+  from "${projectDir}/src/data/org/docbook/schemas"
   include "catalog.src"
   rename { fn -> "catalog.xml" }
   filter { String line ->
@@ -547,7 +555,7 @@ task jarSetup(dependsOn: ["docbookDistSchemas", "docbookCatalog"]) {
   doLast {
     copy {
       into "${buildDir}/stage/jar/docbook-${dbver}"
-      from ("${projectDir}/src/main/resources") {
+      from ("${projectDir}/src/data") {
         exclude "org/docbook/schemas/catalog.src"
       }
     }
@@ -560,7 +568,8 @@ task jarSetup(dependsOn: ["docbookDistSchemas", "docbookCatalog"]) {
   }
 }
 
-task docbookJar(type: Jar, dependsOn: ["jarSetup"]) {
+jar {
+  dependsOn "jarSetup"
   from ("${buildDir}/stage/jar/docbook-${dbver}")
   include("*/**")
   archiveBaseName = "docbook-${dbver}"
@@ -572,22 +581,19 @@ task docbookJar(type: Jar, dependsOn: ["jarSetup"]) {
   }
 }
 
-task addSchemasToJar(dependsOn: ["jar"]) {
-  doLast {
-    println("augment")
-  }
-}
-
 task javadocJar(type: Jar, dependsOn: ["javadoc"]) {
+  archiveBaseName = "docbook-${dbver}"
   classifier = 'javadoc'
   from javadoc.destinationDir
 }
+assemble.dependsOn javadocJar
 
 task sourcesJar(type: Jar, dependsOn: ["javaSource"]) {
+  archiveBaseName = "docbook-${dbver}"
   classifier = 'sources'
   from sourceSets.main.allSource
 }
-
+assemble.dependsOn sourcesJar
 
 signing {
   sign publishing.publications
@@ -627,7 +633,6 @@ publishing {
       groupId = "org.docbook"
       artifactId = "schemas"
       version = dbver
-      artifact docbookJar
       artifact javadocJar
       artifact sourcesJar
     }
