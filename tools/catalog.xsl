@@ -42,14 +42,10 @@
     <xsl:for-each select="('www.oasis-open.org/docbook/xml',
                            'docbook.org/xml', 'www.docbook.org/xml')">
       <xsl:variable name="root" select="."/>
-      <xsl:for-each select="('http', 'https')">
-        <xsl:variable name="scheme" select="."/>
-        <xsl:for-each select="tokenize(unparsed-text($uris), '\s+')">
-          <xsl:if test="normalize-space(.) != ''">
-            <uri name="{$scheme}://{$root}/{$version}/{.}"
-                 uri="{.}"/>
-          </xsl:if>
-        </xsl:for-each>
+      <xsl:for-each select="tokenize(unparsed-text($uris), '\s+')">
+        <xsl:if test="normalize-space(.) != ''">
+          <uri name="https://{$root}/{$version}/{.}" uri="{.}"/>
+        </xsl:if>
       </xsl:for-each>
     </xsl:for-each>
   </catalog>
