@@ -36,14 +36,6 @@ dependencies {
   )
 }
 
-sourceSets {
-  main {
-    java {
-      exclude 'org/docbook/schemas/DocBook.src'
-    }
-  }
-}
-
 defaultTasks 'distribution'
 
 def gitRef() {
@@ -526,7 +518,7 @@ task distribution(dependsOn: ["docbook_zipDist", "publishers_zipDist"]) {
 
 buildConfig {
   className("DocBook")
-  packageName("org.docbook.schemas")
+  packageName("org.docbook.schemas.docbook")
 
   def veralias = dbver
   ["a", "b"].each { letter ->
@@ -551,9 +543,9 @@ buildConfig {
 
   buildConfigField('String[]', 'VERSIONS', '{' + verinit + '}')
   buildConfigField('String', 'DOCBOOK_CATALOG_PATH',
-                   '"/org/docbook/schemas/catalog.xml"')
+                   '"/org/docbook/schemas/docbook/catalog.xml"')
 
-  def path = "${projectDir}/src/data/org/docbook/schemas"
+  def path = "${projectDir}/src/data/docbook"
   def technologies = ["dtd", "rng", "xsd", "sch"]
   // FYI: docbookx is just for 4.5
   def variants = ["docbook", "docbookx", "dbits", "docbookxi", "assembly"]
@@ -569,7 +561,7 @@ buildConfig {
           if (varkey == "docbookx") {
             varkey = "docbook"
           }
-          def filename = "/org/docbook/schemas/${ver}/${tech}/${variant}"
+          def filename = "/org/docbook/schemas/docbook/${ver}/${tech}/${variant}"
           if (!dbmap.containsKey(varkey)) { dbmap[varkey] = [:] }
           if (!dbmap[varkey].containsKey(ver)) { dbmap[varkey][ver] = [:] }
           dbmap[varkey][ver][tech] = "${filename}.${tech}"
@@ -591,7 +583,7 @@ buildConfig {
     versions.each { ver ->
       ["rng", "sch"].each { tech ->
         if (variant != "docbookx") {
-          def filename = "/org/docbook/schemas/${dbver}/${tech}/${variant}"
+          def filename = "/org/docbook/schemas/docbook/${dbver}/${tech}/${variant}"
           if (!dbmap.containsKey(variant)) { dbmap[variant] = [:] }
           if (!dbmap[variant].containsKey(ver)) { dbmap[variant][ver] = [:] }
           dbmap[variant][ver][tech] = "${filename}.${tech}"
@@ -623,16 +615,32 @@ buildConfig {
 task jarSetup(dependsOn: ["docbookDistSchemas", "docbookCatalog"]) {
   doLast {
     copy {
-      into "${buildDir}/stage/jar/docbook-${dbver}"
-      from ("${projectDir}/src/data") {
-        exclude "org/docbook/schemas/catalog.src"
+      into "${buildDir}/stage/jar/docbook-${dbver}/org/docbook/schemas/docbook"
+      from ("${projectDir}/src/data/docbook") {
+        exclude "catalog.src"
       }
     }
   }
+
   doLast {
     copy {
-      into "${buildDir}/stage/jar/docbook-${dbver}/org/docbook/schemas/${dbver}"
+      into "${buildDir}/stage/jar/docbook-${dbver}/org/docbook/schemas/docbook/${dbver}"
       from "${buildDir}/stage/docbook-${dbver}"
+    }
+  }
+
+  doLast {
+    copy {
+      into "${buildDir}/stage/jar/docbook-${dbver}/org/docbook/schemas/docbook"
+      from ("${projectDir}/src/data/docbook") {
+        include "catalog.src"
+      }
+      rename { fn ->
+        return "catalog.xml"
+      }
+      filter { String line ->
+        line.replace("@@DBVER@@", dbver)
+      }
     }
   }
 }
