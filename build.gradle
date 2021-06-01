@@ -4,6 +4,7 @@ plugins {
   id "signing"
   //id 'com.github.eerohele.saxon-gradle' version '0.9.0-beta1'
   id 'com.nwalsh.saxon-gradle' version '0.9.1-beta3'
+  id 'com.github.gmazzo.buildconfig' version "3.0.0"
 }
 
 import static groovy.io.FileType.FILES
@@ -523,19 +524,101 @@ task distribution(dependsOn: ["docbook_zipDist", "publishers_zipDist"]) {
 
 // ============================================================
 
-task javaSource(type: Copy) {
-  inputs.file "${projectDir}/src/main/java/org/docbook/schemas/DocBook.src"
-  outputs.file "${projectDir}/src/main/java/org/docbook/schemas/DocBook.java"
-  into "${projectDir}/src/main/java/org/docbook/schemas"
-  from "${projectDir}/src/main/java/org/docbook/schemas"
-  include "DocBook.src"
-  rename { fn -> "DocBook.java" }
-  filter { String line ->
-    line.replace("@@DBVER@@", dbver)
+buildConfig {
+  className("DocBook")
+  packageName("org.docbook.schemas")
+
+  def veralias = dbver
+  ["a", "b"].each { letter ->
+    def pos = veralias.indexOf(letter)
+    if (pos > 0) {
+      veralias = veralias.substring(0, pos)
+    }
+  }
+  def versions = ["4.5", "5.0", "5.1", veralias]
+  if (veralias != dbver) {
+    versions += dbver
+  }
+  println("Generating constants for ${versions}")
+
+  def verinit = ""
+  versions.each { ver ->
+    if (verinit != '') {
+      verinit += ', '
+    }
+    verinit += '"' + ver + '"'
+  }
+
+  buildConfigField('String[]', 'VERSIONS', '{' + verinit + '}')
+  buildConfigField('String', 'DOCBOOK_CATALOG_PATH',
+                   '"/org/docbook/schemas/catalog.xml"')
+
+  def path = "${projectDir}/src/data/org/docbook/schemas"
+  def technologies = ["dtd", "rng", "xsd", "sch"]
+  // FYI: docbookx is just for 4.5
+  def variants = ["docbook", "docbookx", "dbits", "docbookxi", "assembly"]
+
+  def dbmap = [:]
+
+  variants.each { variant ->
+    versions.each { ver ->
+      technologies.each { tech ->
+        def f1 = new File("${path}/${ver}/${tech}/${variant}.${tech}")
+        if (f1.exists()) {
+          def varkey = variant
+          if (varkey == "docbookx") {
+            varkey = "docbook"
+          }
+          def filename = "/org/docbook/schemas/${ver}/${tech}/${variant}"
+          if (!dbmap.containsKey(varkey)) { dbmap[varkey] = [:] }
+          if (!dbmap[varkey].containsKey(ver)) { dbmap[varkey][ver] = [:] }
+          dbmap[varkey][ver][tech] = "${filename}.${tech}"
+          if (tech == "rng") {
+            dbmap[varkey][ver]["rnc"] = "${filename}.rnc"
+          }
+        }
+      }
+    }
+  }
+
+  versions = [veralias]
+  if (veralias != dbver) {
+    versions += dbver
+  }
+
+  // The preceding loop won't have captured the current release
+  variants.each { variant ->
+    versions.each { ver ->
+      ["rng", "sch"].each { tech ->
+        if (variant != "docbookx") {
+          def filename = "/org/docbook/schemas/${dbver}/${tech}/${variant}"
+          if (!dbmap.containsKey(variant)) { dbmap[variant] = [:] }
+          if (!dbmap[variant].containsKey(ver)) { dbmap[variant][ver] = [:] }
+          dbmap[variant][ver][tech] = "${filename}.${tech}"
+          if (tech == "rng") {
+            dbmap[variant][ver]["rnc"] = "${filename}.rnc"
+          }
+        }
+      }
+    }
+  }
+
+  def varmap = [
+    "docbook": "",
+    "docbookxi": "XI_",
+    "dbits":"ITS_",
+    "assembly": "ASSEMBLY_"
+  ]
+  dbmap.keySet().each { variant ->
+    dbmap[variant].keySet().each { ver ->
+      dbmap[variant][ver].keySet().each { tech ->
+        def namever = ver.replaceAll('\\.', '_').replaceAll('\\-', '_')
+        def name = "DOCBOOK_${varmap[variant]}${namever}_${tech.toUpperCase()}_PATH"
+        buildConfigField('String', name, '"' + dbmap[variant][ver][tech] + '"')
+      }
+    }
   }
 }
-compileJava.dependsOn "javaSource"
-javadoc.dependsOn compileJava
 
 task jarCatalog(type: Copy) {
   inputs.file "${projectDir}/src/data/org/docbook/schemas/catalog.src"
@@ -548,7 +631,6 @@ task jarCatalog(type: Copy) {
     line.replace("@@DBVER@@", dbver)
   }
 }
-compileJava.dependsOn "javaSource"
 javadoc.dependsOn compileJava
 
 task jarSetup(dependsOn: ["docbookDistSchemas", "docbookCatalog"]) {
@@ -588,7 +670,7 @@ task javadocJar(type: Jar, dependsOn: ["javadoc"]) {
 }
 assemble.dependsOn javadocJar
 
-task sourcesJar(type: Jar, dependsOn: ["javaSource"]) {
+task sourcesJar(type: Jar) {
   archiveBaseName = "docbook-${dbver}"
   classifier = 'sources'
   from sourceSets.main.allSource
