@@ -620,19 +620,6 @@ buildConfig {
   }
 }
 
-task jarCatalog(type: Copy) {
-  inputs.file "${projectDir}/src/data/org/docbook/schemas/catalog.src"
-  outputs.file "${projectDir}/src/data/org/docbook/schemas/catalog.xml"
-  into "${projectDir}/src/data/org/docbook/schemas"
-  from "${projectDir}/src/data/org/docbook/schemas"
-  include "catalog.src"
-  rename { fn -> "catalog.xml" }
-  filter { String line ->
-    line.replace("@@DBVER@@", dbver)
-  }
-}
-javadoc.dependsOn compileJava
-
 task jarSetup(dependsOn: ["docbookDistSchemas", "docbookCatalog"]) {
   doLast {
     copy {
