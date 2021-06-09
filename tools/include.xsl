@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:db="http://docbook.org/ns/docbook"
-                exclude-result-prefixes="ctrl xs"
-                version="2.0">
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                exclude-result-prefixes="a ctrl xs"
+                version="3.0">
 
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
   <xsl:strip-space elements="*"/>
@@ -71,6 +72,12 @@
 
   <xsl:template match="rng:include" mode="include">
     <xsl:variable name="doc" select="document(@href,.)"/>
+
+    <xsl:if test="$debug != 0">
+      <xsl:message>============================================================</xsl:message>
+      <xsl:message>Including <xsl:value-of select="@href"/></xsl:message>
+    </xsl:if>
+
     <xsl:variable name="nestedGrammar">
       <xsl:apply-templates select="$doc/rng:grammar/*" mode="include"/>
       <xsl:apply-templates mode="markOverride"/>
@@ -162,7 +169,7 @@
 	<xsl:if test="not(@combine)
 		      or (@combine != 'choice' and @combine != 'interleave')">
           <xsl:if test="$debug != 0">
-            <xsl:message>Adding override to <xsl:value-of select="@name"/></xsl:message>
+            <xsl:message>Adding override to <xsl:value-of select="local-name(.)"/>/<xsl:value-of select="@name"/></xsl:message>
           </xsl:if>
 	  <xsl:attribute name="override">
 	    <xsl:value-of select="ancestor::rng:include[1]/@href"/>
@@ -458,6 +465,9 @@
       <xsl:if test="$doc//rng:zeroOrMore[not(*)]">
         <xsl:text>1</xsl:text>
       </xsl:if>
+      <xsl:if test="$doc//rng:oneOrMore[not(*)]">
+        <xsl:text>1</xsl:text>
+      </xsl:if>
       <xsl:if test="$doc//rng:define[not(*)]">
         <xsl:text>1</xsl:text>
       </xsl:if>
@@ -482,6 +492,25 @@
       <xsl:otherwise>
 	<xsl:copy-of select="$doc"/>
       </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="rng:start" mode="remove-unused">
+    <xsl:choose>
+      <xsl:when test="count(*) = 1 and rng:empty">
+        <xsl:if test="$debug != 0">
+	  <xsl:message>   Removing empty rng:start</xsl:message>
+        </xsl:if>
+      </xsl:when>
+      <xsl:when test=".//rng:*">
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="remove-unused"/>
+	</xsl:copy>
+      </xsl:when>
+      <xsl:when test="$debug != 0">
+	<xsl:message>   Removing empty rng:start</xsl:message>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
 
@@ -537,7 +566,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="rng:optional|rng:choice|rng:zeroOrMore" mode="remove-unused">
+  <xsl:template match="rng:optional|rng:choice|rng:zeroOrMore|rng:oneOrMore" mode="remove-unused">
     <xsl:choose>
       <xsl:when test="*">
 	<xsl:copy>

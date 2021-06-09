@@ -1,0 +1,13 @@
+<webpage xmlns="http://docbook.org/ns/docbook" 
+         id="homepage" version="5.0-website">
+<config param="rcsdate" value="$Date: 2002/05/28 19:24:28 $"/>
+<head>
+<title>Some page title</title>
+</head>
+
+<sect1>
+<title>A top-level section</title>
+
+<para>Numbered sections aren’t allowed in website.</para>
+</sect1>
+</webpage>

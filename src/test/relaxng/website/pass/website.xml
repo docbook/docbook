@@ -1,0 +1,10 @@
+<webpage xmlns="http://docbook.org/ns/docbook" 
+         xml:id="homepage" version="5.0-website">
+<config param="rcsdate" value="$Date: 2002/05/28 19:24:28 $"/>
+<head>
+<title>Some page title</title>
+</head>
+
+<para>Page content.</para>
+
+</webpage>
