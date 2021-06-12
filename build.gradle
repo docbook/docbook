@@ -241,7 +241,7 @@ schemaDirectories.each { dirname ->
 
   t = task "${basename}_rnd"(type: SaxonXsltTask,
                              dependsOn: ["${basename}_rng_cleanup"]) {
-    input "${buildDir}/${basename}_rng_cleanup.xml"
+    input "${buildDir}/tmp/${basename}_rng_cleanup.xml"
     output "${buildDir}/tmp/${basename}.rnd"
     stylesheet "tools/rngdocxml.xsl"
     parameters (
@@ -253,7 +253,7 @@ schemaDirectories.each { dirname ->
 
 task any_docbook_rng(type: SaxonXsltTask,
                      dependsOn: [ "docbook_compiled" ]) {
-  input "${buildDir}/docbook_compiled.rng"
+  input "${buildDir}/tmp/docbook_compiled.rng"
   output "${buildDir}/docbook/any.docbook.rng"
   stylesheet "tools/all-patterns.xsl"
 }
