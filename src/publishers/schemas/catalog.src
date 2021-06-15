@@ -1,0 +1,52 @@
+<?xml version='1.0'?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">
+
+  <group xml:base="@@DBVER@@/">
+    <delegateURI
+        uriStartString="https://docs.oasis-open.org/docbook/publishers/v@@DBVER@@/"
+        catalog="catalog.xml"/>
+
+    <delegateURI
+        uriStartString="https://docbook.org/xml/publishers/@@DBVER@@/"
+        catalog="catalog.xml"/>
+
+    <delegateURI
+        uriStartString="https://cdn.docbook.org/schema/publishers-@@DBVER@@/"
+        catalog="catalog.xml"/>
+  </group>
+
+  <group xml:base="@@DBVER@@/">
+    <delegateURI
+        uriStartString="https://docs.oasis-open.org/docbook/publishers/v5.2/"
+        catalog="catalog.xml"/>
+
+    <delegateURI
+        uriStartString="https://docbook.org/xml/publishers/5.2/"
+        catalog="catalog.xml"/>
+
+    <delegateURI
+        uriStartString="https://cdn.docbook.org/schema/publishers-5.2/"
+        catalog="catalog.xml"/>
+  </group>
+
+  <group xml:base="1.0/">
+    <public publicId="-//OASIS//DTD DocBook Publishers XML V1.0//EN"
+            uri="dtd/publishers.dtd"/>
+
+    <rewriteURI
+        uriStartString="https://www.oasis-open.org/docbook/publishers/xml/1.0/"
+        rewritePrefix="dtd/"/>
+
+    <rewriteURI
+        uriStartString="https://docbook.org/publishers/xml/1.0/"
+        rewritePrefix="dtd/"/>
+
+    <rewriteURI
+        uriStartString="https://docbook.org/publishers/rng/1.0/"
+        rewritePrefix="rng/"/>
+
+    <rewriteURI
+        uriStartString="https://docbook.org/publishers/xsd/1.0/"
+        rewritePrefix="xsd/"/>
+  </group>
+</catalog>

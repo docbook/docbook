@@ -1,0 +1,7 @@
+<article xmlns="http://docbook.org/ns/docbook"
+         version="htmlforms-5.2">
+<title>A forms example</title>
+<form xmlns="http://www.w3.org/1999/xhtml">
+<input name="text"/>
+</form>
+</article>

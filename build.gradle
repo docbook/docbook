@@ -1,14 +1,20 @@
 plugins {
+  id "java"
   id "maven-publish"
   id "signing"
   //id 'com.github.eerohele.saxon-gradle' version '0.9.0-beta1'
-  id 'com.nwalsh.saxon-gradle' version '0.9.1-beta3'
+  id 'com.nwalsh.saxon-gradle' version '0.9.1-beta4'
+  id 'com.nwalsh.gradle.relaxng.validate' version '0.0.5'
+  id 'com.nwalsh.gradle.relaxng.translate' version '0.0.5'
 }
 
 import static groovy.io.FileType.FILES
 import static groovy.io.FileType.DIRECTORIES
 //import com.github.eerohele.SaxonXsltTask
 import com.nwalsh.SaxonXsltTask
+import com.nwalsh.gradle.relaxng.validate.RelaxNGValidateTask
+import com.nwalsh.gradle.relaxng.translate.RelaxNGTranslateTask
+import com.nwalsh.gradle.relaxng.util.CollectingErrorHandler
 
 repositories {
   mavenLocal()
@@ -17,7 +23,9 @@ repositories {
 
 configurations.all {
   resolutionStrategy {
-    force 'xml-apis:xml-apis:1.4.01'
+    force 'xml-apis:xml-apis:1.4.01',
+      "org.xmlresolver:xmlresolver:${resolverVersion}",
+      "net.sf.saxon:Saxon-HE:${saxonVersion}"
   }
 }
 
@@ -30,11 +38,38 @@ dependencies {
     [group: 'net.sf.saxon', name: 'Saxon-HE', version: saxonVersion],
     [group: 'org.relaxng', name: 'jing', version: "20181222" ],
     [group: 'org.relaxng', name: 'trang', version: "20181222" ],
-    [group: 'org.xmlresolver', name: 'xmlresolver', version: "1.0.8"],
+    [group: 'org.xmlresolver', name: 'xmlresolver', version: resolverVersion]
   )
 }
 
-defaultTasks 'distribution'
+sourceSets {
+  docbook {
+    java {
+    }
+  }
+  publishers {
+    java {
+    }
+  }
+}
+
+relaxng_translate.configure {
+  classpath configurations.validateRuntime
+}
+
+relaxng_validate.configure {
+  classpath configurations.validateRuntime
+}
+
+def nextReleaseVer = dbver
+if (nextReleaseVer.indexOf("a") > 0) {
+  nextReleaseVer = nextReleaseVer.substring(0, nextReleaseVer.indexOf("a"))
+}
+if (nextReleaseVer.indexOf("b") > 0) {
+  nextReleaseVer = nextReleaseVer.substring(0, nextReleaseVer.indexOf("b"))
+}
+
+defaultTasks 'dist'
 
 def gitRef() {
   def ref = ""
@@ -49,24 +84,7 @@ def gitRef() {
   ref
 }
 
-def captureOutput = new OutputStream() {
-  // This is a hack. We need to check if a failing test actually fails.
-  // But if we let the JavaExec call fail, then the gradle script fails.
-  // So instead, we ignore the JavaExec exit value and capture the error
-  // output with this class. If the error output isn't empty, then we
-  // assume the validation failed, which for a test that's supposed to
-  // fail, is a pass!
-  int count = 0
-  @Override
-  public void write(int b) {
-    count += 1
-  }
-  public int byteCount() {
-    return count
-  }
-}
-
-def version = [
+def titles = [
   "assembly": "DocBook Assembly V${dbver}",
   "assemblyxi": "DocBook Assembly XIncludeV${dbver}",
   "dbforms": "DocBook Forms V${dbver}",
@@ -99,65 +117,73 @@ task fail_tests() {
   // nop, just something to hang dependencies on
 }
 
-task test(dependsOn: ["pass_tests", "fail_tests"]) {
-  // nop, just something to hang dependencies on
-}
+test.dependsOn "pass_tests"
+test.dependsOn "fail_tests"
+
+// In this project, we have schemas divided into "packages" in a way
+// that's roughly analogous to Java packages. Roughly. This map let's
+// us easily get from a schema name (say "assembly") back to the package
+// it belongs in ("docbook").
+def packageMap = [:]
 
 // For every schema, create a task to transform it from RNC to RNG.
 // There's no 'defguide' directory anymore because we can manufacture
 // it entirely in the build. But we still need some of the tasks
 // created in this loop, so fake it.
-def schemaDirectories = ["src/main/relaxng/defguide"]
-new File("src/main/relaxng").traverse([maxDepth: 0, type: DIRECTORIES]) { schema ->
-  schemaDirectories.add(schema.toString())
+def schemaDirectories = ["src/defguide/relaxng/defguide"]
+new File("src").traverse([maxDepth: 2, type: DIRECTORIES]) { schema ->
+  def dirname = schema.toString()
+  if (!dirname.startsWith("src/test/")) {
+    def pos = dirname.indexOf("${File.separator}relaxng${File.separator}")
+    if (pos >= 0) {
+      packageMap[schema.getName()] = dirname.substring(4, pos)
+      schemaDirectories.add(dirname)
+    }
+  }
 }
+
 schemaDirectories.each { dirname ->
-  def pos = dirname.indexOf("${File.separator}main${File.separator}relaxng${File.separator}")
-  def basename = dirname.substring(pos+14)
+  def pos = dirname.indexOf("${File.separator}relaxng${File.separator}")
+  def basename = dirname.substring(pos+9)
+
   Task t = null
   if (basename != "defguide") {
-    t = task "${basename}_rng_src"(type: JavaExec) {
+    t = task "${basename}_rng_src"(type: RelaxNGTranslateTask) {
       inputs.files fileTree(dir: dirname)
-      outputs.file "build/${basename}/${basename}.rng"
-      classpath = configurations.validateRuntime
-      main = "com.thaiopensource.relaxng.translate.Driver"
-      args "${dirname}/${basename}.rnc", "build/${basename}/${basename}.rng"
-      doFirst {
-        mkdir "build/${basename}"
-      }
+      input "${dirname}/${basename}.rnc"
+      output "${buildDir}/${basename}/${basename}.rng"
     }
   }
 
   t = task "${basename}_rng_include"(type: SaxonXsltTask,
-                                     dependsOn: ["${basename}_rng_src",
-                                                 "${basename}_copyright"]) {
+                                     dependsOn: ["${basename}_rng_src"]) {
     inputs.file("tools/include.xsl")
-    input "build/${basename}/${basename}.rng"
-    output "build/${basename}_rng_include.xml"
+    input "${buildDir}/${basename}/${basename}.rng"
+    output "${buildDir}/tmp/${basename}_rng_include.xml"
     stylesheet "tools/include.xsl"
   }
 
   t = task "${basename}_rng_augment"(type: SaxonXsltTask,
                                      dependsOn: [ "${basename}_rng_include" ]) {
     inputs.file("tools/augment.xsl")
-    input "build/${basename}_rng_include.xml"
-    output "build/${basename}_rng_augment.xml"
+    input "${buildDir}/tmp/${basename}_rng_include.xml"
+    output "${buildDir}/tmp/${basename}_rng_augment.xml"
     stylesheet "tools/augment.xsl"
   }
 
   t = task "${basename}_rng_cleanup"(type: SaxonXsltTask,
                                      dependsOn: [ "${basename}_rng_augment" ]) {
     inputs.file("tools/cleanup.xsl")
-    input "build/${basename}_rng_augment.xml"
-    output "build/${basename}_rng_cleanup.xml"
+    input "${buildDir}/tmp/${basename}_rng_augment.xml"
+    output "${buildDir}/tmp/${basename}_rng_cleanup.xml"
     stylesheet "tools/cleanup.xsl"
   }
 
   t = task "${basename}_rng_nodoc"(type: SaxonXsltTask,
                                    dependsOn: [ "${basename}_rng_cleanup" ]) {
     inputs.file("tools/removedoc.xsl")
-    input "build/${basename}_rng_cleanup.xml"
-    output "build/${basename}_rng_nodoc.xml"
+    input "${buildDir}/tmp/${basename}_rng_cleanup.xml"
+    output "${buildDir}/tmp/${basename}_rng_nodoc.xml"
     stylesheet "tools/removedoc.xsl"
     parameters (
       "remove-schematron": "0"
@@ -167,54 +193,46 @@ schemaDirectories.each { dirname ->
   t = task "${basename}_sch"(type: SaxonXsltTask,
                              dependsOn: [ "${basename}_rng_cleanup" ]) {
     inputs.file("tools/schematron.xsl")
-    input "build/${basename}_rng_cleanup.xml"
-    output "build/${basename}.sch"
+    input "${buildDir}/tmp/${basename}_rng_cleanup.xml"
+    output "${buildDir}/schemas/sch/${packageMap[basename]}/${basename}.sch"
     stylesheet "tools/schematron.xsl"
   }
 
-  t = task "${basename}_copyright"(type: Copy) {
-    from "src/main/relaxng/${basename}"
-    include "copyright.xml"
-    into "build/${basename}"
-    filter { String line ->
-      if (line.indexOf("{\$release}") >= 0) {
-        line = line
-          .replace("{\$release}", version[basename])
-      }
-      line
-    }
-    doFirst {
-      mkdir "build/${basename}"
-    }
-  }
-
   t = task "${basename}_compiled"(type: SaxonXsltTask,
-                                  dependsOn: ["${basename}_rng_nodoc",
-                                              "${basename}_copyright"]) {
-    input "build/${basename}_rng_nodoc.xml"
-    output "build/${basename}_compiled.rng"
+                                  dependsOn: ["${basename}_rng_nodoc"]) {
+    doFirst {
+      copy {
+        from "src/${packageMap[basename]}/relaxng/${basename}"
+        include "copyright.xml"
+        into "${buildDir}/${basename}"
+        filter { String line ->
+          if (line.indexOf("{\$release}") >= 0) {
+            line = line
+              .replace("{\$release}", titles[basename])
+          }
+          line
+        }
+      }
+    }
+
+    input "${buildDir}/tmp/${basename}_rng_nodoc.xml"
+    output "${buildDir}/tmp/${basename}_compiled.rng"
     stylesheet "tools/attach-copyright.xsl"
     parameters (
-      "copyright": "../build/${basename}/copyright.xml"
+      "copyright": "${buildDir}/${basename}/copyright.xml"
     )
   }
 
-  t = task "${basename}_rnc"(type: JavaExec,
+  t = task "${basename}_rnc"(type: RelaxNGTranslateTask,
                              dependsOn: ["${basename}_compiled"]) {
-    inputs.file("build/${basename}_compiled.rng")
-    outputs.file("build/${basename}.rnc")
-    classpath = configurations.validateRuntime
-    main = "com.thaiopensource.relaxng.translate.Driver"
-    args "build/${basename}_compiled.rng", "build/${basename}.rnc"
+    input "${buildDir}/tmp/${basename}_compiled.rng"
+    output "${buildDir}/schemas/rng/${packageMap[basename]}/${basename}.rnc"
   }
 
-  t = task "${basename}_rng"(type: JavaExec,
+  t = task "${basename}_rng"(type: RelaxNGTranslateTask,
                              dependsOn: ["${basename}_rnc"]) {
-    inputs.file("build/${basename}.rnc")
-    outputs.file("build/${basename}.rng")
-    classpath = configurations.validateRuntime
-    main = "com.thaiopensource.relaxng.translate.Driver"
-    args "build/${basename}.rnc", "build/${basename}.rng"
+    input "${buildDir}/schemas/rng/${packageMap[basename]}/${basename}.rnc"
+    output "${buildDir}/schemas/rng/${packageMap[basename]}/${basename}.rng"
   }
   if (basename != "defguide") {
     makeSchemas.dependsOn t
@@ -223,8 +241,8 @@ schemaDirectories.each { dirname ->
 
   t = task "${basename}_rnd"(type: SaxonXsltTask,
                              dependsOn: ["${basename}_rng_cleanup"]) {
-    input "build/${basename}_rng_cleanup.xml"
-    output "build/${basename}.rnd"
+    input "${buildDir}/tmp/${basename}_rng_cleanup.xml"
+    output "${buildDir}/tmp/${basename}.rnd"
     stylesheet "tools/rngdocxml.xsl"
     parameters (
       "buildhash": gitRef()
@@ -235,8 +253,8 @@ schemaDirectories.each { dirname ->
 
 task any_docbook_rng(type: SaxonXsltTask,
                      dependsOn: [ "docbook_compiled" ]) {
-  input "build/docbook_compiled.rng"
-  output "build/docbook/any.docbook.rng"
+  input "${buildDir}/tmp/docbook_compiled.rng"
+  output "${buildDir}/docbook/any.docbook.rng"
   stylesheet "tools/all-patterns.xsl"
 }
 
@@ -245,7 +263,7 @@ task defguide_rng_src(dependsOn: ["any_docbook_rng", "assembly_rng", "docbook_rn
     // The defguide.rng file is just a driver that combines 
     // a few schemas together for documentation purposes.
     // it doesn't exist to perform validation of any sort.
-    def rng = new PrintStream(new File("build/defguide/defguide.rng"))
+    def rng = new PrintStream(new File("${buildDir}/defguide/defguide.rng"))
     rng.println("<?xml version='1.0' encoding='UTF-8'?>")
     rng.println("<grammar ns='http://docbook.org/ns/docbook'")
     rng.println("         xmlns='http://relaxng.org/ns/structure/1.0'>")
@@ -260,7 +278,7 @@ task defguide_rng_src(dependsOn: ["any_docbook_rng", "assembly_rng", "docbook_rn
     rng.close()
   }
   doFirst {
-    mkdir "build/defguide"
+    mkdir "${buildDir}/defguide"
   }
 }
 
@@ -274,56 +292,65 @@ fileTree(dir: "src/test").each { testfile ->
   if (fn.endsWith(".xml")) {
     def taskName = fn.replace("${File.separator}", "_").replace(".", "_").replace("-","_")    
     def parts = fn.split("[/\\\\]") // e.g., docbook/pass/testname.xml
-    def schema = parts[0]
-    def passfail = parts[1]
+    def schema_name = parts[1]
+    def passfail = parts[2]
     def document = testfile.toString()
 
-    if (!baseTests.containsKey(schema)) {
-      baseTests[schema] = task "${schema}_tests"() { }
+    if (!baseTests.containsKey(schema_name)) {
+      baseTests[schema_name] = task "${schema_name}_tests"() { }
     }
 
     if (passfail == "pass") {
-      Task t = task "test_${taskName}_rng"(type: JavaExec,
-                                           dependsOn: ["${schema}_rng"]) {
-        classpath = configurations.validateRuntime
-        main = "com.thaiopensource.relaxng.util.Driver"
-        args "-i", "build/${schema}.rng", document
+      Task t = task "test_${taskName}_rng"(type: RelaxNGValidateTask,
+                                           dependsOn: ["${schema_name}_rng"]) {
+        input document
+        output "${buildDir}/test/rng/${fn}"
+        schema "${buildDir}/schemas/rng/${packageMap[schema_name]}/${schema_name}.rng"
+        errorHandler new CollectingErrorHandler()
+        idref (schema_name != 'website' && schema_name != 'website-full' && schema_name != 'dbforms')
+        assertValid false
       }
       pass_tests.dependsOn t
-      baseTests[schema].dependsOn t
+      baseTests[schema_name].dependsOn t
 
-      t = task "test_${taskName}_sch"(type: JavaExec,
-                                      dependsOn: ["${schema}_sch"]) {
-        classpath = configurations.validateRuntime
-        main = "com.thaiopensource.relaxng.util.Driver"
-        args "-i", "build/${schema}.sch", document
+      t = task "test_${taskName}_sch"(type: RelaxNGValidateTask,
+                                      dependsOn: ["${schema_name}_sch"]) {
+        input document
+        output "${buildDir}/test/sch/${fn}"
+        schema "${buildDir}/schemas/sch/${packageMap[schema_name]}/${schema_name}.sch"
+        errorHandler new CollectingErrorHandler()
+        idref (schema_name != 'website' && schema_name != 'website-full' && schema_name != 'dbforms')
+        assertValid false
       }
       pass_tests.dependsOn t
-      baseTests[schema].dependsOn t
+      baseTests[schema_name].dependsOn t
+
     } else if (passfail == "fail") {
-      Task t_rng = task "test_${taskName}_rng"(type: JavaExec,
-                                               dependsOn: ["${schema}_rng"]) {
-        classpath = configurations.validateRuntime
-        main = "com.thaiopensource.relaxng.util.Driver"
-        ignoreExitValue = true
-        standardOutput = captureOutput
-        errorOutput = captureOutput
-        args "-i", "build/${schema}.rng", document
+      Task t_rng = task "test_${taskName}_rng"(type: RelaxNGValidateTask,
+                                               dependsOn: ["${schema_name}_rng"]) {
+        def eh = new CollectingErrorHandler()
+        input document
+        schema "${buildDir}/schemas/rng/${packageMap[schema_name]}/${schema_name}.rng"
+        output "${buildDir}/test/rng/${fn}"
+        assertValid false
+        errorHandler eh
         doLast {
-          failResults["${taskName}_rng"] = errorOutput.byteCount() == 0
+          println("TEST test_${taskName}_rng: ${eh.errorCount()} errors")
+          failResults["${taskName}_rng"] = eh.errorCount() == 0
         }
       }
 
-      Task t_sch = task "test_${taskName}_sch"(type: JavaExec,
-                                               dependsOn: ["${schema}_sch"]) {
-        classpath = configurations.validateRuntime
-        main = "com.thaiopensource.relaxng.util.Driver"
-        ignoreExitValue = true
-        standardOutput = captureOutput
-        errorOutput = captureOutput
-        args "-i", "build/${schema}.sch", document
+      Task t_sch = task "test_${taskName}_sch"(type: RelaxNGValidateTask,
+                                               dependsOn: ["${schema_name}_sch"]) {
+        def eh = new CollectingErrorHandler()
+        input document
+        schema "${buildDir}/schemas/sch/${packageMap[schema_name]}/${schema_name}.sch"
+        output "${buildDir}/test/sch/${fn}"
+        assertValid false
+        errorHandler eh
         doLast {
-          failResults["${taskName}_sch"] = errorOutput.byteCount() == 0
+          println("TEST test_${taskName}_sch: ${eh.errorCount()} errors")
+          failResults["${taskName}_sch"] = eh.errorCount() == 0
         }
       }
 
@@ -331,14 +358,14 @@ fileTree(dir: "src/test").each { testfile ->
                                                    "test_${taskName}_sch"]) {
         doLast {
           // If both the Schematron test and the RELAX NG test passed, then fail!
-          if (failResults["{$taskName}_sch"] && failResults["{$taskName}_rng"]) {
-            raise GradleException("Test should not have passed")
+          if (failResults["${taskName}_sch"] && failResults["${taskName}_rng"]) {
+            throw new GradleException("Test should not have passed")
           }
         }
       }
 
       fail_tests.dependsOn t
-      baseTests[schema].dependsOn t
+      baseTests[schema_name].dependsOn t
     } else {
       println("Ignoring test file: ${fn}")
     }
@@ -347,187 +374,401 @@ fileTree(dir: "src/test").each { testfile ->
 
 // ============================================================
 
-task copyDocBookRNG(type: Copy,
-                    dependsOn: ["docbook_rng", "docbookxi_rng",
-                                "assembly_rng", "assemblyxi_rng",
-                                "dbits_rng", "dbitsxi_rng"]) {
-  from "build"
-  into "build/stage/docbook-${dbver}/rng"
-  include "docbook.rnc", "docbook.rng", "docbookxi.rng", "docbookxi.rnc",
-    "assembly.rnc", "assembly.rng", "assemblyxi.rnc", "assemblyxi.rng",
-    "dbits.rnc", "dbits.rng", "dbitsxi.rnc"
-  doFirst {
-    mkdir "build/stage/docbook-${dbver}/rng"
-  }
-}
+def distributions = [
+  "docbook": ["dependsOn": ["docbook_rng", "docbookxi_rng", "assembly_rng",
+                            "assemblyxi_rng", "dbits_rng", "dbitsxi_rng",
+                            "docbook_sch", "docbookxi_sch", "assembly_sch",
+                            "assemblyxi_sch", "dbits_sch", "dbitsxi_sch",
+                            "assembly_tests", "docbook_tests", "docbookxi_tests",
+                            "dbits_tests", "dbitsxi_tests"],
+              "schemas": ["docbook", "dbits", "assembly"]],
+  "publishers": ["dependsOn": ["publishers_rng", "publishers_sch", "publishers_tests"],
+                 "schemas": ["publishers"]],
+  "sdocbook": ["dependsOn": ["sdocbook_rng", "sdocbook_sch", "sdocbook_tests"],
+               "schemas": ["sdocbook"]],
+  "slides": ["dependsOn": ["slides_rng", "slides_sch", "slides-full_rng",
+                           "slides-full_sch", "slides_tests", "slides-full_tests"],
+             "schemas": ["slides", "slides-full"]],
+  "website": ["dependsOn": ["website_rng", "website_sch", "website-full_rng",
+                            "website-full_sch", "website_tests", "website-full_tests"],
+              "schemas": ["website", "website-full"]],
+  "dbforms": ["dependsOn": ["dbforms_rng", "dbforms_sch", "dbforms_tests"],
+               "schemas": ["dbforms"]]]
 
-task copyDocBookSCH(type: Copy,
-                    dependsOn: ["docbook_sch", "docbookxi_sch",
-                                "assembly_sch", "assemblyxi_sch",
-                                "dbits_sch", "dbitsxi_sch"]) {
-  from "build"
-  into "build/stage/docbook-${dbver}/sch"
-  include "docbook.sch", "docbookxi.sch",
-    "assembly.sch", "assemblyxi.sch", "dbits.sch", "dbitsxi.sch"
-  doFirst {
-    mkdir "build/stage/docbook-${dbver}/sch"
-  }
-}
+distributions.each { dist, obj ->
+  task "${dist}_stage"(dependsOn: distributions[dist]["dependsOn"]) {
+    ["rng", "sch"].each { lang ->
+      distributions[dist]["schemas"].each { schema ->
+        doFirst {
+          copy {
+            from "${buildDir}/schemas/${lang}/${schema}"
+            into "${buildDir}/stage/${dist}-${dbver}/${lang}"
+          }
+        }
+      }
+    }
 
-task docbookDistSchemas(dependsOn: ["copyDocBookRNG", "copyDocBookSCH"]) {
-  // nop
-}
-["docbook", "assembly", "dbits", "dbitsxi"].each { schema ->
-  Task t = task "copy_${schema}_nvdl"(type: Copy) {
-    inputs.file("src/main/nvdl/${schema}/${schema}.nvdl")
-    outputs.file("build/stage/docbook-${dbver}/${schema}.nvdl")
-    from "src/main/nvdl/${schema}"
-    into "build/stage/docbook-${dbver}"
-    include "${schema}.nvdl"
+    distributions[dist]["schemas"].each { schema ->
+      doFirst {
+        copy {
+          from "${projectDir}/src/${packageMap[schema]}/nvdl/${schema}"
+          into "${buildDir}/stage/${dist}-${dbver}"
+        }
+      }
+    }
+
+    doLast {
+      def list = new PrintStream(new File("${buildDir}/tmp/${dist}.uris"))
+      def path = "${buildDir}/stage/${dist}-${dbver}"
+      new File(path).traverse([maxDepth: 2, type: FILES]) { schema ->
+        if (schema.getName() != "catalog.xml") {
+          list.println(schema.toString().substring(path.length()+1))
+        }
+      }
+      list.close()
+    }
+  }
+
+  task "${dist}_catalog"(type: SaxonXsltTask, dependsOn: ["${dist}_stage"]) {
+    def path = "${buildDir}/stage/${dist}-${dbver}"
+    inputs.file("tools/catalog.xsl")
+    input "tools/catalog.xsl"
+    output "${path}/catalog.xml"
+    stylesheet "tools/catalog.xsl"
+    parameters (
+      "version-list": "${dbver} ${nextReleaseVer}",
+      "distribution": dist,
+      "uris": "${buildDir}/tmp/${dist}.uris"
+    )
+  }
+
+  task "${dist}_zip"(type: Zip, dependsOn: ["${dist}_catalog"]) {
+    from("${buildDir}/stage/${dist}-${dbver}")
+    into "${dist}-${dbver}"
+    archiveFileName = "${dist}-${dbver}.zip"
     doFirst {
-      mkdir "build/stage/docbook-${dbver}"
+      mkdir "${buildDir}/distributions"
     }
-  }
-  docbookDistSchemas.dependsOn t
-}
-
-// It shouldn't be necessary to write this to a file, but I can't figure
-// out any other way to get the sequence correct. I need the URIs to
-// to build the catalog.
-task docbookDistFiles(dependsOn: ["docbookDistSchemas"]) {
-  doLast {
-    def list = new PrintStream(new File("build/docbook.uris"))
-    def path = "${buildDir}/stage/docbook-${dbver}"
-    new File(path).traverse([maxDepth: 2, type: FILES]) { schema ->
-      list.println(schema.toString().substring(path.length()+1))
-    }
-    list.close()
-  }
-}
-
-task docbookCatalog(type: SaxonXsltTask, dependsOn: ["docbookDistFiles"]) {
-  def path = "${buildDir}/stage/docbook-${dbver}"
-  inputs.file("tools/catalog.xsl")
-  input "tools/catalog.xsl"
-  output "${path}/catalog.xml"
-  stylesheet "tools/catalog.xsl"
-  parameters (
-    "version": dbver,
-    "uris": "../build/docbook.uris"
-  )
-  doFirst {
-    mkdir("build/stage/docbook-${dbver}")
-  }
-}
-
-task docbook_dist(dependsOn: ["docbookCatalog", "docbook_tests", "assembly_tests"]) {
-}
-
-task docbook_zipDist(type: Zip, dependsOn: ["docbook_dist"]) {
-  from("${buildDir}/stage/docbook-${dbver}")
-  into "docbook-${dbver}"
-  archiveFileName = "docbook-${dbver}.zip"
-  doFirst {
-    mkdir "${buildDir}/distributions"
   }
 }
 
 // ============================================================
 
-task copyPublishersRNG(type: Copy,
-                       dependsOn: ["publishers_rng"]) {
-  from "build"
-  into "build/stage/publishers-${dbver}/rng"
-  include "publishers.rnc", "publishers.rng"
-  doFirst {
-    mkdir "build/stage/publishers-${dbver}/rng"
+task dist() {
+  dependsOn "assemble"
+  distributions.each { dist, obj ->
+    dependsOn "${dist}_zip"
   }
 }
 
-task copyPublishersSCH(type: Copy,
-                    dependsOn: ["publishers_sch"]) {
-  from "build"
-  into "build/stage/publishers-${dbver}/sch"
-  include "publishers.sch"
-  doFirst {
-    mkdir "build/stage/publishers-${dbver}/sch"
-  }
-}
+// ============================================================
 
-task publishersDistSchemas(dependsOn: ["copyPublishersRNG", "copyPublishersSCH"]) {
-  // nop
-}
-["publishers"].each { schema ->
-  Task t = task "copy_${schema}_nvdl"(type: Copy) {
-    inputs.file("src/main/nvdl/${schema}/${schema}.nvdl")
-    outputs.file("build/stage/publishers-${dbver}/${schema}.nvdl")
-    from "src/main/nvdl/${schema}"
-    into "build/stage/publishers-${dbver}"
-    include "${schema}.nvdl"
-    doFirst {
-      mkdir "build/stage/publishers-${dbver}"
+task docbook_javaConfig() {
+  def jver = ""
+  def java = "${projectDir}/src/docbook/java/org/docbook/schemas/docbook/DocBook.java"
+  try (BufferedReader br = new BufferedReader(new FileReader(java))) {
+    jver = br.readLine()
+    while (jver != null) {
+      if (jver.contains("VERSIONS")) {
+        jver = jver.split("\s*=\s")[1]
+        break;
+      }
+      jver = br.readLine()
     }
   }
-  publishersDistSchemas.dependsOn t
+  def expect = "{'4.5', '5.0', '5.1', '5.2', '${dbver}'};".replace('\'', '"')
+  if (jver != expect) {
+    throw new GradleException("Check VERSIONS in DocBook.java; ${expect} != ${jver}")
+  }
 }
 
-// It shouldn't be necessary to write this to a file, but I can't figure
-// out any other way to get the sequence correct. I need the URIs to
-// to build the catalog.
-task publishersDistFiles(dependsOn: ["publishersDistSchemas"]) {
+task docbook_jarSetup(dependsOn: ["docbook_stage", "docbook_catalog", "docbook_javaConfig"]) {
   doLast {
-    def list = new PrintStream(new File("build/publishers.uris"))
-    def path = "${buildDir}/stage/publishers-${dbver}"
-    new File(path).traverse([maxDepth: 2, type: FILES]) { schema ->
-      list.println(schema.toString().substring(path.length()+1))
+    copy {
+      into "${buildDir}/stage-jar/docbook-${dbver}/org/docbook/schemas/docbook"
+      from ("${projectDir}/src/docbook/schemas") {
+        exclude "catalog.src"
+      }
     }
-    list.close()
+  }
+
+  doLast {
+    copy {
+      into "${buildDir}/stage-jar/docbook-${dbver}/org/docbook/schemas/docbook/${dbver}"
+      from "${buildDir}/stage/docbook-${dbver}"
+    }
+  }
+
+  doLast {
+    copy {
+      into "${buildDir}/stage-jar/docbook-${dbver}/org/docbook/schemas/docbook"
+      from ("${projectDir}/src/docbook/schemas") {
+        include "catalog.src"
+      }
+      rename { fn ->
+        return "catalog.xml"
+      }
+      filter { String line ->
+        line.replace("@@DBVER@@", dbver)
+      }
+    }
   }
 }
 
-task publishersCatalog(type: SaxonXsltTask, dependsOn: ["publishersDistFiles"]) {
-  def path = "${buildDir}/stage/publishers-${dbver}"
-  inputs.file("tools/catalog.xsl")
-  input "tools/catalog.xsl"
-  output "${path}/catalog.xml"
-  stylesheet "tools/catalog.xsl"
+task docbook_jarCatalog(type: SaxonXsltTask, dependsOn: ["docbook_jarSetup"]) {
+  input "${buildDir}/stage-jar/docbook-${dbver}/org/docbook/schemas/docbook/${dbver}/catalog.xml"
+  stylesheet "${projectDir}/tools/resolver-catalog.xsl"
+  output "${buildDir}/stage-jar/docbook-${dbver}/org/xmlresolver/catalog.xml"
   parameters (
-    "version": dbver,
-    "uris": "../build/publishers.uris"
+    'schema': 'docbook',
+    'version': dbver
   )
-  doFirst {
-    mkdir("build/stage/publishers-${dbver}")
+}
+
+// I'd make this a task called docbook_jar except that a default 'jar' task
+// always runs. That creates an empty 'docbook.jar'. So this avoids that.
+jar {
+  dependsOn "compileDocbookJava"
+  dependsOn "docbook_jarCatalog"
+  from ("${buildDir}/stage-jar/docbook-${dbver}")
+  from ("${buildDir}/classes/java/docbook")
+  include("*/**")
+  archiveBaseName = "docbook-${dbver}"
+  manifest {
+    attributes "Built-By": "Norman Walsh"
+    attributes "Implementation-Vendor": "Norman Walsh"
+    attributes "Implementation-Title": "DocBook Schemas"
+    attributes "Implementation-Version": dbver
   }
 }
 
-task publishers_dist(dependsOn: ["publishersCatalog", "publishers_tests"]) {
-}
-
-task publishers_zipDist(type: Zip, dependsOn: ["publishers_dist"]) {
-  from("${buildDir}/stage/publishers-${dbver}")
-  into "publishers-${dbver}"
-  archiveFileName = "publishers-${dbver}.zip"
+task docbook_javadoc(type: Javadoc) {
+  destinationDir = new File("${buildDir}/docs/docbook")
+  source = sourceSets.docbook.allJava
   doFirst {
-    mkdir "${buildDir}/distributions"
+    mkdir("${buildDir}/docs/docbook")
   }
 }
 
-task distribution(dependsOn: ["docbook_zipDist", "publishers_zipDist"]) {
-  // nop 
+task docbook_javadocJar(type: Jar, dependsOn: ["docbook_javadoc"]) {
+  archiveBaseName = "docbook-${dbver}"
+  classifier = 'javadoc'
+  from docbook_javadoc.destinationDir
 }
+assemble.dependsOn docbook_javadocJar
+
+task docbook_sourcesJar(type: Jar) {
+  archiveBaseName = "docbook-${dbver}"
+  classifier = 'sources'
+  from sourceSets.docbook.allSource
+}
+assemble.dependsOn docbook_sourcesJar
+
+// ============================================================
+
+task publishers_javaConfig() {
+  def jver = ""
+  def java = "${projectDir}/src/publishers/java/org/docbook/schemas/publishers/Publishers.java"
+  try (BufferedReader br = new BufferedReader(new FileReader(java))) {
+    jver = br.readLine()
+    while (jver != null) {
+      if (jver.contains("VERSIONS")) {
+        jver = jver.split("\s*=\s")[1]
+        break;
+      }
+      jver = br.readLine()
+    }
+  }
+  def expect = "{'1.0', '5.2', '${dbver}'};".replace('\'', '"')
+  if (jver != expect) {
+    throw new GradleException("Check VERSIONS in DocBook.java; ${expect} != ${jver}")
+  }
+}
+
+task publishers_jarSetup(dependsOn: ["publishers_stage", "publishers_catalog", "publishers_javaConfig"]) {
+  doLast {
+    copy {
+      into "${buildDir}/stage-jar/publishers-${dbver}/org/docbook/schemas/publishers"
+      from ("${projectDir}/src/publishers/schemas") {
+        exclude "catalog.src"
+      }
+    }
+  }
+
+  doLast {
+    copy {
+      into "${buildDir}/stage-jar/publishers-${dbver}/org/docbook/schemas/publishers/${dbver}"
+      from "${buildDir}/stage/publishers-${dbver}"
+    }
+  }
+
+  doLast {
+    copy {
+      into "${buildDir}/stage-jar/publishers-${dbver}/org/docbook/schemas/publishers"
+      from ("${projectDir}/src/publishers/schemas") {
+        include "catalog.src"
+      }
+      rename { fn ->
+        return "catalog.xml"
+      }
+      filter { String line ->
+        line.replace("@@DBVER@@", dbver)
+      }
+    }
+  }
+}
+
+task publishers_jarCatalog(type: SaxonXsltTask, dependsOn: ["publishers_jarSetup"]) {
+  input "${buildDir}/stage-jar/publishers-${dbver}/org/docbook/schemas/publishers/${dbver}/catalog.xml"
+  stylesheet "${projectDir}/tools/resolver-catalog.xsl"
+  output "${buildDir}/stage-jar/publishers-${dbver}/org/xmlresolver/catalog.xml"
+  parameters (
+    'schema': 'publishers',
+    'version': dbver
+  )
+}
+
+task publishers_jar(type: Jar, dependsOn: ["compilePublishersJava", "publishers_jarCatalog"]) {
+  from ("${buildDir}/stage-jar/publishers-${dbver}")
+  from ("${buildDir}/classes/java/publishers")
+  include("*/**")
+  archiveBaseName = "publishers-${dbver}"
+  manifest {
+    attributes "Built-By": "Norman Walsh"
+    attributes "Implementation-Vendor": "Norman Walsh"
+    attributes "Implementation-Title": "DocBook Publishers Schemas"
+    attributes "Implementation-Version": dbver
+  }
+}
+assemble.dependsOn publishers_jar
+
+task publishers_javadoc(type: Javadoc) {
+  destinationDir = new File("${buildDir}/docs/publishers")
+  source = sourceSets.publishers.allJava
+  doFirst {
+    mkdir("${buildDir}/docs/publishers")
+  }
+}
+
+task publishers_javadocJar(type: Jar, dependsOn: ["publishers_javadoc"]) {
+  archiveBaseName = "publishers-${dbver}"
+  classifier = 'javadoc'
+  from publishers_javadoc.destinationDir
+}
+assemble.dependsOn publishers_javadocJar
+
+task publishers_sourcesJar(type: Jar) {
+  archiveBaseName = "publishers-${dbver}"
+  classifier = 'sources'
+  from sourceSets.publishers.allSource
+}
+assemble.dependsOn publishers_sourcesJar
+
+signing {
+  sign publishing.publications
+}
+
+publishing {
+  publications {
+    docbookJava(MavenPublication) {
+      pom {
+        name = 'DocBook Schemas'
+        packaging = 'jar'
+        description = 'The DocBook schemas'
+        url = 'https://github.com/docbook/docbook'
+
+        scm {
+          url = 'scm:git@github.com:docbook/docbook.git'
+          connection = 'scm:git@github.com:docbook/docbook.git'
+          developerConnection = 'scm:git@github.com:docbook/docbook.git'
+        }
+
+        licenses {
+          license {
+            name = 'Apache License version 2.0'
+            url = 'https://www.apache.org/licenses/LICENSE-2.0'
+            distribution = 'repo'
+          }
+        }
+
+        developers {
+          developer {
+            id = 'ndw'
+            name = 'Norman Walsh'
+          }
+        }
+      }
+
+      groupId = "org.docbook"
+      artifactId = "schemas-docbook"
+      version = dbver
+      artifact jar
+      artifact docbook_javadocJar
+      artifact docbook_sourcesJar
+    }
+
+    publishersJava(MavenPublication) {
+      pom {
+        name = 'DocBook Publishers Schemas'
+        packaging = 'jar'
+        description = 'The DocBook Publishers schemas'
+        url = 'https://github.com/docbook/docbook'
+
+        scm {
+          url = 'scm:git@github.com:docbook/docbook.git'
+          connection = 'scm:git@github.com:docbook/docbook.git'
+          developerConnection = 'scm:git@github.com:docbook/docbook.git'
+        }
+
+        licenses {
+          license {
+            name = 'Apache License version 2.0'
+            url = 'https://www.apache.org/licenses/LICENSE-2.0'
+            distribution = 'repo'
+          }
+        }
+
+        developers {
+          developer {
+            id = 'ndw'
+            name = 'Norman Walsh'
+          }
+        }
+      }
+
+      groupId = "org.docbook"
+      artifactId = "schemas-publishers"
+      version = dbver
+      artifact publishers_jar
+      artifact publishers_javadocJar
+      artifact publishers_sourcesJar
+    }
+  }
+
+  repositories {
+    maven {
+      url = dbver.contains("SNAPSHOT") ?
+        "https://oss.sonatype.org/content/repositories/snapshots/" :
+        "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+      credentials {
+        username = findProperty("sonatypeUsername") ?: ""
+        password = findProperty("sonatypePassword") ?: ""
+      }
+    }
+  }
+}
+println(publishing.publications)
 
 // ============================================================
 
 task helloWorld() {
   doLast {
     println("Hello.")
+    /*
+    configurations.validateRuntime.each { path ->
+      println(path)
+    }
+    println(System.getProperty("javax.xml.transform.TransformerFactory"))
+     */
   }
 }
-
-/*
-def EXCP="${projectDir}/build/classes/java/main"
-configurations.compileClasspath.each { it ->
-  EXCP += ":" + it
-}
-println(EXCP)
-*/
