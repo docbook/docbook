@@ -58,7 +58,6 @@ db.synopsis.blocks =
  | db.namespacesynopsis
  | db.macrosynopsis
  | db.unionsynopsis
- | db.typedefsynopsis
 
 db.programmingsynopsis =
    db.namespacesynopsis
