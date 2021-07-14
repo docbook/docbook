@@ -431,15 +431,29 @@ distributions.each { dist, obj ->
 
   task "${dist}_catalog"(type: SaxonXsltTask, dependsOn: ["${dist}_stage"]) {
     def path = "${buildDir}/stage/${dist}-${dbver}"
+
+    def catalogParameters = [
+      'title': "XML Catalog for ${titles[dist]}",
+      'version': dbver,
+      'distribution': dist,
+      'uris': "${buildDir}/tmp/${dist}.uris"
+    ]
+
+    if (dist == "docbook") {
+      catalogParameters['oasisVersion'] = oasisDocBookVersion
+      catalogParameters['oasisRelease'] = oasisDocBookRelease
+    }
+
+    if (dist == "publishers") {
+      catalogParameters['oasisVersion'] = oasisPublishersVersion
+      catalogParameters['oasisRelease'] = oasisPublishersRelease
+    }
+
     inputs.file("tools/catalog.xsl")
     input "tools/catalog.xsl"
     output "${path}/catalog.xml"
     stylesheet "tools/catalog.xsl"
-    parameters (
-      "version-list": "${dbver} ${nextReleaseVer}",
-      "distribution": dist,
-      "uris": "${buildDir}/tmp/${dist}.uris"
-    )
+    parameters catalogParameters
   }
 
   task "${dist}_zip"(type: Zip, dependsOn: ["${dist}_catalog"]) {
