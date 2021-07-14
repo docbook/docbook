@@ -658,7 +658,7 @@ div {
       element constructorsynopsis {
          db.constructorsynopsis.attlist,
          db.constructorsynopsis.info,
-         db.synopsisinfo*
+         db.synopsisinfo*,
          db.modifier*,
          db.methodname?,
          ((db.methodparam|db.group.methodparam)+ | db.void?),
@@ -688,7 +688,7 @@ div {
       element destructorsynopsis {
          db.destructorsynopsis.attlist,
          db.destructorsynopsis.info,
-         db.synopsisinfo*
+         db.synopsisinfo*,
          db.modifier*,
          db.methodname?,
          ((db.methodparam|db.group.methodparam)+ | db.void?),
