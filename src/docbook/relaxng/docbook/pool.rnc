@@ -4673,7 +4673,7 @@ div {
       attribute content { text }
 
    db.meta.attlist =
-      db.meta.name.attribute
+      db.meta.name.attribute?
     & db.meta.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
