@@ -3,12 +3,13 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" 
                 exclude-result-prefixes="xs"
-                version="2.0">
+                version="3.0">
 
 <xsl:output method="xml" encoding="utf-8" indent="yes"/>
 
 <xsl:param name="title" as="xs:string" select="'XML Catalog'"/>
 <xsl:param name="version" as="xs:string" select="'UNKNOWN'"/>
+<xsl:param name="prefix" as="xs:string" select="'xml'"/>
 <xsl:param name="oasisVersion" as="xs:string" select="''"/>
 <xsl:param name="oasisRelease" as="xs:string" select="''"/>
 <xsl:param name="uris" as="xs:string" required="yes"/>
@@ -52,30 +53,67 @@
     <xsl:text>&#10;</xsl:text>
 
     <xsl:if test="$oasisVersion != '' and $oasisRelease != ''">
-      <xsl:call-template name="catalog-files">
-        <xsl:with-param name="comment" select="'The official OASIS URIs'"/>
-        <xsl:with-param name="root"
-                        select="concat('docs.oasis-open.org/docbook/docbook/v',
-                                       $oasisVersion, '/', $oasisRelease)"/>
-      </xsl:call-template>
+        <!-- We don't have official URIs for Publishers yet...only output
+        the official URs for DocBook -->
+      <xsl:if test="$prefix = 'xml'">
+        <xsl:call-template name="catalog-files">
+          <xsl:with-param name="comment" select="'The official OASIS URIs'"/>
+          <xsl:with-param name="root"
+                          select="'docs.oasis-open.org/docbook/docbook/v' || $oasisVersion || '/' || $oasisRelease"/>
+        </xsl:call-template>
+      </xsl:if>
+
+      <xsl:if test="$oasisVersion != $version">
+        <xsl:call-template name="catalog-files">
+          <xsl:with-param name="comment" select="'The docbook.org URIs'"/>
+          <xsl:with-param name="root"
+                          select="'docbook.org/' || $prefix || '/' || $oasisVersion"/>
+        </xsl:call-template>
+
+        <xsl:call-template name="catalog-files">
+          <xsl:with-param name="comment" select="'The www.docbook.org URIs (for completeness)'"/>
+          <xsl:with-param name="root"
+                          select="'www.docbook.org/' || $prefix || '/' || $oasisVersion"/>
+        </xsl:call-template>
+
+        <xsl:call-template name="catalog-files">
+          <xsl:with-param name="comment" select="'The CDN schemas'"/>
+          <xsl:with-param name="root"
+                          select="if ($prefix = 'xml')
+                                             then 'cdn.docbook.org/schema/' || $oasisVersion
+                                             else 'cdn.docbook.org/schema/' || $prefix || '-' || $oasisVersion"/>
+          <!-- There shouldn't be any http://cdn URIs. -->
+          <xsl:with-param name="schemes" select="'https'"/>
+        </xsl:call-template>
+      </xsl:if>
     </xsl:if>
 
     <xsl:call-template name="catalog-files">
       <xsl:with-param name="comment" select="'The historical OASIS URIs (for backwards compatibility)'"/>
       <xsl:with-param name="root"
-                      select="concat('www.oasis-open.org/docbook/xml/', $version)"/>
+                      select="'www.oasis-open.org/docbook/' || $prefix || '/' || $version"/>
     </xsl:call-template>
 
     <xsl:call-template name="catalog-files">
       <xsl:with-param name="comment" select="'The docbook.org URIs'"/>
       <xsl:with-param name="root"
-                      select="concat('docbook.org/xml/', $version)"/>
+                      select="'docbook.org/' || $prefix || '/' || $version"/>
     </xsl:call-template>
 
     <xsl:call-template name="catalog-files">
       <xsl:with-param name="comment" select="'The www.docbook.org URIs (for completeness)'"/>
       <xsl:with-param name="root"
-                      select="concat('www.docbook.org/xml/', $version)"/>
+                      select="'www.docbook.org/' || $prefix || '/' || $version"/>
+    </xsl:call-template>
+
+    <xsl:call-template name="catalog-files">
+      <xsl:with-param name="comment" select="'CDN schemas'"/>
+      <xsl:with-param name="root"
+                      select="if ($prefix = 'xml')
+                              then 'cdn.docbook.org/schema/' || $version
+                              else 'cdn.docbook.org/schema/' || $prefix || '-' || $version"/>
+      <!-- There shouldn't be any http://cdn URIs. -->
+      <xsl:with-param name="schemes" select="'https'"/>
     </xsl:call-template>
   </catalog>
 </xsl:template>
@@ -93,8 +131,9 @@
 <xsl:template name="catalog-files">
   <xsl:param name="comment" as="xs:string" required="yes"/>
   <xsl:param name="root" as="xs:string" required="yes"/>
+  <xsl:param name="schemes" as="xs:string+" select="('https', 'http')"/>
 
-  <xsl:for-each select="('https', 'http')">
+  <xsl:for-each select="$schemes">
     <group>
       <xsl:text> </xsl:text>
       <xsl:comment>

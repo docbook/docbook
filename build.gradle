@@ -447,9 +447,9 @@ distributions.each { dist, obj ->
     if (dist == "publishers") {
       catalogParameters['oasisVersion'] = oasisPublishersVersion
       catalogParameters['oasisRelease'] = oasisPublishersRelease
+      catalogParameters['prefix'] = 'publishers'
     }
 
-    inputs.file("tools/catalog.xsl")
     input "tools/catalog.xsl"
     output "${path}/catalog.xml"
     stylesheet "tools/catalog.xsl"
