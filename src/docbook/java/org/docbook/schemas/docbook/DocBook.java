@@ -7,7 +7,7 @@ package org.docbook.schemas.docbook;
 // some tests to make sure the testing version is correct.
 
 public final class DocBook {
-  public static final String[] VERSIONS = {"4.5", "5.0", "5.1", "5.2", "5.2b10a5"};
+  public static final String[] VERSIONS = {"4.5", "5.0", "5.1", "5.2", "5.2b11"};
 
   public static final String DOCBOOK_CATALOG_PATH = "/org/docbook/schemas/docbook/catalog.xml";
 
