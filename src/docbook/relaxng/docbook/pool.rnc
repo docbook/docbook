@@ -5015,14 +5015,37 @@ div {
    db:refpurpose [ "The title of a cited work" ]
 ]
 div {
+    ctrl:other-attribute [name="db.citetitle.pubwork.attribute"
+                          enum-name="db.citetitle.pubwork-enum.attribute"
+                          other-name="db.citetitle.pubwork-other.attributes" ]
+
 
    db.citetitle.pubwork.enumeration = db.pubwork.enumeration
 
-   db.citetitle.pubwork.attribute =
+   db.citetitle.pubwork-enum.attribute =
       [
          db:refpurpose [ "Identifies the nature of the publication being cited" ]
       ]
       attribute pubwork { db.citetitle.pubwork.enumeration }
+
+   db.citetitle.pubwork-other.attribute =
+      [
+         db:refpurpose [ "Identifies the nature of some other kind of publication being cited" ]
+      ]
+      attribute otherpubwork { xsd:NMTOKEN }
+
+   db.citetitle.pubwork-other.attributes =
+      [
+         db:refpurpose [ "Identifies that this is some other kind of publication being cited" ]
+      ]
+      attribute pubwork {
+         ## Indicates that the published work is some 'other' kind.
+         "other"
+      }
+      & db.citetitle.pubwork-other.attribute
+
+   db.citetitle.pubwork.attribute =
+      (db.citetitle.pubwork-enum.attribute | db.citetitle.pubwork-other.attributes)
 
    db.citetitle.role.attribute = attribute role { text }
 
