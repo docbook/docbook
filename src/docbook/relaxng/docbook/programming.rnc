@@ -5,7 +5,7 @@ namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace db = "http://docbook.org/ns/docbook"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 
-start |= db.synopsis.blocks | db.funcsynopsisinfo | db.classsynopsisinfo | db.programmingsynopsis
+start |= db.synopsis.blocks | db.funcsynopsisinfo | db.classsynopsisinfo
 
 db.domain.inlines |= db.programming.inlines
 
@@ -55,16 +55,9 @@ db.synopsis.blocks =
  | db.fieldsynopsis
  | db.enumsynopsis
  | db.typedefsynopsis
- | db.namespacesynopsis
+ | db.packagesynopsis
  | db.macrosynopsis
  | db.unionsynopsis
-
-db.programmingsynopsis =
-   db.namespacesynopsis
- | db.macrosynopsis
- | db.typedefsynopsis
- | db.enumsynopsis
-
 
 # ======================================================================
 
@@ -1042,29 +1035,29 @@ div {
 # ======================================================================
 
 [
-   db:refname [ "namespacesynopsis" ]
-   db:refpurpose [ "The syntax summary for a name space definition" ]
+   db:refname [ "packagesynopsis" ]
+   db:refpurpose [ "The syntax summary for a package definition" ]
 ]
 div {
-   db.namespacesynopsis.info = db._info.title.forbidden
+   db.packagesynopsis.info = db._info.title.forbidden
 
-   db.namespacesynopsis.role.attribute = attribute role { text }
+   db.packagesynopsis.role.attribute = attribute role { text }
    
-   db.namespacesynopsis.attlist =
-      db.namespacesynopsis.role.attribute?
+   db.packagesynopsis.attlist =
+      db.packagesynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
    
-   db.namespacesynopsis = 
-      element namespacesynopsis { 
-         db.namespacesynopsis.attlist,
-         db.namespacesynopsis.info,
+   db.packagesynopsis = 
+      element packagesynopsis { 
+         db.packagesynopsis.attlist,
+         db.packagesynopsis.info,
          db.synopsisinfo*,
-         (db.package | db.modifier)*,
-         (db.namespace | db.namespacename),
-         (db.package | db.modifier)*,
-         db.synopsisinfo*
+         db.modifier*,
+         db.package,
+         db.modifier*,
+         (db.synopsis.blocks|db.synopsisinfo)*
       }
 }
 

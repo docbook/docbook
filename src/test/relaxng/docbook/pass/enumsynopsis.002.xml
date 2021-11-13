@@ -8,13 +8,11 @@
          <db:para>Contains miscellaneous identifiers used throughout the Qt library</db:para>
       </db:abstract>
    </db:info>
-   <db:namespacesynopsis>
-      <db:namespace>
-         <db:namespacename>Qt</db:namespacename>
-      </db:namespace>
-      <db:synopsisinfo role="module">QtCore</db:synopsisinfo>
-      <db:synopsisinfo role="headers">#include &lt;qnamespace.h&gt;</db:synopsisinfo>
-   </db:namespacesynopsis>
+   <db:packagesynopsis>
+     <db:package>Qt</db:package>
+     <db:synopsisinfo role="module">QtCore</db:synopsisinfo>
+     <db:synopsisinfo role="headers">#include &lt;qnamespace.h&gt;</db:synopsisinfo>
+   </db:packagesynopsis>
    <db:section>
       <db:title>Member Type Documentation</db:title>
       <db:section>

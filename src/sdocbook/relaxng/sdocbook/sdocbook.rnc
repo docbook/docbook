@@ -144,7 +144,7 @@ include "../../../docbook/relaxng/docbook/programming.rnc" {
   db.template = notAllowed
   db.namespace = notAllowed
   db.namespacename = notAllowed
-  db.namespacesynopsis = notAllowed
+  db.packagesynopsis = notAllowed
   db.macroname = notAllowed
   db.macrosynopsis = notAllowed
   db.macroprototype = notAllowed
