@@ -9,7 +9,7 @@
   <xsl:strip-space elements="*"/>
 
   <xsl:template match="rng:grammar">
-    <s:schema>
+    <s:schema queryBinding="xslt2">
       <s:ns prefix="db" uri="http://docbook.org/ns/docbook"/>
       <s:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
       <s:ns prefix="trans" uri="http://docbook.org/ns/transclusion"/>
