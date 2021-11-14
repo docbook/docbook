@@ -32,8 +32,6 @@ db.programming.inlines =
  | db.buildtarget
  | db.oo.inlines
  | db.templatename
- | db.namespace
- | db.namespacename
  | db.macroname
  | db.unionname
  | db.enumname
@@ -985,51 +983,6 @@ div {
         db.specializedtemplate.attlist,
         (db.modifier | db.type | db._text)*
      }
-}
-
-# ======================================================================
-
-[
-   db:refname [ "namespace" ]
-   db:refpurpose [ "The definition of a name space, which may be more than a name" ]
-]
-div {
-
-   db.namespace.role.attribute = attribute role { text }
-
-   db.namespace.attlist =
-      db.namespace.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-   
-   db.namespace =
-      element namespace {
-         db.namespace.attlist,
-         db.modifier*, db.namespacename, db.modifier*
-      }
-}
-
-# ======================================================================
-
-[
-   db:refname [ "namespacename" ]
-   db:refpurpose [ "The name of a name space" ]
-]
-div {
-
-   db.namespacename.role.attribute = attribute role { text }
-   
-   db.namespacename.attlist =
-      db.namespacename.role.attribute?
-    & db.common.attributes
-    & db.common.linking.attributes
-   
-   db.namespacename =
-      element namespacename {
-         db.namespacename.attlist,
-         db._text
-      }
-
 }
 
 # ======================================================================
