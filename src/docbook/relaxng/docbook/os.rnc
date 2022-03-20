@@ -222,6 +222,12 @@ div {
 
    db.cmdsynopsis.label.attribute = db.label.attribute
 
+   db.cmdsynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
+
    db.cmdsynopsis.attlist =
       db.cmdsynopsis.role.attribute?
     & db.common.attributes
@@ -229,6 +235,7 @@ div {
     & db.cmdsynopsis.sepchar.attribute?
     & db.cmdsynopsis.cmdlength.attribute?
     & db.cmdsynopsis.label.attribute?
+    & db.cmdsynopsis.packageref.attribute?
 
    db.cmdsynopsis.info = db._info.title.forbidden
 
