@@ -116,11 +116,18 @@ div {
 
    db.funcsynopsis.role.attribute = attribute role { text }
 
+   db.funcsynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
+
    db.funcsynopsis.attlist =
       db.funcsynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
+    & db.funcsynopsis.packageref.attribute?
 
    db.funcsynopsis =
       element funcsynopsis {
@@ -372,12 +379,19 @@ div {
       ]
       attribute class { db.classsynopsis.class.enumeration }
 
+  db.classsynopsis.packageref.attribute =
+      [
+         db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+      ]
+      attribute packageref {text }
+
    db.classsynopsis.attlist =
       db.classsynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
     & db.classsynopsis.class.attribute?
+    & db.classsynopsis.packageref.attribute?
 
    db.classsynopsis =
       element classsynopsis {
@@ -585,11 +599,18 @@ div {
 
    db.fieldsynopsis.role.attribute = attribute role { text }
 
+   db.fieldsynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
+
    db.fieldsynopsis.attlist =
       db.fieldsynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
+    & db.fieldsynopsis.packageref.attribute?
 
    db.fieldsynopsis =
       element fieldsynopsis {
@@ -639,11 +660,18 @@ div {
 
    db.constructorsynopsis.role.attribute = attribute role { text }
 
+   db.constructorsynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
+
    db.constructorsynopsis.attlist =
       db.constructorsynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
+    & db.constructorsynopsis.packageref.attribute?
 
    db.constructorsynopsis =
       element constructorsynopsis {
@@ -669,11 +697,18 @@ div {
 
    db.destructorsynopsis.role.attribute = attribute role { text }
 
+   db.destructorsynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
+
    db.destructorsynopsis.attlist =
       db.destructorsynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
+    & db.destructorsynopsis.packageref.attribute?
 
    db.destructorsynopsis =
       element destructorsynopsis {
@@ -699,11 +734,18 @@ div {
 
    db.methodsynopsis.role.attribute = attribute role { text }
 
+   db.methodsynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
+
    db.methodsynopsis.attlist =
       db.methodsynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
+    & db.methodsynopsis.packageref.attribute?
 
    db.methodsynopsis =
       element methodsynopsis {
@@ -995,12 +1037,19 @@ div {
    db.packagesynopsis.info = db._info.title.forbidden
 
    db.packagesynopsis.role.attribute = attribute role { text }
+
+   db.packagesynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
    
    db.packagesynopsis.attlist =
       db.packagesynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
+    & db.packagesynopsis.packageref.attribute?
    
    db.packagesynopsis = 
       element packagesynopsis { 
@@ -1048,11 +1097,18 @@ div {
 
    db.macrosynopsis.role.attribute = attribute role { text }
    
+   db.macrosynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
+
    db.macrosynopsis.attlist =
       db.macrosynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
+    & db.macrosynopsis.packageref.attribute?
    
    db.macrosynopsis =
       element macrosynopsis {
@@ -1182,6 +1238,12 @@ div {
          db:refpurpose [ "Indicates how the value of a union is specified." ]
       ]
       attribute ordered { db.enumsynopsis.ordered.enumeration }
+
+   db.unionsynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
        
    db.unionsynopsis.attlist =
       db.unionsynopsis.role.attribute?
@@ -1189,6 +1251,7 @@ div {
     & db.common.linking.attributes
     & db.language.attribute?
     & db.unionsynopsis.ordered.attribute?
+    & db.unionsynopsis.packageref.attribute?
    
    db.unionsynopsis = 
       element unionsynopsis {
@@ -1344,13 +1407,20 @@ div {
          db:refpurpose [ "Indicates how the value of an enumeration is specified." ]
       ]
       attribute ordered { db.enumsynopsis.ordered.enumeration }
-   
+
+   db.enumsynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
+  
    db.enumsynopsis.attlist =
       db.enumsynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
     & db.enumsynopsis.ordered.attribute?
+    & db.enumsynopsis.packageref.attribute?
    
    db.enumsynopsis = 
       element enumsynopsis {
@@ -1399,11 +1469,18 @@ div {
 
    db.typedefsynopsis.role.attribute = attribute role { text }
 
+   db.typedefsynopsis.packageref.attribute =
+       [
+           db:refpurpose [ "Identifies the package to which this synopsis (logically) belongs" ]
+       ]
+       attribute packageref {text }
+
    db.typedefsynopsis.attlist =
       db.typedefsynopsis.role.attribute?
     & db.common.attributes
     & db.common.linking.attributes
     & db.language.attribute?
+    & db.typedefsynopsis.packageref.attribute?
    
    db.typedefsynopsis = 
       element typedefsynopsis {

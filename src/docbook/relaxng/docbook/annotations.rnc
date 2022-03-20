@@ -31,7 +31,7 @@ div {
    db.annotation.role.attribute = attribute role { text }
    db.annotation.annotates.attribute =
       [
-         db:refpurpose [ "Identifies one ore more elements to which this annotation applies" ]
+         db:refpurpose [ "Identifies one or more elements to which this annotation applies" ]
       ]
       attribute annotates { text }
 
