@@ -681,6 +681,7 @@ div {
          db.modifier*,
          db.methodname?,
          ((db.methodparam|db.group.methodparam)+ | db.void?),
+         db.modifier*,
          db.exceptionname*,
          db.synopsisinfo*
       }
