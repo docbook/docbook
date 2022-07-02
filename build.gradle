@@ -132,13 +132,13 @@ def packageMap = [:]
 // There's no 'defguide' directory anymore because we can manufacture
 // it entirely in the build. But we still need some of the tasks
 // created in this loop, so fake it.
-def schemaDirectories = ["src/defguide/relaxng/defguide"]
-new File("src").traverse([maxDepth: 2, type: DIRECTORIES]) { schema ->
+def schemaDirectories = ["${projectDir}/src/defguide/relaxng/defguide"]
+new File("${projectDir}/src").traverse([maxDepth: 2, type: DIRECTORIES]) { schema ->
   def dirname = schema.toString()
-  if (!dirname.startsWith("src/test/")) {
+  if (!dirname.startsWith("${projectDir}/src/test/")) {
     def pos = dirname.indexOf("${File.separator}relaxng${File.separator}")
     if (pos >= 0) {
-      packageMap[schema.getName()] = dirname.substring(4, pos)
+      packageMap[schema.getName()] = dirname.substring("${projectDir}".length()+5, pos)
       schemaDirectories.add(dirname)
     }
   }
@@ -159,34 +159,34 @@ schemaDirectories.each { dirname ->
 
   t = task "${basename}_rng_include"(type: SaxonXsltTask,
                                      dependsOn: ["${basename}_rng_src"]) {
-    inputs.file("tools/include.xsl")
+    inputs.file("${projectDir}/tools/include.xsl")
     input "${buildDir}/${basename}/${basename}.rng"
     output "${buildDir}/tmp/${basename}_rng_include.xml"
-    stylesheet "tools/include.xsl"
+    stylesheet "${projectDir}/tools/include.xsl"
   }
 
   t = task "${basename}_rng_augment"(type: SaxonXsltTask,
                                      dependsOn: [ "${basename}_rng_include" ]) {
-    inputs.file("tools/augment.xsl")
+    inputs.file("${projectDir}/tools/augment.xsl")
     input "${buildDir}/tmp/${basename}_rng_include.xml"
     output "${buildDir}/tmp/${basename}_rng_augment.xml"
-    stylesheet "tools/augment.xsl"
+    stylesheet "${projectDir}/tools/augment.xsl"
   }
 
   t = task "${basename}_rng_cleanup"(type: SaxonXsltTask,
                                      dependsOn: [ "${basename}_rng_augment" ]) {
-    inputs.file("tools/cleanup.xsl")
+    inputs.file("${projectDir}/tools/cleanup.xsl")
     input "${buildDir}/tmp/${basename}_rng_augment.xml"
     output "${buildDir}/tmp/${basename}_rng_cleanup.xml"
-    stylesheet "tools/cleanup.xsl"
+    stylesheet "${projectDir}/tools/cleanup.xsl"
   }
 
   t = task "${basename}_rng_nodoc"(type: SaxonXsltTask,
                                    dependsOn: [ "${basename}_rng_cleanup" ]) {
-    inputs.file("tools/removedoc.xsl")
+    inputs.file("${projectDir}/tools/removedoc.xsl")
     input "${buildDir}/tmp/${basename}_rng_cleanup.xml"
     output "${buildDir}/tmp/${basename}_rng_nodoc.xml"
-    stylesheet "tools/removedoc.xsl"
+    stylesheet "${projectDir}/tools/removedoc.xsl"
     parameters (
       "remove-schematron": "0"
     )
@@ -194,17 +194,17 @@ schemaDirectories.each { dirname ->
 
   t = task "${basename}_sch"(type: SaxonXsltTask,
                              dependsOn: [ "${basename}_rng_cleanup" ]) {
-    inputs.file("tools/schematron.xsl")
+    inputs.file("${projectDir}/tools/schematron.xsl")
     input "${buildDir}/tmp/${basename}_rng_cleanup.xml"
     output "${buildDir}/schemas/sch/${packageMap[basename]}/${basename}.sch"
-    stylesheet "tools/schematron.xsl"
+    stylesheet "${projectDir}/tools/schematron.xsl"
   }
 
   t = task "${basename}_compiled"(type: SaxonXsltTask,
                                   dependsOn: ["${basename}_rng_nodoc"]) {
     doFirst {
       copy {
-        from "src/${packageMap[basename]}/relaxng/${basename}"
+        from "${projectDir}/src/${packageMap[basename]}/relaxng/${basename}"
         include "copyright.xml"
         into "${buildDir}/${basename}"
         filter { String line ->
@@ -219,7 +219,7 @@ schemaDirectories.each { dirname ->
 
     input "${buildDir}/tmp/${basename}_rng_nodoc.xml"
     output "${buildDir}/tmp/${basename}_compiled.rng"
-    stylesheet "tools/attach-copyright.xsl"
+    stylesheet "${projectDir}/tools/attach-copyright.xsl"
     parameters (
       "copyright": "${buildDir}/${basename}/copyright.xml"
     )
@@ -245,7 +245,7 @@ schemaDirectories.each { dirname ->
                              dependsOn: ["${basename}_rng_cleanup"]) {
     input "${buildDir}/tmp/${basename}_rng_cleanup.xml"
     output "${buildDir}/tmp/${basename}.rnd"
-    stylesheet "tools/rngdocxml.xsl"
+    stylesheet "${projectDir}/tools/rngdocxml.xsl"
     parameters (
       "buildhash": gitRef()
     )
@@ -257,7 +257,7 @@ task any_docbook_rng(type: SaxonXsltTask,
                      dependsOn: [ "docbook_compiled" ]) {
   input "${buildDir}/tmp/docbook_compiled.rng"
   output "${buildDir}/docbook/any.docbook.rng"
-  stylesheet "tools/all-patterns.xsl"
+  stylesheet "${projectDir}/tools/all-patterns.xsl"
 }
 
 task defguide_rng_src(dependsOn: ["any_docbook_rng", "assembly_rng", "docbook_rng"]) {
@@ -288,7 +288,7 @@ task defguide_rng_src(dependsOn: ["any_docbook_rng", "assembly_rng", "docbook_rn
 // Create tasks to run all of the tests
 def baseTests = [:]
 def failResults = [:]
-fileTree(dir: "src/test").each { testfile ->
+fileTree(dir: "${projectDir}/src/test").each { testfile ->
   def pos = projectDir.toString().length() + "/src/test/".length()
   def fn = testfile.toString().substring(pos)
   if (fn.endsWith(".xml")) {
@@ -452,9 +452,9 @@ distributions.each { dist, obj ->
       catalogParameters['prefix'] = 'publishers'
     }
 
-    input "tools/catalog.xsl"
+    input "${projectDir}/tools/catalog.xsl"
     output "${path}/catalog.xml"
-    stylesheet "tools/catalog.xsl"
+    stylesheet "${projectDir}/tools/catalog.xsl"
     parameters catalogParameters
   }
 
