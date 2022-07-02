@@ -61,6 +61,8 @@ relaxng_validate.configure {
   classpath configurations.validateRuntime
 }
 
+println("Building with Java version ${System.getProperty('java.version')}")
+
 def nextReleaseVer = dbver
 if (nextReleaseVer.indexOf("a") > 0) {
   nextReleaseVer = nextReleaseVer.substring(0, nextReleaseVer.indexOf("a"))
