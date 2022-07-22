@@ -1,17 +1,37 @@
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://dev.saxonica.com/maven" }
+  }
+
+  configurations.all {
+    resolutionStrategy {
+      force 'xml-apis:xml-apis:1.4.01',
+        "net.sf.saxon:Saxon-HE:${saxonVersion}",
+        "org.xmlresolver:xmlresolver:${resolverVersion}",
+        'com.nwalsh:sinclude:4.1.0'
+    }
+  }
+
+  dependencies {
+    classpath group: "net.sf.saxon", name: "Saxon-HE", version: saxonVersion
+    classpath group: 'org.docbook', name: 'docbook-xslTNG', version: xslTNGversion
+  }
+}
+
 plugins {
   id "java"
   id "maven-publish"
   id "signing"
-  //id 'com.github.eerohele.saxon-gradle' version '0.9.0-beta1'
-  id 'com.nwalsh.saxon-gradle' version '0.9.1-beta4'
-  id 'com.nwalsh.gradle.relaxng.validate' version '0.0.5'
-  id 'com.nwalsh.gradle.relaxng.translate' version '0.0.5'
+  id 'com.nwalsh.gradle.saxon.saxon-gradle' version '0.9.3'
+  id 'com.nwalsh.gradle.relaxng.validate' version '0.0.8'
+  id 'com.nwalsh.gradle.relaxng.translate' version '0.0.8'
 }
 
 import static groovy.io.FileType.FILES
 import static groovy.io.FileType.DIRECTORIES
-//import com.github.eerohele.SaxonXsltTask
-import com.nwalsh.SaxonXsltTask
+import com.nwalsh.gradle.saxon.SaxonXsltTask
 import com.nwalsh.gradle.relaxng.validate.RelaxNGValidateTask
 import com.nwalsh.gradle.relaxng.translate.RelaxNGTranslateTask
 import com.nwalsh.gradle.relaxng.util.CollectingErrorHandler
@@ -30,7 +50,8 @@ configurations.all {
 }
 
 configurations {
-  validateRuntime.extendsFrom(implementation)
+  validateRuntime.extendsFrom implementation
+  transform.extendsFrom documentation
 }
 
 dependencies {
@@ -39,6 +60,9 @@ dependencies {
     [group: 'org.relaxng', name: 'jing', version: "20181222" ],
     [group: 'org.relaxng', name: 'trang', version: "20181222" ],
     [group: 'org.xmlresolver', name: 'xmlresolver', version: resolverVersion]
+  )
+  documentation (
+    [group: 'org.docbook', name: 'docbook-xslTNG', version: xslTNGversion]
   )
 }
 
@@ -53,12 +77,9 @@ sourceSets {
   }
 }
 
-relaxng_translate.configure {
-  classpath configurations.validateRuntime
-}
-
-relaxng_validate.configure {
-  classpath configurations.validateRuntime
+saxon.configure {
+  classpath configurations.transform
+  initializer 'org.docbook.xsltng.extensions.Register'
 }
 
 println("Building with Java version ${System.getProperty('java.version')}")
@@ -251,6 +272,59 @@ schemaDirectories.each { dirname ->
     )
   }
   make_rnd.dependsOn t
+
+  if (file("${projectDir}/src/${basename}/xml/release-notes.xml").exists()) {
+    Task r = task "copy_${basename}_resources"() {
+      outputs.files
+        fileTree(dir: "${buildDir}/stage/${basename}-${dbver}/release-notes")
+      def dbjar = null
+      configurations.transform.each { path ->
+        if (path.toString().contains("docbook-xslTNG")) {
+          dbjar = path
+        }
+      }
+
+      doLast {
+        if (dbjar == null) {
+          throw new GradleException("Failed to locate DocBook xslTNG jar file")
+        }
+        copy {
+          into "${buildDir}/stage/${basename}-${dbver}/release-notes"
+          from ({ zipTree(dbjar.toString()) }) {
+            include "org/docbook/xsltng/resources/**"
+          }
+          eachFile { fileCopyDetails ->
+            def originalPath = fileCopyDetails.path
+            fileCopyDetails.path
+              = originalPath.replace('org/docbook/xsltng/resources/', '')
+          }
+        }
+      }
+
+      doLast {
+        copy {
+          into "${buildDir}/stage/${basename}-${dbver}/release-notes"
+          from "${projectDir}/src/${basename}/xml"
+          include "release-notes.xml"
+        }
+      }
+
+      doLast {
+        delete "${buildDir}/stage/${basename}-${dbver}/release-notes/org"
+      }
+    }
+
+    t = task "${basename}_release_notes"(
+      type: SaxonXsltTask
+    ) {
+      input "${projectDir}/src/${basename}/xml/release-notes.xml"
+      output "${buildDir}/stage/${basename}-${dbver}/release-notes/index.html"
+      stylesheet "${projectDir}/tools/docbook.xsl"
+      parameters (
+      )
+    }
+    t.dependsOn r
+  }
 }
 
 task any_docbook_rng(type: SaxonXsltTask,
@@ -458,13 +532,17 @@ distributions.each { dist, obj ->
     parameters catalogParameters
   }
 
-  task "${dist}_zip"(type: Zip, dependsOn: ["${dist}_catalog"]) {
+  Task zip = task "${dist}_zip"(type: Zip, dependsOn: ["${dist}_catalog"]) {
     from("${buildDir}/stage/${dist}-${dbver}")
     into "${dist}-${dbver}"
     archiveFileName = "${dist}-${dbver}.zip"
     doFirst {
       mkdir "${buildDir}/distributions"
     }
+  }
+
+  if (tasks.findByName("${dist}_release_notes") != null) {
+    zip.dependsOn tasks.findByName("${dist}_release_notes")
   }
 }
 
