@@ -452,7 +452,8 @@ div {
       element ooclass {
          db.ooclass.attlist,
          (db.package|db.modifier)*,
-         db.classname
+         db.classname,
+         db.modifier*
       }
 }
 
@@ -475,7 +476,8 @@ div {
       element oointerface {
          db.oointerface.attlist,
          (db.package|db.modifier)*,
-         db.interfacename
+         db.interfacename,
+         db.modifier*
       }
 }
 
@@ -498,7 +500,8 @@ div {
       element ooexception {
          db.ooexception.attlist,
          (db.package|db.modifier)*,
-         db.exceptionname
+         db.exceptionname,
+         db.modifier*
       }
 }
 
@@ -620,6 +623,7 @@ div {
          db.modifier*,
          (db.type | db.templatename)*,
          db.varname,
+         db.modifier*,
          db.initializer?,
          db.synopsisinfo*
       }
@@ -681,6 +685,7 @@ div {
          db.modifier*,
          db.methodname?,
          ((db.methodparam|db.group.methodparam)+ | db.void?),
+         db.modifier*,
          db.exceptionname*,
          db.synopsisinfo*
       }
@@ -718,6 +723,7 @@ div {
          db.modifier*,
          db.methodname?,
          ((db.methodparam|db.group.methodparam)+ | db.void?),
+         db.modifier*,
          db.exceptionname*,
          db.synopsisinfo*
       }
@@ -1428,11 +1434,10 @@ div {
          db.enumsynopsis.info,
          db.synopsisinfo*,
          (db.package | db.modifier)*,
-         db.enumname?,
+         (db.enumname, db.modifier*)?,
          db.enumitem+,
          db.synopsisinfo*
       }
-   
 }
 
 # ======================================================================
