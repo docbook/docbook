@@ -1,8 +1,7 @@
 <article xmlns="http://docbook.org/ns/docbook" version="5.0">
 <info>
 <title>Article wrapper</title>
-<x:irrelevant xmlns:x="http://example.com/doesntmatter"
-              xml:id="xreftext">Xref Endterm</x:irrelevant>
+<bibliomisc role="xreftext" xml:id="xreftext">Xref Endterm</bibliomisc>
 </info>
 
 <para>This is an xref test.</para>

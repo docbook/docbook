@@ -382,9 +382,9 @@ fileTree(dir: "${projectDir}/src/test").each { testfile ->
         input document
         output "${buildDir}/test/rng/${fn}"
         schema "${buildDir}/schemas/rng/${packageMap[schema_name]}/${schema_name}.rng"
-        errorHandler new CollectingErrorHandler()
+        errorHandler new CollectingErrorHandler(System.err)
         idref (schema_name != 'website' && schema_name != 'website-full' && schema_name != 'dbforms')
-        assertValid false
+        assertValid true
       }
       pass_tests.dependsOn t
       baseTests[schema_name].dependsOn t
@@ -394,9 +394,9 @@ fileTree(dir: "${projectDir}/src/test").each { testfile ->
         input document
         output "${buildDir}/test/sch/${fn}"
         schema "${buildDir}/schemas/sch/${packageMap[schema_name]}/${schema_name}.sch"
-        errorHandler new CollectingErrorHandler()
+        errorHandler new CollectingErrorHandler(System.err)
         idref (schema_name != 'website' && schema_name != 'website-full' && schema_name != 'dbforms')
-        assertValid false
+        assertValid true
       }
       pass_tests.dependsOn t
       baseTests[schema_name].dependsOn t

@@ -72,6 +72,10 @@
 namespace db = "http://docbook.org/ns/docbook"
 namespace its = "http://www.w3.org/2005/11/its"
 namespace html = "http://www.w3.org/1999/xhtml"
+namespace xml = "http://www.w3.org/XML/1998/namespace"
+namespace xlink = "http://www.w3.org/1999/xlink"
+namespace trans = "http://docbook.org/ns/transclusion"
+namespace local = ""
 
 include "../../../docbook/relaxng/docbook/docbook.rnc" {
    # Exclude ITS markup from "wildcard" element
@@ -81,6 +85,13 @@ include "../../../docbook/relaxng/docbook/docbook.rnc" {
           | text
           | db._any)*
       }
+
+   # Exclude ITS markup from "any other" attribute
+   db._any_other.attribute =
+       [
+         db:refpurpose [ "Any attribute in an other explicit namespace." ]
+       ]
+       attribute * - (db:* | xml:* | xlink:* | trans:* | its:* | local:*) { text }
 }
 
 # Include base ITS schema
