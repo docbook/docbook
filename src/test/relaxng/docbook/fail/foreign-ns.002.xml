@@ -1,0 +1,10 @@
+<article xmlns="http://docbook.org/ns/docbook"
+         xmlns:db="http://docbook.org/ns/docbook"
+         version="5.2">
+<title>Article wrapper</title>
+
+<para db:name="this is also not ok">You can put foreign namespaced
+elements on any DocBook element. They must be in an explicit
+namespace other than the DocBook namespace.</para>
+
+</article>
