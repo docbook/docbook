@@ -24,6 +24,8 @@ div {
       attribute href { xsd:anyURI { pattern = "[^#]+" } }?,
       [ a:defaultValue="xml" ] attribute parse { "xml" | "text" }?,
       attribute xpointer { text }?,
+      attribute fragid { text }?,
+      attribute set-xml-id { text }?,
       attribute encoding { text }?,
       attribute accept { text }?,
       attribute accept-language { text }?,
