@@ -40,6 +40,7 @@ start |= db.abstract
  | db.simpara
  | db.step
  | db.stepalternatives
+ | db.info
 
 # ======================================================================
 
@@ -51,13 +52,13 @@ div {
 
    db._any.attribute =
       [
-         db:refpurpose [ "Any attribute, including any attribute in any namespace." ]
+         db:refpurpose [ "Any attribute, including any attribute in any namespace" ]
       ]
       attribute * { text }
 
    db._any_other.attribute =
        [
-         db:refpurpose [ "Any attribute in an other explicit namespace." ]
+         db:refpurpose [ "Any attribute in any other explicit namespace" ]
        ]
        attribute * - (db:* | xml:* | xlink:* | trans:* | local:*) { text }
 
@@ -143,7 +144,7 @@ db.userlevel.attribute =
 
 db.vendor.attribute =
   [
-    db:refpurpose [ "Indicates the computer vendor to which the element applies." ]
+    db:refpurpose [ "Indicates the computer vendor to which the element applies" ]
   ]
   attribute vendor      { text }
 
@@ -501,7 +502,7 @@ db.verbatim.continuation.enumeration =
 
 db.verbatim.continuation.attribute =
    [
-      db:refpurpose [ "Determines whether line numbering continues from the previous element or restarts." ]
+      db:refpurpose [ "Determines whether line numbering continues from the previous element or restarts" ]
    ]
    attribute continuation { db.verbatim.continuation.enumeration }
 
@@ -513,25 +514,25 @@ db.verbatim.linenumbering.enumeration =
 
 db.verbatim.linenumbering.attribute =
    [
-      db:refpurpose [ "Determines whether lines are numbered." ]
+      db:refpurpose [ "Determines whether lines are numbered" ]
    ]
    attribute linenumbering { db.verbatim.linenumbering.enumeration }
 
 db.verbatim.startinglinenumber.attribute =
    [
-      db:refpurpose [ "Specifies the initial line number." ]
+      db:refpurpose [ "Specifies the initial line number" ]
    ]
    attribute startinglinenumber { xsd:integer }
 
 db.verbatim.language.attribute =
    [
-      db:refpurpose [ "Identifies the language (i.e. programming language) of the verbatim content." ]
+      db:refpurpose [ "Identifies the language (i.e. programming language) of the verbatim content" ]
    ]
    attribute language { text }
 
 db.verbatim.xml.space.attribute =
    [
-      db:refpurpose [ "Can be used to indicate explicitly that whitespace in the verbatim environment is preserved. Whitespace must always be preserved in verbatim environments whether this attribute is specified or not." ]
+      db:refpurpose [ "Can be used to indicate explicitly that whitespace in the verbatim environment is preserved. Whitespace must always be preserved in verbatim environments whether this attribute is specified or not" ]
    ]
    attribute xml:space {
       ## Whitespace must be preserved.
@@ -588,7 +589,7 @@ db.pgwide.attribute =
 
 db.language.attribute =
    [
-      db:refpurpose [ "Identifies the language (i.e. programming language) of the content." ]
+      db:refpurpose [ "Identifies the language (i.e. programming language) of the content" ]
    ]
    attribute language { text }
 
@@ -600,7 +601,7 @@ db.performance.enumeration =
 
 db.performance.attribute =
    [
-      db:refpurpose [ "Specifies if the content is required or optional." ]
+      db:refpurpose [ "Specifies if the content is required or optional" ]
    ]
    attribute performance { db.performance.enumeration }
 
@@ -1881,7 +1882,7 @@ div {
 
    db.orderedlist.startingnumber.attribute =
       [
-         db:refpurpose [ "Specifies the initial line number." ]
+         db:refpurpose [ "Specifies the initial line number" ]
       ]
    attribute startingnumber { xsd:integer }
 
@@ -2091,7 +2092,7 @@ div {
    db.simplelist.type.attribute =
       [
          a:defaultValue="vert"
-         db:refpurpose [ "Specifies the type of list presentation." ]
+         db:refpurpose [ "Specifies the type of list presentation" ]
       ]
       attribute type { db.simplelist.type.enumeration }
 
