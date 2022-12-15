@@ -1,9 +1,9 @@
 <article xmlns="http://docbook.org/ns/docbook"
 	 xmlns:xlink="http://www.w3.org/1999/xlink"
-         version='5.1'>
+         version='5.2'>
 <info>
-<title>DocBook 5.2 CR2 Release Notes</title>
-<pubdate>2022-07-22</pubdate>
+<title>DocBook 5.2 CR3 Release Notes</title>
+<pubdate>2022-08-13</pubdate>
 </info>
 
 <section>
@@ -76,6 +76,14 @@ elements support legal sections.
 BITS schemas.</simpara>
 </listitem>
 </orderedlist>
+</section>
+
+<section>
+<title>Changes from DocBook 5.2 CR2 to DocBook 5.2 CR3</title>
+
+<para>Allow attributes in foreign namespaces (and not in the DocBook, XML, XLink, or
+transclusion namespaces) to appear on any DocBook element.</para>
+
 </section>
 
 <section>
