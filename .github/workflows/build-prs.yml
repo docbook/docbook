@@ -3,7 +3,7 @@ on:
   pull_request_target:
     types: [assigned, opened, edited, synchronize, reopened]
     branches:
-      - master
+      - main
 jobs:
   check_branch:
     runs-on: ubuntu-latest
