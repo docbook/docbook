@@ -52,6 +52,16 @@ jobs:
         run: |
           ./gradlew dist
 
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
+        if: ${{ env.HAVE_ACCESS_TOKEN == 'true' && env.CI_BRANCH == 'main' && env.CI_TAG != '' }}
+        with:
+          draft: false
+          prerelease: false
+          fail_on_unmatched_files: true
+          files: |
+            build/distributions/*-${{ env.CI_TAG }}.zip
+
 # FIXME: automate deploy to CDN for tagged builds
 ## Remember the SHA of the current build.
 #SHA=$(git rev-parse --verify HEAD)
