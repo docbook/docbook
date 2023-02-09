@@ -75,6 +75,18 @@ elements support legal sections.
 <simpara>Added XInclude-enabled schema versions of Assembly and
 BITS schemas.</simpara>
 </listitem>
+<listitem>
+<simpara>Added missing <tag class="attribute">fragid</tag> and
+<tag class="attribute">set-xml-id</tag> to the XInclude-enabled schema.
+</simpara>
+</listitem>
+<listitem>
+<simpara>Allow <tag>info</tag> as top-level element.</simpara>
+</listitem>
+<listitem>
+<simpara>Allow foreign namespace-qualified attributes on DocBook elements.
+</simpara>
+</listitem>
 </orderedlist>
 </section>
 
