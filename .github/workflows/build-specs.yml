@@ -1,0 +1,76 @@
+name: build-specs
+on: push
+jobs:
+  check_branch:
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.check_step.outputs.branch }}
+      reponame: ${{ steps.check_step.outputs.reponame }}
+      tag: ${{ steps.check_step.outputs.tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get branch name, etc.
+        id: check_step
+        run: |
+          raw=${{ github.repository }}
+          reponame=${raw##*/}
+          echo "::set-output name=reponame::$reponame"
+          raw=$(git branch -r --contains ${{ github.ref }})
+          branch=${raw##*/}
+          echo "::set-output name=branch::$branch"
+          tag=""
+          if [ ${{ github.ref_type }} = "tag" ]; then
+            tag=${{ github.ref_name }}
+            echo "Running in $reponame on $branch for $tag"
+          else
+            echo "Running in $reponame on $branch"
+          fi
+          echo "::set-output name=tag::$tag"
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    needs: check_branch
+    env:
+      HAVE_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN != '' }}
+      BRANCH_NAME: ${{ github.ref_name }}
+      CIWORKFLOW: yes
+      CI_SHA1: ${{ github.sha }}
+      CI_BUILD_NUM: ${{ github.run_number }}
+      CI_PROJECT_USERNAME: ${{ github.repository_owner }}
+      CI_PROJECT_REPONAME: ${{ needs.check_branch.outputs.reponame }}
+      CI_BRANCH: ${{ needs.check_branch.outputs.branch }}
+      CI_TAG: ${{ needs.check_branch.outputs.tag }}
+    steps:
+      - name: Checkout the ixml repository
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          ./gradlew dist
+
+# FIXME: automate deploy to CDN for tagged builds
+## Remember the SHA of the current build.
+#SHA=$(git rev-parse --verify HEAD)
+#
+## Checkout and update cdn.docbook.org; note we need to explicitly
+## specify the deployment key because it's a different repo.
+#IDRSA="/home/circleci/.ssh/id_rsa_b0bdc42f3808364c081793c898531e98"
+#
+#cd ../
+#mkdir cdn
+#cd cdn
+#git clone --depth 1 -c core.sshCommand="/usr/bin/ssh -i $IDRSA" git@github.com:docbook/cdn.git .
+#
+## This assumes the same tag will never be republished (it never should be!).
+#rsync -ar ../repo/build/stage/ schema/
+#
+## generate indexes
+#perl bin/make-indexes.pl schema
+#
+#git add .
+#git commit -m "Deploy DocBook ${CIRCLE_TAG} for ${CIRCLE_PROJECT_USERNAME}: ${SHA}"
+#git push -q origin HEAD

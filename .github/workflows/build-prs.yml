@@ -1,0 +1,71 @@
+name: build-prs
+on:
+  pull_request_target:
+    types: [assigned, opened, edited, synchronize, reopened]
+    branches:
+      - master
+jobs:
+  check_branch:
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.check_step.outputs.branch }}
+      reponame: ${{ steps.check_step.outputs.reponame }}
+      tag: ${{ steps.check_step.outputs.tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get branch name, etc.
+        id: check_step
+        run: |
+          raw=${{ github.repository }}
+          reponame=${raw##*/}
+          echo "::set-output name=reponame::$reponame"
+          raw=$(git branch -r --contains ${{ github.ref }})
+          branch=${raw##*/}
+          echo "::set-output name=branch::$branch"
+          tag=""
+          if [ ${{ github.ref_type }} = "tag" ]; then
+            tag=${{ github.ref_name }}
+            echo "Running in $reponame on $branch for $tag"
+          else
+            echo "Running in $reponame on $branch"
+          fi
+          echo "::set-output name=tag::$tag"
+
+  build-and-deploy-pr:
+    runs-on: ubuntu-latest
+    needs: check_branch
+    env:
+      HAVE_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN != '' }}
+      AUTODIFF: ${{ secrets.DIFFURI != '' && secrets.DIFFPW != '' }}
+      CIWORKFLOW: yes
+      CI_SHA1: ${{ github.sha }}
+      CI_BUILD_NUM: ${{ github.run_number }}
+      CI_PROJECT_USERNAME: ${{ github.repository_owner }}
+      CI_PROJECT_REPONAME: ${{ needs.check_branch.outputs.reponame }}
+      CI_BRANCH: ${{ needs.check_branch.outputs.branch }}
+      CI_TAG: ${{ needs.check_branch.outputs.tag }}
+      CI_PULL: ${{ github.event.number }}
+    steps:
+      - name: Get the pull request
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Save sources
+        run: |
+          mkdir /tmp/pr-sources
+          rsync -ar ./src/ /tmp/pr-sources/
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Update sources
+        run: rsync -var /tmp/pr-sources/ ./src/
+
+      - name: Build specifications
+        run: |
+          ./gradlew dist
