@@ -2,8 +2,8 @@
 	 xmlns:xlink="http://www.w3.org/1999/xlink"
          version='5.2'>
 <info>
-<title>DocBook 5.2 CR3 Release Notes</title>
-<pubdate>2022-08-13</pubdate>
+<title>DocBook 5.2 CR5 Release Notes</title>
+<pubdate>2023-02-09</pubdate>
 </info>
 
 <section>
@@ -76,6 +76,39 @@ elements support legal sections.
 BITS schemas.</simpara>
 </listitem>
 </orderedlist>
+</section>
+
+<section>
+<title>Changes from DocBook 5.2 CR4 to DocBook 5.2 CR5</title>
+
+<para>Fixed the bug where the <tag class="attribute">cols</tag> attribute
+on CALS <tag>entrytbl</tag> was optional. It is required by the CALS
+specification.</para>
+
+</section>
+
+<section>
+<title>Changes from DocBook 5.2 CR3 to DocBook 5.2 CR4</title>
+
+<itemizedlist>
+<listitem>
+<para>Fix OASIS identifiers in the XML catalog.
+</para>
+</listitem>
+<listitem>
+<para>Allow <tag>info</tag> as a top-level element.
+</para>
+</listitem>
+<listitem>
+<para>Fixed inconsistencies in XInclude declarations.
+</para>
+</listitem>
+<listitem>
+<para>Small documentation improvements.
+</para>
+</listitem>
+</itemizedlist>
+
 </section>
 
 <section>

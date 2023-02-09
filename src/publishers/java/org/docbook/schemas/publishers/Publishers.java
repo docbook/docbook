@@ -7,7 +7,7 @@ package org.docbook.schemas.publishers;
 // some tests to make sure the testing version is correct.
 
 public final class Publishers {
-  public static final String[] VERSIONS = {"1.0", "5.2", "5.2CR4"};
+  public static final String[] VERSIONS = {"1.0", "5.2", "5.2CR5"};
 
   public static final String PUBLISHERS_CATALOG_PATH = "/org/docbook/schemas/publishers/catalog.xml";
 
