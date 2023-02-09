@@ -516,7 +516,7 @@ div {
     & db.charoff.attribute?
     & db.column-spec.attributes?
     & db.entrytbl.tgroupstyle.attribute?
-    & db.entrytbl.cols.attribute?
+    & db.entrytbl.cols.attribute
     & db.colsep.attribute?
     & db.rowsep.attribute?
     & db.align.attribute?
