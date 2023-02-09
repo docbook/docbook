@@ -73,7 +73,7 @@ elements support legal sections.
 </listitem>
 <listitem>
 <simpara>Added XInclude-enabled schema versions of Assembly and
-BITS schemas.</simpara>
+International Tag Set (<acronym>ITS</acronym>) schemas.</simpara>
 </listitem>
 <listitem>
 <simpara>Added missing <tag class="attribute">fragid</tag> and
