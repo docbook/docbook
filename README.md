@@ -1,6 +1,6 @@
 # The DocBook Schemas
 
-[![Build Status](https://travis-ci.org/docbook/docbook.svg?branch=master)](https://travis-ci.org/docbook/docbook.svg?branch=master)
+[![build-specs](https://github.com/docbook/docbook/actions/workflows/build-branch.yml/badge.svg)](https://github.com/docbook/docbook/actions/workflows/build-branch.yml)
 
 This repository contains the sources for the DocBook schemas. On 23
 July 2020, the branching structure was reorganized. Apologies for any
