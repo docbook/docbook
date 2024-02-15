@@ -570,7 +570,7 @@ task docbook_javaConfig() {
       jver = br.readLine()
     }
   }
-  def expect = "{'4.5', '5.0', '5.1', '5.2', '${dbver}'};".replace('\'', '"')
+  def expect = "{'4.5', '5.0', '5.1', '${dbver}'};".replace('\'', '"')
   if (jver != expect) {
     throw new GradleException("Check VERSIONS in DocBook.java; ${expect} != ${jver}")
   }
@@ -646,14 +646,14 @@ task docbook_javadoc(type: Javadoc) {
 
 task docbook_javadocJar(type: Jar, dependsOn: ["docbook_javadoc"]) {
   archiveBaseName = "docbook-${dbver}"
-  classifier = 'javadoc'
+  archiveClassifier = 'javadoc'
   from docbook_javadoc.destinationDir
 }
 assemble.dependsOn docbook_javadocJar
 
 task docbook_sourcesJar(type: Jar) {
   archiveBaseName = "docbook-${dbver}"
-  classifier = 'sources'
+  archiveClassifier = 'sources'
   from sourceSets.docbook.allSource
 }
 assemble.dependsOn docbook_sourcesJar
@@ -673,9 +673,9 @@ task publishers_javaConfig() {
       jver = br.readLine()
     }
   }
-  def expect = "{'1.0', '5.2', '${dbver}'};".replace('\'', '"')
+  def expect = "{'1.0', '${dbver}'};".replace('\'', '"')
   if (jver != expect) {
-    throw new GradleException("Check VERSIONS in DocBook.java; ${expect} != ${jver}")
+    throw new GradleException("Check VERSIONS in Publishers.java; ${expect} != ${jver}")
   }
 }
 
@@ -746,14 +746,14 @@ task publishers_javadoc(type: Javadoc) {
 
 task publishers_javadocJar(type: Jar, dependsOn: ["publishers_javadoc"]) {
   archiveBaseName = "publishers-${dbver}"
-  classifier = 'javadoc'
+  archiveClassifier = 'javadoc'
   from publishers_javadoc.destinationDir
 }
 assemble.dependsOn publishers_javadocJar
 
 task publishers_sourcesJar(type: Jar) {
   archiveBaseName = "publishers-${dbver}"
-  classifier = 'sources'
+  archiveClassifier = 'sources'
   from sourceSets.publishers.allSource
 }
 assemble.dependsOn publishers_sourcesJar
